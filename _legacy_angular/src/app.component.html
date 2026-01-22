@@ -1,0 +1,373 @@
+<!-- Background Aurora Gradients -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+  <div class="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-[#7C3AED]/20 rounded-full blur-[120px] animate-float-slow mix-blend-screen"></div>
+  <div class="absolute bottom-[-10%] right-[-20%] w-[50vw] h-[50vw] bg-[#DB2777]/20 rounded-full blur-[100px] animate-float-reverse mix-blend-screen"></div>
+  <div class="absolute top-[30%] left-[40%] w-[30vw] h-[30vw] bg-[#2563EB]/10 rounded-full blur-[80px] animate-float-slow mix-blend-screen"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-40 px-4 py-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="glass-panel !rounded-full px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-[#7C3AED] flex items-center justify-center text-white font-bold font-mono shadow-[0_0_15px_rgba(124,58,237,0.5)]">
+          P
+        </div>
+        <span class="text-xl font-heading font-bold text-white tracking-tight">PerTuto</span>
+      </div>
+
+      <!-- Center: Mode Switcher -->
+      <div class="hidden md:flex items-center bg-black/40 rounded-full p-1 border border-white/10">
+        <button 
+          (click)="viewMode.set('student')" 
+          [class]="viewMode() === 'student' ? 'bg-[#7C3AED] text-white shadow-neon-button' : 'text-gray-400 hover:text-white'" 
+          class="px-4 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300">
+          STUDENT
+        </button>
+        <button 
+          (click)="viewMode.set('parent')" 
+          [class]="viewMode() === 'parent' ? 'bg-[#DB2777] text-white shadow-[0_0_15px_rgba(219,39,119,0.5)]' : 'text-gray-400 hover:text-white'" 
+          class="px-4 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300">
+          PARENT
+        </button>
+      </div>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center gap-6 font-mono text-sm font-bold text-gray-300">
+        <button (click)="scrollToSection('features')" class="hover:text-white transition-all">
+          @if(viewMode() === 'student') { THE VIBE } @else { BENEFITS }
+        </button>
+        <button (click)="scrollToSection('how-it-works')" class="hover:text-white transition-all">PROCESS</button>
+        <button (click)="scrollToSection('contact')" class="hover:text-white transition-all">
+          @if(viewMode() === 'student') { JOIN WAITLIST } @else { GET ACCESS }
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center gap-4">
+        <!-- Mini Switcher for Mobile -->
+        <button (click)="viewMode.set(viewMode() === 'student' ? 'parent' : 'student')" class="text-xs font-mono font-bold px-3 py-1 bg-white/10 rounded-full border border-white/10">
+          {{ viewMode() === 'student' ? 'STUDENT' : 'PARENT' }}
+        </button>
+
+        <button (click)="toggleMenu()" class="text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Dropdown -->
+  @if (mobileMenuOpen()) {
+    <div class="absolute top-24 left-4 right-4 z-50">
+      <clay-card>
+        <div class="flex flex-col gap-4 text-center font-mono">
+          <button (click)="scrollToSection('features')" class="p-2 font-bold text-white">BENEFITS</button>
+          <button (click)="scrollToSection('how-it-works')" class="p-2 font-bold text-white">PROCESS</button>
+          <button (click)="scrollToSection('contact')" class="p-2 font-bold text-[#7C3AED]">JOIN</button>
+        </div>
+      </clay-card>
+    </div>
+  }
+</nav>
+
+<!-- Main Content -->
+<main class="relative z-10 pt-36 pb-20 space-y-24 md:space-y-32">
+  
+  <!-- Hero Section -->
+  <section class="px-4 md:px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-6 text-center lg:text-left relative">
+      <!-- Decor element -->
+      <div class="absolute -top-10 -left-10 w-20 h-20 border border-[#7C3AED]/30 rounded-full animate-spin-slow hidden lg:block"></div>
+      
+      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/10 backdrop-blur-md">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7C3AED] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-[#7C3AED]"></span>
+        </span>
+        <span class="font-mono text-xs text-[#d8b4fe] tracking-widest uppercase">
+          @if(viewMode() === 'student') { Academic Weapon Loading... } @else { Early Access Available }
+        </span>
+      </div>
+
+      <h1 class="text-6xl md:text-8xl font-bold text-white leading-[0.9] tracking-tighter">
+        @if(viewMode() === 'student') {
+          UNLEASH<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] via-[#DB2777] to-[#7C3AED] hover-glitch cursor-default transition-all">YOUR BRAIN</span>
+        } @else {
+          PERSONALIZED<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DB2777] via-[#7C3AED] to-[#DB2777] hover-glitch cursor-default transition-all">TUTORING</span>
+        }
+      </h1>
+      <p class="text-xl text-gray-400 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+        @if(viewMode() === 'student') {
+          Premium 1:1 mentorship for students who want to dominate the grade curve. No boring lectures. Just results.
+        } @else {
+          A smarter 1:1 learning experience with adaptive pathways, progress tracking, and interactive learning decks — not just worksheets.
+        }
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+        <clay-button (onClick)="scrollToSection('contact')" variant="primary" customClass="!h-14 !text-base !px-8">
+          JOIN WAITLIST
+        </clay-button>
+        <clay-button (onClick)="scrollToSection('how-it-works')" variant="secondary" customClass="!h-14 !text-base !px-8">
+          HOW IT WORKS
+        </clay-button>
+      </div>
+    </div>
+
+    <!-- Hero Visual / 3D Card Stack -->
+    <div class="relative flex justify-center lg:justify-end perspective-[1000px]">
+      <!-- Background Card -->
+      <div class="absolute top-0 right-0 w-80 h-96 bg-gradient-to-br from-[#2563EB] to-[#7C3AED] rounded-[40px] rotate-12 opacity-40 blur-sm transform translate-x-10"></div>
+      
+      <!-- Main Card -->
+      <clay-card customClass="w-full max-w-md aspect-[4/5] flex flex-col justify-between !p-10 rotate-[-6deg] hover:rotate-0 transition-transform duration-500 border-t border-white/20">
+        <div class="flex justify-between items-start">
+          <div class="w-16 h-16 rounded-2xl bg-[#000] border border-white/10 flex items-center justify-center text-3xl">
+            🧠
+          </div>
+          <div class="px-3 py-1 rounded-full bg-[#10B981]/20 border border-[#10B981]/50 text-[#10B981] font-mono text-xs font-bold">
+            +150 XP
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-4xl font-bold text-white mb-2">Physics II</h3>
+          <p class="text-gray-400">"Literally saved my GPA. The visual learning tools are insane."</p>
+        </div>
+        
+        <div class="flex items-center gap-4 pt-4 border-t border-white/10">
+          <div class="flex -space-x-3">
+             <div class="w-10 h-10 rounded-full border-2 border-black bg-purple-500"></div>
+             <div class="w-10 h-10 rounded-full border-2 border-black bg-pink-500"></div>
+             <div class="w-10 h-10 rounded-full border-2 border-black bg-blue-500"></div>
+          </div>
+          <span class="text-sm font-bold text-white">+420 Online</span>
+        </div>
+      </clay-card>
+    </div>
+  </section>
+
+  <!-- Marquee Section -->
+  <div class="w-full overflow-hidden bg-[#7C3AED]/10 border-y border-[#7C3AED]/20 py-6 marquee-container relative z-20 flex">
+    <!-- Strip 1 -->
+    <div class="animate-marquee whitespace-nowrap flex gap-12 items-center px-6 font-heading font-black text-4xl text-transparent bg-clip-text bg-gradient-to-r from-white/20 to-white/50 shrink-0 min-w-full">
+      <span>MATH</span> <span>•</span> <span>PHYSICS</span> <span>•</span> <span>CHEMISTRY</span> <span>•</span> <span>BIOLOGY</span> <span>•</span> <span>CODING</span> <span>•</span> <span>HISTORY</span> <span>•</span> <span>ECONOMICS</span> <span>•</span> <span>LITERATURE</span> <span>•</span> <span>ART</span> <span>•</span> <span>DESIGN</span> <span>•</span> <span>PSYCHOLOGY</span> <span>•</span>
+      <span>MATH</span> <span>•</span> <span>PHYSICS</span> <span>•</span> <span>CHEMISTRY</span> <span>•</span> <span>BIOLOGY</span> <span>•</span> <span>CODING</span> <span>•</span> <span>HISTORY</span> <span>•</span> <span>ECONOMICS</span> <span>•</span> <span>LITERATURE</span> <span>•</span> <span>ART</span> <span>•</span> <span>DESIGN</span> <span>•</span> <span>PSYCHOLOGY</span> <span>•</span>
+    </div>
+    <!-- Strip 2 (Clone) -->
+    <div class="animate-marquee whitespace-nowrap flex gap-12 items-center px-6 font-heading font-black text-4xl text-transparent bg-clip-text bg-gradient-to-r from-white/20 to-white/50 shrink-0 min-w-full">
+      <span>MATH</span> <span>•</span> <span>PHYSICS</span> <span>•</span> <span>CHEMISTRY</span> <span>•</span> <span>BIOLOGY</span> <span>•</span> <span>CODING</span> <span>•</span> <span>HISTORY</span> <span>•</span> <span>ECONOMICS</span> <span>•</span> <span>LITERATURE</span> <span>•</span> <span>ART</span> <span>•</span> <span>DESIGN</span> <span>•</span> <span>PSYCHOLOGY</span> <span>•</span>
+      <span>MATH</span> <span>•</span> <span>PHYSICS</span> <span>•</span> <span>CHEMISTRY</span> <span>•</span> <span>BIOLOGY</span> <span>•</span> <span>CODING</span> <span>•</span> <span>HISTORY</span> <span>•</span> <span>ECONOMICS</span> <span>•</span> <span>LITERATURE</span> <span>•</span> <span>ART</span> <span>•</span> <span>DESIGN</span> <span>•</span> <span>PSYCHOLOGY</span> <span>•</span>
+    </div>
+  </div>
+
+  <!-- Stats / Receipts -->
+  <section id="stats" class="px-4 md:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      @for (stat of stats(); track stat.label) {
+        <clay-card customClass="flex flex-col items-center justify-center text-center !p-6 hover:bg-white/5">
+          <span class="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{{ stat.value }}</span>
+          <span class="text-xs font-mono font-bold text-[#7C3AED] uppercase tracking-widest">{{ stat.label }}</span>
+        </clay-card>
+      }
+    </div>
+  </section>
+
+  <!-- Features Grid (Bento) -->
+  <section id="features" class="px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+      <div class="space-y-2">
+        <h2 class="text-4xl md:text-6xl font-bold text-white">
+          @if(viewMode() === 'student') { THE VIBE } @else { WHY PERTUTO }
+        </h2>
+        <p class="text-gray-400 max-w-md">
+          @if(viewMode() === 'student') {
+            We don't do boring. We sculpt minds using advanced cognitive techniques and aesthetic learning.
+          } @else {
+            We bridge the gap between traditional tutoring and modern technology to deliver measurable results.
+          }
+        </p>
+      </div>
+      <div class="font-mono text-[#7C3AED] text-sm animate-pulse">/// SCROLL FOR DATA</div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (feature of features(); track feature.title) {
+        <clay-card customClass="flex flex-col items-start gap-4 h-full group hover:border-[#7C3AED]/50">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#DB2777] flex items-center justify-center text-2xl text-white shadow-neon-button mb-2 group-hover:scale-110 transition-transform">
+            {{ feature.icon }}
+          </div>
+          <h3 class="text-2xl font-bold text-white group-hover:text-[#7C3AED] transition-colors">{{ feature.title }}</h3>
+          <p class="text-gray-400 leading-relaxed">{{ feature.desc }}</p>
+        </clay-card>
+      }
+      <!-- Special Callout Card -->
+      <div class="md:col-span-2 lg:col-span-1">
+        <clay-card customClass="!bg-[#7C3AED] h-full flex flex-col justify-between text-white !border-none relative overflow-hidden group">
+           <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+           <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-black/20 rounded-full blur-3xl"></div>
+           
+           <div class="relative z-10">
+            <h3 class="text-3xl font-bold mb-4">Level Up 🚀</h3>
+            <p class="text-white/90 text-lg mb-8">Join the mobile app waitlist. Get early access to the AI tutor.</p>
+          </div>
+          <clay-button variant="secondary" customClass="!bg-white !text-[#7C3AED] w-full font-bold !border-none hover:!scale-105">GET APP</clay-button>
+        </clay-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section (New) -->
+  <section id="how-it-works" class="px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+    <div class="text-center space-y-4">
+      <h2 class="text-4xl md:text-5xl font-bold text-white">
+        @if(viewMode() === 'student') { YOUR ROADMAP } @else { HOW IT WORKS }
+      </h2>
+      <p class="text-gray-400 max-w-lg mx-auto">
+        @if(viewMode() === 'student') {
+          Three steps to academic domination. No fluff.
+        } @else {
+          A simple, transparent process to get your child back on track.
+        }
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 relative">
+      <!-- Decor Line (Desktop Only) -->
+      <div class="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent -translate-y-1/2 z-0"></div>
+
+      @for (step of howItWorks(); track step.step) {
+        <clay-card customClass="relative z-10 flex flex-col items-center text-center gap-4 hover:-translate-y-2 transition-transform !bg-opacity-95">
+          <div class="w-12 h-12 rounded-full bg-[#1e1e24] border border-white/10 flex items-center justify-center text-xl font-bold text-[#7C3AED] shadow-lg mb-2">
+            {{ step.step }}
+          </div>
+          <div class="text-4xl mb-2">{{ step.icon }}</div>
+          <h3 class="text-xl font-bold text-white">{{ step.title }}</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">{{ step.desc }}</p>
+        </clay-card>
+      }
+    </div>
+  </section>
+
+  <!-- FAQ Section (New) -->
+  <section id="faq" class="px-4 md:px-8 max-w-4xl mx-auto space-y-8">
+     <h2 class="text-3xl md:text-4xl font-bold text-white text-center">FAQ</h2>
+     <div class="space-y-4">
+       @for (faq of faqs(); track faq.question; let i = $index) {
+         <clay-card customClass="!p-0 !rounded-2xl overflow-hidden cursor-pointer" (click)="toggleFaq(i)">
+            <div class="py-4 px-6 flex justify-between items-center hover:bg-white/5 transition-colors">
+              <span class="font-bold text-base md:text-lg text-white pr-4">{{ faq.question }}</span>
+              <span class="text-[#7C3AED] text-xl font-mono transform transition-transform duration-300" [class.rotate-180]="faq.open">
+                ▼
+              </span>
+            </div>
+            @if (faq.open) {
+              <div class="px-6 pb-4 pt-0 text-sm md:text-base text-gray-400 leading-relaxed border-t border-white/5 animate-fade-in">
+                <div class="pt-3">{{ faq.answer }}</div>
+              </div>
+            }
+         </clay-card>
+       }
+     </div>
+  </section>
+
+  <!-- Lead Gen Section -->
+  <section id="contact" class="px-4 md:px-8 max-w-5xl mx-auto pb-20 pt-10">
+    <clay-card customClass="!p-0 overflow-hidden border border-white/20 shadow-[0_0_50px_rgba(124,58,237,0.15)]">
+      <div class="grid md:grid-cols-5 h-full">
+        <!-- Decor Side -->
+        <div class="hidden md:flex md:col-span-2 bg-[#0a0a0a] p-10 flex-col justify-between text-white relative overflow-hidden border-r border-white/10">
+          <div class="absolute inset-0 bg-gradient-to-b from-[#7C3AED]/20 to-transparent"></div>
+          <div class="relative z-10">
+            <h3 class="text-3xl font-bold mb-4 font-heading">
+              @if(viewMode() === 'student') { LET'S COOK<br>SOME GRADES } @else { UNLOCK<br>POTENTIAL }
+            </h3>
+            <p class="text-gray-400 font-mono text-sm">Fill out the intel form to schedule your strategy call.</p>
+          </div>
+          
+          <div class="relative z-10 font-mono text-xs text-[#7C3AED]">
+            > INITIATING_UPLINK...<br>
+            > SECURE_CONNECTION_ESTABLISHED
+          </div>
+        </div>
+
+        <!-- Form Side -->
+        <div class="md:col-span-3 p-8 md:p-12 bg-[#050505]">
+          @if (formStatus() === 'success') {
+            <div class="h-full flex flex-col items-center justify-center text-center space-y-6">
+              <div class="w-20 h-20 rounded-full bg-[#10B981] flex items-center justify-center text-3xl text-white shadow-[0_0_20px_#10B981]">
+                ✓
+              </div>
+              <h3 class="text-3xl font-bold text-white">SENT 📨</h3>
+              <p class="text-gray-400 font-mono text-sm">We'll slide into your DMs shortly.</p>
+              <clay-button (onClick)="formStatus.set('idle')" variant="secondary">AGAIN</clay-button>
+            </div>
+          } @else {
+            <form [formGroup]="leadForm" (ngSubmit)="onSubmit()" class="space-y-6">
+              <h3 class="md:hidden text-2xl font-bold text-white mb-6">CONTACT US</h3>
+              
+              <clay-input 
+                id="name" 
+                [label]="viewMode() === 'student' ? 'Codename / Name' : 'Student Name'" 
+                [placeholder]="viewMode() === 'student' ? 'e.g. Neo Anderson' : 'e.g. John Doe'" 
+                [control]="$any(leadForm.get('name'))">
+              </clay-input>
+
+              <clay-input 
+                id="email" 
+                type="email" 
+                [label]="viewMode() === 'student' ? 'Comms Channel' : 'Email Address'" 
+                [placeholder]="viewMode() === 'student' ? 'neo@matrix.com' : 'email@example.com'" 
+                [control]="$any(leadForm.get('email'))">
+              </clay-input>
+
+              <div class="grid grid-cols-2 gap-4">
+                <clay-input 
+                  id="grade" 
+                  [label]="viewMode() === 'student' ? 'Level' : 'Grade / Year'" 
+                  placeholder="10" 
+                  [control]="$any(leadForm.get('studentGrade'))">
+                </clay-input>
+                <clay-input 
+                  id="subject" 
+                  [label]="viewMode() === 'student' ? 'Mission' : 'Subject'" 
+                  [placeholder]="viewMode() === 'student' ? 'Calculus' : 'e.g. Math'" 
+                  [control]="$any(leadForm.get('subject'))">
+                </clay-input>
+              </div>
+
+              <clay-input 
+                id="goals" 
+                type="textarea" 
+                [label]="viewMode() === 'student' ? 'Objectives' : 'Learning Goals'" 
+                [placeholder]="viewMode() === 'student' ? 'What are we achieving?' : 'Briefly describe the student needs...'" 
+                [control]="$any(leadForm.get('goals'))">
+              </clay-input>
+
+              <div class="pt-4">
+                <clay-button 
+                  [loading]="isSubmitting()" 
+                  [disabled]="isSubmitting()"
+                  customClass="w-full">
+                  @if (isSubmitting()) { UPLOADING... } @else { JOIN WAITLIST }
+                </clay-button>
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    </clay-card>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center pb-8 pt-12 border-t border-white/5">
+    <p class="text-gray-500 font-mono text-xs">
+      &copy; 2024 PERTUTO. BUILT DIFFERENT. <span class="text-[#7C3AED]">♥</span>
+    </p>
+  </footer>
+</main>

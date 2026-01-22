@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased text-gray-900 bg-white;
+  }
+}
+
+/* Custom Utilities for "Clay" effect if needed later, or we use utilities inline */
+.clay-card {
+  @apply bg-white rounded-2xl shadow-xl border border-gray-100;
+}
+
+/* Cinematic Design System */
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-black/5 dark:bg-black/60 dark:border-white/10 shadow-xl dark:shadow-none;
+  }
+
+  .glass-panel-hover {
+    @apply hover:bg-white/90 dark:hover:bg-black/40 hover:backdrop-blur-none transition-all duration-700 ease-cinematic;
+  }
+
+  .text-cinematic {
+    @apply font-serif italic tracking-wide text-black dark:text-white;
+  }
+
+  .btn-cinematic {
+    @apply relative overflow-hidden backdrop-blur-md transition-all duration-500 hover:scale-105 hover:shadow-cinematic;
+  }
+
+  .btn-cinematic-primary {
+    @apply bg-blue-600/80 hover:bg-blue-600 border border-blue-400/30 text-white;
+  }
+
+  .btn-cinematic-secondary {
+    @apply bg-amber-600/80 hover:bg-amber-600 border border-amber-400/30 text-white;
+  }
+}

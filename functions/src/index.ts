@@ -1,12 +1,16 @@
-import * as functions from "firebase-functions";
+import * as functionsV1 from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import * as nodemailer from "nodemailer";
+import { generateQuestionsFlow, generateNotesFlow } from "./flows/content-factory";
+import { extractQuestionsFromPdfFlow } from "./flows/pdf-extraction";
+import { syncDriveFolderFlow } from "./flows/drive-sync";
+import { onCall } from "firebase-functions/v2/https";
 
 admin.initializeApp();
 
 // Config will be set via CLI: firebase functions:config:set gmail.email="super@pertuto.com" gmail.password="xxxx"
-const gmailEmail = functions.config().gmail?.email;
-const gmailPassword = functions.config().gmail?.password;
+const gmailEmail = functionsV1.config().gmail?.email;
+const gmailPassword = functionsV1.config().gmail?.password;
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -16,7 +20,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const onLeadCreated = functions.region("asia-south1").firestore
+export const onLeadCreated = functionsV1.region("asia-south1").firestore
     .document("leads/{leadId}")
     .onCreate(async (snap) => {
         const lead = snap.data();
@@ -79,3 +83,36 @@ export const onLeadCreated = functions.region("asia-south1").firestore
             }
         }
     });
+
+// Genkit API Wrappers
+export const generateQuestions = onCall({
+    region: "us-central1",
+    memory: "512MiB",
+    timeoutSeconds: 60
+}, async (request) => {
+    return await generateQuestionsFlow(request.data);
+});
+
+export const generateNotes = onCall({
+    region: "us-central1",
+    memory: "512MiB",
+    timeoutSeconds: 60
+}, async (request) => {
+    return await generateNotesFlow(request.data);
+});
+
+export const generateQuestionsFromPdf = onCall({
+    region: "us-central1",
+    memory: "1GiB",
+    timeoutSeconds: 240 // PDFs take longer
+}, async (request) => {
+    return await extractQuestionsFromPdfFlow(request.data);
+});
+
+export const syncDriveFolder = onCall({
+    region: "us-central1",
+    memory: "512MiB",
+    timeoutSeconds: 120
+}, async (request) => {
+    return await syncDriveFolderFlow(request.data);
+});

@@ -11,20 +11,20 @@
 ## 🚧 Phase 1: Foundation (Week 1)
 
 ### 1.1 Routing & SEO Infrastructure
-- [ ] Install `react-router-dom`
-- [ ] Install `react-helmet-async` for meta tags
-- [ ] Install `vite-plugin-sitemap`
-- [ ] Refactor `App.tsx` into modular structure:
-    - [ ] Create `src/layouts/MainLayout.tsx` (Navbar, Footer, Aurora)
-    - [ ] Create `src/pages/HomePage.tsx` (Current hero, features, etc.)
-    - [ ] Set up React Router in `main.tsx`
+- [x] Install `react-router-dom`
+- [x] Install `react-helmet-async` for meta tags
+- [x] Install `vite-plugin-sitemap`
+- [x] Refactor `App.tsx` into modular structure:
+    - [x] Create `src/layouts/MainLayout.tsx` (Navbar, Footer, Aurora)
+    - [x] Create `src/pages/HomePage.tsx` (Current hero, features, etc.)
+    - [x] Set up React Router in `main.tsx`
 
 ### 1.2 Create Shell Pages (SEO Pillar Pages)
-- [ ] `/curricula/british` - IGCSE & A-Level (Oxford Blue Theme)
-- [ ] `/curricula/ib` - MYP & DP (Navy/Gold Theme)
-- [ ] `/curricula/indian` - CBSE & ICSE (Forest Green Theme)
-- [ ] `/executive` - Professional Academic Support (Executive Dark Theme)
-- [ ] `/services/small-group` - Value Offering (Max 4 Students)
+- [x] `/curricula/british` - IGCSE & A-Level (Oxford Blue Theme) (`/igcse-tutoring`, `/a-level-tutoring`)
+- [x] `/curricula/ib` - MYP & DP (Navy/Gold Theme) (`/ib-tutoring`)
+- [x] `/curricula/indian` - CBSE & ICSE (Forest Green Theme) (`/cbse-tutoring`)
+- [x] `/executive` - Professional Academic Support (Executive Dark Theme)
+- [x] `/services/small-group` - Value Offering (Max 4 Students)
 
 ### 1.3 Subject Pages (Deep Content)
 - [ ] `/subjects/math` - Including AA/AI for IB
@@ -36,15 +36,21 @@
 
 ## 🚧 Phase 2: Content & Trust (Week 2)
 
-### 2.1 Content Injection (from Flyer Research)
+### 2.1 Content Injection (from Flyer Research) - DEFERRED
 - [ ] Implement **Fear/Urgency** vs **Aspiration** copy for each curator page
-- [ ] Add **"Demo Class Package - AED 100"** CTA to all K-12 pages
+- [x] Add **"Demo Class Package - AED 100"** CTA to all K-12 pages (Implemented as DemoOffer component)
 - [ ] Implement **PAS (Problem-Agitate-Solution)** framework in subject descriptions
 
 ### 2.2 Trust Signals & Compliance
-- [ ] Design "100% MoHRE/DED Compliant" badge
-- [ ] Add badge to Footer & Booking flow
-- [ ] Create `/about/verified-tutors` compliance page
+- [x] Design "100% MoHRE/DED Compliant" badge (Implemented in Footer & Banner)
+- [x] Add badge to Footer & Booking flow
+- [x] Create `/about/verified-tutors` compliance page
+
+### 2.3 ChronoClass Integration (Scheduling)
+- [x] Port ChronoClass logic to standard React components
+- [x] Implement booking flow in `/booking` or modal (`/book`)
+- [x] Connect to Firebase Firestore (fix persistence issues) (Updated Rules)
+- [ ] Debug Admin Dashboard lead persistence
 
 ### 2.2 Localization (Dubai Factor)
 - [ ] Add Dubai imagery/visuals to hero and about section

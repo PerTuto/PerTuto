@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 84% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 5%;
+    --primary: 262 83% 66%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 4% 25%;
+    --input: 217 33% 17%;
+    --ring: 262 83% 66%;
+    --radius: 0.75rem; /* Increased for a softer look */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 10% 4%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 262 83% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 240 4% 25%;
+    --sidebar-ring: 262 83% 66%;
+  }
+
+  .dark {
+    --background: 240 10% 4%; /* bg-dark: #09090b */
+    --foreground: 240 5% 96%; /* text-main: #f4f4f5 */
+    --card: 240 5% 15%; /* bg-panel: #18181b - Using panel for card background */
+    --card-foreground: 240 5% 96%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 240 5% 96%;
+    --primary: 262 83% 66%; /* primary: #8b5cf6 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 15%; /* bg-card: #27272a */
+    --secondary-foreground: 240 5% 96%;
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 4% 63%; /* text-sub: #a1a1aa */
+    --accent: 38 92% 50%; /* accent: #f59e0b */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 4% 25%; /* border: #3f3f46 */
+    --input: 240 4% 25%;
+    --ring: 262 83% 66%;
+    --sidebar-background: 240 10% 4%;
+    --sidebar-foreground: 240 5% 96%;
+    --sidebar-primary: 262 83% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240, 5%, 16%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 240 4% 25%;
+    --sidebar-ring: 262 83% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .card {
+    background: rgba(39, 39, 42, 0.6);
+    @apply backdrop-blur-md border rounded-2xl transition-all duration-300 ease-in-out;
+  }
+  .card:hover {
+    @apply -translate-y-2 border-primary/50 shadow-2xl shadow-primary/10;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}

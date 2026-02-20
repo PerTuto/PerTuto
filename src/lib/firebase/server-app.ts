@@ -36,7 +36,7 @@ function getFirebaseAdminApp() {
         console.log("[Firebase Admin] Initializing with Application Default Credentials");
         return initializeApp({
             credential: applicationDefault(),
-            projectId: 'studio-1290149231-fc928',
+            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'pertutoclasses',
         });
     }
     return getApp();

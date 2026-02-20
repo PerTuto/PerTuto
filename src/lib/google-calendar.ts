@@ -11,7 +11,7 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 // Determine redirect URI based on environment
 const REDIRECT_URI = process.env.NODE_ENV === 'production'
-    ? 'https://studio-1290149231-fc928.web.app/api/auth/google/callback'
+    ? 'https://pertuto.com/api/auth/google/callback'
     : 'http://localhost:3000/api/auth/google/callback';
 
 export const getOAuth2Client = (): OAuth2Client => {

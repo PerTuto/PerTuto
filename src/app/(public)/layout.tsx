@@ -13,8 +13,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     </Link>
 
                     <div className="hidden md:flex items-center gap-8">
+                        <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                            About Us
+                        </Link>
                         <Link href="/services/k12" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             K-12 Tutoring
+                        </Link>
+                        <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                            Pricing
                         </Link>
                         <Link href="/services/professional" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             Professional
@@ -40,8 +46,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             {/* Footer */}
             <footer className="border-t border-border/30 bg-background/50">
                 <div className="max-w-6xl mx-auto px-6 py-12">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div className="md:col-span-1">
                             <h3 className="font-headline text-lg font-bold mb-3">
                                 Per<span className="text-primary">Tuto</span>
                             </h3>
@@ -51,10 +57,16 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                             </p>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-sm mb-3 text-foreground">Services</h4>
+                            <h4 className="font-semibold text-sm mb-3 text-foreground">Services & Info</h4>
                             <div className="space-y-2">
+                                <Link href="/about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                    About Us
+                                </Link>
                                 <Link href="/services/k12" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
                                     K-12 Tutoring
+                                </Link>
+                                <Link href="/pricing" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                    Pricing
                                 </Link>
                                 <Link href="/services/professional" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
                                     Professional Upskilling
@@ -73,6 +85,17 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                 <a href="mailto:hello@pertuto.com" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
                                     hello@pertuto.com
                                 </a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-sm mb-3 text-foreground">Legal</h4>
+                            <div className="space-y-2">
+                                <Link href="/privacy" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                    Privacy Policy
+                                </Link>
+                                <Link href="/terms" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                    Terms & Conditions
+                                </Link>
                             </div>
                         </div>
                     </div>

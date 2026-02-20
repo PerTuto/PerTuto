@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { addLead } from '@/lib/firebase/services';
+import { submitPublicLead } from '@/app/actions/leads';
 import { Send, CheckCircle2, Loader2 } from 'lucide-react';
 
 const SUBJECTS = [
@@ -28,8 +28,6 @@ interface LeadCaptureFormProps {
     className?: string;
 }
 
-const DEFAULT_TENANT = 'pertuto-default';
-
 export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCaptureFormProps) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LeadFormData>();
     const [subject, setSubject] = useState('');
@@ -38,29 +36,30 @@ export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCap
     const { toast } = useToast();
 
     const onSubmit = async (data: LeadFormData) => {
-        if (!subject) {
+        if (!subject && variant === 'minimal') {
             toast({ title: "Please select a subject", variant: "destructive" });
             return;
         }
 
         setIsSubmitting(true);
         try {
-            await addLead(DEFAULT_TENANT, {
+            const result = await submitPublicLead({
                 name: data.name,
                 phone: data.phone,
                 email: data.email || '',
-                status: 'New',
-                source: 'website',
-                dateAdded: new Date().toISOString(),
-                notes: `Subject: ${subject}`,
+                subject: subject || data.subject || '',
             });
 
-            setIsSuccess(true);
-            reset();
-            setSubject('');
-            toast({ title: "Demo booked!", description: "We'll call you within 2 hours." });
+            if (result.success) {
+                setIsSuccess(true);
+                reset();
+                setSubject('');
+                toast({ title: "Request received!", description: "We'll be in touch shortly." });
 
-            setTimeout(() => setIsSuccess(false), 4000);
+                setTimeout(() => setIsSuccess(false), 4000);
+            } else {
+                throw new Error(result.error || 'Failed to submit');
+            }
         } catch (error) {
             console.error('Lead submission error:', error);
             toast({ title: "Something went wrong", description: "Please try again or WhatsApp us.", variant: "destructive" });

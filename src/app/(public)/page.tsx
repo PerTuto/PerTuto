@@ -3,6 +3,7 @@ import { Aurora } from '@/components/public/aurora';
 import { SpotlightCard } from '@/components/public/spotlight-card';
 import { DecryptedText } from '@/components/public/decrypted-text';
 import { LeadCaptureForm } from '@/components/public/lead-capture-form';
+import { TestimonialGrid } from '@/components/public/testimonial-grid';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ArrowRight, GraduationCap, Briefcase, Sparkles, Users, Target } from 'lucide-react';
@@ -163,6 +164,9 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ===== TESTIMONIALS ===== */}
+            <TestimonialGrid />
 
             {/* ===== LEAD CAPTURE ===== */}
             <section id="book-demo" className="py-24 px-6">

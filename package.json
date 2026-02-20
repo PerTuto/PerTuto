@@ -73,6 +73,14 @@
     "typescript": "^5"
   },
   "overrides": {
-    "next": "$next"
+    "next": "$next",
+    "react-day-picker": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "@floating-ui/react-dom": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }

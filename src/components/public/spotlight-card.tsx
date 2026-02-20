@@ -2,6 +2,8 @@
 
 import { useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { PERTUTO_PHYSICS } from "@/lib/framer-physics";
 
 interface SpotlightCardProps {
     children: ReactNode;
@@ -42,7 +44,14 @@ export function SpotlightCard({
                     background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`
                 }}
             />
-            <div className="relative z-10">{children}</div>
+            {/* The Noora Magnetic Scale Reveal */}
+            <motion.div 
+              className="relative z-10 w-full h-full"
+              whileHover={{ scale: 0.98 }}
+              transition={PERTUTO_PHYSICS.springSnappy}
+            >
+                {children}
+            </motion.div>
         </div>
     );
 }

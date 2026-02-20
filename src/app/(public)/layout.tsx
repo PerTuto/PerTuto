@@ -5,28 +5,27 @@ import { Button } from '@/components/ui/button';
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
-            {/* Floating Glass Navigation Pill (Noora Style) */}
-            <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-8 px-8 py-3 rounded-full bg-background/60 backdrop-blur-xl border border-border/50 shadow-2xl transition-all">
-                <nav className="flex items-center justify-between w-full min-w-[320px] md:min-w-[600px]">
+            {/* Navigation */}
+            <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
+                <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                     <Link href="/" className="font-headline text-xl font-bold tracking-tight text-foreground">
                         Per<span className="text-primary">Tuto</span>
                     </Link>
 
                     <div className="hidden md:flex items-center gap-8">
-                        <Link href="/services/k12" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                        <Link href="/services/k12" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             K-12 Tutoring
                         </Link>
-                        <Link href="/services/professional" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                        <Link href="/services/professional" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             Professional
                         </Link>
-                        <Link href="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                        <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             Contact
                         </Link>
                     </div>
 
                     <Link href="/contact">
-                        {/* Ghost Button styling for primary CTA in Nav */}
-                        <Button variant="outline" size="sm" className="font-semibold rounded-full border-border/50 bg-transparent hover:bg-foreground hover:text-background transition-colors">
+                        <Button size="sm" className="font-semibold">
                             Book Demo
                         </Button>
                     </Link>

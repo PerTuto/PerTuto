@@ -32,6 +32,7 @@ const firestore = getFirestore(firebaseApp);
 // Connect to emulators in development
 if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
   // Only connect once
+  /*
   if (!(auth as any)._isEmulator) {
     try {
       connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
@@ -51,6 +52,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
       // Already connected
     }
   }
+  */
 }
 
 export { firebaseApp, auth, firestore };

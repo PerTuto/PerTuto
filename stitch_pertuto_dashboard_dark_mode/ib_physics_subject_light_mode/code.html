@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IB Physics Subject Light Mode</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1313ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101022",
+              "emerald": "#10b981", // For star ratings
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem", 
+              "lg": "1rem", 
+              "xl": "1.5rem", 
+              "full": "9999px"
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(19, 19, 236, 0.08)',
+              'card': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom scrollbar for TOC */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+<div class="relative flex flex-col w-full min-h-screen">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white">
+<div class="p-1 bg-primary text-white rounded-lg">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">PerTuto</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Subjects</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Tutors</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Resources</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="hidden sm:block text-slate-900 dark:text-white text-sm font-medium hover:underline" href="#">Login</a>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2 rounded-full transition-all shadow-lg shadow-primary/20">
+                        Get Started
+                    </button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative pt-24 pb-20 bg-white dark:bg-background-dark overflow-hidden">
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="max-w-4xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-8">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Premium Curriculum
+                    </div>
+<h1 class="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white leading-[0.9] mb-8">
+                        IB Physics <br/>
+<span class="text-slate-300 dark:text-slate-700">Mastery.</span>
+</h1>
+<p class="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-light leading-relaxed max-w-2xl">
+                        Deconstruct the universe's most complex syllabus. Elite tutoring for the International Baccalaureate HL &amp; SL curriculum.
+                    </p>
+</div>
+</div>
+<!-- Abstract Graphic -->
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-[40%] h-[80%] opacity-5 pointer-events-none" data-alt="Minimalist abstract geometric line pattern representing physics vectors" style="background-image: radial-gradient(circle at center, #1313ec 1px, transparent 1px); background-size: 40px 40px;">
+</div>
+</section>
+<!-- Data Strip -->
+<section class="border-y border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+<div class="max-w-7xl mx-auto px-6 py-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+<div class="flex flex-col gap-2">
+<span class="text-sm font-medium text-slate-500 uppercase tracking-wider">Level 7 Rate</span>
+<div class="text-5xl font-light text-slate-900 dark:text-white tracking-tight">78<span class="text-2xl text-primary">%</span></div>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-sm font-medium text-slate-500 uppercase tracking-wider">Avg Rating</span>
+<div class="text-5xl font-light text-slate-900 dark:text-white tracking-tight">4.9<span class="text-slate-300 dark:text-slate-700">/5</span></div>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-sm font-medium text-slate-500 uppercase tracking-wider">Syllabus</span>
+<div class="text-5xl font-light text-slate-900 dark:text-white tracking-tight">100<span class="text-2xl text-primary">%</span></div>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-sm font-medium text-slate-500 uppercase tracking-wider">Active Students</span>
+<div class="text-5xl font-light text-slate-900 dark:text-white tracking-tight">1.2k<span class="text-2xl text-primary">+</span></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area with Sidebar -->
+<section class="py-24 bg-white dark:bg-background-dark">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col lg:flex-row gap-20">
+<!-- Sticky Sidebar / TOC -->
+<aside class="hidden lg:block w-64 shrink-0 relative">
+<div class="sticky top-32 space-y-8">
+<div>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Contents</h3>
+<nav class="space-y-1 border-l-2 border-slate-100 dark:border-slate-800">
+<a class="block pl-4 py-2 text-sm font-semibold text-primary border-l-2 border-primary -ml-[2px]" href="#methodology">
+                                        The Methodology
+                                    </a>
+<a class="block pl-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#core-modules">
+                                        Core Modules
+                                    </a>
+<a class="block pl-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#tutors">
+                                        Elite Tutors
+                                    </a>
+<a class="block pl-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#reviews">
+                                        Student Success
+                                    </a>
+</nav>
+</div>
+<div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-3 text-3xl">download</span>
+<h4 class="font-bold text-slate-900 dark:text-white mb-2">Syllabus Guide</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">Download the comprehensive breakdown of the 2024 IB Physics curriculum.</p>
+<button class="w-full py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-primary hover:text-primary transition-colors">
+                                    Download PDF
+                                </button>
+</div>
+</div>
+</aside>
+<!-- Content Column -->
+<main class="flex-1 max-w-3xl">
+<!-- Methodology Section -->
+<div class="mb-24 scroll-mt-32" id="methodology">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">Clinical Precision in Learning</h3>
+<p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                                We don't just teach physics; we reconstruct how you think about the physical world. Our approach is clinical, precise, and results-oriented. We move beyond rote memorization into the first principles that govern the universe.
+                            </p>
+<blockquote class="border-l-4 border-primary pl-8 py-2 my-10 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
+<p class="text-xl font-medium text-slate-900 dark:text-white italic leading-relaxed">
+                                    "Physics is not about complexity; it's about simplicity. It's finding the single elegant equation that explains the chaos."
+                                </p>
+<footer class="mt-4 text-sm font-bold text-primary">— Dr. Elena Rostova, Head of Physics</footer>
+</blockquote>
+<p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                                By focusing on the <span class="font-semibold text-slate-900 dark:text-white underline decoration-primary/30 decoration-2 underline-offset-4">internal assessment (IA)</span> early and rigorously drilling past paper mechanics, our students enter the exam hall with the confidence of a seasoned academic.
+                            </p>
+</div>
+<!-- Core Modules Grid -->
+<div class="mb-24 scroll-mt-32" id="core-modules">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-10 tracking-tight">Core Modules</h3>
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Module Card 1 -->
+<div class="group p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-soft transition-all bg-white dark:bg-slate-900">
+<div class="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300 group-hover:text-primary">settings_motion_mode</span>
+</div>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mechanics</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                        Motion, forces, energy, and momentum in depth. The foundation of all physical interaction.
+                                    </p>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full w-[85%] bg-primary rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs font-medium text-slate-400">
+<span>Difficulty: High</span>
+<span>Weight: 35%</span>
+</div>
+</div>
+<!-- Module Card 2 -->
+<div class="group p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-soft transition-all bg-white dark:bg-slate-900">
+<div class="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300 group-hover:text-primary">waves</span>
+</div>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Waves &amp; Optics</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                        Oscillations, standing waves, and optical phenomena. Understanding the nature of light and sound.
+                                    </p>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full w-[60%] bg-primary rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs font-medium text-slate-400">
+<span>Difficulty: Med</span>
+<span>Weight: 20%</span>
+</div>
+</div>
+<!-- Module Card 3 -->
+<div class="group p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-soft transition-all bg-white dark:bg-slate-900">
+<div class="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300 group-hover:text-primary">bolt</span>
+</div>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Electricity</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                        Fields, currents, and electromagnetic induction. The invisible forces that power our world.
+                                    </p>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full w-[90%] bg-primary rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs font-medium text-slate-400">
+<span>Difficulty: Very High</span>
+<span>Weight: 25%</span>
+</div>
+</div>
+<!-- Module Card 4 -->
+<div class="group p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-soft transition-all bg-white dark:bg-slate-900">
+<div class="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300 group-hover:text-primary">thermostat</span>
+</div>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Thermal Physics</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                        Thermodynamics, ideal gases, and heat transfer. From engines to the expansion of the universe.
+                                    </p>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full w-[40%] bg-primary rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs font-medium text-slate-400">
+<span>Difficulty: Low</span>
+<span>Weight: 20%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonials Section -->
+<div class="scroll-mt-32" id="reviews">
+<div class="flex items-end justify-between mb-10">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Student Outcomes</h3>
+<div class="hidden md:flex items-center gap-2">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Excellent</span>
+<div class="flex text-emerald">
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+</div>
+<span class="text-sm text-slate-500">4.9 out of 5</span>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Review 1 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-card border border-slate-100 dark:border-slate-700">
+<div class="flex text-emerald mb-4">
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                                        "I was predicted a 4 in HL Physics. After 3 months with PerTuto, I achieved a 7 in my mocks and final exams. The methodology just clicks."
+                                    </p>
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+<img alt="Student portrait" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHJXjYPc1jT61aOlAabbQ6Iad_bisfKBdSyaHGcB7wLzX2Jtz-DNg3zUdC7Y5FUOO4ViHlPJdhHzFuz3ZjLEwH3rZWVUX1BHdWMWvrbU08mxMwdxFgnyMW5MtoJAnoj1fm-33HLbw8gMeNR0Uj_GN-HIx9vlD5q1NrPisiyKDACJega8S42WqwI0Rq4JyQrFG0Y3T4LviukA0Rg71QJZhOuyzyDuE8WDgQ2uXvN_eddhfMbLo3RLV187IN2OasNhnHFPHco5opN1XD"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Sarah Jenkins</p>
+<p class="text-xs text-slate-500">IB Diploma '23 • Oxford University</p>
+</div>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-card border border-slate-100 dark:border-slate-700">
+<div class="flex text-emerald mb-4">
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                                        "The structured approach to the IA was a lifesaver. My tutor didn't just correct me; she taught me how to think like a physicist."
+                                    </p>
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+<img alt="Student portrait" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCju2MtUy6HqPwjhkmcU69-toEsfBNBzYBGgi3FIPLAoezt1InJ369HQOvIHMNW_X3sETHwVb6k0yJlJV8BT5MD4CO32kCKy4nmaibA1o1tuKexfkJdMcvnWY_j27DFp7-FD5CFQJpdQP2TD6mT2_mrKMdtlqtTCMa2pOehCwiC9EROm52KH5FHVgJPiCSoScdzX_Lcy4QAVYbC-GNVdtjIm4hohWfWz6ocsvd3LP15GvCIbpWpKaDCGic0a9wRN4NMQEtdKTFY1ErR"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Michael Chen</p>
+<p class="text-xs text-slate-500">IB Diploma '24 • Stanford University</p>
+</div>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-card border border-slate-100 dark:border-slate-700">
+<div class="flex text-emerald mb-4">
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                                        "The online platform is sleek and distraction-free. It feels like a university-grade learning environment rather than just another Zoom call."
+                                    </p>
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+<img alt="Student portrait" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyVicVuEIrnMcB6MPfAu8C1Ye9S2s2VElhTAWmosmoe3udHTv8sV08cZAReE5ess1vPjf6OvKt609JJqzmY3b5xQUutaiB_lEjktolmISusBsAnOrVaFDDzUfC4qLsDeVMwPMR0lODX2iRC--ch3nwcDRYMecqH4kr7LSjoMgqlCwU-pFcdCEYgNHmo0tZCVC9KZ-tmPgHFPsJcLYaRscoVKdlPo6Zqkl1fj-e2gNH7cx10-ONeooRujtai91Iqc-bY7_eZ0a3MVSB"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Emma Thompson</p>
+<p class="text-xs text-slate-500">IB Diploma '23 • Imperial College</p>
+</div>
+</div>
+</div>
+<!-- Review 4 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-card border border-slate-100 dark:border-slate-700">
+<div class="flex text-emerald mb-4">
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                                        "Mechanics was a nightmare until I found PerTuto. The tutors break down problems into logical steps that actually make sense."
+                                    </p>
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+<img alt="Student portrait" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz5Wc-1bT7eb5Ccy4So-AHuUgFphGdUEE6hRunXtP2Ap-bX45IIwqMgMpIs2lBuWdlu5L5uSRhrl6BiEPjgaFkXn_MFOu3M_mEuaXKMx3d3reREhOOiFc6MbZhW-X9tn18qK_G_sw5CBCmaPGnKcPoEGc1Vx9BwivBwHrcr9i9Fzt6NTGIWdsRXhZGywJ2aUSRcQeJI7xkLt3BnKWt-eppcTyBt-pyCNU_ZHkIdiXkIPI7ULQNSCNkTyl7RLvmmOQ53cWiBROg_HuR"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">David Kim</p>
+<p class="text-xs text-slate-500">IB Diploma '24 • Predicted 44/45</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 bg-background-light dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-3xl mx-auto px-6 text-center">
+<h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">Ready to Master Physics?</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 mb-10 max-w-xl mx-auto">
+                    Join the top 1% of IB students worldwide. Secure your specialized tutor today.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary hover:bg-primary/90 text-white text-base font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                        Find a Tutor
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 text-base font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center">
+                        View Curriculum
+                    </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+<div class="col-span-2 lg:col-span-2">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white mb-6">
+<div class="p-1 bg-primary text-white rounded-lg">
+<span class="material-symbols-outlined text-[18px]">school</span>
+</div>
+<h2 class="text-base font-bold tracking-tight">PerTuto</h2>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">
+                            Elite tutoring for the world's most challenging curriculum. Blending academic authority with high-end tech.
+                        </p>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Subjects</h4>
+<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">IB Math AA/AI</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">IB Physics</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">IB Chemistry</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">IB Biology</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Company</h4>
+<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Legal</h4>
+<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800">
+<p class="text-xs text-slate-400">© 2024 PerTuto Education. All rights reserved.</p>
+<div class="flex gap-4 mt-4 md:mt-0">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="sr-only">Twitter</span>
+<svg class="h-4 w-4" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+</a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="sr-only">LinkedIn</span>
+<svg class="h-4 w-4" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill-rule="evenodd"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

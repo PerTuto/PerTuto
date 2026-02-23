@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Checkout - PerTuto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "primary-hover": "#4a0ec4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "header": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                    boxShadow: {
+                        'premium': '0 25px 50px -12px rgba(91, 19, 236, 0.15), 0 0 0 1px rgba(0,0,0,0.02)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-bg {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-primary/20 selection:text-primary">
+<!-- Background Decorative Elements -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+<div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute top-[40%] -right-[10%] w-[40%] h-[60%] bg-blue-400/10 rounded-full blur-[100px]"></div>
+</div>
+<!-- Main Modal Container -->
+<div class="relative w-full max-w-5xl bg-white dark:bg-slate-900 rounded-2xl shadow-premium overflow-hidden flex flex-col lg:flex-row min-h-[680px]">
+<!-- Left Side: Checkout Flow (60%) -->
+<div class="w-full lg:w-[60%] p-8 lg:p-12 flex flex-col relative z-10">
+<!-- Header -->
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-2 text-primary font-bold tracking-tight">
+<span class="material-symbols-outlined text-xl">school</span>
+<span class="text-sm uppercase tracking-wider font-display">PerTuto Premium</span>
+</div>
+<h1 class="text-3xl lg:text-4xl font-header font-bold text-slate-900 dark:text-white mb-2">Secure Checkout</h1>
+<p class="text-slate-500 dark:text-slate-400">Complete your enrollment for the <span class="font-medium text-slate-900 dark:text-slate-200">Intensive IB Bootcamp</span>.</p>
+</div>
+<!-- Progress Indicator -->
+<div class="flex items-center gap-4 mb-10 w-full max-w-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Account</span>
+</div>
+<div class="h-[2px] flex-1 bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">2</div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Payment</span>
+</div>
+<div class="h-[2px] flex-1 bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-2 opacity-50">
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center text-slate-400 text-xs font-bold">3</div>
+<span class="text-sm font-medium text-slate-500">Review</span>
+</div>
+</div>
+<!-- Form -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Contact Info -->
+<div class="space-y-4">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Contact Information</h3>
+<div>
+<label class="sr-only" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-4 pl-12 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-slate-800 transition-all duration-200" id="email" placeholder="parent@example.com" type="email" value="sarah.jenkins@gmail.com"/>
+</div>
+</div>
+</div>
+<!-- Payment Method -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Payment Method</h3>
+<div class="flex gap-2">
+<div class="h-6 w-9 bg-slate-200 dark:bg-slate-700 rounded-sm"></div> <!-- Visa Placeholder -->
+<div class="h-6 w-9 bg-slate-200 dark:bg-slate-700 rounded-sm"></div> <!-- Mastercard Placeholder -->
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="col-span-2">
+<label class="sr-only" for="card-number">Card Number</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">credit_card</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-4 pl-12 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-slate-800 transition-all duration-200 font-mono" id="card-number" placeholder="0000 0000 0000 0000" type="text"/>
+</div>
+</div>
+<div>
+<label class="sr-only" for="card-expiry">Expiry Date</label>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-4 px-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-slate-800 transition-all duration-200 text-center font-mono" id="card-expiry" placeholder="MM / YY" type="text"/>
+</div>
+<div>
+<label class="sr-only" for="card-cvc">CVC</label>
+<div class="relative">
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-4 px-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-slate-800 transition-all duration-200 text-center font-mono" id="card-cvc" placeholder="CVC" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg cursor-help">help</span>
+</div>
+</div>
+<div class="col-span-2">
+<label class="sr-only" for="card-name">Cardholder Name</label>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-4 px-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-slate-800 transition-all duration-200" id="card-name" placeholder="Name on card" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Total due today</span>
+<span class="text-xl font-header font-bold text-slate-900 dark:text-white">$1,000.00</span>
+</div>
+<button class="w-full bg-primary hover:bg-primary-hover text-white font-medium text-lg py-4 rounded-lg shadow-lg shadow-primary/30 transition-all duration-300 transform active:scale-[0.99] flex items-center justify-center gap-2 group">
+<span>Complete Secure Checkout</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-2 text-slate-400 text-xs mt-2">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Payments are secure and encrypted</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Social Proof / Summary (40%) -->
+<div class="w-full lg:w-[40%] bg-slate-50 dark:bg-slate-800/50 border-l border-slate-100 dark:border-slate-800 p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
+<!-- Decorative Gradient Blob -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<!-- Summary Card -->
+<div class="relative z-10 mb-10">
+<h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-6">Your Selection</h3>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 flex gap-4 items-start">
+<div class="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">local_library</span>
+</div>
+<div>
+<h4 class="font-header font-bold text-slate-900 dark:text-white text-lg leading-tight mb-1">Intensive IB Bootcamp</h4>
+<p class="text-sm text-slate-500 mb-2">Monthly Retainer</p>
+<div class="inline-flex items-center px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium">
+                            Premium Plan
+                        </div>
+</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>1-on-1 Personalized Tutoring</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Ivy League Mentorship</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>24/7 Academic Support</span>
+</div>
+</div>
+</div>
+<!-- Testimonial -->
+<div class="relative z-10 mt-auto">
+<div class="absolute -top-6 -left-2 text-primary/10 select-none">
+<svg fill="currentColor" height="60" viewbox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.01697 21L5.01697 18C5.01697 16.8954 5.9124 16 7.01697 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.01697C5.46468 8 5.01697 8.44772 5.01697 9V11C5.01697 11.5523 4.56925 12 4.01697 12H3.01697V5H13.017V15C13.017 18.3137 10.3307 21 7.01697 21H5.01697Z"></path>
+</svg>
+</div>
+<blockquote class="relative">
+<p class="text-slate-800 dark:text-slate-200 text-lg font-medium leading-relaxed italic mb-6">
+                        "PerTuto secured my son's placement at Oxford. The investment was trivial compared to the outcome."
+                    </p>
+<footer class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white dark:ring-slate-700 shadow-sm">
+<img alt="Sarah J." class="w-full h-full object-cover" data-alt="Portrait of Sarah J, a satisfied parent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXJboCXAAmgPEOJ_Dc5zTVKVIfIvV9jUz0HbCi240-zX9fQ0EEx_ZzT28Ep74NLbwC3XgEn4ugylAVAwSCNPGHuWw5QSQnBncsrRQMaBvHbiqEQUX37c5H48J6IfjVX0LQf83E8ZHSADhOb8SZjrs6KuwnjUI4CajmQACF9KJFD5vwPl4Ew0Ty0BJjKvMNUsH8PAbiEmPmHupJpAevmFQ8q6zXdzYibOt1lt-kejI1Id6FSzFH10qRyL6Jn9jPP5YwUu0eSvfPFHAp"/>
+</div>
+<div>
+<div class="text-slate-900 dark:text-white font-bold text-sm">Sarah J.</div>
+<div class="text-primary text-xs font-medium">Verified Parent</div>
+</div>
+<div class="ml-auto flex gap-0.5 text-yellow-400">
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+</div>
+</footer>
+</blockquote>
+</div>
+<!-- Trust Badge -->
+<div class="absolute bottom-4 right-6 opacity-30 grayscale hover:grayscale-0 transition-all duration-300">
+<div class="flex items-center gap-1 text-[10px] text-slate-500 font-semibold">
+<span>POWERED BY</span>
+<span class="font-bold text-slate-700 dark:text-slate-400 text-xs">STRIPE</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>

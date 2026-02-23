@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto | AI Quiz Curator</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "primary-hover": "#4a0bc4",
+                        "background-dark": "#0B0A10",
+                        "surface-dark": "#131118",
+                        "surface-light": "#1f1c27",
+                        "border-subtle": "rgba(255, 255, 255, 0.1)",
+                        "code-bg": "#0D1117",
+                        "code-token-keyword": "#ff7b72",
+                        "code-token-function": "#d2a8ff",
+                        "code-token-string": "#a5d6ff",
+                        "code-token-comment": "#8b949e",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px -5px rgba(91, 19, 236, 0.5)',
+                        'spotlight': '0 0 15px rgba(91, 19, 236, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for that code-editor feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0A10; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2e2839; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #433b54; 
+        }
+        
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, #2e2839 1px, transparent 1px),
+            linear-gradient(to bottom, #2e2839 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, transparent, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 40%, black 70%, transparent 95%);
+        }
+
+        .scanning-ring {
+            position: relative;
+        }
+        .scanning-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 1rem; 
+            padding: 2px; 
+            background: conic-gradient(from 0deg, transparent, #5b13ec, transparent); 
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-300 font-body h-screen flex flex-col overflow-hidden selection:bg-primary/30 selection:text-white">
+<!-- Navbar -->
+<header class="h-16 border-b border-border-subtle bg-surface-dark flex items-center justify-between px-6 z-20 shrink-0">
+<div class="flex items-center gap-4">
+<div class="size-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white shadow-glow">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<div>
+<h1 class="font-display font-bold text-lg text-white tracking-tight">PerTuto <span class="text-slate-500 font-normal">|</span> <span class="text-slate-400 text-base font-normal">AI Quiz Curator</span></h1>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-4 text-sm font-medium text-slate-400">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-light border border-border-subtle hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+<span class="group-hover:text-white transition-colors">System Online</span>
+</div>
+<div class="h-4 w-px bg-border-subtle"></div>
+<span class="hover:text-white cursor-pointer transition-colors">Docs</span>
+<span class="hover:text-white cursor-pointer transition-colors">Support</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-border-subtle">
+<button class="relative p-2 rounded-lg hover:bg-surface-light text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border border-surface-dark"></span>
+</button>
+<div class="size-9 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 border border-border-subtle overflow-hidden ring-2 ring-transparent hover:ring-primary/50 transition-all cursor-pointer">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1_wuwD4AcD8ieyQm985o8TW0sQ8R8h4ie0MyTXQ8iZU-cVnYlFmj6Qq8yJxRtCl__Bco_3WftDE0iypnRKAQv_KTQOyj1HwUWwrAwb9SXocusduNfjdyzt6FdXDCDbgD4cciq6umx7ddYTNyYWN0ocuBwdxxVCqgCYuHZ6juehqADllp_ESrhZPg-oC9npWNHPUmtdJyTVjDPsnUlhllvvstqundzAlfGw5ddb_0MivFqFGBFE3IQUBVYmx5DKo15gxjOvkVQxCER"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content: Split Screen -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Input & Source Material -->
+<section class="w-1/2 flex flex-col border-r border-border-subtle bg-surface-dark/50 relative">
+<div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+<div class="p-8 flex flex-col h-full z-10 overflow-y-auto">
+<div class="mb-8">
+<h2 class="font-display text-2xl font-bold text-white mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">input</span>
+                        Source Material
+                    </h2>
+<p class="text-slate-500 text-sm">Upload syllabus PDFs or paste raw text to generate targeted quiz questions.</p>
+</div>
+<!-- Active Dropzone -->
+<div class="mb-8 scanning-ring rounded-xl bg-surface-light/30 border border-primary/20 p-8 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-surface-light/50 transition-all">
+<div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span>
+</div>
+<h3 class="text-white font-display font-medium text-lg mb-1">Drop PDF here to scan</h3>
+<p class="text-slate-400 text-sm mb-4">Support for .pdf, .docx, .txt</p>
+<button class="px-4 py-2 rounded-lg bg-surface-light border border-border-subtle text-xs font-bold text-white hover:bg-primary hover:border-primary transition-all">BROWSE FILES</button>
+</div>
+<!-- Parsed Syllabuses List -->
+<div class="flex flex-col gap-4 flex-1">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Detected Syllabuses</h3>
+<span class="text-xs text-primary font-mono bg-primary/10 px-2 py-0.5 rounded">3 Active</span>
+</div>
+<!-- Card 1 -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-900/50 border border-border-subtle hover:border-primary/50 hover:shadow-spotlight transition-all duration-300 p-4 cursor-pointer">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative flex gap-4 items-start">
+<div class="size-10 rounded-lg bg-[#2e2839] flex items-center justify-center shrink-0 text-white">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-display font-bold text-white truncate">Calculus II - Integration</h4>
+<span class="material-symbols-outlined text-green-500 text-base" title="Verified">check_circle</span>
+</div>
+<p class="text-xs text-slate-400 mb-2">Advanced integration techniques, indefinite integrals, and applications.</p>
+<div class="flex gap-2">
+<span class="text-[10px] font-mono bg-surface-light border border-border-subtle px-1.5 py-0.5 rounded text-slate-300">#math</span>
+<span class="text-[10px] font-mono bg-surface-light border border-border-subtle px-1.5 py-0.5 rounded text-slate-300">95% confidence</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-900/50 border border-border-subtle hover:border-primary/50 hover:shadow-spotlight transition-all duration-300 p-4 cursor-pointer">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative flex gap-4 items-start">
+<div class="size-10 rounded-lg bg-[#2e2839] flex items-center justify-center shrink-0 text-white">
+<span class="material-symbols-outlined">science</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-display font-bold text-white truncate">Physics - Thermodynamics</h4>
+<span class="material-symbols-outlined text-green-500 text-base" title="Verified">check_circle</span>
+</div>
+<p class="text-xs text-slate-400 mb-2">Laws of thermodynamics, entropy, and heat transfer equations.</p>
+<div class="flex gap-2">
+<span class="text-[10px] font-mono bg-surface-light border border-border-subtle px-1.5 py-0.5 rounded text-slate-300">#science</span>
+<span class="text-[10px] font-mono bg-surface-light border border-border-subtle px-1.5 py-0.5 rounded text-slate-300">88% confidence</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-900/50 border border-border-subtle hover:border-primary/50 hover:shadow-spotlight transition-all duration-300 p-4 cursor-pointer opacity-70 hover:opacity-100">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative flex gap-4 items-start">
+<div class="size-10 rounded-lg bg-[#2e2839] flex items-center justify-center shrink-0 text-white">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-display font-bold text-white truncate">European History 1900s</h4>
+<span class="material-symbols-outlined text-yellow-500 text-base" title="Scanning">sync</span>
+</div>
+<p class="text-xs text-slate-400 mb-2">Processing document structure...</p>
+<div class="w-full h-1 bg-surface-light rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Output & Controls -->
+<section class="w-1/2 flex flex-col bg-background-dark relative">
+<!-- Top Configuration Bar -->
+<div class="h-16 border-b border-border-subtle bg-surface-dark/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<span class="font-display font-bold text-white">AI Output Terminal</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Toggle: Difficulty -->
+<label class="inline-flex items-center cursor-pointer gap-3 group">
+<span class="text-xs font-bold text-slate-400 group-hover:text-white transition-colors">DIFFICULTY: HARD</span>
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<!-- Toggle: Markscheme -->
+<label class="inline-flex items-center cursor-pointer gap-3 group">
+<span class="text-xs font-bold text-slate-400 group-hover:text-white transition-colors">INCLUDE MARKSCHEME</span>
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Terminal Output Area -->
+<div class="flex-1 p-6 overflow-hidden relative">
+<!-- Code Editor Window -->
+<div class="w-full h-full bg-code-bg rounded-xl border border-border-subtle flex flex-col shadow-2xl relative overflow-hidden">
+<!-- Editor Tabs -->
+<div class="h-10 bg-[#010409] border-b border-border-subtle flex items-center px-4 gap-1">
+<div class="flex gap-2 mr-4">
+<div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+</div>
+<div class="h-full px-4 border-t-2 border-primary bg-code-bg text-white text-xs font-mono flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-blue-400">code</span>
+                            generated_quiz_01.json
+                        </div>
+<div class="h-full px-4 border-t-2 border-transparent hover:bg-surface-light/30 text-slate-500 text-xs font-mono flex items-center gap-2 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[14px]">description</span>
+                            preview.pdf
+                        </div>
+</div>
+<!-- Editor Content -->
+<div class="flex-1 overflow-auto p-4 font-mono text-sm leading-6">
+<div class="flex">
+<!-- Line Numbers -->
+<div class="flex flex-col text-slate-600 text-right pr-4 select-none border-r border-border-subtle mr-4">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+</div>
+<!-- Code -->
+<div class="text-slate-300">
+<div class="text-code-token-comment">// AI Analysis Complete: 12 Questions Generated</div>
+<div class="text-code-token-comment">// Mode: Hard | Topic: Calculus II</div>
+<br/>
+<div><span class="text-code-token-keyword">const</span> <span class="text-code-token-function">quizData</span> = [</div>
+<div class="pl-4">{</div>
+<div class="pl-8"><span class="text-code-token-keyword">id</span>: <span class="text-code-token-function">1</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">topic</span>: <span class="text-code-token-string">"Definite Integrals"</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">difficulty</span>: <span class="text-code-token-string">"Hard"</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">question</span>: <span class="text-code-token-string">"Evaluate the integral from 0 to π of x²sin(x) dx."</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">markscheme</span>: {</div>
+<div class="pl-12"><span class="text-code-token-keyword">step1</span>: <span class="text-code-token-string">"Use integration by parts twice."</span>,</div>
+<div class="pl-12"><span class="text-code-token-keyword">answer</span>: <span class="text-code-token-string">"π² - 4"</span></div>
+<div class="pl-8">}</div>
+<div class="pl-4">},</div>
+<div class="pl-4">{</div>
+<div class="pl-8"><span class="text-code-token-keyword">id</span>: <span class="text-code-token-function">2</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">topic</span>: <span class="text-code-token-string">"Volume of Revolution"</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">difficulty</span>: <span class="text-code-token-string">"Hard"</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">question</span>: <span class="text-code-token-string">"Find the volume generated by rotating the region bounded by y=ln(x), y=0, x=e about the y-axis."</span>,</div>
+<div class="pl-8"><span class="text-code-token-keyword">markscheme</span>: {</div>
+<div class="pl-12"><span class="text-code-token-keyword">method</span>: <span class="text-code-token-string">"Shell method recommended."</span>,</div>
+<div class="pl-12"><span class="text-code-token-keyword">answer</span>: <span class="text-code-token-string">"π(e² + 1)/2"</span> <span class="text-code-token-comment">// needs verification</span></div>
+<div class="pl-8">}</div>
+<div class="pl-4">}</div>
+<div>];</div>
+<br/>
+<div class="animate-pulse inline-block w-2 h-4 bg-primary align-middle"></div>
+</div>
+</div>
+</div>
+<!-- Editor Footer -->
+<div class="h-8 bg-[#010409] border-t border-border-subtle flex items-center justify-between px-4 text-xs text-slate-500 font-mono">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">account_tree</span> main</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-red-400">error</span> 0</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-yellow-400">warning</span> 1</span>
+</div>
+<div class="flex items-center gap-4">
+<span>Ln 22, Col 1</span>
+<span>UTF-8</span>
+<span>JSON</span>
+<span class="text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">check_circle</span> Prettier</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Area -->
+<div class="p-6 pt-0 flex justify-end items-center gap-4">
+<button class="px-6 py-3 rounded-lg text-slate-300 font-bold text-sm hover:text-white transition-colors">
+                    Save Draft
+                </button>
+<button class="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-glow hover:shadow-lg hover:shadow-primary/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+                    EXPORT TO LMS
+                </button>
+</div>
+</section>
+</main>
+</body></html>

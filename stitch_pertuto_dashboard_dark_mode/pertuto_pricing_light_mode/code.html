@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto Pricing - Elite Tutoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2513ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                        "glow": "0 10px 40px -10px rgba(37, 19, 236, 0.15)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col">
+<!-- Header -->
+<header class="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">school</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">PerTuto</h2>
+</div>
+<div class="flex items-center gap-6">
+<a class="hidden md:block text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#">Tutors</a>
+<a class="hidden md:block text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#">Methodology</a>
+<a class="text-sm font-bold text-slate-900 hover:text-primary transition-colors" href="#">Sign In</a>
+<button class="bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                    Get Started
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center pt-16 pb-24 px-6">
+<!-- Hero Section -->
+<div class="text-center max-w-3xl mx-auto mb-16">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                Accepting New Students for Fall 2024
+            </div>
+<h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-6">
+                Elite Tutoring for <br/><span class="text-primary relative inline-block">
+                    the Exceptional
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-primary/20" fill="none" viewbox="0 0 200 9" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C25.7509 2.49997 132.5 -3.50003 198.5 3.99997" stroke="currentColor" stroke-linecap="round" stroke-width="3"></path></svg>
+</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed">
+                Ivy League mentors, tailored to your child's ambition. Unlock their full potential with a curriculum designed for the world's most competitive universities.
+            </p>
+<!-- Billing Toggle -->
+<div class="mt-10 flex items-center justify-center gap-4">
+<span class="text-sm font-semibold text-slate-500">Monthly</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+</label>
+<span class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                    Annual 
+                    <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-green-200">SAVE 20%</span>
+</span>
+</div>
+</div>
+<!-- Pricing Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl w-full mx-auto items-start">
+<!-- Card 1: The Scholar -->
+<div class="relative flex flex-col p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-soft transition-transform hover:-translate-y-1 duration-300">
+<div class="mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">The Scholar</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 h-10">Essential subject mastery for building a strong foundation.</p>
+</div>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">$500</span>
+<span class="text-slate-500 font-medium">/mo</span>
+</div>
+<button class="w-full py-3 px-4 rounded-xl border-2 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white font-bold hover:border-primary hover:text-primary transition-colors mb-8">
+                    Get Started
+                </button>
+<div class="space-y-4 flex-1">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Includes</p>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>4 hours of 1-on-1 sessions</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Weekly progress reports</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Curriculum alignment</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-400 dark:text-slate-600 line-through">
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600 text-[20px]">cancel</span>
+<span>College admissions strategy</span>
+</div>
+</div>
+</div>
+<!-- Card 2: The Fellow (Best Value) -->
+<div class="relative flex flex-col p-8 bg-white dark:bg-slate-800 rounded-2xl border-2 border-primary shadow-glow z-10 scale-105 lg:-mt-4">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                    Most Popular
+                </div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">The Fellow</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 h-10">Comprehensive academic strategy for ambitious students.</p>
+</div>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-5xl font-black text-slate-900 dark:text-white tracking-tight">$1,200</span>
+<span class="text-slate-500 font-medium">/mo</span>
+</div>
+<button class="w-full py-3 px-4 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 mb-8">
+                    Start 7-Day Trial
+                </button>
+<div class="space-y-4 flex-1">
+<p class="text-xs font-bold text-primary uppercase tracking-wider mb-4">Everything in Scholar, plus:</p>
+<div class="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200 font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>10 hours of 1-on-1 sessions</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200 font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Daily check-ins &amp; homework help</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200 font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>SAT/ACT specialized prep</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200 font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Ivy League mentor assignment</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200 font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Extracurricular planning</span>
+</div>
+</div>
+</div>
+<!-- Card 3: The Laureate -->
+<div class="relative flex flex-col p-8 bg-slate-100 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 transition-transform hover:-translate-y-1 duration-300">
+<div class="mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">The Laureate</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 h-10">Full-service educational concierge for the exceptional.</p>
+</div>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">$3,500</span>
+<span class="text-slate-500 font-medium">/mo</span>
+</div>
+<button class="w-full py-3 px-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors mb-8">
+                    Contact Concierge
+                </button>
+<div class="space-y-4 flex-1">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Everything in Fellow, plus:</p>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>Unlimited 1-on-1 sessions</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>24/7 Priority access</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>Full admissions consulting suite</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>All-inclusive subject coverage</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>Direct line to founders</span>
+</div>
+</div>
+</div>
+</div>
+<!-- FAQ Section -->
+<div class="w-full max-w-3xl mt-24">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-8">Frequently Asked Questions</h3>
+<div class="flex flex-col gap-4">
+<details class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+<span class="font-semibold text-slate-900 dark:text-white">How do you vet your tutors?</span>
+<span class="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Our vetting process is rigorous. Only top 1% graduates from Ivy League and equivalent institutions are considered. Each tutor undergoes multiple rounds of interviews, background checks, and a probationary teaching period.
+                    </div>
+</details>
+<details class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+<span class="font-semibold text-slate-900 dark:text-white">Can I switch tutors if it's not a good fit?</span>
+<span class="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Absolutely. We believe the mentor-student relationship is key to success. If the chemistry isn't right, we will rematch your child immediately at no extra cost, ensuring the perfect educational partner.
+                    </div>
+</details>
+<details class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+<span class="font-semibold text-slate-900 dark:text-white">Is there a long-term contract?</span>
+<span class="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        No. Our monthly plans are flexible and can be cancelled or paused at any time. We believe our results will keep you with us, not a contract. Annual plans offer savings but are also refundable on a pro-rated basis within the first 30 days.
+                    </div>
+</details>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-primary">school</span>
+<span class="font-bold">PerTuto</span>
+</div>
+<div class="flex gap-8 text-sm text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+<p class="text-sm text-slate-400">© 2024 PerTuto Inc. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

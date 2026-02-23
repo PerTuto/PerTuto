@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IB Physics Subject Page - PerTuto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3713ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#020617", // Slate-950
+                        "surface-dark": "#0f172a", // Slate-900
+                        "border-dark": "#1e293b", // Slate-800
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "sans": ["Space Grotesk", "sans-serif"] // Overriding sans for consistency as requested
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Custom scrollbar for technical look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3713ec; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display selection:bg-primary selection:text-white">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 w-full border-b border-border-dark/50 bg-background-dark/80 backdrop-blur-md">
+<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-4 text-white">
+<div class="flex items-center gap-2">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-white">PerTuto</h2>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Tutors</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Resources</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Login</a>
+<button class="flex h-9 cursor-pointer items-center justify-center rounded-lg bg-primary hover:bg-primary/90 transition-all px-4 text-white text-sm font-bold shadow-[0_0_15px_rgba(55,19,236,0.3)]">
+                    Find a Tutor
+                </button>
+</nav>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-20 sm:py-32 lg:pb-32 xl:pb-36 bg-background-dark">
+<div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
+<div class="container mx-auto px-4 relative z-10 text-center">
+<div class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 backdrop-blur-sm">
+<span class="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+                    IB Physics HL 2024 Syllabus Updated
+                </div>
+<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-tight text-white sm:text-7xl mb-6">
+                    Struggling with <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400">IB Physics HL?</span>
+</h1>
+<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-400">
+                    Master the syllabus with elite tutors from Top 10 Universities. We turn complexity into clarity through rigorous, data-driven methodology.
+                </p>
+<div class="mt-10 flex items-center justify-center gap-x-6">
+<button class="rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(55,19,236,0.4)] hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300">
+                        Analyze My Performance
+                    </button>
+<button class="group text-sm font-semibold leading-6 text-white flex items-center gap-2 hover:text-primary transition-colors">
+                        Find a Physics Tutor <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">→</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Data Strip -->
+<div class="border-y border-border-dark bg-surface-dark/50 backdrop-blur-sm">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<dl class="grid grid-cols-1 gap-x-8 gap-y-8 text-center lg:grid-cols-3 py-8 divide-y lg:divide-y-0 lg:divide-x divide-border-dark">
+<div class="mx-auto flex max-w-xs flex-col gap-y-2 px-4">
+<dt class="text-base leading-7 text-slate-400">struggle with Mechanics</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-white sm:text-5xl">70%</dd>
+</div>
+<div class="mx-auto flex max-w-xs flex-col gap-y-2 px-4">
+<dt class="text-base leading-7 text-slate-400">Average IB Score Improvement</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-white sm:text-5xl">4.8</dd>
+</div>
+<div class="mx-auto flex max-w-xs flex-col gap-y-2 px-4">
+<dt class="text-base leading-7 text-slate-400">Ivy League &amp; Oxbridge Tutors</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-white sm:text-5xl">100%</dd>
+</div>
+</dl>
+</div>
+</div>
+<!-- Main Content Area -->
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Sidebar Navigation (Sticky) -->
+<aside class="hidden lg:block lg:col-span-3">
+<nav class="sticky top-24 space-y-1">
+<h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4 px-3">Table of Contents</h3>
+<a class="group flex items-center rounded-md px-3 py-2 text-sm font-medium bg-primary/10 text-primary border-l-2 border-primary" href="#">
+<span class="truncate">Syllabus Breakdown</span>
+</a>
+<a class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white border-l-2 border-transparent hover:border-slate-600 transition-all" href="#">
+<span class="truncate">Common Pitfalls</span>
+</a>
+<a class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white border-l-2 border-transparent hover:border-slate-600 transition-all" href="#">
+<span class="truncate">Tutor Methodology</span>
+</a>
+<a class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white border-l-2 border-transparent hover:border-slate-600 transition-all" href="#">
+<span class="truncate">Success Stories</span>
+</a>
+</nav>
+<div class="sticky top-64 mt-8 rounded-xl bg-surface-dark border border-border-dark p-6">
+<h4 class="text-white font-bold mb-2">Need immediate help?</h4>
+<p class="text-slate-400 text-sm mb-4">Our expert tutors are online now.</p>
+<button class="w-full rounded-lg bg-white text-slate-900 px-4 py-2 text-sm font-bold hover:bg-slate-200 transition-colors">
+                        Book a Session
+                    </button>
+</div>
+</aside>
+<!-- Main Article Content -->
+<div class="lg:col-span-9 space-y-12">
+<!-- Section 1 -->
+<div class="prose prose-invert prose-lg max-w-none">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<h2 class="text-3xl font-bold text-white m-0">Syllabus Breakdown: HL vs SL</h2>
+</div>
+<p class="text-slate-400 leading-relaxed">
+                        The leap from Standard Level to Higher Level Physics is often underestimated. While SL focuses on core concepts, HL demands a rigorous mathematical application of those concepts in novel scenarios. Our data shows that topics like <strong>Quantum Physics</strong> and <strong>Fields</strong> are where the grade boundaries are defined.
+                    </p>
+<ul class="space-y-4 my-6 list-none pl-0">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-slate-300">Deep dive into Wave Phenomena (HL Only)</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-slate-300">Advanced Field Mechanics and Gravitation</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-slate-300">Electromagnetic Induction complexities</span>
+</li>
+</ul>
+</div>
+<!-- Callout Blockquote -->
+<div class="relative overflow-hidden rounded-2xl bg-primary px-8 py-10 sm:px-12 sm:py-16">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent)]"></div>
+<svg aria-hidden="true" class="absolute top-6 left-6 h-12 w-12 text-white/20" fill="currentColor" viewbox="0 0 32 32">
+<path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z"></path>
+</svg>
+<blockquote class="relative">
+<p class="text-2xl font-bold leading-9 tracking-tight text-white sm:text-3xl sm:leading-10">
+                            "Physics isn't just math; it's the language of reality. Understanding the syntax is the first step to fluency."
+                        </p>
+<footer class="mt-6">
+<div class="text-base font-semibold text-white/90">Dr. Elena Rostova</div>
+<div class="text-sm leading-6 text-white/70">PhD in Astrophysics, Cambridge | Senior PerTuto Tutor</div>
+</footer>
+</blockquote>
+</div>
+<!-- Section 2 -->
+<div class="prose prose-invert prose-lg max-w-none">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<h2 class="text-3xl font-bold text-white m-0">Our Methodology</h2>
+</div>
+<p class="text-slate-400 leading-relaxed mb-8">
+                        We don't just teach you to solve equations; we teach you to dismantle problems. Our unique <strong>"Deconstruct &amp; Rebuild"</strong> framework ensures that you can approach any exam question—no matter how unfamiliar—with a structured logical toolkit.
+                    </p>
+<!-- Feature Grid inside content -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
+<div class="p-6 rounded-xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-colors group">
+<div class="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 mb-4 group-hover:text-blue-300 group-hover:bg-blue-500/20 transition-all">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Diagnostic Testing</h3>
+<p class="text-sm text-slate-400">Identify weak points with granular precision before they become grade-killers.</p>
+</div>
+<div class="p-6 rounded-xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-colors group">
+<div class="h-10 w-10 rounded-lg bg-violet-500/10 flex items-center justify-center text-violet-400 mb-4 group-hover:text-violet-300 group-hover:bg-violet-500/20 transition-all">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Exam Technique</h3>
+<p class="text-sm text-slate-400">Master the art of maximizing marks with strategic answer structuring.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Spotlight / Reviews Section -->
+<section class="border-t border-border-dark bg-surface-dark py-20">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl text-center mb-16">
+<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Parent &amp; Student Spotlights</h2>
+<p class="mt-4 text-lg leading-8 text-slate-400">Real results from families who demanded excellence.</p>
+</div>
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+<!-- Review Card 1 -->
+<div class="relative group rounded-2xl bg-background-dark p-8 border border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(55,19,236,0.15)]">
+<div class="flex items-center gap-x-4 mb-6">
+<div class="h-12 w-12 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+<img alt="Parent Avatar" class="h-full w-full object-cover" data-alt="Avatar of a parent reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT-slyt-32Ivgw4Q7OK7a7og0-u4YhMFACf-S9oAqPCUZxN9-6iVmD5AXgwCTwDgukFc0kIYDtzAVt9XIM4wTJERBz7IZKCvf8TqCElT-1mdXKDExiMIyGny8LVKang4gEbf3Uos9MYHi4CrmQ7ToXJVa0rBA2-VEur7NCvdfbBXpseyOS871RJeQdWPQm_sqbPpgOPo8sxAaxF4sPs5H4GIfvTtXnU99GGdSq9IJf4Kt8E-kwTydoe3FWn8OrL-ZztEJ301ebdgZ2"/>
+</div>
+<div>
+<h3 class="text-base font-semibold leading-7 tracking-tight text-white">Sarah Jenkins</h3>
+<p class="text-sm font-semibold leading-6 text-primary">Parent of IB Year 2 Student</p>
+</div>
+</div>
+<blockquote class="text-slate-300">
+                            "The transition from a 4 to a 7 in Physics HL seemed impossible. PerTuto's tutor didn't just explain the concepts; they rebuilt my son's confidence from the ground up."
+                        </blockquote>
+<div class="mt-6 flex gap-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<!-- Review Card 2 -->
+<div class="relative group rounded-2xl bg-background-dark p-8 border border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(55,19,236,0.15)]">
+<div class="flex items-center gap-x-4 mb-6">
+<div class="h-12 w-12 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+<img alt="Student Avatar" class="h-full w-full object-cover" data-alt="Avatar of a student reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqXhpFffqhO07qYTUtNYzrM8bY52x5d_FVFH8mLOOUXrR5iHNYF6PUUy08G-rTkUbWarKrsU1k9fhcCHmm3XgQCsHjQJ3aVRViOFWVRKt_F6OKEnn5WqZBQFmIcsTPtj2mQOoRKXu6y8yTKCFfHxAzWwZSlgz3DCUkrw-TFwqAeHwlT89zt0tlzLcM262g-AQ1kbwmd46M4NSyBHURITRnEAOutq06T5RYZ_sfbbZvYMyGjnyCQSyUQgr7X-v9SrtxzFRNB7yrqa52"/>
+</div>
+<div>
+<h3 class="text-base font-semibold leading-7 tracking-tight text-white">David Chen</h3>
+<p class="text-sm font-semibold leading-6 text-primary">Accepted to MIT (Physics)</p>
+</div>
+</div>
+<blockquote class="text-slate-300">
+                            "The tutors here are on another level. They don't just know the syllabus; they know the underlying physics in a way that makes everything click. Highly recommended."
+                        </blockquote>
+<div class="mt-6 flex gap-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<!-- Review Card 3 -->
+<div class="relative group rounded-2xl bg-background-dark p-8 border border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(55,19,236,0.15)]">
+<div class="flex items-center gap-x-4 mb-6">
+<div class="h-12 w-12 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+<img alt="Parent Avatar" class="h-full w-full object-cover" data-alt="Avatar of a parent reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwt43lYQHxEbtpKzyB4LjFA6BRt2IcLyuQmdctPZtKntu5iVRu5ijPCJIIT-CgYVNMshTfZLh3tRhY_GE1Oe7aoz0GzFtm719Ry-qozPN09y9NjAS87IxoYmhs5Rs24ShNv7znezyxkp5zTmyQHp_5LF35BBjHo22JM0RpOEOJKb2DqFtkK-AHIIiJiwU6QkiBCPwdCNpC32BcryYdbvzz99t2PeXKGjzJ-RHMyqB0_RL2U9JR9vez12kSs-PHXXV5xApqOAxq705M"/>
+</div>
+<div>
+<h3 class="text-base font-semibold leading-7 tracking-tight text-white">Emily Ross</h3>
+<p class="text-sm font-semibold leading-6 text-primary">Parent of IB Year 1 Student</p>
+</div>
+</div>
+<blockquote class="text-slate-300">
+                            "We tried three other agencies before PerTuto. The professionalism and technical depth here is unmatched. It feels like a university seminar, not just tutoring."
+                        </blockquote>
+<div class="mt-6 flex gap-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<!-- Review Card 4 -->
+<div class="relative group rounded-2xl bg-background-dark p-8 border border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(55,19,236,0.15)]">
+<div class="flex items-center gap-x-4 mb-6">
+<div class="h-12 w-12 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+<img alt="Student Avatar" class="h-full w-full object-cover" data-alt="Avatar of a student reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcfwgS9OUx4hhNbyx7i3UTkligc02aCB5cEKW2zyjiibflqF6Dtt8SeIrsmCiT8g5H8mpQtKeveF_R2tB2rPAjG23sxAmop1_EGEY2BN6YoeeL5uKUboOrwYjSElcBrY4G80rLwihGcyloghr7mwnRp-lH9miDhGD4hB3MiZyzAxaWdFDUZ7yrQ6efy7kpcxvlN8Ow-kCZPNF7QuMr36n13FXyaxwZztKzhdhOmIsed1Y95gZp9MPxccBmsllbip7MAQ83MDn-wiqv"/>
+</div>
+<div>
+<h3 class="text-base font-semibold leading-7 tracking-tight text-white">Marcus Lee</h3>
+<p class="text-sm font-semibold leading-6 text-primary">Improved from 3 to 6</p>
+</div>
+</div>
+<blockquote class="text-slate-300">
+                            "Mechanics was a nightmare for me. My tutor broke it down into simple, logical steps. I finally understand the 'why' behind the formulas."
+                        </blockquote>
+<div class="mt-6 flex gap-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-dark border-t border-border-dark py-12">
+<div class="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-2xl">token</span>
+</div>
+<span class="text-lg font-bold text-white">PerTuto</span>
+</div>
+<p class="text-slate-500 text-sm">© 2024 PerTuto Education. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Privacy</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

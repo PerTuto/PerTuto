@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
-import { Aurora } from '@/components/public/aurora';
 import { SpotlightCard } from '@/components/public/spotlight-card';
-import { DecryptedText } from '@/components/public/decrypted-text';
 import { LeadCaptureForm } from '@/components/public/lead-capture-form';
 import { TestimonialGrid } from '@/components/public/testimonial-grid';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowRight, GraduationCap, Briefcase, Sparkles, Users, Target } from 'lucide-react';
+import { ArrowRight, GraduationCap, Briefcase, Users, Target, BookOpen, Clock, Activity, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { generateOrganizationSchema, generateFAQSchema } from '@/lib/schema';
 
@@ -37,106 +35,135 @@ export default function HomePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateOrganizationSchema()) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(FAQ_ITEMS)) }} />
 
-            <Aurora />
+            {/* Ambient Background Layer */}
+            <div className="fixed inset-0 z-0 bg-aurora pointer-events-none"></div>
 
-            {/* ===== HERO ===== */}
-            <section className="relative min-h-[85vh] flex items-center justify-center px-6">
-                <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm text-primary">
-                        <Sparkles className="w-4 h-4" />
-                        Trusted by 200+ students across Dubai
+            {/* ===== HERO (Stitch Premium Layout) ===== */}
+            <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
+                <div className="max-w-5xl mx-auto text-center flex flex-col items-center">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-primary-glow mb-8 animate-fade-in-up">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        Accepting New Students for Fall 2024
                     </div>
 
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight leading-[1.1]">
-                        <DecryptedText
-                            text="Expert Tutoring That"
-                            className="block"
-                        />
-                        <span className="text-primary block mt-2">
-                            <DecryptedText text="Delivers Results" speed={40} />
-                        </span>
+                    {/* Headline */}
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.1] mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400 text-glow">
+                        Expert Tutoring That<br />Delivers Results
                     </h1>
 
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        Personalized learning for <strong className="text-foreground">K-12 students</strong> and{' '}
-                        <strong className="text-foreground">working professionals</strong> in Dubai.
-                        IB, IGCSE, A-Level, CBSE + AI, Data Science & more.
+                    {/* Subheadline */}
+                    <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                        Elite mentorship for IB, Cambridge, and Edexcel curriculums. We combine data-driven strategies with personalized coaching to unlock potential.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href="#book-demo">
-                            <Button size="lg" className="h-12 px-8 text-base font-semibold">
-                                Book Free Demo <ArrowRight className="ml-2 w-4 h-4" />
-                            </Button>
+                    {/* Actions */}
+                    <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto z-10">
+                        <Link href="#book-demo" className="w-full sm:w-auto">
+                            <button className="btn-glow bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-semibold text-lg w-full flex items-center justify-center gap-2 font-headline">
+                                Book Free Demo
+                                <ArrowRight className="w-5 h-5" />
+                            </button>
                         </Link>
-                        <Link href="/services/k12">
-                            <Button variant="outline" size="lg" className="h-12 px-8 text-base">
+                        <Link href="/services/k12" className="w-full sm:w-auto">
+                            <button className="px-8 py-4 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors w-full flex items-center justify-center gap-2 group border border-transparent hover:border-white/10 font-headline">
                                 Explore Services
-                            </Button>
+                            </button>
                         </Link>
                     </div>
                 </div>
             </section>
 
-            {/* ===== SOCIAL PROOF MARQUEE ===== */}
-            <section className="border-y border-border/30 bg-card/30 py-8 overflow-hidden">
-                <div className="flex gap-16 animate-marquee">
-                    {[...CURRICULA, ...CURRICULA].map((item, i) => (
-                        <span key={i} className="font-headline font-bold text-3xl text-muted-foreground/30 whitespace-nowrap shrink-0">
-                            {item}
-                        </span>
+            {/* ===== SOCIAL PROOF MARQUEE (Stitch Version) ===== */}
+            <div className="w-full border-y border-white/5 bg-black/20 overflow-hidden py-10 relative">
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background-dark to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background-dark to-transparent z-10 pointer-events-none"></div>
+                
+                <div className="flex whitespace-nowrap animate-marquee">
+                    {/* Create 3 duplicate sets for a seamless infinite loop */}
+                    {[1, 2, 3].map((setIndex) => (
+                        <div key={`set-${setIndex}`} className="flex items-center gap-16 mx-8 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                            {CURRICULA.map((curriculum) => (
+                                <span key={`${setIndex}-${curriculum}`} className="text-2xl font-headline font-bold tracking-widest text-slate-300">
+                                    {curriculum}
+                                </span>
+                            ))}
+                        </div>
                     ))}
                 </div>
-            </section>
+            </div>
 
-            {/* ===== SERVICES ===== */}
-            <section className="py-24 px-6">
+            {/* ===== SERVICES (Stitch Premium Layout) ===== */}
+            <section className="py-32 px-6 relative">
                 <div className="max-w-5xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="font-headline text-3xl md:text-4xl font-bold mb-4">What We Offer</h2>
-                        <p className="text-muted-foreground max-w-xl mx-auto">Two pathways to excellence — whether you&apos;re in school or leveling up your career.</p>
+                    <div className="text-center mb-20 animate-fade-in-up">
+                        <h2 className="text-3xl md:text-5xl font-headline font-bold mb-6 text-white">Pathways to <span className="text-primary-glow">Excellence</span></h2>
+                        <p className="text-slate-400 max-w-2xl mx-auto text-lg">Whether you are aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <Link href="/services/k12">
-                            <SpotlightCard className="h-full cursor-pointer">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                                        <GraduationCap className="w-6 h-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-headline text-xl font-bold mb-2">K-12 Tutoring</h3>
-                                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                                            IB, IGCSE, A-Level, CBSE — Math, Science, English and more.
-                                            From exam prep to IA rescue, we&apos;ve got your back.
-                                        </p>
-                                        <span className="text-primary text-sm font-semibold inline-flex items-center gap-1">
-                                            Learn more <ArrowRight className="w-3 h-3" />
-                                        </span>
-                                    </div>
-                                </div>
-                            </SpotlightCard>
-                        </Link>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* K-12 Card */}
+                        <div className="glass-panel p-8 md:p-10 flex flex-col group relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors duration-500 -translate-y-1/2 translate-x-1/2"></div>
+                            
+                            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 relative z-10">
+                                <GraduationCap className="w-7 h-7 text-primary-glow" />
+                            </div>
+                            
+                            <h3 className="text-3xl font-headline font-bold text-white mb-4 relative z-10">K-12 Tutoring</h3>
+                            <p className="text-slate-400 leading-relaxed mb-8 relative z-10">
+                                Master the complexities of IB DP, Cambridge IGCSE, and A-Levels. From IA reviews to rigorous final exam prep.
+                            </p>
+                            
+                            <ul className="mb-10 space-y-4 relative z-10">
+                                {['IB MYP & DP', 'IGCSE & A-Level', 'Math, Physics, Chem'].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-slate-300">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-primary-glow"></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            
+                            <Link href="/services/k12" className="mt-auto relative z-10">
+                                <button className="w-full py-4 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-white transition-all flex items-center justify-center gap-2 group-hover:border-primary/50">
+                                    View Program Details
+                                    <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                </button>
+                            </Link>
+                        </div>
 
-                        <Link href="/services/professional">
-                            <SpotlightCard className="h-full cursor-pointer" spotlightColor="rgba(167, 139, 250, 0.15)">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
-                                        <Briefcase className="w-6 h-6 text-violet-400" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-headline text-xl font-bold mb-2">Professional Upskilling</h3>
-                                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                                            AI, Data Science, Programming, Professional Degrees.
-                                            Learn the critical 90% in 10% of the time.
-                                        </p>
-                                        <span className="text-violet-400 text-sm font-semibold inline-flex items-center gap-1">
-                                            Learn more <ArrowRight className="w-3 h-3" />
-                                        </span>
-                                    </div>
-                                </div>
-                            </SpotlightCard>
-                        </Link>
+                        {/* Professional Card */}
+                        <div className="glass-panel p-8 md:p-10 flex flex-col group relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl group-hover:bg-violet-500/20 transition-colors duration-500 -translate-y-1/2 -translate-x-1/2"></div>
+                            
+                            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 relative z-10">
+                                <Briefcase className="w-7 h-7 text-violet-400" />
+                            </div>
+                            
+                            <h3 className="text-3xl font-headline font-bold text-white mb-4 relative z-10">Professional <span className="text-violet-400">Upskilling</span></h3>
+                            <p className="text-slate-400 leading-relaxed mb-8 relative z-10">
+                                Future-proof your career with intensive, 1-on-1 coaching in AI, Data Science, and modern Software Engineering.
+                            </p>
+                            
+                            <ul className="mb-10 space-y-4 relative z-10">
+                                {['AI & Machine Learning', 'Data Science & Analytics', 'Executive Tech Literacy'].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-slate-300">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-violet-400"></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            
+                            <Link href="/services/professional" className="mt-auto relative z-10">
+                                <button className="w-full py-4 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-white transition-all flex items-center justify-center gap-2 group-hover:border-violet-500/50">
+                                    View Career Tracks
+                                    <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>

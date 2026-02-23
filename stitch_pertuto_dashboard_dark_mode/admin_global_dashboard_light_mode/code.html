@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#13ec5b",
+                "background-light": "#f8fafc", /* slate-50/slate-100 mix */
+                "background-dark": "#102216",
+                "surface": "#ffffff",
+                "border-subtle": "#e2e8f0", /* slate-200 */
+              },
+              fontFamily: {
+                "display": ["Space Grotesk", "sans-serif"],
+                "body": ["Inter", "sans-serif"],
+              },
+              borderRadius: {
+                "DEFAULT": "0.5rem", 
+                "lg": "0.75rem", /* 12px */
+                "xl": "1rem", 
+                "2xl": "1.5rem",
+                "full": "9999px"
+              },
+              boxShadow: {
+                "subtle": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+                "inner-light": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)",
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-body antialiased overflow-hidden h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 bg-white border-r border-border-subtle flex-col hidden lg:flex h-full font-display">
+<div class="h-16 flex items-center px-6 border-b border-border-subtle">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 rounded-lg p-1.5">
+<span class="material-symbols-outlined text-primary text-2xl">school</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">PerTuto<span class="text-slate-400 font-normal">Admin</span></h1>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-6">
+<div class="flex flex-col gap-1">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Overview</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-slate-900 font-medium group" href="#">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+                    Schedule
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">inbox</span>
+                    Inbox
+                    <span class="ml-auto bg-primary/20 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded-full">4</span>
+</a>
+</div>
+<div class="flex flex-col gap-1">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Management</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Tutors
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+                    Students
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Payments
+                </a>
+</div>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+<div class="mt-4 pt-4 border-t border-border-subtle flex items-center gap-3 px-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden border border-slate-100" data-alt="User avatar placeholder">
+<img alt="User Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXhLtM8MsbQ_5LGmcGlcd0axLb_XYobor0T635jSysmFKwbbjg6R_hTwG1WbAeZdFKnyEh7ezuH-L5VL3Q2YZVLgiQe4QHDrHFJOdc-cSG5UxXpoO7y_DQE3w568DMgE5lpR0vKFiRrQ0tfxaX5azbV8jhqQ0RMdz4sNItvQJl3egjIGH-VkoE-IhAlG9VoDne98KtuEXYmb6sJgecvCw6v0gwWzDeE6BH8AQzB1zwzl__ZeNF21mapd-M67fU_av-hCa5WhLv8JgO"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900">Alex M.</span>
+<span class="text-xs text-slate-500">Super Admin</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light">
+<!-- Header -->
+<header class="h-16 bg-white/80 backdrop-blur-md border-b border-border-subtle flex items-center justify-between px-8 shrink-0 z-10 sticky top-0">
+<div class="flex items-center gap-4 flex-1">
+<span class="material-symbols-outlined lg:hidden text-slate-500 cursor-pointer">menu</span>
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all" placeholder="Search students, tutors, or sessions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 rounded-lg hover:bg-slate-50 text-slate-600 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-white"></span>
+</button>
+<button class="p-2 rounded-lg hover:bg-slate-50 text-slate-600 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1600px] mx-auto space-y-8">
+<!-- KPI Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<!-- KPI Card 1 -->
+<div class="bg-white p-6 rounded-lg border border-border-subtle shadow-subtle hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex flex-col z-10 relative">
+<span class="text-slate-500 text-sm font-medium font-body mb-1">Total Revenue</span>
+<div class="flex items-end gap-3 mb-2">
+<span class="text-3xl font-bold font-display text-slate-900 tracking-tight">$142.3k</span>
+<span class="flex items-center text-emerald-600 text-sm font-semibold mb-1 bg-emerald-50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                    12%
+                                </span>
+</div>
+</div>
+<!-- Sparkline SVG -->
+<div class="absolute bottom-0 left-0 right-0 h-16 opacity-20 group-hover:opacity-30 transition-opacity">
+<svg class="w-full h-full text-primary fill-current" preserveaspectratio="none" viewbox="0 0 200 60">
+<path d="M0,60 L0,40 L20,35 L40,45 L60,25 L80,30 L100,15 L120,25 L140,10 L160,20 L180,5 L200,15 L200,60 Z"></path>
+</svg>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-white p-6 rounded-lg border border-border-subtle shadow-subtle hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex flex-col z-10 relative">
+<span class="text-slate-500 text-sm font-medium font-body mb-1">Active Sessions</span>
+<div class="flex items-end gap-3 mb-2">
+<span class="text-3xl font-bold font-display text-slate-900 tracking-tight">84</span>
+<span class="flex items-center text-emerald-600 text-sm font-semibold mb-1 bg-emerald-50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                    5%
+                                </span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-16 opacity-20 group-hover:opacity-30 transition-opacity">
+<svg class="w-full h-full text-primary fill-current" preserveaspectratio="none" viewbox="0 0 200 60">
+<path d="M0,60 L0,50 L30,45 L60,48 L90,30 L120,35 L150,20 L180,25 L200,10 L200,60 Z"></path>
+</svg>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-white p-6 rounded-lg border border-border-subtle shadow-subtle hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex flex-col z-10 relative">
+<span class="text-slate-500 text-sm font-medium font-body mb-1">New Signups</span>
+<div class="flex items-end gap-3 mb-2">
+<span class="text-3xl font-bold font-display text-slate-900 tracking-tight">12</span>
+<span class="flex items-center text-slate-500 text-sm font-semibold mb-1 bg-slate-100 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">remove</span>
+                                    0%
+                                </span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-16 opacity-10 group-hover:opacity-20 transition-opacity">
+<svg class="w-full h-full text-slate-400 fill-current" preserveaspectratio="none" viewbox="0 0 200 60">
+<path d="M0,60 L0,40 L40,40 L80,38 L120,42 L160,40 L200,40 L200,60 Z"></path>
+</svg>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-white p-6 rounded-lg border border-border-subtle shadow-subtle hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex flex-col z-10 relative">
+<span class="text-slate-500 text-sm font-medium font-body mb-1">Tutor Utilization</span>
+<div class="flex items-end gap-3 mb-2">
+<span class="text-3xl font-bold font-display text-slate-900 tracking-tight">92%</span>
+<span class="flex items-center text-emerald-600 text-sm font-semibold mb-1 bg-emerald-50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                   8%
+                               </span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-16 opacity-20 group-hover:opacity-30 transition-opacity">
+<svg class="w-full h-full text-primary fill-current" preserveaspectratio="none" viewbox="0 0 200 60">
+<path d="M0,60 L0,50 L25,45 L50,30 L75,35 L100,20 L125,15 L150,25 L175,10 L200,5 L200,60 Z"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Split Layout -->
+<div class="flex flex-col xl:flex-row gap-8">
+<!-- Left Column: Schedule (70%) -->
+<div class="flex-1 xl:w-[70%] flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold font-display text-slate-900">Upcoming Schedule</h2>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-sm font-medium text-slate-600 bg-white border border-border-subtle rounded-lg hover:bg-slate-50">Filter</button>
+<button class="px-3 py-1.5 text-sm font-medium text-slate-900 bg-primary/20 hover:bg-primary/30 border border-primary/20 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                                    New Session
+                                </button>
+</div>
+</div>
+<div class="bg-white border border-border-subtle rounded-lg shadow-subtle overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50/50 border-b border-border-subtle text-xs uppercase tracking-wider text-slate-500 font-semibold">
+<th class="px-6 py-4 font-body">Time</th>
+<th class="px-6 py-4 font-body">Session Details</th>
+<th class="px-6 py-4 font-body">Participants</th>
+<th class="px-6 py-4 font-body text-center">Subject</th>
+<th class="px-6 py-4 font-body text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 font-display">14:00</span>
+<span class="text-xs text-slate-500">Today</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900">Adv. Calculus Review</span>
+<span class="text-xs text-slate-500 truncate max-w-[180px]">Preparation for mid-term exam</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Participant 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOLa_x2c28GUP7wq7C6hwG2HKEhVEQOYKhKWeDoQGSdMMTHEv1hTA9s5foO3Ak9D6yyHKfJ9cywRbyMLHy1p7gtLWNpXuTPxG7ZZoRmxxRTBRx98YMnW7DE_rc-iesfY0rgY6wGXrQuE96MmowIyr_32nAR_uxJEOrboiGuTTJ8wI_7kiQK3T7lXDXdxyBzruIE-Qbp39X5BJNgZYa_Zd9Ea_YchTJ532eyOELFwrJ9Ji8G3ChKGkq8gQ2lZf2dLAQUYa2EDa6WWx-"/>
+<img alt="Participant 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfZN9RSKy8ZOvrDZwxmPVX8snsG9XzVQoEJB7o_fGswX_ogcCRFlAjmZ2VLtNNmuibsigOkYDV_0Y0yxe0XJI7i0-QShVFt4Os3im5nugkjc-ogylLsOpV22WhDnh6-FD7_owXeDhNsow89RUALYaIuPPKHbG3w5TE6z-LozC7tbD6zE2LKueHuaqEWkbsN7UjjyAL38PjQP-ywA3TpBjy67nqOt5x7pQzzb6ygdC6bdvp1JZSXEijhqC7RoOCtaasUHIPjQxUI2GQ"/>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                Math
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                                Confirmed
+                                            </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 font-display">15:30</span>
+<span class="text-xs text-slate-500">Today</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900">Organic Chemistry Lab</span>
+<span class="text-xs text-slate-500 truncate max-w-[180px]">Lab report analysis</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Participant 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3mnzB2Hgk38iwMVIjVeqPfLQ6om6uxn3WgwVlGfiPJMUImok97wzGCN8UhKlWSk9o8y_o0C-rrh8Mj3LnUvfcczotrzv8xi5rF2-99-JG96jwiTvnRK3Vu-C6NzzMkWE8vAzhchsFHqy22EyjFCdTru6IQReRbpeJxPiTDiw59-yrziXSi17ZU4y44vjO5wHfHFafN_ZlSjRpJrmMFDuPwLA3OXEuxlVyD-Ysbfzleg__8q2nN7-Vr-Ti-1-i0udmMeqx9YU0BVKc"/>
+<img alt="Participant 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiIIUs4E4JI1AcdZmP0OHk0ets-k7rsGQhueNL7J_ukzXz0GqBXpD6HxIarv9TMzi2py1RfA3FPYKt8vCCuN5Ft94k99lo8tSNOpcr1drBrKMwLcc3l3hEUloZqTtRG1rFRcklPP5-UywMj7ZtfB4CiRyx9nuPZRtpde-y7tRr_w80we9FnvInMiGRYIYNRDguvfTM_ap8FjYbte9HY-uYj8gRWxuTPwkaG3N3d8eJP7n9CW8534lQCXInkqg_kNoK05ktkXXZD2Lq"/>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Science
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">
+<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                                                Pending
+                                            </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 font-display">16:45</span>
+<span class="text-xs text-slate-500">Today</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900">English Literature</span>
+<span class="text-xs text-slate-500 truncate max-w-[180px]">Shakespeare Essay Review</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Participant 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdEM7WPKjrr4kT2X2EsX5J-1l7p8CjuQrpcogafC6t_-gz70t6hdxnzZw63OA11xdu5GySPO7Zl-CVCLBeZUAN7N_Amo-Ah1auoXC2c4DmuJwBYPDSXHn_UyEVvoMUWY3wRHvoZ3hzHhF4yQ79XZ_5fWQmvou3cdGUPuH7-1G2DQVthciit_hpBjOD7bnHDcsdAko8uyDWgiwgZWwnG1wQ2_TrFfea5-hBgS3-FiiKgmcSf9Bw7szIfpXqBFpOzOBtIyQ8_6mw6SH4"/>
+<img alt="Participant 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD58p2dkvrQ0faK3D-O3J4LoZNEvR39lWn2dj0Aga5c0S0CwOhENgYnZBhBO6d5jNijL1eX3A_PVf2QG0YWQIW75vG94w-9MY2KXd1ONKD5kibaKIjZfaMabK2qsw2EojLTNFpVHqTM9r5jAUUQgyrfL4zXjGa83II0cp2oJKtBlE2bshHrJXGuEfU7vJUM-XnIhibdaxwZ-uT_HjK5c6LA0FqsakFr47NnWjtBTkOo65jqheUO1JX5WKSVpHzmptUauV50tpoNNPES"/>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
+                                                Humanities
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                                Confirmed
+                                            </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 font-display">18:00</span>
+<span class="text-xs text-slate-500">Today</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900">SAT Prep - Verbal</span>
+<span class="text-xs text-slate-500 truncate max-w-[180px]">Mock test review</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Participant 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArDywAqNlZhxe6vcyDAyoZvP5NtvbmXmeZmb9pw9UqVtYLWxUjxV3nXWYUNrhmhCXUj8zpnpyFTA9I2Y8K5nvcX6oI87Dya5ljwdkleWTBTNzx2BrNBBAOnffNpEbv-rs0JpPCqvnqm5zWDuAgLs1xk5iqVJzGV-BX1VIrp-cN-OdXkttQ8JQR7zTYRLfwOPmA1UHAZ4s_Q1hnP-L3f669-bYVMu00gPCVSWp1GN4Q_3LXkePflQfC-nVuGQnByQdL46qCqn8zZlI_"/>
+<img alt="Participant 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8uHZ63XbdZsmSYw26PcdSwCd-CvFGQIn_v_TupC5fpkW87fLNQ4wVo5ZFT6gl8t96_-cw_B6JPwiK1SCzR52ELRkgjJX-CwxGYwQ3argEiQAYgHm0g5JgQpWtQGEEY4XGqvA5SnoA9foPsJLeq9Ml01heltDeZ8_anr7YISc4YegLZAW7rRYV5AvvQw0A7cDGirpeDP1vaKYBNFYWOzjJJ-f1BxIsldkIwI94oIQF-9EOBFlBsnzx9o9Q4kF5y0iHYToWwK7w2l0z"/>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                Test Prep
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                                                Cancelled
+                                            </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/50 transition-colors group border-b-0">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 font-display">09:00</span>
+<span class="text-xs text-slate-500">Tomorrow</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900">Intro to Physics</span>
+<span class="text-xs text-slate-500 truncate max-w-[180px]">Newton's Laws</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Participant 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD73lYGmUxKAbALFwyBrQ7FyDlZuQX9rdcFLOKpXbx1S9QimVK1fsM6lS--E6Jy1UjlCJO8emFDct69kDY8ekNBw-BPskIUhW3pRyXPf6LpW8b2Zc-fUYjxJtVEDequPUvFzG-tf-7nWXy8n4OXE8mCjG9Nlssj1X9rIF6NOWmBuWgyIA_0QTT8qm6ozgjRw_hF81S7H2skzJTm1ntJ1AhS9Idkd4d7c4YlDc0OmFT6mjdMMxpUGduiUhyZXJGwSEC-LOm1-6CsT9uL"/>
+<img alt="Participant 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6AfzDcSIQwJBBckJXJUQHMDQhyB8Mve1jAzeiGrBeeWL2AnYF8W3LLdQskWLs8LMWovwZCfT6M5Itri09Sf24ZnO-Y8gdL-KOVP2fJ-VHGzgyjOjq9z1EPEO7vw0Deoeo486ozSamvCh5nhJjsy93WbaDet2omqRxHGUv_-rOMfkF6_B4C-inxVsWgchqvMr9Dgj_-FE6I15lAngrRwI3U0vnMVS9K9h97-KENZ4nJL37oxISKfnMZo3HBVhi8fUzBTy3va6j-pA1"/>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Science
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                                Confirmed
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Column: Activity Feed (30%) -->
+<div class="flex-1 xl:w-[30%] flex flex-col gap-4">
+<div class="flex items-center justify-between h-[38px]">
+<h2 class="text-xl font-bold font-display text-slate-900">Activity Feed</h2>
+<button class="text-sm font-medium text-primary hover:text-emerald-600 transition-colors">View All</button>
+</div>
+<div class="bg-white border border-border-subtle rounded-lg shadow-subtle p-6 h-full min-h-[400px]">
+<div class="relative pl-4 border-l border-slate-200 space-y-8">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-white"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-900 leading-snug">
+<span class="font-semibold">Sarah J.</span> completed payment for 5 sessions.
+                                        </p>
+<span class="text-xs text-slate-400 font-medium">2 minutes ago</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-blue-500 ring-4 ring-white"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-900 leading-snug">
+                                            Tutor <span class="font-semibold">Mark L.</span> uploaded a new resource: "Calculus Cheat Sheet".
+                                        </p>
+<div class="mt-2 p-3 bg-slate-50 border border-slate-100 rounded-lg flex items-center gap-3 group cursor-pointer hover:border-slate-200 transition-colors">
+<div class="bg-red-100 p-1.5 rounded text-red-500">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-slate-800">Cheat_Sheet_v2.pdf</span>
+<span class="text-[10px] text-slate-500">2.4 MB</span>
+</div>
+</div>
+<span class="text-xs text-slate-400 font-medium mt-1">15 minutes ago</span>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-amber-500 ring-4 ring-white"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-900 leading-snug">
+                                            New dispute opened for <span class="font-semibold">Session #4022</span>.
+                                        </p>
+<span class="text-xs text-slate-400 font-medium">1 hour ago</span>
+<div class="mt-1">
+<button class="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-100 hover:bg-amber-100">Review Case</button>
+</div>
+</div>
+</div>
+<!-- Timeline Item 4 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-slate-300 ring-4 ring-white"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-900 leading-snug">
+<span class="font-semibold">System</span> completed daily backup successfully.
+                                        </p>
+<span class="text-xs text-slate-400 font-medium">4 hours ago</span>
+</div>
+</div>
+<!-- Timeline Item 5 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-white"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-900 leading-snug">
+<span class="font-semibold">Jessica T.</span> registered as a new tutor.
+                                        </p>
+<span class="text-xs text-slate-400 font-medium">5 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

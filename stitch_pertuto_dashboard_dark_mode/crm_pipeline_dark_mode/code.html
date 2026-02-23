@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto CRM Pipeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9d2bee",
+                        "primary-hover": "#8a24d3",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#0f0a14", // Deep dark slate-950 ish
+                        "surface-dark": "#1a1320", // Slightly lighter column bg
+                        "card-dark": "#221a28", // Card bg
+                        "border-dark": "#342a3b", // Borders
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for kanban columns */
+        .kanban-col::-webkit-scrollbar {
+            width: 6px;
+        }
+        .kanban-col::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .kanban-col::-webkit-scrollbar-thumb {
+            background-color: #342a3b;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-hidden h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 h-full flex flex-col bg-surface-dark border-r border-border-dark flex-shrink-0">
+<!-- Logo Area -->
+<div class="p-6 flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="PerTuto Logo Abstract" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgbXqpVXkrPFD6K_0nxVfSUSNhhyf3_bcBWnO4hcPEX8a_hSknK87BklPAOhyLERe4u1H2F7KaATOpPNEc1tLW0wvb09FPlaMC67_ASBpdwld5PvIiE_rzy4l3ZB3_HQM_etoQKoEEhOvATdFQ4ebTXUGTiwgesi9D2PVaoykPdfWsT9OWjTGh1kh4JIP8eBlDVshj8rcH7QadEyJyIRGqa8VXIMm_6eS7joK_izMfUzo3G_kKGnCbUZIfjivB3nLEHVfyxK63YigU");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-tight">PerTuto</h1>
+<p class="text-slate-400 text-xs font-normal">CRM Workspace</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-[24px] font-variation-settings-'FILL'-1">view_kanban</span>
+<span class="text-sm font-medium">Pipeline</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">trending_up</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+</nav>
+<!-- Bottom Actions -->
+<div class="p-3 border-t border-border-dark mt-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="flex items-center gap-3 px-3 py-4 mt-2">
+<img alt="User Avatar" class="size-9 rounded-full ring-2 ring-border-dark" data-alt="User Profile Picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiInOBntFhHcHaxDOz-xf7bNbZJyQNqrJr-UGbaaCwV1r00nabSNiEsV56wzqrLSOlFsBJY4ksET_n9mEF5246xvgeVkBQ-FAs-UOU1TxUauMqFO2eCk-MqFLOjJI0CrXTJXSSo8F24kI3eNIwNaRxD0-KWy5bq9zWUNLDdxWIZv6vcuKGueC59uqouRb9g4f0x2bajFgXPSJeN-RO3F02cVECtALU9Cu5FYSq6sk1DJ0wCBlg78XBOdzR34P2on5n3oW3Z4nLxllC"/>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white">Jane Doe</span>
+<span class="text-xs text-slate-500">Sales Lead</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-dark">
+<!-- Header -->
+<header class="h-auto flex-shrink-0 px-8 py-6 border-b border-border-dark bg-background-dark/50 backdrop-blur-md sticky top-0 z-10">
+<div class="flex flex-col gap-4">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Sales</a>
+<span class="text-slate-600">/</span>
+<span class="text-white font-medium">Pipeline</span>
+</div>
+<!-- Title & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h2 class="text-3xl font-bold tracking-tight text-white">Pipeline</h2>
+<div class="flex items-center gap-3">
+<!-- Search -->
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors material-symbols-outlined text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2.5 bg-surface-dark border border-border-dark rounded-full text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64 transition-all" placeholder="Search leads..." type="text"/>
+</div>
+<!-- Filter Button -->
+<button class="flex items-center gap-2 px-4 py-2.5 bg-surface-dark border border-border-dark rounded-full text-sm font-medium text-white hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span>Filter</span>
+</button>
+<!-- Add Lead Button -->
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-full text-sm font-bold shadow-lg shadow-primary/20 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add Lead</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Kanban Board Area -->
+<div class="flex-1 overflow-x-auto overflow-y-hidden p-8">
+<div class="flex h-full gap-6 min-w-[1000px]">
+<!-- Column 1: New -->
+<div class="flex flex-col w-80 flex-shrink-0 h-full rounded-2xl bg-surface-dark/50 border border-border-dark/50">
+<!-- Column Header -->
+<div class="p-4 flex items-center justify-between border-b border-border-dark/50">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-blue-500"></div>
+<h3 class="font-bold text-white">New</h3>
+<span class="px-2 py-0.5 rounded-full bg-border-dark text-xs font-medium text-slate-400">5</span>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Column Content -->
+<div class="flex-1 overflow-y-auto kanban-col p-3 space-y-3">
+<!-- Card 1 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">Sarah Jenkins</h4>
+<span class="text-xs text-slate-500 font-mono">2m</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">language</span>
+<span class="text-xs text-slate-400">Inbound Website</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium border border-primary/20">Enterprise Plan</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxZcroUVb8utji-1CR_Q_opI871hopTig1sRfeYZW9jPr613QfLPXUyNx3ng0n8OuugykIHXXDEkP319IYIM2Pzr4hXIH7n0XJrM8u5wvRpabEoNHxT-X6QIfPsqSFEWlekvwIiThYzLHhbyaybWz8pkiOcaAea4eA339AGITZNGbqQATHcYXOnJGrrOzulyv1QG9E0l5PyLtT2jW_yK8d81A_70a_XLMiOleoP8Yb9_8edn2FlEUk51HFtm1aCV-bHKtAbWnchKJb"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">Mike Ross</h4>
+<span class="text-xs text-slate-500 font-mono">15m</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">mail</span>
+<span class="text-xs text-slate-400">Email Campaign</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium border border-orange-500/20">High Priority</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRY4STBrVZ1OahO8uul0wz3V4b_bx-IyNr6Ihz2wDo7fG1SWnOMwKnqxgUY7sXmMgPzeKyPfc7kWAHpnpSLu61rLC03GEVlf_31PDvVu_FOnnEMN6woYkz6-FrQKgPmEGIukrgN1zEVr_FgsyfzglSS57B2fey80ldcbd1JKZ65UEcIUZf9rTqQseIHf9acrMalKsRgDID_e8Ws1Ejc_COF3csNVjrda2SLCa-tshgQtgWbRy-z6A8mZFoy2h-U8S4SwvpS4HbY_Ft"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Card Quick Action -->
+<div class="p-3 pt-0">
+<button class="w-full py-2 flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            New Lead
+                        </button>
+</div>
+</div>
+<!-- Column 2: Contacted -->
+<div class="flex flex-col w-80 flex-shrink-0 h-full rounded-2xl bg-surface-dark/50 border border-border-dark/50">
+<div class="p-4 flex items-center justify-between border-b border-border-dark/50">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-yellow-500"></div>
+<h3 class="font-bold text-white">Contacted</h3>
+<span class="px-2 py-0.5 rounded-full bg-border-dark text-xs font-medium text-slate-400">3</span>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto kanban-col p-3 space-y-3">
+<!-- Card 3 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">TechFlow Inc.</h4>
+<span class="text-xs text-slate-500 font-mono">1h</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">work</span>
+<span class="text-xs text-slate-400">LinkedIn</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium border border-primary/20">AI Upskilling</span>
+<span class="px-2.5 py-1 rounded-full bg-slate-700/50 text-slate-300 text-xs font-medium border border-slate-600/50">B2B</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHRkfVsUAqik5WQagziXhreXWYK0VUuPy3wof3ZVcBitpS8ZzKhfxJqv8xXuV6LH7GKArKlccQyXLcaj3tPo8P9mDdTfdaQgz7pIRD3ASAbOJ_IwyOWSWVEHciueLuyVKfV5wCUigWhUxhdvpqUT3K1roFCYYGCvHHI7UGIVk49CeDz9pq-r3hhhO_O24TIbqZZaL8vK537GrsBqA5QCp_qageDblTffVhAyLxwYVqHDobR2nvE4Hlrkxo18i8JQoSULJVl4LlThfT"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 pt-0">
+<button class="w-full py-2 flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add
+                        </button>
+</div>
+</div>
+<!-- Column 3: Demo Booked -->
+<div class="flex flex-col w-80 flex-shrink-0 h-full rounded-2xl bg-surface-dark/50 border border-border-dark/50">
+<div class="p-4 flex items-center justify-between border-b border-border-dark/50">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<h3 class="font-bold text-white">Demo Booked</h3>
+<span class="px-2 py-0.5 rounded-full bg-border-dark text-xs font-medium text-slate-400">2</span>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto kanban-col p-3 space-y-3">
+<!-- Card 4 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">Vertex Systems</h4>
+<span class="text-xs text-primary font-bold font-mono">Tmrw 2pm</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">handshake</span>
+<span class="text-xs text-slate-400">Referral</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-medium border border-green-500/20">Q3 Budget</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQTJkib0hNkzo4kZj6YYsCR9ohKxgBSjr4ckdS5aw4E2iyqRHTgLsF1d8l1sAVJ75vgrxkJDMOLeSIwre0dPW-jXjljvBJnjvEJg-9W7b_clyEDWdEGdpnOwryWyzDXNmCylik-bt6YMsdGfe_TWKKBpwZIsHJNww3nBHeenfjq-sdgNTlpoFMcUROumJHq9i-FXiiOyv5puwI05qZzQPzmxCglWnFgtsP5PnLpOfmtR8k6zEiB7ZtvDpSoPNJ6vERNCAGbemGnpj2"/>
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVlrb7rwClHoL5GrKLngNtRXXk6C0W3veNjD0f03V_S_WVDrAh8JcMVF4E4MlmmT0dcMdWfQy_-UBjeHCEX_C7zQ-XnL--FWGmfrQA5VnAQPaOFELqnHsjUl0lTq3AfVMyvlk6-MXVwWwh3RkXKSgpHA6NqLwrEDjQf6_ZmXDv4VAM2yZtl3qQxewDdYxbVDXKngBvOzkjM-27QJRaud-2FCyrKuaGMId-Ct2kCkC_4sq-zzzbylDnbQUyljOmtAjjLdufWo6rgcyK"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">Astra Dynamics</h4>
+<span class="text-xs text-slate-500 font-mono">3d ago</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">podcasts</span>
+<span class="text-xs text-slate-400">Podcast Ad</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium border border-primary/20">Evaluation</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIHTkzlc2dqUwLwNrP2rPq9T5rcXTL-BBxNaRLAwY3v9maDLiRPHmYQqn1oCWIHDm4ta7ogaoUc1gMXO8jtP9jo2_AiQwKxMdXxkdBNnfUdNQrtySmEgKvjAo0iELsY5K8W3VsRozR_5proIN5JbmS05Txq0_QUodcm0GL604VW7bcUjsivaVrapabu_W418NLwnXnUwKH6k6enyqn759AIS8JC0ZtjBhDVxHbaQJmzLkh2aEewmBA12uQGAFzhq7suX-BNCk1gv0b"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 pt-0">
+<button class="w-full py-2 flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add
+                        </button>
+</div>
+</div>
+<!-- Column 4: Converted -->
+<div class="flex flex-col w-80 flex-shrink-0 h-full rounded-2xl bg-surface-dark/50 border border-border-dark/50">
+<div class="p-4 flex items-center justify-between border-b border-border-dark/50">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-green-500"></div>
+<h3 class="font-bold text-white">Converted</h3>
+<span class="px-2 py-0.5 rounded-full bg-border-dark text-xs font-medium text-slate-400">8</span>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto kanban-col p-3 space-y-3">
+<!-- Card 6 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing opacity-75 hover:opacity-100">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base strike-through">Global Corp</h4>
+<span class="text-xs text-green-400 font-mono">Yesterday</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">call_made</span>
+<span class="text-xs text-slate-400">Outbound</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-medium border border-green-500/20">Signed</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTGtWqEHEMS1ABTL5IK6KquXRlUQ6TGJdV-YX4JLUb5wWzmwfn3Gg-vGbTW9sUYlz43r-0yf7XCLvX_DvW0Rj0WPEdTqTk_c7llSVesHCKs6C1dOUCzUZ9Pyqhgta1sLrNdSf1rAoTzO48dRcbWkH5kRj8w6suojJbvQfZosiAsNJSJRGIQRYScdFeMneEZuGmpfMTTFHy7LJk4gtxi-Cogh90zJ7ZSjotwlIDEm4IMtAET64ZHTPCsghvagSWS3cUpFuDdSYJ4mnW"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 7 -->
+<div class="group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)] transition-all cursor-grab active:cursor-grabbing opacity-75 hover:opacity-100">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-white text-base">NorthStar Utilities</h4>
+<span class="text-xs text-slate-500 font-mono">2d ago</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[16px] text-slate-500">event</span>
+<span class="text-xs text-slate-400">Event</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-medium border border-green-500/20">Signed</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-border-dark/50">
+<div class="flex -space-x-2">
+<img alt="Sales Rep" class="size-6 rounded-full ring-2 ring-card-dark" data-alt="Sales Rep Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2maKj7ysTFZjlMyHM_BaDD8bH7pbQVK8ta1QbvGJnNyFoYQGbfQiqsNK9LmbxF25DuWh1UxhUw8EQaSiojZGZyyzOB6eEl5CbQi3vTXruX20BfqKdXZrWlp00AcQxhl7apaElLordA-P4gb2p043spP3R1Ow9UI3YdlNlNt0icxXz56HcbzlMwLG-y2khdspil7Ob_XhAyiqeXQRTLUf7l0MfV-IBMqSeZxxW5Kxe60-iHw9JtZo1RSIy5Ms2lok3uEStkJXM0BzN"/>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="size-7 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 pt-0">
+<button class="w-full py-2 flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

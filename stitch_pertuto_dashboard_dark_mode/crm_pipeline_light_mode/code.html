@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto CRM Pipeline</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Custom scrollbar for horizontal scrolling if needed */
+        .kanban-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .kanban-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .kanban-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 overflow-hidden h-screen flex flex-col antialiased selection:bg-primary/20 selection:text-primary">
+<!-- Top Navbar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-100 px-6 py-3 bg-white z-20 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">spa</span>
+</div>
+<h2 class="text-slate-900 text-xl font-bold leading-tight tracking-tight font-display">PerTuto CRM</h2>
+</div>
+<nav class="hidden md:flex items-center gap-1 bg-slate-50 p-1 rounded-lg">
+<a class="text-slate-500 hover:text-slate-900 hover:bg-white px-4 py-1.5 rounded-md text-sm font-medium transition-all" href="#">Dashboard</a>
+<a class="text-primary bg-white shadow-sm px-4 py-1.5 rounded-md text-sm font-bold" href="#">Pipeline</a>
+<a class="text-slate-500 hover:text-slate-900 hover:bg-white px-4 py-1.5 rounded-md text-sm font-medium transition-all" href="#">Contacts</a>
+<a class="text-slate-500 hover:text-slate-900 hover:bg-white px-4 py-1.5 rounded-md text-sm font-medium transition-all" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:flex w-64 items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 text-[20px]">search</span>
+<input class="w-full rounded-full border border-slate-200 bg-slate-50 py-2 pl-10 pr-4 text-sm text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-slate-400" placeholder="Search leads..." type="text"/>
+</div>
+<div class="flex items-center gap-2 border-l border-slate-100 pl-4">
+<button class="relative p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<button class="p-1 rounded-full border border-slate-100 bg-slate-50">
+<img alt="User Profile" class="size-8 rounded-full object-cover" data-alt="Portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYm1H3cJcYWKC28ZQxq_evlHMWxfH5Hz__87_WgNmNWlX6bJ4HOPEIri4mPITA6yEEn-Ny5Zx20uhjIXpRn2oq6iKGLBd7DnigMOImwyzRoVRkdN_XwMnQbuchkdFcdoMpzJhYBJX434EgaRpyxVllBkM7mNEQOjEy8TXPJEpA_7XErw73C9ozvLiQsumq5E1dGslcpCwhTZe5O6himNbiLmTItOVgdMBJ99vYgJ7WP027FuBKyW_NrREbfXhLmTmWJM-vUvIG2r3F"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Toolbar -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-5 shrink-0 bg-white">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-bold tracking-tight text-slate-900 font-display">Sales Pipeline</h1>
+<p class="text-slate-500 text-sm">Manage your leads and deal stages efficiently.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-slate-50 rounded-lg p-1 border border-slate-100">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white shadow-sm rounded-md text-sm font-medium text-slate-900">
+<span class="material-symbols-outlined text-[18px]">view_kanban</span>
+                    Board
+                </button>
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-500 hover:text-slate-900">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+                    List
+                </button>
+</div>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-white shadow-md shadow-primary/20 hover:bg-primary/90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="text-sm font-bold">Add Lead</span>
+</button>
+</div>
+</div>
+<!-- Filters Row -->
+<div class="px-6 pb-4 flex items-center gap-3 shrink-0 overflow-x-auto no-scrollbar">
+<button class="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-primary/50 hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-primary">person</span>
+            Owner: All
+            <span class="material-symbols-outlined text-[16px] text-slate-400">arrow_drop_down</span>
+</button>
+<button class="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-primary/50 hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-primary">calendar_today</span>
+            Date: This Month
+            <span class="material-symbols-outlined text-[16px] text-slate-400">arrow_drop_down</span>
+</button>
+<button class="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-primary/50 hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-primary">filter_list</span>
+            More Filters
+        </button>
+<div class="h-6 w-px bg-slate-200 mx-1"></div>
+<span class="text-xs text-slate-400 font-medium">Showing 28 leads</span>
+</div>
+<!-- Kanban Board Area -->
+<main class="flex-1 overflow-x-auto overflow-y-hidden px-6 pb-6 kanban-scroll bg-white">
+<div class="flex h-full gap-6 min-w-[1000px]">
+<!-- Column 1: New -->
+<div class="flex w-80 flex-col shrink-0">
+<div class="mb-3 flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-blue-500"></span>
+<h3 class="text-sm font-bold text-slate-900 font-display">New</h3>
+<span class="flex h-5 items-center justify-center rounded-full bg-slate-100 px-2 text-[10px] font-bold text-slate-600">12</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-1 flex-col gap-3 overflow-y-auto rounded-xl bg-slate-50 p-2 border border-slate-100">
+<!-- Card 1 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-primary/30 active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">Sarah Jenkins</h4>
+<p class="text-xs text-slate-500">Acme Corp</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-[10px] font-medium text-primary ring-1 ring-inset ring-primary/10">Enterprise</span>
+<span class="inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-[10px] font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">High Priority</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                2d ago
+                            </div>
+<img alt="LinkedIn" class="size-4 opacity-60 grayscale group-hover:grayscale-0 transition-all" data-alt="LinkedIn logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBi9GO7NvXYRKMSaFBnu8p1pI-CqZXXQcpW8mzOTH6sXtoA9_VHVa6asgqSVvhmwvn1foEIgtRIBq2wu2bs7QTpVJzDavTfPsvQonwfkN0CJnvOqAIkMdF6BL_6_6o2uPI2_6dA2XsoTjbGVNEAaIHaLn1H29SYabAxUlq20og-tt67WPnQ1UI3VbD07kxkDtU_aMsEeU75uNz2Y9m8IXHl0pkgYdpmwsrg7z8NpQXAja3L68X0SGcmNnwrMOB8w-AShPhHjzO9BCD"/>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-primary/30 active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">Michael Chen</h4>
+<p class="text-xs text-slate-500">StartUp Inc.</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-[10px] font-medium text-primary ring-1 ring-inset ring-primary/10">SaaS</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                3d ago
+                            </div>
+<span class="material-symbols-outlined text-[18px] text-slate-400">mail</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-primary/30 active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">Priya Patel</h4>
+<p class="text-xs text-slate-500">Global Tech</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-[10px] font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10">Referral</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                4h ago
+                            </div>
+<span class="material-symbols-outlined text-[18px] text-slate-400">language</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Contacted -->
+<div class="flex w-80 flex-col shrink-0">
+<div class="mb-3 flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+<h3 class="text-sm font-bold text-slate-900 font-display">Contacted</h3>
+<span class="flex h-5 items-center justify-center rounded-full bg-slate-100 px-2 text-[10px] font-bold text-slate-600">8</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-1 flex-col gap-3 overflow-y-auto rounded-xl bg-slate-50 p-2 border border-slate-100">
+<!-- Card 4 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-primary/30 active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">David Kim</h4>
+<p class="text-xs text-slate-500">NextGen Solutions</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-[10px] font-medium text-primary ring-1 ring-inset ring-primary/10">Enterprise</span>
+</div>
+<div class="mt-1 rounded-md bg-yellow-50 p-2">
+<p class="text-[10px] text-yellow-700 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+                                Follow up tomorrow
+                            </p>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                1w ago
+                            </div>
+<img alt="LinkedIn" class="size-4 opacity-60 grayscale group-hover:grayscale-0 transition-all" data-alt="LinkedIn logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoYi4xjsy1nwGvOggXJbBWEYZiIpJbHvtlbO0cqWf3r_bjvP5UMs754FR8_7TQInNO8Qyf_gdiOh8V920cDRbWpBF8iZ7Vh0qx0ODK4zSgtVSd4vT5E47blG62Mb8niWptj_oQwJTwTHz9564Zo8p2g4torxqoAAgZ___KnJii-p2i7UZoSIK2fl-rloIcJbTHiynw9APTXqMrAe87kXSg1W8R-iq7Jq7si3Fx9XxywHolCqcvsQOBbIYZ6T6fM-09KBSIwYBaQrrC"/>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-primary/30 active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">Emily Davis</h4>
+<p class="text-xs text-slate-500">Creative Hub</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-[10px] font-medium text-primary ring-1 ring-inset ring-primary/10">Small Biz</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                5d ago
+                            </div>
+<span class="material-symbols-outlined text-[18px] text-slate-400">mail</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Demo Booked -->
+<div class="flex w-80 flex-col shrink-0">
+<div class="mb-3 flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+<h3 class="text-sm font-bold text-slate-900 font-display">Demo Booked</h3>
+<span class="flex h-5 items-center justify-center rounded-full bg-slate-100 px-2 text-[10px] font-bold text-slate-600">5</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-1 flex-col gap-3 overflow-y-auto rounded-xl bg-slate-50 p-2 border border-slate-100">
+<!-- Card 6 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-l-4 border-slate-200 border-l-primary bg-white p-4 shadow-sm transition-all hover:shadow-md active:cursor-grabbing">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm">James Wilson</h4>
+<p class="text-xs text-slate-500">Tech Giants Ltd</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="rounded-md bg-primary/5 p-2.5 border border-primary/10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[16px]">videocam</span>
+<span class="text-xs font-semibold">Demo: Mon, 14:00</span>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex -space-x-2">
+<img alt="Assignee 1" class="inline-block size-6 rounded-full ring-2 ring-white object-cover" data-alt="Portrait of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPPWE7pbWzuekD5yGsMUQfiq2jp-DGnST46aLSJtEsOuTHl-ntfwceN7PilkQbFdLS9RTNamE0ov7yUlAocBbFkHwKb_CY8MkLiZNFLflivKC5A40rCzREPU4vnfPYjoME8mOXGrh0PxbRQQkk33RI-32p23stQg9MoAJfNFq42tgdSMntRib5UbfjORW7y2fRmKqqS3jinVw8Ot-14XIzxrLgf_yV6hNHQiEmGu7bV3t9o5tHplWHFZJ7N6_XzLuAF2n65dQUGagN"/>
+<img alt="Assignee 2" class="inline-block size-6 rounded-full ring-2 ring-white object-cover" data-alt="Portrait of a man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI6O2c3V5FsiavNejljwuRA-2zy3MECv4DVAXeJD8HXAIL4lY_bf6XSv1vRWAsAzzi1w8avrKPBdUUysbMCTs74epKNaU8c48cCyXBh4q_Oxuj5Iv-XleCgW3drCDnI0XsdRbZLGMwqmhaIBgBtqpjwV6rkSAxeMyh75VWgC2Q_3_SbEFLcSs4ZPbR3wxavAYcTG3bbWHqbPb02k3YAmIFbMGXx_wHbTHvhSN63ALS2OAwFOVm7i5Hvz1o84m2kABAJQpiAsu7H5HK"/>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                2w ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: Converted -->
+<div class="flex w-80 flex-col shrink-0">
+<div class="mb-3 flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+<h3 class="text-sm font-bold text-slate-900 font-display">Converted</h3>
+<span class="flex h-5 items-center justify-center rounded-full bg-slate-100 px-2 text-[10px] font-bold text-slate-600">3</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-1 flex-col gap-3 overflow-y-auto rounded-xl bg-slate-50 p-2 border border-slate-100">
+<!-- Card 7 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-green-500/30 active:cursor-grabbing opacity-75 hover:opacity-100">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm line-through decoration-slate-400">Lucas Brown</h4>
+<p class="text-xs text-slate-500">FinTech Corp</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-[10px] font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Closed Won</span>
+<span class="text-xs font-bold text-slate-900">$12,000</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                1d ago
+                            </div>
+</div>
+</div>
+<!-- Card 8 -->
+<div class="group relative flex cursor-grab flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-green-500/30 active:cursor-grabbing opacity-75 hover:opacity-100">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-slate-900 text-sm line-through decoration-slate-400">Sofia Rodriguez</h4>
+<p class="text-xs text-slate-500">MediaGroup</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-[10px] font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Closed Won</span>
+<span class="text-xs font-bold text-slate-900">$4,500</span>
+</div>
+<div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                2w ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Column Button -->
+<div class="flex w-10 flex-col shrink-0 pt-10 items-center">
+<button class="flex size-10 items-center justify-center rounded-full border-2 border-dashed border-slate-300 text-slate-400 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</main>
+</body></html>

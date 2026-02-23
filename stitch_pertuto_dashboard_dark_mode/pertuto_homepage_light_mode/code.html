@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto - Elite Tutoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#5b13ec",
+              "background-light": "#f8fafc", /* slate-50 */
+              "background-dark": "#161022",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "sans": ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "1rem",
+              "xl": "1.5rem",
+              "2xl": "2rem",
+              "full": "9999px"
+            },
+            boxShadow: {
+              "soft": "0 4px 20px -2px rgba(91, 19, 236, 0.05)",
+              "glow": "0 0 15px rgba(91, 19, 236, 0.3)",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Smooth scrolling for anchor links */
+        html { scroll-behavior: smooth; }
+        /* Hide scrollbar for marquee but keep functionality */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .mesh-gradient {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(91, 19, 236, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(91, 19, 236, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(91, 19, 236, 0.02) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased mesh-gradient min-h-screen flex flex-col">
+<!-- Sticky Navigation -->
+<nav class="sticky top-0 z-50 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/80">
+<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[28px]">school</span>
+</div>
+<span class="text-xl font-bold tracking-tight">PerTuto</span>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary" href="#">Methodology</a>
+<a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary" href="#">Tutors</a>
+<a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary" href="#">Results</a>
+<a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary" href="#">Pricing</a>
+</div>
+<button class="hidden md:flex items-center justify-center rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary/90 hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                Book Demo
+            </button>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden flex items-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
+<div class="mx-auto max-w-7xl px-6 lg:px-8 text-center relative z-10">
+<div class="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-600 shadow-sm mb-8 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300">
+<span class="flex h-2 w-2 rounded-full bg-primary mr-2"></span>
+                Accepting New Students for Fall 2024
+            </div>
+<h1 class="mx-auto max-w-4xl text-5xl font-black tracking-tight text-slate-900 sm:text-7xl dark:text-white mb-8">
+                Elite Tutoring for the <br class="hidden sm:block"/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400">World's Best Universities</span>
+</h1>
+<p class="mx-auto max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400 mb-10">
+                Experience a bespoke curriculum designed by Ivy League mentors. We blend academic rigor with modern efficiency to unlock your full potential.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="w-full sm:w-auto flex items-center justify-center rounded-lg bg-primary px-8 py-4 text-base font-bold text-white shadow-soft transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-glow">
+                    Book Consultation
+                </button>
+<button class="w-full sm:w-auto flex items-center justify-center rounded-lg bg-white px-8 py-4 text-base font-bold text-slate-900 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 dark:bg-slate-800 dark:ring-slate-700 dark:text-white dark:hover:bg-slate-700">
+                    View Success Stories
+                </button>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute top-1/2 left-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-30 blur-[100px] bg-gradient-to-tr from-primary/20 to-violet-300/20 rounded-full"></div>
+</section>
+<!-- Social Proof / Marquee -->
+<section class="border-y border-slate-100 bg-white py-12 dark:bg-slate-900 dark:border-slate-800">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<p class="text-center text-sm font-semibold text-slate-500 mb-8 uppercase tracking-wider">Trusted by families from</p>
+<div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-60 grayscale transition-all hover:grayscale-0">
+<!-- Logos represented by text for this exercise, usually SVGs -->
+<div class="flex items-center gap-2 text-xl font-bold text-slate-800 dark:text-white">
+<span class="material-symbols-outlined">school</span> HARVARD
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-800 dark:text-white">
+<span class="material-symbols-outlined">account_balance</span> STANFORD
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-800 dark:text-white">
+<span class="material-symbols-outlined">history_edu</span> OXFORD
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-800 dark:text-white">
+<span class="material-symbols-outlined">local_library</span> YALE
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-800 dark:text-white">
+<span class="material-symbols-outlined">menu_book</span> MIT
+                </div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="py-24 bg-white dark:bg-slate-900">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+<div class="flex flex-col gap-y-2 border-l-4 border-primary pl-6">
+<dt class="text-sm font-medium leading-6 text-slate-500">Acceptance Rate</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-slate-900 dark:text-white">98%</dd>
+</div>
+<div class="flex flex-col gap-y-2 border-l-4 border-slate-200 pl-6 dark:border-slate-700">
+<dt class="text-sm font-medium leading-6 text-slate-500">Ivy League Mentors</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-slate-900 dark:text-white">500+</dd>
+</div>
+<div class="flex flex-col gap-y-2 border-l-4 border-slate-200 pl-6 dark:border-slate-700">
+<dt class="text-sm font-medium leading-6 text-slate-500">Scholarships Won</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-slate-900 dark:text-white">$10M+</dd>
+</div>
+<div class="flex flex-col gap-y-2 border-l-4 border-slate-200 pl-6 dark:border-slate-700">
+<dt class="text-sm font-medium leading-6 text-slate-500">Satisfaction Score</dt>
+<dd class="order-first text-4xl font-bold tracking-tight text-slate-900 dark:text-white">4.9/5</dd>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Grid -->
+<section class="py-24 relative overflow-hidden">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl lg:text-center mb-16">
+<h2 class="text-base font-semibold leading-7 text-primary">The PerTuto Advantage</h2>
+<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+                    Precision Academics, Human Connection
+                </p>
+<p class="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
+                    We don't just teach subjects; we architect educational outcomes. Our methodology combines data science with pedagogical expertise.
+                </p>
+</div>
+<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+<!-- Card 1 -->
+<div class="group relative rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all hover:shadow-soft hover:-translate-y-1 dark:bg-slate-800 dark:ring-slate-700">
+<div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">map</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Personalized Roadmap</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        A custom curriculum tailored to your unique learning style and goals. We analyze your strengths to build a path to success.
+                    </p>
+</div>
+<!-- Card 2 -->
+<div class="group relative rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all hover:shadow-soft hover:-translate-y-1 dark:bg-slate-800 dark:ring-slate-700">
+<div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">stars</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Top 1% Tutors</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Learn from mentors who have mastered the very subjects they teach. Our tutors come exclusively from top-tier institutions.
+                    </p>
+</div>
+<!-- Card 3 -->
+<div class="group relative rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all hover:shadow-soft hover:-translate-y-1 dark:bg-slate-800 dark:ring-slate-700">
+<div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">monitoring</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Data-Driven Progress</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Real-time analytics and feedback to track your improvement every step of the way. We eliminate the guesswork from studying.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Image Feature Section -->
+<section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="relative rounded-2xl overflow-hidden bg-slate-100 aspect-[4/3] group shadow-lg">
+<div class="absolute inset-0 bg-slate-900/10 z-10"></div>
+<!-- Image of a student studying in a modern library with soft natural light -->
+<img alt="Students collaborating in a modern, sunlit university library environment" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5zpfaQPOJnfvD5shHjykV8FW8skd3kpuT5R7_4R1jcUJilCHlrK6kIVwtXD_YrQI_v1IhiJjcPtdv_uqj7wrXurvXgLpv1VIzXPKUUiBhHeCEpgAMYqN8PZMZ-4TbJef9XyWKtQTzpdtwQACWgrgXfL3L3YN_SQ5hGYHi0JkFt5pXy20DHF-cgN4I8JjeEWeGME0SsJMdu3wNwS4XjT7o_wz3gXIywMmPqDCDsT2CjNyye__gQ2LmWOdaioOjqtiRL28eB9Wmc8MP"/>
+</div>
+<div class="flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 text-primary font-semibold">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Proven Methodology</span>
+</div>
+<h2 class="text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+                        From Application to Acceptance
+                    </h2>
+<p class="text-lg text-slate-600 dark:text-slate-400">
+                        The journey to an elite university is complex. We simplify it. Our comprehensive support covers everything from standardized test prep to essay crafting and interview coaching.
+                    </p>
+<ul class="flex flex-col gap-4 mt-2">
+<li class="flex items-start gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary shrink-0">check_circle</span>
+<span>Strategic application planning and timeline management.</span>
+</li>
+<li class="flex items-start gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary shrink-0">check_circle</span>
+<span>Rigorous SAT/ACT preparation with adaptive learning tech.</span>
+</li>
+<li class="flex items-start gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary shrink-0">check_circle</span>
+<span>Extracurricular profile building to stand out from the crowd.</span>
+</li>
+</ul>
+<div class="pt-4">
+<a class="text-primary font-bold hover:text-violet-700 flex items-center gap-1 transition-colors group" href="#">
+                            Explore our results <span class="material-symbols-outlined transition-transform group-hover:translate-x-1 text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Minimalist Footer -->
+<footer class="bg-white border-t border-slate-200 dark:bg-slate-900 dark:border-slate-800 mt-auto">
+<div class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="md:col-span-1">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white mb-4">
+<span class="material-symbols-outlined text-primary">school</span>
+<span class="font-bold text-lg">PerTuto</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                        Redefining academic excellence for the next generation of leaders.
+                    </p>
+</div>
+<div>
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-4">Platform</h3>
+<ul class="space-y-3">
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Methodology</a></li>
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Tutors</a></li>
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-4">Company</h3>
+<ul class="space-y-3">
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="text-sm text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-4">Stay Updated</h3>
+<form class="flex gap-2">
+<input class="min-w-0 flex-auto rounded-lg border-0 bg-slate-50 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-slate-800 dark:text-white dark:ring-slate-700" placeholder="Enter your email" type="email"/>
+<button class="flex-none rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="button">
+                            Join
+                        </button>
+</form>
+</div>
+</div>
+<div class="mt-12 border-t border-slate-100 pt-8 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500">© 2024 PerTuto Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

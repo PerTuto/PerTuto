@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df259", // Emerald Green
+                        "background-dark": "#050505", // Deepest black
+                        "background-card": "#0f0f11", // Slightly lighter for cards
+                        "border-dark": "#27272a", // Hairline borders
+                        "text-muted": "#a1a1aa",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["Space Grotesk", "monospace"], // Using Space Grotesk for numbers
+                    },
+                    borderRadius: {
+                        "DEFAULT": "4px",
+                        "sm": "2px",
+                        "md": "6px",
+                        "lg": "8px",
+                        "full": "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a sleeker look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        
+        .sparkline path {
+            vector-effect: non-scaling-stroke;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-200 font-display antialiased overflow-hidden h-screen flex">
+<!-- Left Sidebar -->
+<aside class="w-16 lg:w-20 bg-black border-r border-border-dark flex flex-col items-center py-6 shrink-0 z-20">
+<!-- Logo -->
+<div class="mb-8">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">dataset</span>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 flex flex-col gap-6 w-full px-2">
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors relative text-primary">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary rounded-r"></span>
+</button>
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors text-text-muted hover:text-white">
+<span class="material-symbols-outlined text-[24px]">school</span>
+</button>
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors text-text-muted hover:text-white">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+</button>
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors text-text-muted hover:text-white">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+</button>
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors text-text-muted hover:text-white">
+<span class="material-symbols-outlined text-[24px]">credit_card</span>
+</button>
+</nav>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-4 w-full px-2">
+<button class="group flex items-center justify-center w-full aspect-square rounded hover:bg-white/5 transition-colors text-text-muted hover:text-white">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-cover bg-center border border-border-dark" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP48yj_rQYtENkFQPLf1ZV36tLw3MFLQJ9n8i79N1KIqDfvCVnNTqOtgLIxSkL9Pchojh0Y6qPB7NRENWwe3Km9foywnEL8FRuo6CMn_9LMLBVou52tHfbfYmi-r9oTcMfrneIbGvrxXt1YyWneRYqqQFB4fKnDPblWjbTyOjjf5DtOiWHxLVjMzngEYDDwyWr861cV2ZuAzYvN9UoXR4KbNu9cstkhM_s-PRDvywTK1JnIiMWt1NX3YW1zrMwneZM0dDk7S7RqA1I');"></div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-[#0a0a0a]">
+<!-- Header -->
+<header class="h-16 border-b border-border-dark flex items-center justify-between px-6 bg-background-dark/80 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-4 flex-1">
+<h1 class="font-semibold text-lg tracking-tight text-white hidden md:block">Dashboard</h1>
+<div class="h-4 w-[1px] bg-border-dark mx-2 hidden md:block"></div>
+<!-- Search -->
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[20px] group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-[#18181b] border border-border-dark text-sm rounded pl-10 pr-4 py-2 focus:outline-none focus:border-primary/50 text-white placeholder-text-muted transition-all" placeholder="Search students, tutors, or classes..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
+<kbd class="hidden sm:inline-block border border-border-dark rounded px-1.5 py-0.5 text-[10px] font-mono text-text-muted bg-[#27272a]">⌘K</kbd>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-primary text-black px-3 py-1.5 rounded text-sm font-medium hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="hidden sm:inline">New Class</span>
+</button>
+<button class="text-text-muted hover:text-white p-2 rounded hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content Scrollable -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden p-6">
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Card 1 -->
+<div class="bg-background-card border border-border-dark rounded p-4 flex flex-col justify-between h-[120px] relative overflow-hidden group hover:border-border-dark/80 transition-colors">
+<div class="flex justify-between items-start z-10">
+<span class="text-text-muted text-xs font-medium uppercase tracking-wider">Active Students</span>
+<span class="text-primary text-xs font-mono bg-primary/10 px-1.5 py-0.5 rounded">+12%</span>
+</div>
+<div class="flex items-end gap-2 z-10">
+<span class="text-3xl font-mono font-bold text-white tracking-tight">1,240</span>
+</div>
+<!-- Decorative Sparkline -->
+<svg class="absolute bottom-0 left-0 right-0 h-12 w-full text-primary/20 sparkline z-0 opacity-50 group-hover:opacity-100 transition-opacity" preserveaspectratio="none" viewbox="0 0 100 20">
+<path d="M0 15 Q 10 18, 20 12 T 40 10 T 60 14 T 80 8 T 100 12 V 20 H 0 Z" fill="currentColor" stroke="none"></path>
+<path d="M0 15 Q 10 18, 20 12 T 40 10 T 60 14 T 80 8 T 100 12" fill="none" stroke="#0df259" stroke-width="1.5"></path>
+</svg>
+</div>
+<!-- Card 2 -->
+<div class="bg-background-card border border-border-dark rounded p-4 flex flex-col justify-between h-[120px] relative overflow-hidden group hover:border-border-dark/80 transition-colors">
+<div class="flex justify-between items-start z-10">
+<span class="text-text-muted text-xs font-medium uppercase tracking-wider">New Leads</span>
+<span class="text-primary text-xs font-mono bg-primary/10 px-1.5 py-0.5 rounded">+5%</span>
+</div>
+<div class="flex items-end gap-2 z-10">
+<span class="text-3xl font-mono font-bold text-white tracking-tight">85</span>
+</div>
+<svg class="absolute bottom-0 left-0 right-0 h-12 w-full text-primary/20 sparkline z-0 opacity-50 group-hover:opacity-100 transition-opacity" preserveaspectratio="none" viewbox="0 0 100 20">
+<path d="M0 18 Q 20 15, 40 12 T 70 8 T 100 5 V 20 H 0 Z" fill="currentColor" stroke="none"></path>
+<path d="M0 18 Q 20 15, 40 12 T 70 8 T 100 5" fill="none" stroke="#0df259" stroke-width="1.5"></path>
+</svg>
+</div>
+<!-- Card 3 -->
+<div class="bg-background-card border border-border-dark rounded p-4 flex flex-col justify-between h-[120px] relative overflow-hidden group hover:border-border-dark/80 transition-colors">
+<div class="flex justify-between items-start z-10">
+<span class="text-text-muted text-xs font-medium uppercase tracking-wider">Monthly Revenue</span>
+<span class="text-primary text-xs font-mono bg-primary/10 px-1.5 py-0.5 rounded">+8%</span>
+</div>
+<div class="flex items-end gap-2 z-10">
+<span class="text-3xl font-mono font-bold text-white tracking-tight">$42.5k</span>
+</div>
+<svg class="absolute bottom-0 left-0 right-0 h-12 w-full text-primary/20 sparkline z-0 opacity-50 group-hover:opacity-100 transition-opacity" preserveaspectratio="none" viewbox="0 0 100 20">
+<path d="M0 14 Q 25 18, 50 10 T 100 8 V 20 H 0 Z" fill="currentColor" stroke="none"></path>
+<path d="M0 14 Q 25 18, 50 10 T 100 8" fill="none" stroke="#0df259" stroke-width="1.5"></path>
+</svg>
+</div>
+<!-- Card 4 -->
+<div class="bg-background-card border border-border-dark rounded p-4 flex flex-col justify-between h-[120px] relative overflow-hidden group hover:border-border-dark/80 transition-colors">
+<div class="flex justify-between items-start z-10">
+<span class="text-text-muted text-xs font-medium uppercase tracking-wider">Classes Today</span>
+<span class="text-text-muted text-xs font-mono bg-[#27272a] px-1.5 py-0.5 rounded text-white/70">0%</span>
+</div>
+<div class="flex items-end gap-2 z-10">
+<span class="text-3xl font-mono font-bold text-white tracking-tight">142</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-[#27272a] w-full">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+</div>
+<!-- Content Split -->
+<div class="flex flex-col xl:flex-row gap-6 h-full">
+<!-- Main Feed: Upcoming Schedule -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-white text-lg font-semibold tracking-tight">Upcoming Schedule</h2>
+<div class="flex gap-2">
+<button class="p-1 rounded text-text-muted hover:text-white hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+<button class="p-1 rounded text-text-muted hover:text-white hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="bg-background-card border border-border-dark rounded overflow-hidden">
+<div class="grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-3 bg-black/40 border-b border-border-dark text-xs font-medium text-text-muted uppercase tracking-wider">
+<div>Time</div>
+<div>Class Subject</div>
+<div class="hidden sm:block">Tutor</div>
+<div class="hidden sm:block">Student</div>
+<div class="text-right">Status</div>
+</div>
+<!-- Row 1 -->
+<div class="group grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-4 border-b border-border-dark hover:bg-white/[0.02] transition-colors items-center">
+<div class="font-mono text-sm text-text-muted">09:00 AM</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+<span class="font-medium text-white truncate">Calculus II (Adv)</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Sarah J." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCN6Xr7xqe4M8siYIzZFkZ9u17pfaNRjhDnVYKIBZxPOdQh7w8EcgkKfgyb_OtZoFuPZooRLGaf1RorSiY4L-VO0NQUtFA8iKvKKkuQW6OHOo-KULb06yImnxIwEzgw3idnEnIsagUyBXW_nFl6npFAMKCYIm7Umcpx_mSARN_GjUoUhFYb2-nuMh25CS81ZwZp9M2XAhxklsxqeknXqNAedJ6UvBZU-IU2Pb-JjAA8tCNu2F_QpnlO6S1S7igk9pgpLzTe-gSUxQcI');"></div>
+<span class="text-sm text-text-muted">Sarah J.</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Mike T." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBd8wP-CGQgqvMCCOOVB9IMUg44DZwrtfDSl-6aCMaSgN4NV7pJjHf6V3LzqWpRqdL38Q8VJqJG2LkTpx7tiRXNAJy_y4tJ1M97tbb6YypVrwUyl1wP4BQpYka8lbJuzyQs7HObxWWFaAi25f3elVRXyE7aqpJeguMCnPsx7HJMi7TCvV24RTQgxFoabOSZF2DkHRKF1mpJXeTAYorHP3OhSlZTSYYZvg-qXdkdkoyNV_JGR8T6jr5DAmpLWmJOKoguXNWqNIsV9K4K');"></div>
+<span class="text-sm text-text-muted">Mike T.</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                    Confirmed
+                                </span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="group grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-4 border-b border-border-dark hover:bg-white/[0.02] transition-colors items-center">
+<div class="font-mono text-sm text-text-muted">10:30 AM</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]"></div>
+<span class="font-medium text-white truncate">Organic Chemistry</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of David L." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOlRbKVtCpCU_4EPQeRQJu8_jtYv82McCKB7aqy8rAyxFOdwQBAnHyEgPCcEXJWo1_-q2wfCrUx4qviJCiboEn1JgXULygGn3qNtzPhzozTDSJYzy9tzh7c1jEygmVEWbctA-sdc7S_2txqKtTMbubYpf2uRnwHKA-xdX4cODakGrvb8cPH-U1OGW6yCA2jDfIytLJajKULN0BKgI-CliyIP1LlmXlKYAJele6RwF39pUjSlDepfKKc7hbVUxUuJpy2k_I8SqtIJHd');"></div>
+<span class="text-sm text-text-muted">David L.</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Jenny W." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKvmeBdYksjc9tGfBNHawcdX0h0zdvPR6zOhZ1al54cVXv8PgnQmBYMVptKL1EJaVvOG977rgCSd0PmOfpRPVMfLneqL7B-47e7Z5bMvpRZrNn46LBtZW7B2T-js138yJB-JaTee10I6E3FoyERxOWRGXRk5EiuvA32jPM14NCF5QDLJS58pFsfgnA-KIml7sMbQp-UGm1EKZ13iui3N88W1IdW48Q6VqIa49K2fS2VY_FDjoR9BO7yqu3lFDAm_5XFcit94V8HnD_');"></div>
+<span class="text-sm text-text-muted">Jenny W.</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+                                    Pending
+                                </span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="group grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-4 border-b border-border-dark hover:bg-white/[0.02] transition-colors items-center">
+<div class="font-mono text-sm text-text-muted">11:15 AM</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]"></div>
+<span class="font-medium text-white truncate">Physics I</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Mark R." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRGNA2mz6d7fQ8XqlCY23pLrzXEaXd-kfaU4OqQ_o31K8iMyx4RISZdq720BVVkmnneGn2gwfqTKGQeWxz_eagd2cO7VcLgtUYvtsgLyxD0MdpmOseX5Lf0yGGUMnQ9zbsdnnBN0qlCKw8mNFSi-6XFDRhicTQP_hRsE-DnzrnOL5GEQctgep21cPoQf3QtlJ2sbLOIRMHXJD7o3erhKSVtZy5XnkMHFVIk-O8yyY-iiyr1C53jt-CWlgcDSSulkHz-KfxqP8GF5CW');"></div>
+<span class="text-sm text-text-muted">Mark R.</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Sarah C." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8PTYAxxsY5ZOfkFlrE50mQEo_HPrtkQ93Hro67u-QrE7WbwELH39jVqoMkxhVu9JTIgML4ZFoRTjeCyrqbeeap47zv78-pvYNdAy4KSiwn7ahO1ahZF5d3zkqBwQPlYiWXs7YT3dd-vv6-b5BitJiPGrewGrGPX51kjk5b2YFQKwSXa0YDCuh8zlqzOzn81u0Qv0l3jxYOZ3W5aR3kFNyjFdAW4qX684omg2K6lZfl0q1_d88SLDQgwYJV4MgR3IZKGYqU3FiS1y1');"></div>
+<span class="text-sm text-text-muted">Sarah C.</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                    Confirmed
+                                </span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="group grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-4 border-b border-border-dark hover:bg-white/[0.02] transition-colors items-center">
+<div class="font-mono text-sm text-text-muted">01:00 PM</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+<span class="font-medium text-white truncate">English Lit</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Emily K." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6MYeid-p7PxpiApOG1m27aJKKBJ_StN59UZOcAsH1SGxCay9YRQhTB1qdebjuFAK8JBSyWR7OUK8ocrZrV85dmFX-Oj2yFSMNItLVIelCEK0GOiixaIWnseRXubdSwVRt4bdG_psZf8hltw_4Fec9XXi7cJ8siCwKvxSzaYktRD8bRqfawpJ1GP7HfzbIgEXbRk08rK5w0ov0IPQiMZH_pEL8CwruVsgb8szk7wcA_inOompRUlwbj3SIEW3Vf1PpDy_lvtaD0cim');"></div>
+<span class="text-sm text-text-muted">Emily K.</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of John D." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSW7hsXQRVIzAvUoLWB0IIV5B3pjME6iFYggYnoo49myzTwiN9qQMDLjgDLVx71guA0B8Y7spv8-5LXfVMMjIGGlx9P6e9n52ReOg1RDtfxNTK8w2B33kxgY2IsFW0NSdjxCbQXpSTdmDOvFfW_bpghezT4koe5-XgTr0CiVHqrLilr4mfNQJ-6ZSnUszDsz1huuZTpZCmYPoan1PwtF6dZNvuKAk3qZohtf54qwyt_43UYlX3mGViDOwRvX6lWLoNCKEi5w1PKHcj');"></div>
+<span class="text-sm text-text-muted">John D.</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-500/10 text-red-500 border border-red-500/20">
+                                    Cancelled
+                                </span>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="group grid grid-cols-[80px_1fr_120px] sm:grid-cols-[100px_1.5fr_1fr_1fr_120px] gap-4 p-4 border-b border-border-dark hover:bg-white/[0.02] transition-colors items-center">
+<div class="font-mono text-sm text-text-muted">02:30 PM</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]"></div>
+<span class="font-medium text-white truncate">SAT Prep</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Alex T." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxq9Eb644vrwDUHlv0wjZ8I7DNFqedSK1pKs74ftBv-WXZ6J3SoWwmjKCD-WFvk4hb01-Oodzk1bDt11eVKAKPFZQB5FJkRFBolujcHfY_Sa5IaBozgUR3sSl-Uy6qsA_a3ko5sfVKC31wqG4w5bFjlNZhouo-jbrseKuBc2nXWzP_VMRe79wnvI01g3E4CO4u810jIcgERwfLG2fsRcb9IgBHMyC6AAjZDHZtcaam_GTlREAgw0oh-pYLoB_6JVICA6OfT8_eZgEi');"></div>
+<span class="text-sm text-text-muted">Alex T.</span>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-cover bg-center border border-border-dark" data-alt="Portrait of Lisa M." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCH1BE6S9Zb4YWEskgsNLJ6ZcGUaIrriqpKXocRg7WTdT6Lh_iv9kTSkiaXNNtIIulJlB9sdqjXKcu-V1HabWM2zGEs--UUlSo7avlP2gssUddeiwHv7kgpJiRlk_AgYQ0unq9bhIYFgkYsbqZz2vEcdDXAZ21vjGPm71onRDSW_3JTcUsMYvBgaFTpfAWI9ie6tVfW0fvxtVsW1r_fLUxWAsd6gXyYanm_-gZZste0cxoOnglvwaV29ZU1YJzIdTBAbuC0tnxGFE4V');"></div>
+<span class="text-sm text-text-muted">Lisa M.</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                    Confirmed
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Activity Feed -->
+<div class="w-full xl:w-80 shrink-0">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-white text-lg font-semibold tracking-tight">Activity Feed</h2>
+</div>
+<div class="bg-background-card border border-border-dark rounded p-4 h-fit">
+<div class="relative pl-4 border-l border-border-dark space-y-8">
+<!-- Item 1 -->
+<div class="relative group">
+<div class="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-background-card border-2 border-primary group-hover:scale-110 transition-transform"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-200">
+<span class="font-medium text-white">New dispute</span> opened by User #992
+                                    </p>
+<span class="text-xs text-text-muted font-mono">2m ago</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative group">
+<div class="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-background-card border-2 border-border-dark group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-200">
+                                        Payout <span class="font-mono text-primary">#4421</span> processed
+                                    </p>
+<span class="text-xs text-text-muted font-mono">15m ago</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative group">
+<div class="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-background-card border-2 border-blue-500 group-hover:scale-110 transition-transform"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-200">
+<span class="font-medium text-white">System update</span> v2.4.1 deployed
+                                    </p>
+<span class="text-xs text-text-muted font-mono">1h ago</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="relative group">
+<div class="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-background-card border-2 border-border-dark group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-200">
+                                        New tutor application from <span class="font-medium text-white">Dr. Aris</span>
+</p>
+<span class="text-xs text-text-muted font-mono">3h ago</span>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="relative group">
+<div class="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-background-card border-2 border-yellow-500 group-hover:scale-110 transition-transform"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm text-slate-200">
+                                        Class rescheduling request for <span class="font-medium text-white">Physics 101</span>
+</p>
+<span class="text-xs text-text-muted font-mono">5h ago</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-xs font-medium text-text-muted hover:text-white border border-border-dark hover:border-text-muted rounded transition-colors uppercase tracking-wide">
+                            View All Activity
+                        </button>
+</div>
+<!-- Additional Widget: System Status -->
+<div class="mt-6 bg-background-card border border-border-dark rounded p-4">
+<h3 class="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">System Status</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-sm text-white">API Gateway</span>
+</div>
+<span class="text-xs text-primary font-mono">99.9%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-sm text-white">Database</span>
+</div>
+<span class="text-xs text-primary font-mono">99.8%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<span class="text-sm text-white">Email Service</span>
+</div>
+<span class="text-xs text-yellow-500 font-mono">Degraded</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

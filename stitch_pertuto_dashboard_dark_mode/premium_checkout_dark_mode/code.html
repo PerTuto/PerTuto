@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Checkout - PerTuto</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "heading": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                    boxShadow: {
+                        "glow": "0 0 20px -5px rgba(91, 19, 236, 0.5)",
+                        "glow-lg": "0 0 40px -10px rgba(91, 19, 236, 0.6)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161022; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444; 
+        }
+        
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(22, 16, 34, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .bg-dashboard {
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex items-center justify-center overflow-hidden">
+<!-- Background Dashboard Simulation (Heavily Blurred) -->
+<div class="fixed inset-0 z-0 select-none">
+<!-- Abstract Dashboard Background Image -->
+<div class="absolute inset-0 bg-dashboard opacity-80" data-alt="Abstract blurry dashboard background with charts and data tables"></div>
+<div class="absolute inset-0 bg-background-dark/80 backdrop-blur-3xl"></div>
+<!-- Faux UI Elements to imply dashboard behind blur -->
+<div class="absolute top-0 left-0 w-64 h-full border-r border-white/5 bg-background-dark/20 hidden lg:block"></div>
+<div class="absolute top-8 left-72 right-8 h-32 rounded-xl bg-white/5 border border-white/5"></div>
+<div class="absolute top-48 left-72 w-1/3 h-64 rounded-xl bg-white/5 border border-white/5"></div>
+<div class="absolute top-48 left-[calc(18rem+33%+2rem)] right-8 h-96 rounded-xl bg-white/5 border border-white/5"></div>
+</div>
+<!-- Modal Container -->
+<div class="relative z-10 w-full max-w-5xl mx-4 lg:mx-auto shadow-2xl shadow-black/80 rounded-2xl overflow-hidden flex flex-col lg:flex-row min-h-[600px] border border-white/10 glass-panel animate-fade-in-up">
+<!-- Left Side: Checkout Form (60%) -->
+<div class="w-full lg:w-[60%] p-8 lg:p-12 flex flex-col justify-between relative bg-background-dark">
+<!-- Header Section -->
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-icons-outlined text-primary text-xl">school</span>
+<span class="text-xs uppercase tracking-widest text-slate-400 font-semibold">PerTuto Elite</span>
+</div>
+<h1 class="font-heading text-3xl lg:text-4xl font-semibold text-white mb-2 leading-tight">
+                    Intensive IB Bootcamp<br/><span class="text-slate-400 font-normal">12 Sessions</span>
+</h1>
+<div class="flex items-center gap-3 mt-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                        Monthly Retainer
+                    </span>
+<span class="text-2xl font-heading font-medium text-white">$1,000<span class="text-base text-slate-500 font-display">/mo</span></span>
+</div>
+</div>
+<!-- Form Section -->
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<!-- Contact Info -->
+<div class="group">
+<label class="block text-xs font-medium text-slate-400 mb-1.5 ml-1">Email Address</label>
+<input class="w-full bg-background-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-300" placeholder="Enter your email" type="email" value="parent@example.com"/>
+</div>
+<!-- Payment Details -->
+<div>
+<div class="flex justify-between items-center mb-1.5 ml-1">
+<label class="block text-xs font-medium text-slate-400">Card Information</label>
+<div class="flex gap-2 opacity-50">
+<span class="material-icons-outlined text-white text-sm">credit_card</span>
+<span class="text-[10px] text-white tracking-widest uppercase">Encrypted</span>
+</div>
+</div>
+<div class="border border-white/10 rounded-lg overflow-hidden focus-within:ring-1 focus-within:ring-primary focus-within:border-primary transition-all duration-300 bg-background-dark">
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-white/10 px-4 py-3.5 text-white placeholder-slate-600 focus:ring-0" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-4 top-3.5 flex gap-2">
+<!-- Card Brand Icon Placeholders -->
+<div class="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+<div class="w-3 h-3 rounded-full bg-red-500/80 -mr-1"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+</div>
+</div>
+</div>
+<div class="flex divide-x divide-white/10">
+<input class="w-1/2 bg-transparent border-0 px-4 py-3.5 text-white placeholder-slate-600 focus:ring-0" placeholder="MM / YY" type="text"/>
+<input class="w-1/2 bg-transparent border-0 px-4 py-3.5 text-white placeholder-slate-600 focus:ring-0" placeholder="CVC" type="text"/>
+</div>
+</div>
+</div>
+<!-- Cardholder Name -->
+<div class="group">
+<label class="block text-xs font-medium text-slate-400 mb-1.5 ml-1">Cardholder Name</label>
+<input class="w-full bg-background-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-300" placeholder="Name as it appears on card" type="text"/>
+</div>
+</form>
+<!-- Bottom CTA -->
+<div class="mt-8 pt-6 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-[#4a0fc4] text-white font-medium py-4 rounded-xl shadow-glow hover:shadow-glow-lg transition-all duration-300 transform active:scale-[0.99] flex items-center justify-center gap-2 group">
+<span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">lock</span>
+<span class="font-heading text-lg tracking-wide">Complete Secure Checkout</span>
+</button>
+<div class="flex justify-center mt-4 gap-6 opacity-40">
+<span class="material-icons-outlined text-white text-lg">verified_user</span>
+<span class="material-icons-outlined text-white text-lg">shield</span>
+<span class="material-icons-outlined text-white text-lg">lock</span>
+</div>
+</div>
+</div>
+<!-- Right Side: Social Proof (40%) -->
+<div class="w-full lg:w-[40%] bg-gradient-to-br from-[#1a1426] to-[#0f0b18] p-8 lg:p-12 border-l border-white/5 flex flex-col relative overflow-hidden">
+<!-- Decorative Elements -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Content Container -->
+<div class="relative z-10 flex flex-col h-full justify-center">
+<!-- Rating Stars -->
+<div class="flex gap-1 mb-8">
+<span class="material-icons text-yellow-400 text-2xl">star</span>
+<span class="material-icons text-yellow-400 text-2xl">star</span>
+<span class="material-icons text-yellow-400 text-2xl">star</span>
+<span class="material-icons text-yellow-400 text-2xl">star</span>
+<span class="material-icons text-yellow-400 text-2xl">star</span>
+</div>
+<!-- Testimonial Quote -->
+<blockquote class="mb-8">
+<p class="font-heading text-2xl lg:text-3xl font-medium text-white leading-relaxed">
+                        "Dr. Ankur transformed my son's IB Math grade. We saw results in <span class="text-primary border-b border-primary/30 pb-0.5">just 3 weeks</span>."
+                    </p>
+</blockquote>
+<!-- Author Info -->
+<div class="flex items-center gap-4 mb-12">
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 p-[1px]">
+<!-- Image placeholder with data-alt -->
+<img alt="Portrait of Sarah Jenkins" class="w-full h-full rounded-full object-cover border-2 border-background-dark" data-alt="Professional headshot of a middle-aged woman looking confident" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy6WKu1AekcSdz4JLCFuCX9k8i256MKxmIthTXrY-6FERuQu04FHt9vWlhmBVKPdCWl4WhMgU-lZjTT4q1hDclCkW-BcUI_P8Hr_ZX9Tv95Kvw2pKL9ExmU9JaXMZ_FCVnsn7Wh08gloXVYjyNOATq_ep7O3qNpQ3lxLOdBYpNiZQGrZ6wIVrpAgiKr-wcMPjGeETfh8Q-jjgrTs2qQbTqVfzuiUENJPrtZ53EAjp_taIXespNQ2jPKYVi6A3jag56o6xCDAIlsGaH"/>
+</div>
+<div>
+<div class="font-heading text-white text-lg font-medium">Sarah Jenkins</div>
+<div class="text-slate-400 text-sm">Parent of Oxford Applicant</div>
+</div>
+</div>
+<!-- Trust Badges / Stats -->
+<div class="mt-auto pt-8 border-t border-white/5 grid grid-cols-2 gap-4">
+<div>
+<div class="text-3xl font-heading font-bold text-white mb-1">98%</div>
+<div class="text-xs text-slate-500 uppercase tracking-wider">Success Rate</div>
+</div>
+<div>
+<div class="text-3xl font-heading font-bold text-white mb-1">Top 10</div>
+<div class="text-xs text-slate-500 uppercase tracking-wider">Uni Acceptances</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Help Button -->
+<button class="fixed bottom-8 right-8 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white p-4 rounded-full shadow-lg transition-all z-50 group">
+<span class="material-icons-outlined group-hover:rotate-12 transition-transform">support_agent</span>
+</button>
+</body></html>

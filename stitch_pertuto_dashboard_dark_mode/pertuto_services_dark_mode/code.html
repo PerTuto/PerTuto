@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PerTuto Services - Dark Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "primary-glow": "#7c3aed",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f0c15", // Deep dark background
+                        "surface-dark": "#18151f", // Slightly lighter for cards
+                        "border-dark": "#2e2839", // Subtle border
+                        "accent-green": "#10b981", // Emerald for CTA
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Noto Sans", sans-serif;
+            background-color: #0f0c15;
+            color: #e2e8f0;
+        }
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: "Space Grotesk", sans-serif;
+        }
+        .glass-panel {
+            background: rgba(91, 19, 236, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px -5px rgba(91, 19, 236, 0.3);
+            border-color: rgba(91, 19, 236, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-100 antialiased selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md">
+<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-2">
+<div class="flex size-8 items-center justify-center rounded bg-primary text-white">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<span class="font-display text-xl font-bold tracking-tight text-white">PerTuto</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">Methodology</a>
+<a class="text-sm font-medium text-white transition-colors" href="#">Services</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">Results</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">Tutors</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex h-9 items-center justify-center rounded-lg bg-white/5 px-4 text-sm font-medium text-white hover:bg-white/10 transition-colors border border-white/10">
+                    Client Login
+                </button>
+<button class="flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white shadow-[0_0_15px_-3px_rgba(91,19,236,0.6)] hover:bg-primary-glow transition-all">
+                    Book Consult
+                </button>
+</div>
+</div>
+</header>
+<main class="flex flex-col">
+<!-- Hero Section -->
+<section class="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden border-b border-border-dark px-4 py-20 text-center sm:px-6 lg:px-8">
+<!-- Background Elements -->
+<div class="absolute inset-0 z-0">
+<div class="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-[100px]"></div>
+<div class="absolute bottom-0 right-0 h-[300px] w-[300px] translate-y-1/3 rounded-full bg-blue-600/10 blur-[80px]"></div>
+</div>
+<div class="relative z-10 max-w-4xl space-y-6">
+<div class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary-glow">
+<span class="mr-1.5 flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                    Now accepting new students for Fall 2024
+                </div>
+<h1 class="font-display text-5xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                    Learn the Critical <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-glow to-blue-400">90%</span><br/>
+                    in <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-glow to-blue-400">10%</span> of the Time
+                </h1>
+<p class="mx-auto max-w-2xl text-lg text-slate-400">
+                    Elite tutoring infrastructure for high-performance students. We deconstruct complex curriculums into mastery-focused analytical frameworks.
+                </p>
+<div class="flex flex-col items-center justify-center gap-4 sm:flex-row pt-4">
+<button class="h-12 w-full min-w-[160px] rounded-lg bg-white text-background-dark font-bold hover:bg-slate-200 sm:w-auto transition-colors">
+                        Explore Method
+                    </button>
+<button class="h-12 w-full min-w-[160px] rounded-lg border border-border-dark bg-surface-dark px-6 font-medium text-white hover:bg-border-dark sm:w-auto transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        See How It Works
+                    </button>
+</div>
+</div>
+<!-- Abstract Grid Background -->
+<div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(#2e2839 1px, transparent 1px), linear-gradient(90deg, #2e2839 1px, transparent 1px); background-size: 40px 40px;"></div>
+</section>
+<!-- Bento Grid Section -->
+<section class="relative z-10 mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+<div class="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+<div>
+<h2 class="font-display text-3xl font-bold text-white">Core Disciplines</h2>
+<p class="mt-2 text-slate-400">Precision-engineered curriculums for every academic goal.</p>
+</div>
+<a class="group flex items-center text-sm font-medium text-primary hover:text-primary-glow" href="#">
+                    View full catalog 
+                    <span class="material-symbols-outlined ml-1 text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-2 h-auto md:h-[600px]">
+<!-- Large Card: Mathematics -->
+<div class="bento-card group relative col-span-1 md:col-span-2 md:row-span-2 flex flex-col overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-6 md:p-8">
+<div class="absolute right-0 top-0 h-full w-full opacity-40 mix-blend-overlay transition-opacity group-hover:opacity-60">
+<div class="h-full w-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/30 via-transparent to-transparent"></div>
+</div>
+<div class="mb-auto">
+<div class="mb-4 inline-flex items-center justify-center rounded-lg bg-primary/10 p-3 text-primary">
+<span class="material-symbols-outlined text-[28px]">function</span>
+</div>
+<h3 class="font-display text-2xl font-bold text-white">Advanced Mathematics</h3>
+<p class="mt-2 text-slate-400">Calculus, Linear Algebra, and Statistics mastered through first-principles thinking.</p>
+</div>
+<div class="mt-8 relative h-48 w-full overflow-hidden rounded-lg bg-black/40 border border-white/5" data-alt="Abstract glowing mathematical graph showing exponential growth on dark background">
+<!-- Decorative Graph Visual -->
+<svg class="absolute bottom-0 left-0 right-0 h-full w-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0 100 Q 30 90 50 60 T 100 10" fill="none" stroke="#5b13ec" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="M0 100 Q 30 90 50 60 T 100 10 L 100 100 L 0 100 Z" fill="url(#gradient)" opacity="0.2"></path>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#5b13ec;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#5b13ec;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute top-4 right-4 flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400 border border-green-500/20">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                            +15% Avg Grade
+                        </div>
+</div>
+</div>
+<!-- Medium Card: Physics -->
+<div class="bento-card group relative col-span-1 md:col-span-2 md:row-span-1 flex flex-col justify-center overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-6">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-2">
+<div class="inline-flex w-fit items-center justify-center rounded-lg bg-blue-500/10 p-2 text-blue-400">
+<span class="material-symbols-outlined">science</span>
+</div>
+<h3 class="font-display text-xl font-bold text-white">Physics &amp; Mechanics</h3>
+<p class="text-sm text-slate-400">Newtonian dynamics to Quantum theory.</p>
+</div>
+<div class="hidden h-16 w-16 items-center justify-center rounded-full bg-white/5 md:flex">
+<span class="material-symbols-outlined text-[32px] text-slate-600 group-hover:text-blue-400 transition-colors">model_training</span>
+</div>
+</div>
+</div>
+<!-- Small Card: Computer Science -->
+<div class="bento-card group relative col-span-1 md:col-span-1 md:row-span-1 flex flex-col overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-6">
+<div class="mb-3 inline-flex w-fit items-center justify-center rounded-lg bg-purple-500/10 p-2 text-purple-400">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<h3 class="font-display text-lg font-bold text-white">Computer Science</h3>
+<p class="mt-1 text-xs text-slate-400">Algorithms, Data Structures &amp; AI.</p>
+</div>
+<!-- Small Card: Standardized Testing -->
+<div class="bento-card group relative col-span-1 md:col-span-1 md:row-span-1 flex flex-col overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-6">
+<div class="mb-3 inline-flex w-fit items-center justify-center rounded-lg bg-orange-500/10 p-2 text-orange-400">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<h3 class="font-display text-lg font-bold text-white">Test Prep</h3>
+<p class="mt-1 text-xs text-slate-400">SAT, ACT, GRE elite preparation.</p>
+</div>
+</div>
+</section>
+<!-- Z-Pattern Section -->
+<section class="py-24 border-t border-border-dark bg-background-dark overflow-hidden">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<!-- Row 1: Image Left, Text Right -->
+<div class="mb-24 flex flex-col items-center gap-12 lg:flex-row">
+<div class="w-full lg:w-1/2">
+<div class="relative aspect-square md:aspect-video w-full overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-2">
+<div class="h-full w-full rounded-xl bg-cover bg-center" data-alt="Abstract data visualization dashboard displaying analytics charts on dark screen" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCf2b_0YIR8vPEJKQmIvHVHaJqx03tJ3-kyqQT9SI7nY2tKH0YXoeK1w_CqqcmH6E3uw3zjvjaBv--waO7v0zHDo-6CE9JlN2goeLfKuiJROUGq9ichi4WNdhRHCkakEFFxSDyYPybFICfYsAy_gz1RG0B2X0CHEU9fGyxUGOQsAxqhzn5R6pjUSlYkUferRRu--zhZyVjCLueSY4u9OrghDijca6nmpOgA0O7r8q0r_6VC3lY1R5_3inMIHFrkqRsEVfVmQltm-JZG');"></div>
+<div class="absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-primary/30 blur-3xl"></div>
+</div>
+</div>
+<div class="w-full lg:w-1/2 lg:pl-12">
+<div class="mb-4 inline-flex items-center gap-2 text-sm font-bold text-primary uppercase tracking-wider">
+<span class="h-px w-8 bg-primary"></span>
+                            The Pareto Principle
+                        </div>
+<h2 class="mb-6 font-display text-3xl font-bold text-white md:text-4xl">Focus on the vital few, ignore the trivial many.</h2>
+<p class="mb-8 text-lg text-slate-400">
+                            Traditional education wastes time on rote memorization. Our methodology identifies the 20% of concepts that drive 80% of the results, allowing for rapid mastery and deeper understanding.
+                        </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined mt-1 text-primary">check_circle</span>
+<span class="text-slate-300">Identify high-leverage concepts immediately.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined mt-1 text-primary">check_circle</span>
+<span class="text-slate-300">Eliminate redundant study hours.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined mt-1 text-primary">check_circle</span>
+<span class="text-slate-300">Structured repetition for long-term retention.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Row 2: Text Left, Image Right -->
+<div class="flex flex-col-reverse items-center gap-12 lg:flex-row">
+<div class="w-full lg:w-1/2 lg:pr-12">
+<div class="mb-4 inline-flex items-center gap-2 text-sm font-bold text-primary uppercase tracking-wider">
+<span class="h-px w-8 bg-primary"></span>
+                            Analytical Tracking
+                        </div>
+<h2 class="mb-6 font-display text-3xl font-bold text-white md:text-4xl">Data-Driven Progress. Zero Ambiguity.</h2>
+<p class="mb-8 text-lg text-slate-400">
+                            We don't guess; we measure. Every session is tracked, every quiz analyzed. Our proprietary dashboard gives you real-time insight into your mastery levels across every sub-topic.
+                        </p>
+<button class="group flex items-center gap-2 text-white font-medium hover:text-primary transition-colors">
+                            View Sample Report
+                            <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+<div class="w-full lg:w-1/2">
+<div class="relative aspect-square md:aspect-video w-full overflow-hidden rounded-2xl border border-border-dark bg-surface-dark p-2">
+<div class="h-full w-full rounded-xl bg-cover bg-center" data-alt="Futuristic dark digital interface showing geometric 3D shapes and data points" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxwsnWNAYxPMAcuj3Me5FGTKJUAmH5wCzIg3ZSsJPjvxra-RGORXXuVjXg-0E1NabraxuqWiVjOpV64xXY4-SpUDlpW93f5gGsa8B9ezBtlG6fC1IJ6f0Dj7HWf4yFszkwD5KT_g7mAOIWyzyLI774voSpVF5f_szEpRreDnKcq4Ud4AL5AB0LxdTPvdfCNjLHZTiXBK04oeFR-dRVAmjIEPZQo9bKthUjoCtMH4x9WmBLkrEnS9G2s1oJ3vMave2NdUMRJB27M8s8');"></div>
+<div class="absolute -top-6 -left-6 h-32 w-32 rounded-full bg-blue-500/20 blur-3xl"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA / Lead Capture -->
+<section class="relative py-24 px-4 sm:px-6 lg:px-8">
+<div class="absolute inset-0 z-0">
+<div class="h-full w-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1e1b2e] via-background-dark to-background-dark"></div>
+</div>
+<div class="relative z-10 mx-auto max-w-4xl">
+<div class="glass-panel overflow-hidden rounded-2xl p-8 shadow-2xl sm:p-12 text-center">
+<div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[32px]">rocket_launch</span>
+</div>
+<h2 class="font-display text-3xl font-bold text-white sm:text-4xl">Secure Your Spot</h2>
+<p class="mt-4 text-slate-400 max-w-lg mx-auto mb-8">
+                        Our tutors are in high demand. Apply now to reserve your consultation and receive a personalized roadmap.
+                    </p>
+<form class="mx-auto max-w-md space-y-4 text-left">
+<div>
+<label class="sr-only" for="name">Full Name</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-500 text-[20px]">person</span>
+</div>
+<input class="block w-full rounded-lg border-border-dark bg-background-dark/50 p-3 pl-10 text-white placeholder-slate-500 focus:border-primary focus:ring-primary sm:text-sm" id="name" name="name" placeholder="Full Name" type="text"/>
+</div>
+</div>
+<div>
+<label class="sr-only" for="email">Email</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-500 text-[20px]">mail</span>
+</div>
+<input class="block w-full rounded-lg border-border-dark bg-background-dark/50 p-3 pl-10 text-white placeholder-slate-500 focus:border-primary focus:ring-primary sm:text-sm" id="email" name="email" placeholder="Email Address" type="email"/>
+</div>
+</div>
+<div>
+<label class="sr-only" for="subject">Subject of Interest</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-500 text-[20px]">category</span>
+</div>
+<select class="block w-full rounded-lg border-border-dark bg-background-dark/50 p-3 pl-10 text-slate-300 focus:border-primary focus:ring-primary sm:text-sm" id="subject" name="subject">
+<option>Select a Subject</option>
+<option>Mathematics</option>
+<option>Physics</option>
+<option>Computer Science</option>
+<option>Test Prep</option>
+<option>General Mentorship</option>
+</select>
+</div>
+</div>
+<button class="mt-6 flex w-full items-center justify-center rounded-lg bg-accent-green px-8 py-3 text-base font-bold text-slate-900 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-background-dark transition-all shadow-[0_0_20px_-5px_rgba(16,185,129,0.4)]" type="button">
+                            Submit Application
+                        </button>
+<p class="text-center text-xs text-slate-500 mt-4">
+                            Limited availability for Fall 2024. No credit card required for consultation.
+                        </p>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-border-dark bg-background-dark py-12">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="font-display font-bold">PerTuto</span>
+<span class="text-xs ml-2">© 2024</span>
+</div>
+<div class="flex gap-6 text-sm text-slate-500">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-white transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

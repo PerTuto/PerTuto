@@ -48,11 +48,17 @@ body {
   .dark {
     --background: 240 10% 4%; /* bg-dark: #09090b */
     --foreground: 240 5% 96%; /* text-main: #f4f4f5 */
-    --card: 240 5% 15%; /* bg-panel: #18181b - Using panel for card background */
+    --card: 240 5% 15%; /* bg-panel: #18181b */
     --card-foreground: 240 5% 96%;
     --popover: 240 10% 4%;
     --popover-foreground: 240 5% 96%;
-    --primary: 262 83% 66%; /* primary: #8b5cf6 */
+    
+    /* Stitch Premium Palette Overrides */
+    --primary: 262 85% 50%; /* #5b13ec */
+    --primary-glow: 262 82% 58%; /* #7c3aed */
+    --background-dark: 222 84% 5%; /* #020617 (slate-950) */
+    --surface-dark: 215 48% 11%; /* #0f172a (slate-900) */
+    
     --primary-foreground: 0 0% 100%;
     --secondary: 240 5% 15%; /* bg-card: #27272a */
     --secondary-foreground: 240 5% 96%;
@@ -73,6 +79,13 @@ body {
     --sidebar-accent-foreground: 240 5% 96%;
     --sidebar-border: 240 4% 25%;
     --sidebar-ring: 262 83% 66%;
+  }
+
+  /* Stitch Aurora background definition for Tailwind v4 */
+  @property --bg-aurora {
+    syntax: "<string>";
+    inherits: false;
+    initial-value: "radial-gradient(circle at 50% 0%, rgba(91, 19, 236, 0.15) 0%, rgba(2, 6, 23, 0) 50%), radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(2, 6, 23, 0) 40%)";
   }
 }
 
@@ -106,4 +119,51 @@ body {
 
 .animate-marquee {
   animation: marquee 40s linear infinite;
+}
+
+/* Stitch Components & Utilities */
+@layer components {
+  /* Replace old card styles with new Stitch aesthetics */
+  .glass-panel {
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .glass-header {
+      background: rgba(2, 6, 23, 0.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .text-glow {
+      text-shadow: 0 0 20px rgba(91, 19, 236, 0.3);
+  }
+  
+  .btn-glow {
+      box-shadow: 0 0 20px rgba(91, 19, 236, 0.4);
+      transition: all 0.3s ease;
+  }
+  .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(91, 19, 236, 0.6);
+      transform: translateY(-1px);
+  }
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  .bg-aurora {
+    background-image: radial-gradient(circle at 50% 0%, rgba(91, 19, 236, 0.15) 0%, rgba(2, 6, 23, 0) 50%), radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(2, 6, 23, 0) 40%);
+  }
+  .bg-background-dark {
+    background-color: hsl(var(--background-dark));
+  }
+  .bg-surface-dark {
+    background-color: hsl(var(--surface-dark));
+  }
+  .text-primary-glow {
+    color: hsl(var(--primary-glow));
+  }
 }

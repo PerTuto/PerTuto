@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Roster - PerTuto</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5b13ec",
+                        "background-light": "#f8fafc", // slate-50
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "0.75rem", 
+                        "xl": "1rem", 
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-900 min-h-screen flex flex-col font-body antialiased selection:bg-primary/20 selection:text-primary">
+<!-- Top Navbar -->
+<div class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+<div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+<!-- Brand -->
+<div class="flex items-center gap-3 text-slate-900">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<h2 class="text-xl font-bold font-display tracking-tight">PerTuto</h2>
+</div>
+<!-- Navigation -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-semibold bg-primary/5 px-3 py-1.5 rounded-lg" href="#">Students</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Courses</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Analytics</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-3">
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-slate-50 text-slate-500 hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-slate-50 text-slate-500 hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="w-px h-6 bg-slate-200 mx-1"></div>
+<button class="flex items-center gap-2 pl-1 pr-1 py-1 rounded-full hover:bg-slate-50 transition-colors group">
+<div class="size-8 rounded-full bg-gradient-to-tr from-primary to-indigo-400 p-[2px]">
+<div class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+<!-- Using a generic avatar-like pattern or solid color if image fails, but mimicking user avatar -->
+<div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xs">JD</div>
+</div>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Layout -->
+<main class="flex-1 w-full max-w-[1400px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
+<!-- Header Section -->
+<header class="flex flex-col gap-6">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-sm font-medium text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Students</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-slate-900">Roster</span>
+</div>
+<!-- Title & Primary Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<h1 class="text-4xl font-bold tracking-tight text-slate-900 font-display">Student Roster</h1>
+<p class="text-slate-500 font-medium">Spring 2024 Semester • <span class="text-primary font-semibold">1,248 Students</span> Enrolled</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-10 px-4 rounded-lg border border-slate-200 bg-white text-slate-600 font-medium text-sm hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export CSV
+                    </button>
+<button class="h-10 px-4 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-all flex items-center gap-2 shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Add Student
+                    </button>
+</div>
+</div>
+<!-- Forensic Filter Bar -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+<!-- Search -->
+<div class="md:col-span-5 relative group">
+<label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider font-display">Search Students</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 h-11 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all" placeholder="Search by name, ID, or email..." type="text"/>
+</div>
+</div>
+<!-- Filters -->
+<div class="md:col-span-3">
+<label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider font-display">Course</label>
+<div class="relative">
+<select class="w-full pl-3 pr-10 h-11 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary appearance-none cursor-pointer hover:bg-slate-50 transition-colors">
+<option>All Courses</option>
+<option>UX Design 101</option>
+<option>Data Visualization</option>
+<option>Frontend Development</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="md:col-span-3">
+<label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider font-display">Status</label>
+<div class="relative">
+<select class="w-full pl-3 pr-10 h-11 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary appearance-none cursor-pointer hover:bg-slate-50 transition-colors">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Paused</option>
+<option>Graduated</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Advanced Filter Toggle -->
+<div class="md:col-span-1 flex justify-end">
+<button class="size-11 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:text-primary hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Data Table Container -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50/50 border-b border-slate-200">
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[280px]">Student Name</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[120px]">ID</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[240px]">Enrolled Courses</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[200px]">Progress</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[140px]">Status</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display w-[180px]">Last Active</th>
+<th class="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider font-display text-right w-[80px]">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<!-- Avatar placeholder -->
+<div class="w-full h-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-primary text-xs font-bold">AD</div>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 size-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Alexia Doran</span>
+<span class="text-xs text-slate-500">alexia.d@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#8832</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">UX Design 101</span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-100">Data Vis</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 78%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">78%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                2 mins ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-orange-700 text-xs font-bold">MC</div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Marcus Chen</span>
+<span class="text-xs text-slate-500">m.chen@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#9941</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-100">Data Vis</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 45%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">45%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+<span class="size-1.5 rounded-full bg-slate-400"></span>
+                                    Paused
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                1 day ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-blue-700 text-xs font-bold">SJ</div>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 size-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Sarah Jenkins</span>
+<span class="text-xs text-slate-500">sarah.j@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#7723</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">Frontend Dev</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 92%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">92%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                5 mins ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-pink-700 text-xs font-bold">DK</div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">David Kim</span>
+<span class="text-xs text-slate-500">david.k@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#6612</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-50 text-cyan-700 border border-cyan-100">Backend Arch</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-red-400 rounded-full" style="width: 14%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">14%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                    At Risk
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                Just now
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center text-teal-700 text-xs font-bold">ER</div>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 size-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Elena Rodriguez</span>
+<span class="text-xs text-slate-500">elena.r@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#5534</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">UX Design 101</span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">Frontend Dev</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">65%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                3 days ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-indigo-50 to-indigo-100 flex items-center justify-center text-primary text-xs font-bold">JW</div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">James Wilson</span>
+<span class="text-xs text-slate-500">james.w@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#4421</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-100">Data Vis</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 88%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">88%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                1 hr ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center text-rose-700 text-xs font-bold">PP</div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Priya Patel</span>
+<span class="text-xs text-slate-500">priya.p@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#3319</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">Frontend Dev</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 34%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">34%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+<span class="size-1.5 rounded-full bg-slate-400"></span>
+                                    Paused
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                2 weeks ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="group hover:bg-slate-50/80 transition-colors duration-150">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden ring-2 ring-white">
+<div class="w-full h-full bg-gradient-to-br from-lime-100 to-lime-200 flex items-center justify-center text-lime-700 text-xs font-bold">TB</div>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 size-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Tom Baker</span>
+<span class="text-xs text-slate-500">tom.b@example.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-mono text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">#2298</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-50 text-cyan-700 border border-cyan-100">Backend Arch</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 56%"></div>
+</div>
+<span class="text-xs font-mono font-medium text-slate-700 w-8 text-right">56%</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-sm text-slate-500">
+                                4 hrs ago
+                            </td>
+<td class="py-4 px-6 text-right">
+<button class="size-8 inline-flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="border-t border-slate-200 px-6 py-4 flex items-center justify-between bg-white">
+<div class="text-sm text-slate-500 font-medium">
+                    Showing <span class="text-slate-900 font-bold">1-8</span> of <span class="text-slate-900 font-bold">1,248</span> students
+                </div>
+<div class="flex items-center gap-2">
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-all disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-primary bg-primary/5 text-primary font-bold text-sm transition-all">
+                        1
+                    </button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-transparent hover:bg-slate-50 text-slate-600 font-medium text-sm transition-all">
+                        2
+                    </button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-transparent hover:bg-slate-50 text-slate-600 font-medium text-sm transition-all hidden sm:flex">
+                        3
+                    </button>
+<span class="text-slate-400 px-1">...</span>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-transparent hover:bg-slate-50 text-slate-600 font-medium text-sm transition-all hidden sm:flex">
+                        24
+                    </button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -72,14 +72,13 @@ export function SidebarNav() {
   return (
     <>
       <SidebarHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-1.5 bg-primary rounded-lg">
-            <Book className="size-7 text-primary-foreground" />
+        <div className="flex items-center gap-3 px-2 py-4">
+          <div className="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20 bg-primary/10 flex items-center justify-center">
+            <Book className="size-5 text-primary" />
           </div>
-          <div>
-            <h1 className="font-headline text-2xl font-bold text-primary">
-              ChronoClass
-            </h1>
+          <div className="flex flex-col">
+            <h1 className="text-white text-base font-bold leading-tight font-headline">PerTuto</h1>
+            <p className="text-slate-400 text-xs font-normal">Workspace</p>
           </div>
         </div>
       </SidebarHeader>

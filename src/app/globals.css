@@ -68,16 +68,21 @@ body {
     --accent-foreground: 0 0% 100%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 240 4% 25%; /* border: #3f3f46 */
+    --border: 240 4% 20%; /* border: #3f3f46 */
     --input: 240 4% 25%;
     --ring: 262 83% 66%;
-    --sidebar-background: 240 10% 4%;
+    
+    /* Dashboard specific */
+    --card-dark: 275 22% 13%; /* #221a28 */
+    --border-dark: 275 17% 19%; /* #342a3b */
+
+    --sidebar-background: 215 48% 11%; /* Matches surface-dark */
     --sidebar-foreground: 240 5% 96%;
     --sidebar-primary: 262 83% 66%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240, 5%, 16%;
+    --sidebar-accent: 262 85% 50% / 0.1; /* primary with low opacity for hover */
     --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 240 4% 25%;
+    --sidebar-border: 275 17% 19%; /* Matches border-dark */
     --sidebar-ring: 262 83% 66%;
   }
 
@@ -160,8 +165,11 @@ body {
   .bg-background-dark {
     background-color: hsl(var(--background-dark));
   }
-  .bg-surface-dark {
-    background-color: hsl(var(--surface-dark));
+  .bg-card-dark {
+    background-color: hsl(var(--card-dark));
+  }
+  .border-border-dark {
+    border-color: hsl(var(--border-dark));
   }
   .text-primary-glow {
     color: hsl(var(--primary-glow));

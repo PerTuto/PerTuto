@@ -44,11 +44,11 @@ export function AuthenticatedLayout({ children }: { children: React.ReactNode })
 
   return (
     <TooltipProvider>
-      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <div className="dark grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-background-dark text-slate-100 font-sans">
         <Sidebar>
           <SidebarNav />
         </Sidebar>
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-1 overflow-hidden bg-background-dark">
           <Header />
           <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
             {children}

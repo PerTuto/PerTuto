@@ -25,3 +25,7 @@ env:
     value: G-H2RGQ50B1T
   - variable: NEXT_PUBLIC_GA_MEASUREMENT_ID
     value: G-H2RGQ50B1T
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
+  - variable: ADMIN_EMAIL
+    value: ankur@pertuto.com

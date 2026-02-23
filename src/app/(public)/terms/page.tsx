@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Aurora } from '@/components/public/aurora';
 
 export const metadata: Metadata = {
     title: 'Terms & Conditions — PerTuto',
@@ -9,7 +8,6 @@ export const metadata: Metadata = {
 export default function TermsPage() {
     return (
         <>
-            <Aurora colorStops={['#3B82F6', '#1E3A8A', '#0f172a']} speed={0.2} />
 
             <section className="relative pt-32 pb-20 px-6">
                 <div className="max-w-3xl mx-auto space-y-12 relative z-10">

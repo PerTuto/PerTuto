@@ -35,14 +35,14 @@ export function SidebarNav() {
   const { toast } = useToast();
 
   const menuItems = [
-    { href: "/", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/schedule", label: "Schedule", icon: Calendar },
-    { href: "/availability", label: "Availability", icon: ClipboardList },
-    { href: "/students", label: "Students", icon: GraduationCap },
-    { href: "/leads", label: "Leads", icon: Users },
-    { href: "/courses", label: "Courses", icon: Book },
-    { href: "/assignments", label: "Assignments", icon: ClipboardList },
-    { href: "/attendance", label: "Attendance", icon: Users },
+    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/dashboard/schedule", label: "Schedule", icon: Calendar },
+    { href: "/dashboard/availability", label: "Availability", icon: ClipboardList },
+    { href: "/dashboard/students", label: "Students", icon: GraduationCap },
+    { href: "/dashboard/leads", label: "Leads", icon: Users },
+    { href: "/dashboard/courses", label: "Courses", icon: Book },
+    { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList },
+    { href: "/dashboard/attendance", label: "Attendance", icon: Users },
   ];
 
   const hasRole = (role: string) => {

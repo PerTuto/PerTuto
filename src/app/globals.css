@@ -5,92 +5,54 @@
 @plugin "@tailwindcss/typography";
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", "DM Sans", sans-serif;
 }
 
+/* ===== DESIGN SYSTEM: PerTuto Light Mode ===== */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 84% 5%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
+    /* Background & Surface */
+    --background: 40 20% 98%;       /* #FAFAF8 warm white */
+    --foreground: 215 25% 15%;      /* #1A2744 navy */
+    --card: 0 0% 100%;              /* #FFFFFF */
+    --card-foreground: 215 25% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
-    --primary: 262 83% 66%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Brand Colors */
+    --primary: 168 65% 29%;         /* #1B7A6D teal */
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 38 92% 50%;
+    --secondary: 215 20% 95%;       /* #EEF0F4 light navy */
+    --secondary-foreground: 215 25% 15%;
+    --muted: 215 15% 95%;           /* #F0F2F5 */
+    --muted-foreground: 215 15% 47%; /* #5A6578 */
+    --accent: 41 76% 58%;           /* #D4A853 warm gold */
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 4% 25%;
-    --input: 217 33% 17%;
-    --ring: 262 83% 66%;
-    --radius: 0.75rem; /* Increased for a softer look */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 10% 4%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 262 83% 66%;
+
+    /* Semantic */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 15% 89%;          /* #E2E5EA */
+    --input: 215 15% 95%;           /* #F0F2F5 */
+    --ring: 168 65% 29%;            /* teal focus ring */
+    --radius: 0.75rem;
+
+    /* Charts */
+    --chart-1: 168 65% 29%;
+    --chart-2: 215 25% 15%;
+    --chart-3: 41 76% 58%;
+    --chart-4: 168 45% 45%;
+    --chart-5: 215 20% 40%;
+
+    /* Sidebar (dashboard) */
+    --sidebar-background: 215 25% 15%;   /* Navy */
+    --sidebar-foreground: 215 15% 90%;
+    --sidebar-primary: 168 65% 29%;      /* Teal */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 240 4% 25%;
-    --sidebar-ring: 262 83% 66%;
-  }
-
-  .dark {
-    --background: 240 10% 4%; /* bg-dark: #09090b */
-    --foreground: 240 5% 96%; /* text-main: #f4f4f5 */
-    --card: 240 5% 15%; /* bg-panel: #18181b */
-    --card-foreground: 240 5% 96%;
-    --popover: 240 10% 4%;
-    --popover-foreground: 240 5% 96%;
-    
-    /* Stitch Premium Palette Overrides */
-    --primary: 262 85% 50%; /* #5b13ec */
-    --primary-glow: 262 82% 58%; /* #7c3aed */
-    --background-dark: 222 84% 5%; /* #020617 (slate-950) */
-    --surface-dark: 215 48% 11%; /* #0f172a (slate-900) */
-    
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 15%; /* bg-card: #27272a */
-    --secondary-foreground: 240 5% 96%;
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 4% 63%; /* text-sub: #a1a1aa */
-    --accent: 38 92% 50%; /* accent: #f59e0b */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 4% 20%; /* border: #3f3f46 */
-    --input: 240 4% 25%;
-    --ring: 262 83% 66%;
-    
-    /* Dashboard specific */
-    --card-dark: 275 22% 13%; /* #221a28 */
-    --border-dark: 275 17% 19%; /* #342a3b */
-
-    --sidebar-background: 215 48% 11%; /* Matches surface-dark */
-    --sidebar-foreground: 240 5% 96%;
-    --sidebar-primary: 262 83% 66%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 262 85% 50% / 0.1; /* primary with low opacity for hover */
-    --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 275 17% 19%; /* Matches border-dark */
-    --sidebar-ring: 262 83% 66%;
-  }
-
-  /* Stitch Aurora background definition for Tailwind v4 */
-  @property --bg-aurora {
-    syntax: "<string>";
-    inherits: false;
-    initial-value: "radial-gradient(circle at 50% 0%, rgba(91, 19, 236, 0.15) 0%, rgba(2, 6, 23, 0) 50%), radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(2, 6, 23, 0) 40%)";
+    --sidebar-accent: 215 20% 20%;
+    --sidebar-accent-foreground: 215 15% 90%;
+    --sidebar-border: 215 20% 22%;
+    --sidebar-ring: 168 65% 29%;
   }
 }
 
@@ -103,75 +65,131 @@ body {
   }
 }
 
+/* ===== COMPONENTS ===== */
 @layer components {
-  .card {
-    background: rgba(39, 39, 42, 0.6);
-    @apply backdrop-blur-md border rounded-2xl transition-all duration-300 ease-in-out;
+  /* Glass panel — light frosted card */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(215 15% 89%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
   }
-  .card:hover {
-    @apply -translate-y-2 border-primary/50 shadow-2xl shadow-primary/10;
+  .glass-panel:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
   }
+
+  /* Glass header — light frosted navbar */
+  .glass-header {
+    background: rgba(250, 250, 248, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid hsl(215 15% 89%);
+  }
+
+  /* Primary button with teal glow */
+  .btn-primary {
+    background: hsl(168 65% 29%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(27, 122, 109, 0.25);
+    transition: all 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: hsl(168 65% 24%);
+    box-shadow: 0 4px 16px rgba(27, 122, 109, 0.35);
+    transform: translateY(-1px);
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply bg-white border rounded-2xl transition-all duration-300 ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .card-hover:hover {
+    @apply -translate-y-1;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    border-color: hsl(168 65% 29% / 0.3);
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply border-t border-border;
+  }
+}
+
+/* ===== ANIMATION KEYFRAMES ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes blob-morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  animation: marquee 40s linear infinite;
-}
-
-/* Stitch Components & Utilities */
-@layer components {
-  /* Replace old card styles with new Stitch aesthetics */
-  .glass-panel {
-      background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  .glass-header {
-      background: rgba(2, 6, 23, 0.7);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .text-glow {
-      text-shadow: 0 0 20px rgba(91, 19, 236, 0.3);
-  }
-  
-  .btn-glow {
-      box-shadow: 0 0 20px rgba(91, 19, 236, 0.4);
-      transition: all 0.3s ease;
-  }
-  .btn-glow:hover {
-      box-shadow: 0 0 30px rgba(91, 19, 236, 0.6);
-      transform: translateY(-1px);
-  }
-}
-
-@tailwind utilities;
-
+/* ===== ANIMATION UTILITIES ===== */
 @layer utilities {
-  .bg-aurora {
-    background-image: radial-gradient(circle at 50% 0%, rgba(91, 19, 236, 0.15) 0%, rgba(2, 6, 23, 0) 50%), radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(2, 6, 23, 0) 40%);
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
-  .bg-background-dark {
-    background-color: hsl(var(--background-dark));
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
   }
-  .bg-card-dark {
-    background-color: hsl(var(--card-dark));
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
   }
-  .border-border-dark {
-    border-color: hsl(var(--border-dark));
+
+  .animate-blob {
+    animation: blob-morph 8s ease-in-out infinite;
   }
-  .text-primary-glow {
-    color: hsl(var(--primary-glow));
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
   }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  /* Stagger delays for children */
+  .stagger-1 { animation-delay: 100ms; }
+  .stagger-2 { animation-delay: 200ms; }
+  .stagger-3 { animation-delay: 300ms; }
+  .stagger-4 { animation-delay: 400ms; }
+  .stagger-5 { animation-delay: 500ms; }
 }

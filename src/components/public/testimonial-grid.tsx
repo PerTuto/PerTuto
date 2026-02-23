@@ -49,7 +49,7 @@ export function TestimonialGrid() {
                         <SpotlightCard key={i} className="p-8 h-full flex flex-col">
                             <div className="flex gap-1 mb-6">
                                 {[...Array(testimonial.rating)].map((_, i) => (
-                                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                                    <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                                 ))}
                             </div>
                             <blockquote className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1">

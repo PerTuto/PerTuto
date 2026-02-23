@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import { getBlogPosts, getPostBySlug } from '@/lib/mdx';
 import { CalendarIcon, UserIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { Aurora } from '@/components/public/aurora';
 import { LeadCaptureForm } from '@/components/public/lead-capture-form';
 
 // Generate static params so these pages are built at compile time (SSG)
@@ -55,7 +54,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <Aurora />
 
       <article className="min-h-screen py-24 px-6 relative z-10">
         <div className="max-w-3xl mx-auto">

@@ -1,11 +1,9 @@
-import { Aurora } from '@/components/public/aurora';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function NotFound() {
     return (
         <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-background">
-            <Aurora colorStops={['#3B82F6', '#1E3A8A', '#0f172a']} speed={0.2} />
             
             <div className="relative z-10 max-w-2xl px-6 text-center space-y-8">
                 <div className="space-y-4">

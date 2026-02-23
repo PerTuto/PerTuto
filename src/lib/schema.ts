@@ -18,7 +18,7 @@ export function generateOrganizationSchema() {
             availableLanguage: ['English', 'Hindi'],
         },
         sameAs: [
-            'https://wa.me/919899266498',
+            'https://wa.me/971556006565',
         ],
     };
 }

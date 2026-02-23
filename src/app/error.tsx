@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Aurora } from '@/components/public/aurora';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
@@ -20,7 +19,6 @@ export default function GlobalError({
 
     return (
         <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-background">
-            <Aurora colorStops={['#ef4444', '#7f1d1d', '#450a0a']} speed={0.1} />
 
             <div className="relative z-10 max-w-2xl px-6 text-center space-y-8 p-12 rounded-3xl bg-card/60 backdrop-blur-xl border border-destructive/20 shadow-2xl">
                 <div className="mx-auto w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-6">

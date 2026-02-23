@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Aurora } from '@/components/public/aurora';
 import { SpotlightCard } from '@/components/public/spotlight-card';
 import { GraduationCap, Target, ShieldCheck, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
     return (
         <>
-            <Aurora colorStops={['#3B82F6', '#1E3A8A', '#93C5FD']} speed={0.3} />
 
             {/* ===== HERO ===== */}
             <section className="relative pt-32 pb-20 px-6">
@@ -28,7 +26,7 @@ export default function AboutPage() {
             </section>
 
             {/* ===== OUR STORY ===== */}
-            <section className="py-20 px-6 bg-card/20 border-y border-border/20">
+            <section className="py-20 px-6 bg-secondary/30 border-y border-border">
                 <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                     <div className="space-y-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm font-medium text-primary mb-4">
@@ -48,7 +46,7 @@ export default function AboutPage() {
                         </div>
                     </div>
                     {/* Placeholder for Founder Image or Abstract Graphic */}
-                    <div className="relative aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary/20 to-violet-500/10 border border-border/50 flex items-center justify-center p-8">
+                    <div className="relative aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5 border border-border flex items-center justify-center p-8">
                         <blockquote className="relative z-10 text-xl md:text-2xl font-headline font-medium leading-snug text-center">
                             "Education shouldn't be standardized. It should be as unique as the student."
                             <footer className="mt-4 text-sm font-body text-primary">— Ankur Kakkar, Founder</footer>
@@ -105,7 +103,7 @@ export default function AboutPage() {
             </section>
 
             {/* ===== CTA ===== */}
-            <section className="py-20 px-6 bg-primary/5 border-t border-border/20 text-center">
+            <section className="py-20 px-6 bg-primary/[0.03] border-t border-border text-center">
                 <div className="max-w-2xl mx-auto space-y-8">
                      <h2 className="font-headline text-3xl font-bold">Ready to experience the difference?</h2>
                      <p className="text-muted-foreground">Stop settling for average results. Speak directly with our lead academic advisor today.</p>

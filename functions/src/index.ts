@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const onLeadCreated = functionsV1.region("asia-south1").firestore
-    .document("leads/{leadId}")
+    .document("tenants/pertuto-default/leads/{leadId}")
     .onCreate(async (snap) => {
         const lead = snap.data();
 
@@ -45,7 +45,7 @@ export const onLeadCreated = functionsV1.region("asia-south1").firestore
             <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Grade:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${lead.grade || "N/A"}</td></tr>
             <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Message:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${lead.message || "-"}</td></tr>
         </table>
-        <p><a href="https://pertutoclasses.web.app/leads" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View in Dashboard</a></p>
+        <p><a href="https://pertuto.com/dashboard/leads" style="background-color: #1B7A6D; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View in Dashboard</a></p>
       `,
         };
 
@@ -67,7 +67,7 @@ export const onLeadCreated = functionsV1.region("asia-south1").firestore
                   <h1>Hi ${lead.name},</h1>
                   <p>Thanks for reaching out to PerTuto Classes! 🎓</p>
                   <p>We have received your details and one of our academic counselors will get in touch with you shortly to discuss your personalized learning plan.</p>
-                  <p>In the meantime, feel free to browse our <a href="https://pertutoclasses.web.app">website</a>.</p>
+                  <p>In the meantime, feel free to browse our <a href="https://pertuto.com">website</a>.</p>
                   <br>
                   <p>Best regards,</p>
                   <p><strong>The PerTuto Team</strong></p>

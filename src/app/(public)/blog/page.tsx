@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Aurora } from '@/components/public/aurora';
 import { getBlogPosts } from '@/lib/mdx';
 import { CalendarIcon, UserIcon, ArrowRight } from 'lucide-react';
 import { SpotlightCard } from '@/components/public/spotlight-card';
@@ -16,7 +15,6 @@ export default function BlogIndexPage() {
   return (
     <>
       <section className="relative min-h-[40vh] flex flex-col items-center justify-center px-6 overflow-hidden bg-background pt-20">
-        <Aurora />
         <div className="max-w-3xl mx-auto text-center space-y-4 relative z-10">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold tracking-tight">
             The PerTuto <span className="text-primary">Journal</span>

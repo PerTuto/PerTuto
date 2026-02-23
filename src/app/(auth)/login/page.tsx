@@ -34,12 +34,19 @@ export default function LoginPage() {
     try {
       await login(values.email, values.password);
       toast({ title: "Login Successful", description: "Welcome back!" });
-      router.push("/");
+      router.push("/dashboard/leads");
     } catch (error: any) {
       console.error(error);
+      let errorMessage = error.message || "An unexpected error occurred.";
+      if (error.code === 'auth/network-request-failed') {
+        errorMessage = "Network error. The authentication server is unreachable. Please check your connection.";
+      } else if (error.code === 'auth/invalid-credential') {
+        errorMessage = "Invalid email or password.";
+      }
+
       toast({
         title: "Login Failed",
-        description: error.message || "An unexpected error occurred.",
+        description: errorMessage,
         variant: "destructive",
       });
     }

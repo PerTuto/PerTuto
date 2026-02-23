@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             fullName: "Super User Admin",
             email: user.email!,
             role: "super", // Platform Super role
-            tenantId: undefined, // No tenant - global access
+            tenantId: "pertuto-default", // Super user accesses the default tenant
           });
           setLoading(false);
           return;

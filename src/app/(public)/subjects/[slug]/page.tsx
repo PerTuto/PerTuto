@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getSubjectBySlug, subjectsData } from '@/data/subjects';
-import { Aurora } from '@/components/public/aurora';
 import { SpotlightCard } from '@/components/public/spotlight-card';
 import { LeadCaptureForm } from '@/components/public/lead-capture-form';
 import { Button } from '@/components/ui/button';
@@ -47,7 +46,6 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
     <>
       {/* ===== HERO (Dynamic) ===== */}
       <section className="relative min-h-[70vh] flex items-center justify-center px-6 overflow-hidden bg-background">
-        <Aurora />
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10 pt-20">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm text-primary mb-4">
             <BookOpen className="w-4 h-4" />

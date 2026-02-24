@@ -56,7 +56,7 @@ export function AddStudentForm({ addStudent, setIsAddDialogOpen }: AddStudentFor
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // @ts-ignore
-      await addStudent({ ...values, courses: [], avatar: `https://picsum.photos/seed/${Date.now()}/40/40` });
+      await addStudent({ ...values, courses: [], avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${values.email || values.name}` });
       if (setIsAddDialogOpen) setIsAddDialogOpen(false);
       form.reset();
     } catch (e) {

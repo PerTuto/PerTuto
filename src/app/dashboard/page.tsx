@@ -2,6 +2,7 @@ import { QuickAdd } from "@/components/dashboard/quick-add";
 import { DashboardStats } from "@/components/dashboard/dashboard-stats";
 import { UpcomingClasses } from "@/components/schedule/upcoming-classes";
 import { PendingAssignments } from "@/components/dashboard/pending-assignments";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from 'next/navigation';
 
@@ -14,9 +15,14 @@ export default function DashboardPage() {
       <QuickAdd />
       <DashboardStats />
       <Separator />
-      <div className="grid gap-6 md:grid-cols-2">
-        <UpcomingClasses />
-        <PendingAssignments />
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="md:col-span-2 space-y-6">
+          <UpcomingClasses />
+          <PendingAssignments />
+        </div>
+        <div>
+          <RecentActivity />
+        </div>
       </div>
     </div>
   );

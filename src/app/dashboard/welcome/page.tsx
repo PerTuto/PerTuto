@@ -71,8 +71,8 @@ export default function WelcomePage() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
         <Card className="w-full max-w-lg">
           <CardHeader className="text-center">
-            <CardTitle className="font-headline text-2xl">Welcome to ChronoClass!</CardTitle>
-            <CardDescription>Let's set up your profile.</CardDescription>
+            <CardTitle className="font-headline text-2xl">Welcome to PerTuto!</CardTitle>
+            <CardDescription>Let's set up your tutoring center profile.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>

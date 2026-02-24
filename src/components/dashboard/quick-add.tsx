@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { createEntityWithNaturalLanguage } from "@/ai/flows/entity-creation-flow";
+import { useAuth } from "@/hooks/use-auth";
+import { addLead, addStudent } from "@/lib/firebase/services";
 
 type QuickAddProps = {
   onEntityAdd?: (entity: any, type: 'student' | 'lead' | 'class') => void;
@@ -16,6 +18,7 @@ export function QuickAdd({ onEntityAdd }: QuickAddProps) {
   const [input, setInput] = useState("");
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const { userProfile } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +31,26 @@ export function QuickAdd({ onEntityAdd }: QuickAddProps) {
         });
 
         if (result && result.entityType !== 'none') {
+          if (userProfile?.tenantId) {
+            if (result.entityType === 'student') {
+              await addStudent(userProfile.tenantId, {
+                name: result.name,
+                email: result.email || '',
+                avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${result.email || result.name}`,
+                courses: [], // The flow returns course title, but not ID. Adding link by title is too complex here, leaving empty
+              });
+            } else if (result.entityType === 'lead') {
+              await addLead(userProfile.tenantId, {
+                name: result.name,
+                email: result.email || '',
+                phone: result.phone || '',
+                status: 'New',
+                source: 'AI Quick Add',
+                dateAdded: new Date().toISOString().split('T')[0],
+              });
+            }
+          }
+
            toast({
             title: `${result.entityType.charAt(0).toUpperCase() + result.entityType.slice(1)} Created!`,
             description: `Successfully created ${result.name}.`,

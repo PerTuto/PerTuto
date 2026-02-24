@@ -129,7 +129,7 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Avatar className="size-8">
-                <AvatarImage src={user?.photoURL || `https://picsum.photos/seed/user1/40/40`} alt={userProfile?.fullName || 'User'} data-ai-hint="person portrait" />
+                <AvatarImage src={user?.photoURL || undefined} alt={userProfile?.fullName || 'User'} />
                 <AvatarFallback>{userProfile?.fullName?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col truncate">

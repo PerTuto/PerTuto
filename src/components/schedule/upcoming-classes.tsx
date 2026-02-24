@@ -1,25 +1,57 @@
 "use client"
 
-import { classes, courses } from "@/lib/data";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, Video } from "lucide-react";
+import { Calendar, Clock, Video, Loader2 } from "lucide-react";
 import Link from "next/link";
-
-const courseColorMap: { [key: string]: string } = {
-  'course-1': 'bg-blue-100 border-blue-300 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300',
-  'course-2': 'bg-green-100 border-green-300 text-green-800 dark:bg-green-900/50 dark:border-green-700 dark:text-green-300',
-  'course-3': 'bg-yellow-100 border-yellow-300 text-yellow-800 dark:bg-yellow-900/50 dark:border-yellow-700 dark:text-yellow-300',
-  'course-4': 'bg-purple-100 border-purple-300 text-purple-800 dark:bg-purple-900/50 dark:border-purple-700 dark:text-purple-300',
-};
-
+import { useAuth } from "@/hooks/use-auth";
+import { getClasses, getCourses } from "@/lib/firebase/services";
+import type { Course } from "@/lib/types";
 
 export function UpcomingClasses() {
+  const { userProfile } = useAuth();
+  const [classes, setClasses] = useState<any[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userProfile?.tenantId) return;
+      try {
+        const [c, co] = await Promise.all([
+          getClasses(userProfile.tenantId),
+          getCourses(userProfile.tenantId),
+        ]);
+        setClasses(c);
+        setCourses(co);
+      } catch (error) {
+        console.error("Failed to fetch classes:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [userProfile?.tenantId]);
+
+  const now = new Date();
   const upcomingClasses = classes
-    .filter(c => c.start > new Date())
-    .sort((a, b) => a.start.getTime() - b.start.getTime())
+    .filter(c => {
+      const start = c.start instanceof Date ? c.start : new Date(c.start);
+      return start > now;
+    })
+    .sort((a, b) => {
+      const aStart = a.start instanceof Date ? a.start : new Date(a.start);
+      const bStart = b.start instanceof Date ? b.start : new Date(b.start);
+      return aStart.getTime() - bStart.getTime();
+    })
     .slice(0, 3);
+
+  const formatTime = (date: any) => {
+    const d = date instanceof Date ? date : new Date(date);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
   return (
     <Card className="flex flex-col">
@@ -29,22 +61,27 @@ export function UpcomingClasses() {
             Upcoming Classes
         </CardTitle>
         <CardDescription>
-            Here are the next few classes on your schedule. <Link href="/schedule" className="text-primary hover:underline">View full schedule</Link>
+            Next few classes on your schedule.{' '}
+            <Link href="/dashboard/schedule" className="text-primary hover:underline">View full schedule</Link>
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        {upcomingClasses.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          </div>
+        ) : upcomingClasses.length > 0 ? (
           <div className="space-y-4">
             {upcomingClasses.map((c) => {
               const course = courses.find(course => course.id === c.courseId);
               return (
-                <div key={c.id} className={cn("p-3 rounded-lg border", courseColorMap[c.courseId] || 'bg-muted')}>
+                <div key={c.id} className="p-3 rounded-lg border bg-muted/30">
                   <p className="font-semibold">{c.title}</p>
-                  <p className="text-sm">{course?.instructor}</p>
+                  {course && <p className="text-sm text-muted-foreground">{course.instructor || course.title}</p>}
                   <div className="flex items-center justify-between text-sm mt-2">
                       <div className="flex items-center gap-2">
                           <Clock className="h-4 w-4" />
-                          <span>{c.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - {c.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                          <span>{formatTime(c.start)} - {formatTime(c.end)}</span>
                       </div>
                       {c.meetLink && <Badge variant="outline" className="flex gap-1.5 items-center"><Video className="h-3 w-3" /> Meet</Badge>}
                   </div>

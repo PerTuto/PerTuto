@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Clock, User, Trash2, Users, Pencil } from "lucide-react";
+import { Clock, User, Trash2, Users, Pencil, Book } from "lucide-react";
 import { getCourses, getStudents, deleteCourse } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
@@ -156,12 +156,18 @@ export default function CoursesPage() {
                 className="flex flex-col overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative h-48 w-full">
-                  <Image
-                    src={course.image || "https://picsum.photos/seed/default/600/400"}
-                    alt={course.title}
-                    fill
-                    className="object-cover"
-                  />
+                  {course.image ? (
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <Book className="h-12 w-12 text-primary/40" />
+                    </div>
+                  )}
                   <Badge
                     className={`absolute top-2 right-2 ${getStatusColor(course.status)}`}
                   >

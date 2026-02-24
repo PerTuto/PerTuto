@@ -100,7 +100,7 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
             } else {
                 const newCourse = await addCourse(userProfile.tenantId, {
                     ...formData,
-                    image: formData.image || `https://picsum.photos/seed/${formData.title}/600/400`,
+                    image: formData.image || '',
                 });
                 toast({
                     title: "Success",

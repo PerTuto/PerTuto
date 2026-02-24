@@ -1,55 +1,101 @@
-import { students, courses, assignments } from "@/lib/data";
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Book, Calendar, ClipboardList, Mail, Percent, BookOpen } from "lucide-react";
+import { Book, Calendar, ClipboardList, Mail, Loader2, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Student } from "@/lib/types";
+import { useAuth } from "@/hooks/use-auth";
+import { getStudents, getCourses, getAssignments } from "@/lib/firebase/services";
+import type { Student, Course, Assignment } from "@/lib/types";
 
 const statusColors: { [key in Student['status']]: string } = {
-    Active: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
-    'On-hold': "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
-    Graduated: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
-    Dropped: "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300",
+    Active: "bg-green-100 text-green-800",
+    'On-hold': "bg-yellow-100 text-yellow-800",
+    Graduated: "bg-blue-100 text-blue-800",
+    Dropped: "bg-red-100 text-red-800",
 };
 
-export default function StudentProfilePage({ params }: { params: { id: string } }) {
-  const student = students.find((s) => s.id === params.id);
+export default function StudentProfilePage() {
+  const params = useParams();
+  const studentId = params.id as string;
+  const { userProfile } = useAuth();
 
-  if (!student) {
-    notFound();
+  const [student, setStudent] = useState<Student | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userProfile?.tenantId || !studentId) return;
+      try {
+        const [allStudents, allCourses, allAssignments] = await Promise.all([
+          getStudents(userProfile.tenantId),
+          getCourses(userProfile.tenantId),
+          getAssignments(userProfile.tenantId),
+        ]);
+        const found = allStudents.find(s => s.id === studentId) || null;
+        setStudent(found);
+        setCourses(allCourses);
+        setAssignments(allAssignments);
+      } catch (error) {
+        console.error("Failed to fetch student data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [userProfile?.tenantId, studentId]);
+
+  if (loading) {
+    return (
+      <div className="flex h-[400px] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
-  const enrolledCourses = courses.filter(c => student.courses.includes(c.id));
-  const studentAssignments = assignments.filter(a => student.courses.includes(a.courseId));
+  if (!student) {
+    return (
+      <div className="flex h-[400px] flex-col items-center justify-center text-center">
+        <p className="text-xl font-semibold">Student Not Found</p>
+        <p className="text-muted-foreground mt-2">This student doesn't exist or you don't have access.</p>
+      </div>
+    );
+  }
+
+  const enrolledCourses = courses.filter(c => student.courses?.includes(c.id));
+  const studentAssignments = assignments.filter(a => student.courses?.includes(a.courseId));
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader className="flex flex-col md:flex-row items-start md:items-center gap-4">
             <Avatar className="h-24 w-24 border-2 border-primary">
-                <AvatarImage src={student.avatar} alt={student.name} />
-                <AvatarFallback className="text-3xl">{student.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback className="text-3xl bg-primary/10 text-primary">{student.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex-1">
                 <div className="flex items-center gap-3">
                     <CardTitle className="font-headline text-3xl">{student.name}</CardTitle>
                     <Badge className={cn("text-sm", statusColors[student.status])}>{student.status}</Badge>
                 </div>
+                {student.email && (
+                  <CardDescription className="flex items-center gap-2 mt-1">
+                      <Mail className="h-4 w-4" /> {student.email}
+                  </CardDescription>
+                )}
                 <CardDescription className="flex items-center gap-2 mt-1">
-                    <Mail className="h-4 w-4" /> {student.email}
-                </CardDescription>
-                 <CardDescription className="flex items-center gap-2 mt-1">
                     <Calendar className="h-4 w-4" /> Enrolled on {new Date(student.enrolledDate).toLocaleDateString()}
                 </CardDescription>
             </div>
             <div className="text-right">
                 <div className="text-sm text-muted-foreground">Overall Progress</div>
-                <div className="text-3xl font-bold font-headline text-primary">{student.progress}%</div>
-                <Progress value={student.progress} className="w-32 mt-2"/>
+                <div className="text-3xl font-bold font-headline text-primary">{student.progress || 0}%</div>
+                <Progress value={student.progress || 0} className="w-32 mt-2"/>
             </div>
         </CardHeader>
         {student.notes && (
@@ -68,7 +114,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
             <CardTitle className="font-headline flex items-center gap-2"><BookOpen className="h-5 w-5" /> Enrolled Courses</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {enrolledCourses.map(course => (
+            {enrolledCourses.length > 0 ? enrolledCourses.map(course => (
               <div key={course.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                 <div>
                   <p className="font-semibold">{course.title}</p>
@@ -76,7 +122,9 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
                 </div>
                 <Badge variant="secondary">{course.duration}</Badge>
               </div>
-            ))}
+            )) : (
+              <p className="text-sm text-muted-foreground">No courses enrolled.</p>
+            )}
           </CardContent>
         </Card>
 
@@ -85,7 +133,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
             <CardTitle className="font-headline flex items-center gap-2"><ClipboardList className="h-5 w-5" /> Recent Assignments</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-             {studentAssignments.slice(0, 5).map(assignment => (
+            {studentAssignments.length > 0 ? studentAssignments.slice(0, 5).map(assignment => (
                 <div key={assignment.id} className="flex items-center justify-between">
                     <div>
                         <p className="font-medium">{assignment.title}</p>
@@ -97,7 +145,9 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
                         {assignment.status}
                     </Badge>
                 </div>
-              ))}
+              )) : (
+                <p className="text-sm text-muted-foreground">No assignments yet.</p>
+              )}
           </CardContent>
         </Card>
       </div>

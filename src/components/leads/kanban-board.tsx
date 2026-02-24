@@ -93,7 +93,11 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                           {lead.name}
                         </h4>
                         <span className="text-xs text-muted-foreground font-mono">
-                          {lead.dateAdded ? new Date(lead.dateAdded).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'New'}
+                          {lead.dateAdded ? (() => {
+                            const d = lead.dateAdded as any;
+                            const date = d?.seconds ? new Date(d.seconds * 1000) : new Date(d);
+                            return isNaN(date.getTime()) ? 'New' : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                          })() : 'New'}
                         </span>
                       </div>
                       

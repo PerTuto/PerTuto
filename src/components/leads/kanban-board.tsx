@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import type { Lead } from '@/lib/types';
 import { MoreHorizontal, Globe, Mail, Briefcase, Phone, Check, ArrowRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatDistanceToNow } from 'date-fns';
 
 interface KanbanBoardProps {
   leads: Lead[];
@@ -46,7 +45,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
 
   const getNextStatus = (currentStatus: Lead['status']): Lead['status'] | null => {
     const idx = COLUMNS.findIndex(c => c.id === currentStatus);
-    if (idx >= 0 && idx < COLUMNS.length - 2) { // Allow moving up to Qualified (before Converted/Lost)
+    if (idx >= 0 && idx < COLUMNS.length - 2) {
       return COLUMNS[idx + 1].id;
     }
     return null;
@@ -59,17 +58,17 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
           const columnLeads = leads.filter(l => l.status === column.id);
           
           return (
-            <div key={column.id} className="flex flex-col w-[320px] flex-shrink-0 max-h-full rounded-2xl bg-surface-dark/50 border border-border-dark/50">
+            <div key={column.id} className="flex flex-col w-[320px] flex-shrink-0 max-h-full rounded-2xl bg-secondary/50 border border-border">
               {/* Column Header */}
-              <div className="p-4 flex items-center justify-between border-b border-border-dark/50 shrink-0">
+              <div className="p-4 flex items-center justify-between border-b border-border shrink-0">
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${column.color}`}></div>
-                  <h3 className="font-bold text-white tracking-wide">{column.label}</h3>
-                  <span className="px-2 py-0.5 rounded-full bg-border-dark text-xs font-medium text-slate-400">
+                  <h3 className="font-bold text-foreground tracking-wide">{column.label}</h3>
+                  <span className="px-2 py-0.5 rounded-full bg-muted text-xs font-medium text-muted-foreground">
                     {columnLeads.length}
                   </span>
                 </div>
-                <button className="text-slate-500 hover:text-white transition-colors">
+                <button className="text-muted-foreground hover:text-foreground transition-colors">
                   <MoreHorizontal className="w-5 h-5" />
                 </button>
               </div>
@@ -84,35 +83,34 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                     <div 
                       key={lead.id} 
                       className={cn(
-                        "group relative bg-card-dark p-4 rounded-xl border border-border-dark hover:border-primary/50 transition-all text-left",
-                        lead.status === 'Converted' ? "opacity-75 hover:opacity-100" : "hover:shadow-[0_0_15px_-5px_rgba(157,43,238,0.3)]",
+                        "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-left shadow-sm hover:shadow-md",
+                        lead.status === 'Converted' ? "opacity-75 hover:opacity-100" : "",
                         isProcessing && "opacity-50 pointer-events-none"
                       )}
                     >
                       <div className="flex justify-between items-start mb-2">
-                        <h4 className={cn("font-bold text-white text-base", lead.status === 'Converted' && "line-through text-slate-400")}>
+                        <h4 className={cn("font-bold text-foreground text-base", lead.status === 'Converted' && "line-through text-muted-foreground")}>
                           {lead.name}
                         </h4>
-                        <span className="text-xs text-slate-500 font-mono">
+                        <span className="text-xs text-muted-foreground font-mono">
                           {lead.dateAdded ? new Date(lead.dateAdded).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'New'}
                         </span>
                       </div>
                       
-                      <div className="flex items-center gap-2 mb-3 text-slate-500">
+                      <div className="flex items-center gap-2 mb-3 text-muted-foreground">
                         {getSourceIcon(lead.source)}
-                        <span className="text-xs text-slate-400 truncate">{lead.source || 'Direct'}</span>
+                        <span className="text-xs text-muted-foreground truncate">{lead.source || 'Direct'}</span>
                       </div>
                       
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {/* Need mock tags for now since Leads don't have arrays of tags natively right now */}
-                        <span className="px-2.5 py-1 rounded-full bg-primary/20 text-primary-glow text-xs font-medium border border-primary/20 truncate max-w-full">
+                        <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20 truncate max-w-full">
                           {lead.notes ? lead.notes.substring(0, 20) + (lead.notes.length > 20 ? '...' : '') : 'Lead'}
                         </span>
                       </div>
                       
-                      <div className="flex items-center justify-between mt-2 pt-3 border-t border-border-dark/50">
+                      <div className="flex items-center justify-between mt-2 pt-3 border-t border-border">
                         <div className="flex -space-x-2">
-                           <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-white ring-2 ring-card-dark">
+                           <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-white ring-2 ring-white">
                              {lead.name.charAt(0).toUpperCase()}
                            </div>
                         </div>
@@ -121,7 +119,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                           {nextStatus && (
                             <button 
                               onClick={() => handleMove(lead, nextStatus)}
-                              className="w-8 h-8 flex items-center justify-center rounded-full bg-surface-dark hover:bg-primary hover:text-white text-slate-400 transition-colors"
+                              className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-primary hover:text-white text-muted-foreground transition-colors"
                               title={`Move to ${nextStatus}`}
                             >
                               <ArrowRight className="w-4 h-4" />
@@ -131,7 +129,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                           {lead.status === 'Qualified' && (
                             <button 
                               onClick={() => handleConvert(lead)}
-                              className="w-8 h-8 flex items-center justify-center rounded-full bg-surface-dark hover:bg-green-500 hover:text-white text-slate-400 transition-colors"
+                              className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-green-500 hover:text-white text-muted-foreground transition-colors"
                               title="Convert to Student"
                             >
                               <Check className="w-4 h-4" />
@@ -147,7 +145,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                 {(column.id === 'New' || column.id === 'Contacted') && (
                   <button 
                     onClick={onAddLeadClick}
-                    className="w-full py-2.5 mt-2 flex items-center justify-center gap-2 rounded-xl border border-dashed border-border-dark text-slate-500 hover:text-primary-glow hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium"
+                    className="w-full py-2.5 mt-2 flex items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium"
                   >
                     <Plus className="w-4 h-4" />
                     New Lead

@@ -111,7 +111,7 @@ export default function LeadsPage() {
   }
 
   return (
-    <div className="space-y-4 flex flex-col h-full bg-background-dark">
+    <div className="space-y-4 flex flex-col h-full">
       <KanbanBoard 
         leads={leads}
         onStatusChange={handleStatusChange}

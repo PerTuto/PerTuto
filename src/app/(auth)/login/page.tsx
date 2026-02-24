@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { PerTutoLogo } from "@/components/brand/logo";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
@@ -53,6 +54,8 @@ export default function LoginPage() {
   };
 
   return (
+    <div className="flex flex-col items-center gap-8">
+      <PerTutoLogo size="md" />
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
         <CardTitle className="font-headline text-2xl">Welcome Back</CardTitle>
@@ -95,5 +98,6 @@ export default function LoginPage() {
         </Form>
       </CardContent>
     </Card>
+    </div>
   );
 }

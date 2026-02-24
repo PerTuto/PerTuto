@@ -27,6 +27,7 @@ import { Separator } from "../ui/separator";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { PerTutoLogo } from "@/components/brand/logo";
 
 export function SidebarNav() {
   const pathname = usePathname();
@@ -73,12 +74,10 @@ export function SidebarNav() {
     <>
       <SidebarHeader>
         <div className="flex items-center gap-3 px-2 py-4">
-          <div className="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20 bg-primary/10 flex items-center justify-center">
-            <Book className="size-5 text-primary" />
-          </div>
+          <PerTutoLogo size="sm" variant="icon" className="text-sidebar-primary" />
           <div className="flex flex-col">
-            <h1 className="text-white text-base font-bold leading-tight font-headline">PerTuto</h1>
-            <p className="text-slate-400 text-xs font-normal">Workspace</p>
+            <h1 className="text-sidebar-foreground text-base font-bold leading-tight font-headline">PerTuto</h1>
+            <p className="text-sidebar-foreground/60 text-xs font-normal">Workspace</p>
           </div>
         </div>
       </SidebarHeader>
@@ -99,13 +98,13 @@ export function SidebarNav() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <Separator className="my-2" />
+        <Separator className="my-2 bg-sidebar-border" />
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               as={Link}
-              href="/settings"
-              isActive={pathname === "/settings"}
+              href="/dashboard/settings"
+              isActive={pathname === "/dashboard/settings"}
             >
               <Settings />
               <span>Settings</span>
@@ -119,7 +118,7 @@ export function SidebarNav() {
               </Avatar>
               <div className="flex flex-col truncate">
                 <span className="font-semibold">{userProfile?.fullName || 'User'}</span>
-                <span className="text-xs text-muted-foreground">{user?.email}</span>
+                <span className="text-xs text-sidebar-foreground/50">{user?.email}</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

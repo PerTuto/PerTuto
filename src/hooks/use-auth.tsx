@@ -27,7 +27,7 @@ export interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 
-const SUPER_USER_EMAIL = 'super@pertuto.com';
+const SUPER_USER_EMAIL = process.env.NEXT_PUBLIC_SUPER_USER_EMAIL || 'super@pertuto.com';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);

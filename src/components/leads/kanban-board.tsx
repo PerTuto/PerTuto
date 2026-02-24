@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { Lead } from '@/lib/types';
-import { MoreHorizontal, Globe, Mail, Briefcase, Phone, Check, ArrowRight, Plus } from 'lucide-react';
+import { MoreHorizontal, Globe, Mail, Briefcase, Phone, Check, ArrowRight, Plus, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface KanbanBoardProps {
@@ -10,6 +10,17 @@ interface KanbanBoardProps {
   onStatusChange: (leadId: string, newStatus: Lead['status']) => Promise<void>;
   onConvert: (lead: Lead) => Promise<void>;
   onAddLeadClick: () => void;
+  onEditClick: (lead: Lead) => void;
+}
+
+function formatLeadDate(dateAdded: any): string {
+  if (!dateAdded) return 'New';
+  const date = dateAdded?.seconds
+    ? new Date(dateAdded.seconds * 1000)
+    : new Date(dateAdded);
+  return isNaN(date.getTime())
+    ? 'New'
+    : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 const COLUMNS: { id: Lead['status'], label: string, color: string }[] = [
@@ -20,7 +31,7 @@ const COLUMNS: { id: Lead['status'], label: string, color: string }[] = [
   { id: 'Lost', label: 'Lost', color: 'bg-red-500' },
 ];
 
-export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }: KanbanBoardProps) {
+export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, onEditClick }: KanbanBoardProps) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const handleMove = async (lead: Lead, nextStatus: Lead['status']) => {
@@ -83,22 +94,22 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                     <div 
                       key={lead.id} 
                       className={cn(
-                        "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-left shadow-sm hover:shadow-md",
+                        "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-left shadow-sm hover:shadow-md cursor-pointer",
                         lead.status === 'Converted' ? "opacity-75 hover:opacity-100" : "",
                         isProcessing && "opacity-50 pointer-events-none"
                       )}
+                      onClick={() => onEditClick(lead)}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <h4 className={cn("font-bold text-foreground text-base", lead.status === 'Converted' && "line-through text-muted-foreground")}>
                           {lead.name}
                         </h4>
-                        <span className="text-xs text-muted-foreground font-mono">
-                          {lead.dateAdded ? (() => {
-                            const d = lead.dateAdded as any;
-                            const date = d?.seconds ? new Date(d.seconds * 1000) : new Date(d);
-                            return isNaN(date.getTime()) ? 'New' : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-                          })() : 'New'}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground font-mono">
+                            {formatLeadDate(lead.dateAdded)}
+                          </span>
+                          <Pencil className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
                       </div>
                       
                       <div className="flex items-center gap-2 mb-3 text-muted-foreground">
@@ -122,7 +133,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                           {nextStatus && (
                             <button 
-                              onClick={() => handleMove(lead, nextStatus)}
+                              onClick={(e) => { e.stopPropagation(); handleMove(lead, nextStatus); }}
                               className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-primary hover:text-white text-muted-foreground transition-colors"
                               title={`Move to ${nextStatus}`}
                             >
@@ -132,7 +143,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick }
                           
                           {lead.status === 'Qualified' && (
                             <button 
-                              onClick={() => handleConvert(lead)}
+                              onClick={(e) => { e.stopPropagation(); handleConvert(lead); }}
                               className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-green-500 hover:text-white text-muted-foreground transition-colors"
                               title="Convert to Student"
                             >

@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import type { Lead } from '@/lib/types';
 import { AddLeadForm } from '@/components/leads/add-lead-form';
+import { EditLeadDialog } from '@/components/leads/edit-lead-dialog';
 import { KanbanBoard } from '@/components/leads/kanban-board';
-import { getLeads, addLead as addLeadToFirestore, convertLeadToStudent, updateLead } from "@/lib/firebase/services";
+import { getLeads, addLead as addLeadToFirestore, convertLeadToStudent, updateLead, deleteLead } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -16,6 +17,7 @@ export default function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editingLead, setEditingLead] = useState<Lead | null>(null);
 
   useEffect(() => {
     async function fetchLeads() {
@@ -74,6 +76,32 @@ export default function LeadsPage() {
     }
   };
 
+  const handleEditLead = async (leadId: string, data: Partial<Omit<Lead, 'id'>>) => {
+    if (!userProfile?.tenantId) return;
+
+    try {
+      await updateLead(userProfile.tenantId, leadId, data);
+      setLeads(prev => prev.map(l => l.id === leadId ? { ...l, ...data } : l));
+      toast({ title: 'Lead Updated', description: 'Changes saved successfully.' });
+    } catch (error) {
+      console.error("Failed to update lead:", error);
+      toast({ title: 'Error', description: 'Failed to update lead.', variant: 'destructive' });
+    }
+  };
+
+  const handleDeleteLead = async (leadId: string) => {
+    if (!userProfile?.tenantId) return;
+
+    try {
+      await deleteLead(userProfile.tenantId, leadId);
+      setLeads(prev => prev.filter(l => l.id !== leadId));
+      toast({ title: 'Lead Deleted', description: 'Lead has been removed.' });
+    } catch (error) {
+      console.error("Failed to delete lead:", error);
+      toast({ title: 'Error', description: 'Failed to delete lead.', variant: 'destructive' });
+    }
+  };
+
   const handleConvert = async (lead: Lead) => {
     if (!userProfile?.tenantId) return;
 
@@ -117,8 +145,10 @@ export default function LeadsPage() {
         onStatusChange={handleStatusChange}
         onConvert={handleConvert}
         onAddLeadClick={() => setIsAddDialogOpen(true)}
+        onEditClick={(lead) => setEditingLead(lead)}
       />
 
+      {/* Add Lead Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -128,6 +158,15 @@ export default function LeadsPage() {
           <AddLeadForm addLead={addLead} setIsAddDialogOpen={setIsAddDialogOpen} />
         </DialogContent>
       </Dialog>
+
+      {/* Edit Lead Dialog */}
+      <EditLeadDialog
+        lead={editingLead}
+        open={!!editingLead}
+        onOpenChange={(open) => { if (!open) setEditingLead(null); }}
+        onSave={handleEditLead}
+        onDelete={handleDeleteLead}
+      />
     </div>
   );
 }

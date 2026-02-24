@@ -436,3 +436,49 @@ export async function convertLeadToStudent(tenantId: string, lead: Lead): Promis
     ...studentData
   } as Student;
 }
+
+// --- Attendance Services ---
+
+import type { AttendanceRecord } from '../types';
+
+/**
+ * Saves an attendance record for a class session.
+ */
+export async function saveAttendance(
+  tenantId: string,
+  data: Omit<AttendanceRecord, 'id'>
+): Promise<AttendanceRecord> {
+  const attendanceRef = collection(firestore, `tenants/${tenantId}/attendance`);
+  const docRef = await addDoc(attendanceRef, {
+    ...data,
+    createdAt: Timestamp.now(),
+  });
+  return { id: docRef.id, ...data } as AttendanceRecord;
+}
+
+/**
+ * Fetches attendance records for a specific class.
+ */
+export async function getAttendanceByClass(
+  tenantId: string,
+  classId: string
+): Promise<AttendanceRecord[]> {
+  const q = query(
+    collection(firestore, `tenants/${tenantId}/attendance`),
+    where('classId', '==', classId)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AttendanceRecord));
+}
+
+/**
+ * Fetches all attendance records for a tenant (recent first, max 50).
+ */
+export async function getRecentAttendance(tenantId: string): Promise<AttendanceRecord[]> {
+  const attendanceRef = collection(firestore, `tenants/${tenantId}/attendance`);
+  const snapshot = await getDocs(attendanceRef);
+  const records = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AttendanceRecord));
+  // Sort by date descending
+  records.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  return records.slice(0, 50);
+}

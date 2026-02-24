@@ -1,40 +1,77 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { StatCard } from "./stat-card";
-import { GraduationCap, Users, Book, BarChart3 } from "lucide-react";
-import { students, leads, courses } from "@/lib/data";
+import { GraduationCap, Users, Book, Calendar } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { getStudents, getLeads, getCourses, getClasses } from "@/lib/firebase/services";
 
 export function DashboardStats() {
-    const totalStudents = students.length;
-    const newLeads = leads.filter(l => l.status === 'New').length;
-    const totalCourses = courses.length;
-    const averageProgress = students.length > 0
-        ? Math.round(students.reduce((acc, s) => acc + s.progress, 0) / students.length)
-        : 0;
+    const { userProfile } = useAuth();
+    const [stats, setStats] = useState({ students: 0, leads: 0, courses: 0, classesThisWeek: 0 });
+
+    useEffect(() => {
+        async function fetchStats() {
+            if (!userProfile?.tenantId) return;
+            try {
+                const [students, leads, courses, classes] = await Promise.all([
+                    getStudents(userProfile.tenantId),
+                    getLeads(userProfile.tenantId),
+                    getCourses(userProfile.tenantId),
+                    getClasses(userProfile.tenantId),
+                ]);
+
+                // Count classes this week
+                const now = new Date();
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay());
+                weekStart.setHours(0, 0, 0, 0);
+                const weekEnd = new Date(weekStart);
+                weekEnd.setDate(weekStart.getDate() + 7);
+
+                const classesThisWeek = classes.filter((c: any) => {
+                    const start = c.start instanceof Date ? c.start : new Date(c.start);
+                    return start >= weekStart && start < weekEnd;
+                }).length;
+
+                setStats({
+                    students: students.length,
+                    leads: leads.filter(l => l.status !== 'Converted' && l.status !== 'Lost').length,
+                    courses: courses.length,
+                    classesThisWeek,
+                });
+            } catch (error) {
+                console.error("Failed to fetch dashboard stats:", error);
+            }
+        }
+        fetchStats();
+    }, [userProfile?.tenantId]);
 
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <StatCard 
                 title="Total Students"
-                value={totalStudents.toString()}
+                value={stats.students.toString()}
                 icon={<GraduationCap className="h-5 w-5" />}
-                description="The total number of active students."
+                description="Enrolled across all courses"
             />
             <StatCard 
-                title="New Leads"
-                value={newLeads.toString()}
+                title="Active Leads"
+                value={stats.leads.toString()}
                 icon={<Users className="h-5 w-5" />}
-                description="Number of new potential students."
+                description="In the sales pipeline"
             />
             <StatCard 
-                title="Courses Offered"
-                value={totalCourses.toString()}
+                title="Courses"
+                value={stats.courses.toString()}
                 icon={<Book className="h-5 w-5" />}
-                description="The total number of available courses."
+                description="Currently offered"
             />
             <StatCard 
-                title="Average Progress"
-                value={`${averageProgress}%`}
-                icon={<BarChart3 className="h-5 w-5" />}
-                description="Average course completion across all students."
+                title="Classes This Week"
+                value={stats.classesThisWeek.toString()}
+                icon={<Calendar className="h-5 w-5" />}
+                description="Scheduled sessions"
             />
         </div>
     )

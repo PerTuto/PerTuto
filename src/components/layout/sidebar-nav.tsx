@@ -12,6 +12,8 @@ import {
   LogOut,
   Settings,
   Users,
+  UserCog,
+  Clock,
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -28,6 +30,28 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { PerTutoLogo } from "@/components/brand/logo";
+import type { UserRole } from "@/lib/types";
+
+type MenuItem = {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  roles: UserRole[]; // Empty = visible to all
+};
+
+const ALL_ROLES: UserRole[] = ['super', 'admin', 'executive', 'teacher', 'parent', 'student'];
+
+const menuItems: MenuItem[] = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: [] },
+  { href: "/dashboard/schedule", label: "Schedule", icon: Calendar, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/availability", label: "Availability", icon: Clock, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/students", label: "Students", icon: GraduationCap, roles: ['super', 'admin', 'executive', 'teacher'] },
+  { href: "/dashboard/leads", label: "Leads", icon: Users, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/courses", label: "Courses", icon: Book, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/attendance", label: "Attendance", icon: Users, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin'] },
+];
 
 export function SidebarNav() {
   const pathname = usePathname();
@@ -35,28 +59,22 @@ export function SidebarNav() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const menuItems = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/dashboard/schedule", label: "Schedule", icon: Calendar },
-    { href: "/dashboard/availability", label: "Availability", icon: ClipboardList },
-    { href: "/dashboard/students", label: "Students", icon: GraduationCap },
-    { href: "/dashboard/leads", label: "Leads", icon: Users },
-    { href: "/dashboard/courses", label: "Courses", icon: Book },
-    { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList },
-    { href: "/dashboard/attendance", label: "Attendance", icon: Users },
-  ];
-
-  const hasRole = (role: string) => {
+  const hasRole = (role: string): boolean => {
     if (!userProfile?.role) return false;
     if (Array.isArray(userProfile.role)) {
-      return userProfile.role.includes(role as any);
+      return userProfile.role.includes(role as UserRole);
     }
     return userProfile.role === role;
   };
 
-  if (hasRole('admin')) {
-    menuItems.push({ href: "/organization/users", label: "Users", icon: Users });
-  }
+  const visibleItems = menuItems.filter((item) => {
+    // Empty roles array = visible to all
+    if (item.roles.length === 0) return true;
+    // Super sees everything
+    if (hasRole('super')) return true;
+    // Check if user has any of the required roles
+    return item.roles.some((role) => hasRole(role));
+  });
 
   const handleLogout = async () => {
     try {
@@ -67,8 +85,6 @@ export function SidebarNav() {
       toast({ title: "Logout Failed", description: "Could not log you out. Please try again.", variant: "destructive" });
     }
   };
-
-
 
   return (
     <>
@@ -83,7 +99,7 @@ export function SidebarNav() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {menuItems.map((item) => (
+          {visibleItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
                 as={Link}

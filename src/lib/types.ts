@@ -103,3 +103,13 @@ export type AvailabilitySlot = {
   endTime: string; // "17:00"
   status: 'available' | 'busy';
 };
+
+export type AttendanceRecord = {
+  id: string;
+  classId: string;
+  courseId: string;
+  date: string; // ISO date string
+  records: { studentId: string; studentName: string; present: boolean }[];
+  markedBy: string; // userId
+  createdAt?: any;
+};

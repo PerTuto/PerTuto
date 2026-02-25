@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { BookOpen, FileText, HelpCircle, Lightbulb, ArrowRight, Loader2 } from "lucide-react";
+import { BookOpen, FileText, HelpCircle, Lightbulb, ArrowRight, Loader2, Beaker, Atom, Calculator, Microscope } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,12 +12,35 @@ import { LeadCaptureForm } from "@/components/public/lead-capture-form";
 
 const DEFAULT_TENANT_ID = "pertuto-default";
 
-const GRADES = [
-  { grade: "8", label: "Class 8", description: "Foundation of algebra, geometry, and data handling", color: "from-blue-500 to-blue-600" },
-  { grade: "9", label: "Class 9", description: "Number systems, polynomials, coordinate geometry", color: "from-indigo-500 to-indigo-600" },
-  { grade: "10", label: "Class 10", description: "Board exam preparation — algebra, trigonometry, statistics", color: "from-violet-500 to-violet-600" },
-  { grade: "11", label: "Class 11", description: "Sets, calculus foundations, complex numbers, conics", color: "from-purple-500 to-purple-600" },
-  { grade: "12", label: "Class 12", description: "Board exam — calculus, vectors, linear programming, probability", color: "from-fuchsia-500 to-fuchsia-600" },
+type CourseCard = {
+  slug: string;
+  label: string;
+  description: string;
+  color: string;
+  icon: string;
+  curriculum: string;
+  subject: string;
+  grades: string[]; // grades that belong to this card
+};
+
+const COURSE_CARDS: CourseCard[] = [
+  // CBSE Mathematics
+  { slug: "cbse-mathematics-8", label: "CBSE Math — Class 8", description: "Rational numbers, algebraic expressions, mensuration, and data handling", color: "from-blue-500 to-blue-600", icon: "8", curriculum: "CBSE", subject: "Mathematics", grades: ["8"] },
+  { slug: "cbse-mathematics-9", label: "CBSE Math — Class 9", description: "Number systems, polynomials, coordinate geometry, and probability", color: "from-blue-600 to-blue-700", icon: "9", curriculum: "CBSE", subject: "Mathematics", grades: ["9"] },
+  { slug: "cbse-mathematics-10", label: "CBSE Math — Class 10", description: "Board exam prep — algebra, trigonometry, statistics & probability", color: "from-blue-700 to-indigo-600", icon: "10", curriculum: "CBSE", subject: "Mathematics", grades: ["10"] },
+  { slug: "cbse-mathematics-11", label: "CBSE Math — Class 11", description: "Sets, calculus foundations, complex numbers, permutations & conics", color: "from-indigo-500 to-indigo-600", icon: "11", curriculum: "CBSE", subject: "Mathematics", grades: ["11"] },
+  { slug: "cbse-mathematics-12", label: "CBSE Math — Class 12", description: "Board exam — calculus, vectors, linear programming, probability", color: "from-indigo-600 to-violet-600", icon: "12", curriculum: "CBSE", subject: "Mathematics", grades: ["12"] },
+
+  // IB
+  { slug: "ib-mathematics-aa", label: "IB Math AA", description: "Analysis & Approaches — Number, Functions, Trigonometry, Stats, Calculus (SL & HL)", color: "from-violet-500 to-purple-600", icon: "IB", curriculum: "IB", subject: "Mathematics AA", grades: ["SL", "HL"] },
+  { slug: "ib-chemistry", label: "IB Chemistry", description: "Structure & Reactivity framework — Bonding, Energetics, Kinetics, Organic (SL & HL)", color: "from-emerald-500 to-emerald-600", icon: "IB", curriculum: "IB", subject: "Chemistry", grades: ["SL", "HL"] },
+
+  // IGCSE
+  { slug: "igcse-physics", label: "IGCSE Physics", description: "Motion, Thermal Physics, Waves, Electricity, Nuclear & Space Physics", color: "from-orange-500 to-orange-600", icon: "IG", curriculum: "IGCSE", subject: "Physics", grades: ["Core"] },
+  { slug: "igcse-mathematics", label: "IGCSE Mathematics", description: "Number, Algebra, Geometry, Trigonometry, Statistics & Probability", color: "from-amber-500 to-amber-600", icon: "IG", curriculum: "IGCSE", subject: "Mathematics", grades: ["Extended"] },
+
+  // A-Level
+  { slug: "a-level-biology", label: "A-Level Biology", description: "Cell Biology, Genetics, Ecology, Respiration, Photosynthesis & more (AS & A2)", color: "from-green-500 to-green-600", icon: "AL", curriculum: "A-Level", subject: "Biology", grades: ["AS", "A2"] },
 ];
 
 export default function ResourcesHubPage() {
@@ -28,19 +51,79 @@ export default function ResourcesHubPage() {
     async function loadCounts() {
       try {
         const allResources = await getPublishedResources(DEFAULT_TENANT_ID);
+        // Build counts keyed by "curriculum|subject"
         const counts: Record<string, number> = {};
         allResources.forEach((r: any) => {
-          counts[r.grade] = (counts[r.grade] || 0) + 1;
+          const key = `${r.curriculum}|${r.subject}|${r.grade}`;
+          counts[key] = (counts[key] || 0) + 1;
         });
         setResourceCounts(counts);
       } catch {
-        // Silently handle — show 0 counts
+        // Silently handle
       } finally {
         setLoading(false);
       }
     }
     loadCounts();
   }, []);
+
+  function getCountForCard(card: CourseCard): number {
+    let total = 0;
+    card.grades.forEach((g) => {
+      const key = `${card.curriculum}|${card.subject}|${g}`;
+      total += resourceCounts[key] || 0;
+    });
+    return total;
+  }
+
+  // Group cards by curriculum
+  const cbseCards = COURSE_CARDS.filter((c) => c.curriculum === "CBSE");
+  const ibCards = COURSE_CARDS.filter((c) => c.curriculum === "IB");
+  const igcseCards = COURSE_CARDS.filter((c) => c.curriculum === "IGCSE");
+  const aLevelCards = COURSE_CARDS.filter((c) => c.curriculum === "A-Level");
+
+  function renderSection(title: string, subtitle: string, cards: CourseCard[]) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="font-headline text-2xl font-bold">{title}</h2>
+          <p className="text-sm text-muted-foreground">{subtitle}</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {cards.map((card) => {
+            const count = getCountForCard(card);
+            return (
+              <Link key={card.slug} href={`/resources/${card.slug}`}>
+                <SpotlightCard className="h-full group">
+                  <div className="flex flex-col h-full space-y-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center`}>
+                      <span className="text-white font-bold text-sm">{card.icon}</span>
+                    </div>
+                    <div>
+                      <h3 className="font-headline text-lg font-bold mb-1">{card.label}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{card.description}</p>
+                    </div>
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+                      {loading ? (
+                        <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                      ) : (
+                        <Badge variant="outline" className="text-xs">
+                          {count} {count === 1 ? "resource" : "resources"}
+                        </Badge>
+                      )}
+                      <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Explore <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -49,20 +132,20 @@ export default function ResourcesHubPage() {
         <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 pt-20 pb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm text-primary mb-4">
             <BookOpen className="w-4 h-4" />
-            Free CBSE Resources
+            Free Study Resources
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold tracking-tight leading-[1.1]">
-            CBSE Mathematics Resources
+            Study Resources Hub
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Complete syllabus outlines, past year papers, study guides, and FAQs for CBSE Mathematics — from Class 8 to Class 12.
+            Syllabus outlines, past year papers, study guides, and FAQs — covering CBSE, IB, IGCSE, and A-Level curricula.
           </p>
         </div>
       </section>
 
       {/* Content Type Legend */}
       <section className="px-6 pb-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
               <BookOpen className="w-4 h-4 text-blue-600" />
@@ -84,43 +167,13 @@ export default function ResourcesHubPage() {
         </div>
       </section>
 
-      {/* Grade Cards */}
-      <section className="px-6 pb-24">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {GRADES.map((g) => {
-              const count = resourceCounts[g.grade] || 0;
-              const slug = `cbse-mathematics-${g.grade}`;
-
-              return (
-                <Link key={g.grade} href={`/resources/${slug}`}>
-                  <SpotlightCard className="h-full group">
-                    <div className="flex flex-col h-full space-y-4">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${g.color} flex items-center justify-center`}>
-                        <span className="text-white font-bold text-lg">{g.grade}</span>
-                      </div>
-                      <div>
-                        <h3 className="font-headline text-xl font-bold mb-1">{g.label}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{g.description}</p>
-                      </div>
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-                        {loading ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-                        ) : (
-                          <Badge variant="outline" className="text-xs">
-                            {count} {count === 1 ? "resource" : "resources"}
-                          </Badge>
-                        )}
-                        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Explore <ArrowRight className="w-4 h-4" />
-                        </span>
-                      </div>
-                    </div>
-                  </SpotlightCard>
-                </Link>
-              );
-            })}
-          </div>
+      {/* All Sections */}
+      <section className="px-6 pb-24 space-y-16">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {renderSection("CBSE Mathematics", "Grades 8–12 — Complete chapter-wise syllabus aligned to CBSE 2024-25", cbseCards)}
+          {renderSection("IB Diploma Programme", "SL & HL — Analysis & Approaches, Chemistry", ibCards)}
+          {renderSection("Cambridge IGCSE", "Core & Extended — Physics, Mathematics", igcseCards)}
+          {renderSection("Cambridge A-Level", "AS & A2 — Biology", aLevelCards)}
         </div>
       </section>
 
@@ -129,7 +182,7 @@ export default function ResourcesHubPage() {
         <div className="max-w-lg mx-auto">
           <div className="rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-md p-8 md:p-10 shadow-2xl">
             <div className="text-center mb-8">
-              <h2 className="font-headline text-2xl md:text-3xl font-bold mb-2">Need Help with CBSE Math?</h2>
+              <h2 className="font-headline text-2xl md:text-3xl font-bold mb-2">Need Expert Tutoring?</h2>
               <p className="text-sm text-muted-foreground">Book a free consultation today. We&apos;ll call you within 2 hours.</p>
             </div>
             <LeadCaptureForm variant="minimal" />

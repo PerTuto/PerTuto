@@ -49,8 +49,10 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CBSE_MATH_SEED_DATA } from "./seed-data";
+import { ALL_ADDITIONAL_SEED_DATA } from "./seed-data-all";
 
-const GRADES = ["8", "9", "10", "11", "12"];
+const GRADES = ["8", "9", "10", "11", "12", "SL", "HL", "Core", "Extended", "AS", "A2"];
+const CURRICULA = ["CBSE", "IB", "IGCSE", "A-Level"];
 const RESOURCE_TYPES = [
   { value: ResourceType.Syllabus, label: "Syllabus" },
   { value: ResourceType.PastPaper, label: "Past Paper" },
@@ -119,6 +121,7 @@ export default function ResourcesPage() {
   const [filterGrade, setFilterGrade] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
   const [filterPublished, setFilterPublished] = useState<string>("all");
+  const [filterCurriculum, setFilterCurriculum] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -151,6 +154,7 @@ export default function ResourcesPage() {
     return resources.filter((r) => {
       if (filterGrade !== "all" && r.grade !== filterGrade) return false;
       if (filterType !== "all" && r.type !== filterType) return false;
+      if (filterCurriculum !== "all" && r.curriculum !== filterCurriculum) return false;
       if (filterPublished === "published" && !r.published) return false;
       if (filterPublished === "draft" && r.published) return false;
       if (
@@ -160,7 +164,7 @@ export default function ResourcesPage() {
         return false;
       return true;
     });
-  }, [resources, filterGrade, filterType, filterPublished, searchQuery]);
+  }, [resources, filterGrade, filterType, filterCurriculum, filterPublished, searchQuery]);
 
   function openAddDialog() {
     setEditingId(null);
@@ -299,12 +303,13 @@ export default function ResourcesPage() {
     }
   }
 
-  async function handleSeedData() {
+  async function handleSeedData(dataSet: "cbse" | "all") {
     if (!tenantId) return;
     setSeeding(true);
     try {
+      const entries = dataSet === "cbse" ? CBSE_MATH_SEED_DATA : [...CBSE_MATH_SEED_DATA, ...ALL_ADDITIONAL_SEED_DATA];
       let count = 0;
-      for (const entry of CBSE_MATH_SEED_DATA) {
+      for (const entry of entries) {
         await addResource(tenantId, {
           ...entry,
           tenantId,
@@ -316,7 +321,7 @@ export default function ResourcesPage() {
       }
       toast({
         title: "Seeded!",
-        description: `${count} CBSE Math syllabus entries created.`,
+        description: `${count} syllabus entries created across all courses.`,
       });
       fetchResources();
     } catch (e) {
@@ -363,19 +368,34 @@ export default function ResourcesPage() {
         </div>
         <div className="flex items-center gap-2">
           {totalCount === 0 && (
-            <Button
-              variant="outline"
-              onClick={handleSeedData}
-              disabled={seeding}
-              className="gap-2"
-            >
-              {seeding ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Sparkles className="w-4 h-4" />
-              )}
-              Seed CBSE Syllabus
-            </Button>
+            <>
+              <Button
+                variant="outline"
+                onClick={() => handleSeedData("cbse")}
+                disabled={seeding}
+                className="gap-2"
+              >
+                {seeding ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4" />
+                )}
+                Seed CBSE Only
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => handleSeedData("all")}
+                disabled={seeding}
+                className="gap-2"
+              >
+                {seeding ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4" />
+                )}
+                Seed All Courses
+              </Button>
+            </>
           )}
           <Button onClick={openAddDialog} className="gap-2">
             <Plus className="w-4 h-4" /> Add Resource
@@ -412,16 +432,25 @@ export default function ResourcesPage() {
             className="pl-9"
           />
         </div>
-        <Select value={filterGrade} onValueChange={setFilterGrade}>
-          <SelectTrigger className="w-[130px]">
-            <SelectValue placeholder="Grade" />
+        <Select value={filterCurriculum} onValueChange={setFilterCurriculum}>
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="Curriculum" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Grades</SelectItem>
+            <SelectItem value="all">All Curricula</SelectItem>
+            {CURRICULA.map((c) => (
+              <SelectItem key={c} value={c}>{c}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={filterGrade} onValueChange={setFilterGrade}>
+          <SelectTrigger className="w-[130px]">
+            <SelectValue placeholder="Level" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Levels</SelectItem>
             {GRADES.map((g) => (
-              <SelectItem key={g} value={g}>
-                Class {g}
-              </SelectItem>
+              <SelectItem key={g} value={g}>{g}</SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -460,7 +489,7 @@ export default function ResourcesPage() {
             <h3 className="text-xl font-semibold">No Resources Found</h3>
             <p className="text-muted-foreground max-w-md mx-auto">
               {totalCount === 0
-                ? 'Click "Seed CBSE Syllabus" to auto-populate CBSE Math chapters, or add resources manually.'
+                ? 'Click "Seed All Courses" to auto-populate syllabus entries for CBSE, IB, IGCSE, and A-Level — or add resources manually.'
                 : "No resources match your current filters."}
             </p>
           </div>
@@ -481,7 +510,7 @@ export default function ResourcesPage() {
                         {TYPE_LABELS[r.type]}
                       </Badge>
                       <Badge variant="outline" className="text-[10px] shrink-0">
-                        Class {r.grade}
+                        {r.curriculum} · {r.grade}
                       </Badge>
                       {!r.published && (
                         <Badge

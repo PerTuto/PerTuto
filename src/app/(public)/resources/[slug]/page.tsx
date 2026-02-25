@@ -40,10 +40,22 @@ function GradePageContent() {
   const router = useRouter();
   const slug = params.slug as string;
 
-  // Parse slug: "cbse-mathematics-10" → grade "10"
-  const grade = slug?.split("-").pop() || "";
-  const curriculum = "CBSE";
-  const subject = "Mathematics";
+  // Slug-to-config mapping for all curricula
+  const SLUG_CONFIG: Record<string, { curriculum: string; subject: string; grades: string[]; title: string }> = {
+    "cbse-mathematics-8":  { curriculum: "CBSE", subject: "Mathematics", grades: ["8"],  title: "CBSE Mathematics — Class 8" },
+    "cbse-mathematics-9":  { curriculum: "CBSE", subject: "Mathematics", grades: ["9"],  title: "CBSE Mathematics — Class 9" },
+    "cbse-mathematics-10": { curriculum: "CBSE", subject: "Mathematics", grades: ["10"], title: "CBSE Mathematics — Class 10" },
+    "cbse-mathematics-11": { curriculum: "CBSE", subject: "Mathematics", grades: ["11"], title: "CBSE Mathematics — Class 11" },
+    "cbse-mathematics-12": { curriculum: "CBSE", subject: "Mathematics", grades: ["12"], title: "CBSE Mathematics — Class 12" },
+    "ib-mathematics-aa":   { curriculum: "IB",  subject: "Mathematics AA", grades: ["SL", "HL"], title: "IB Math Analysis & Approaches" },
+    "ib-chemistry":        { curriculum: "IB",  subject: "Chemistry", grades: ["SL", "HL"], title: "IB Chemistry" },
+    "igcse-physics":       { curriculum: "IGCSE", subject: "Physics", grades: ["Core"],  title: "IGCSE Physics" },
+    "igcse-mathematics":   { curriculum: "IGCSE", subject: "Mathematics", grades: ["Extended"], title: "IGCSE Mathematics" },
+    "a-level-biology":     { curriculum: "A-Level", subject: "Biology", grades: ["AS", "A2"], title: "A-Level Biology" },
+  };
+
+  const config = SLUG_CONFIG[slug] || { curriculum: "CBSE", subject: "Mathematics", grades: [slug?.split("-").pop() || ""], title: `Resources — ${slug}` };
+  const { curriculum, subject, grades, title } = config;
 
   const activeTab = searchParams.get("tab") || "syllabus";
 
@@ -54,16 +66,21 @@ function GradePageContent() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getPublishedResources(DEFAULT_TENANT_ID, { grade, curriculum });
-        setResources(data.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0)));
+        // Fetch resources for all grades belonging to this course
+        const promises = grades.map((g) =>
+          getPublishedResources(DEFAULT_TENANT_ID, { grade: g, curriculum })
+        );
+        const results = await Promise.all(promises);
+        const allData = results.flat();
+        setResources(allData.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0)));
       } catch {
         // Silently handle
       } finally {
         setLoading(false);
       }
     }
-    if (grade) load();
-  }, [grade, curriculum]);
+    if (slug) load();
+  }, [slug, curriculum, grades]);
 
   const activeTabData = TABS.find((t) => t.id === activeTab) || TABS[0];
   const filteredResources = useMemo(
@@ -128,12 +145,10 @@ function GradePageContent() {
             <ArrowLeft className="w-4 h-4" /> All Resources
           </Link>
           <h1 className="text-3xl md:text-4xl font-headline font-bold tracking-tight mb-2">
-            {curriculum} {subject} — Class {grade}
+            {title}
           </h1>
           <p className="text-muted-foreground text-lg">
-            {grade === "10" || grade === "12"
-              ? `Board exam preparation resources — syllabus, past papers, study guides, and FAQs.`
-              : `Complete study resources — syllabus outlines, study guides, and FAQs.`}
+            Complete study resources — syllabus outlines, past papers, study guides, and FAQs.
           </p>
         </div>
       </section>
@@ -188,7 +203,7 @@ function GradePageContent() {
               </div>
               <h3 className="text-xl font-semibold">No {activeTabData.label} Yet</h3>
               <p className="text-muted-foreground max-w-md mx-auto">
-                {activeTabData.label} for Class {grade} {subject} are coming soon. Check back later!
+                {activeTabData.label} for {title} are coming soon. Check back later!
               </p>
             </div>
           ) : (
@@ -372,7 +387,7 @@ function GradePageContent() {
           <div className="rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-md p-8 md:p-10 shadow-2xl">
             <div className="text-center mb-8">
               <h2 className="font-headline text-2xl md:text-3xl font-bold mb-2">
-                Need Help with Class {grade} Math?
+                Need Help with {title}?
               </h2>
               <p className="text-sm text-muted-foreground">
                 Book a free consultation. We&apos;ll create a personalized study plan for your child.

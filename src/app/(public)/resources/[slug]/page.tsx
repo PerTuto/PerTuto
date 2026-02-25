@@ -42,6 +42,7 @@ function GradePageContent() {
 
   // Slug-to-config mapping for all curricula
   const SLUG_CONFIG: Record<string, { curriculum: string; subject: string; grades: string[]; title: string }> = {
+    // K-12
     "cbse-mathematics-8":  { curriculum: "CBSE", subject: "Mathematics", grades: ["8"],  title: "CBSE Mathematics — Class 8" },
     "cbse-mathematics-9":  { curriculum: "CBSE", subject: "Mathematics", grades: ["9"],  title: "CBSE Mathematics — Class 9" },
     "cbse-mathematics-10": { curriculum: "CBSE", subject: "Mathematics", grades: ["10"], title: "CBSE Mathematics — Class 10" },
@@ -52,6 +53,17 @@ function GradePageContent() {
     "igcse-physics":       { curriculum: "IGCSE", subject: "Physics", grades: ["Core"],  title: "IGCSE Physics" },
     "igcse-mathematics":   { curriculum: "IGCSE", subject: "Mathematics", grades: ["Extended"], title: "IGCSE Mathematics" },
     "a-level-biology":     { curriculum: "A-Level", subject: "Biology", grades: ["AS", "A2"], title: "A-Level Biology" },
+    // Higher Education
+    "university-mathematics": { curriculum: "University", subject: "Mathematics", grades: ["Undergraduate"], title: "University Mathematics" },
+    "university-statistics":  { curriculum: "University", subject: "Statistics", grades: ["Undergraduate"], title: "Statistics & Probability" },
+    "research-methods":       { curriculum: "University", subject: "Research Methods", grades: ["Postgraduate"], title: "Research Methods" },
+    "academic-writing":       { curriculum: "University", subject: "Academic Writing", grades: ["All Levels", "Postgraduate"], title: "Academic Writing" },
+    // Professional
+    "python-programming": { curriculum: "Professional", subject: "Python", grades: ["Beginner", "Intermediate", "Advanced"], title: "Python Programming" },
+    "data-science-ml":    { curriculum: "Professional", subject: "Data Science", grades: ["Beginner", "Intermediate", "Advanced"], title: "Data Science & Machine Learning" },
+    "sql-databases":      { curriculum: "Professional", subject: "SQL & Databases", grades: ["Beginner", "Intermediate"], title: "SQL & Databases" },
+    "web-development":    { curriculum: "Professional", subject: "Web Development", grades: ["Beginner", "Intermediate"], title: "Web Development" },
+    "cloud-devops":       { curriculum: "Professional", subject: "Cloud & DevOps", grades: ["Beginner", "Intermediate"], title: "Cloud & DevOps" },
   };
 
   const config = SLUG_CONFIG[slug] || { curriculum: "CBSE", subject: "Mathematics", grades: [slug?.split("-").pop() || ""], title: `Resources — ${slug}` };

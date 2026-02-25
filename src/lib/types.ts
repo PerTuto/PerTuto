@@ -299,10 +299,11 @@ export enum ResourceType {
 export type Resource = {
   id: string;
   tenantId: string;
+  vertical: 'k12' | 'higher-ed' | 'professional';
   type: ResourceType;
-  curriculum: string;      // e.g. "CBSE"
+  curriculum: string;      // e.g. "CBSE", "University", "Professional"
   subject: string;         // e.g. "Mathematics"
-  grade: string;           // e.g. "10"
+  grade: string;           // e.g. "10", "SL", "Beginner"
   title: string;           // e.g. "Ch 3: Pair of Linear Equations"
   content: string;         // Markdown body
   fileUrl?: string;        // Firebase Storage URL for PDFs

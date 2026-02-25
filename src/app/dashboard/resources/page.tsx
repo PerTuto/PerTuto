@@ -50,9 +50,16 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CBSE_MATH_SEED_DATA } from "./seed-data";
 import { ALL_ADDITIONAL_SEED_DATA } from "./seed-data-all";
+import { HIGHER_ED_SEED_DATA } from "./seed-data-higher-ed";
+import { PROFESSIONAL_SEED_DATA } from "./seed-data-professional";
 
-const GRADES = ["8", "9", "10", "11", "12", "SL", "HL", "Core", "Extended", "AS", "A2"];
-const CURRICULA = ["CBSE", "IB", "IGCSE", "A-Level"];
+const VERTICALS = [
+  { value: "k12", label: "K-12 Tutoring" },
+  { value: "higher-ed", label: "Higher Education" },
+  { value: "professional", label: "Professional" },
+];
+const GRADES = ["8", "9", "10", "11", "12", "SL", "HL", "Core", "Extended", "AS", "A2", "Undergraduate", "Postgraduate", "All Levels", "Beginner", "Intermediate", "Advanced"];
+const CURRICULA = ["CBSE", "IB", "IGCSE", "A-Level", "University", "Professional"];
 const RESOURCE_TYPES = [
   { value: ResourceType.Syllabus, label: "Syllabus" },
   { value: ResourceType.PastPaper, label: "Past Paper" },
@@ -75,6 +82,7 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 type FormData = {
+  vertical: string;
   type: ResourceType;
   curriculum: string;
   subject: string;
@@ -89,6 +97,7 @@ type FormData = {
 };
 
 const emptyForm: FormData = {
+  vertical: "k12",
   type: ResourceType.Syllabus,
   curriculum: "CBSE",
   subject: "Mathematics",
@@ -118,6 +127,7 @@ export default function ResourcesPage() {
   const [processingId, setProcessingId] = useState<string | null>(null);
 
   // Filters
+  const [filterVertical, setFilterVertical] = useState<string>("all");
   const [filterGrade, setFilterGrade] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
   const [filterPublished, setFilterPublished] = useState<string>("all");
@@ -152,6 +162,7 @@ export default function ResourcesPage() {
 
   const filtered = useMemo(() => {
     return resources.filter((r) => {
+      if (filterVertical !== "all" && (r as any).vertical !== filterVertical) return false;
       if (filterGrade !== "all" && r.grade !== filterGrade) return false;
       if (filterType !== "all" && r.type !== filterType) return false;
       if (filterCurriculum !== "all" && r.curriculum !== filterCurriculum) return false;
@@ -164,7 +175,7 @@ export default function ResourcesPage() {
         return false;
       return true;
     });
-  }, [resources, filterGrade, filterType, filterCurriculum, filterPublished, searchQuery]);
+  }, [resources, filterVertical, filterGrade, filterType, filterCurriculum, filterPublished, searchQuery]);
 
   function openAddDialog() {
     setEditingId(null);
@@ -176,6 +187,7 @@ export default function ResourcesPage() {
   function openEditDialog(r: Resource) {
     setEditingId(r.id);
     setForm({
+      vertical: r.vertical || "k12",
       type: r.type,
       curriculum: r.curriculum,
       subject: r.subject,
@@ -206,6 +218,7 @@ export default function ResourcesPage() {
     setSaving(true);
     try {
       const data: any = {
+        vertical: form.vertical,
         type: form.type,
         curriculum: form.curriculum,
         subject: form.subject,
@@ -303,11 +316,18 @@ export default function ResourcesPage() {
     }
   }
 
-  async function handleSeedData(dataSet: "cbse" | "all") {
+  async function handleSeedData(dataSet: "k12" | "higher-ed" | "professional" | "all") {
     if (!tenantId) return;
     setSeeding(true);
     try {
-      const entries = dataSet === "cbse" ? CBSE_MATH_SEED_DATA : [...CBSE_MATH_SEED_DATA, ...ALL_ADDITIONAL_SEED_DATA];
+      let entries: any[] = [];
+      const k12Entries = [...CBSE_MATH_SEED_DATA, ...ALL_ADDITIONAL_SEED_DATA];
+      switch (dataSet) {
+        case "k12": entries = k12Entries; break;
+        case "higher-ed": entries = HIGHER_ED_SEED_DATA; break;
+        case "professional": entries = PROFESSIONAL_SEED_DATA; break;
+        case "all": entries = [...k12Entries, ...HIGHER_ED_SEED_DATA, ...PROFESSIONAL_SEED_DATA]; break;
+      }
       let count = 0;
       for (const entry of entries) {
         await addResource(tenantId, {
@@ -319,9 +339,10 @@ export default function ResourcesPage() {
         });
         count++;
       }
+      const labels: Record<string, string> = { k12: "K-12", "higher-ed": "Higher Ed", professional: "Professional", all: "all verticals" };
       toast({
         title: "Seeded!",
-        description: `${count} syllabus entries created across all courses.`,
+        description: `${count} entries created for ${labels[dataSet]}.`,
       });
       fetchResources();
     } catch (e) {
@@ -366,33 +387,21 @@ export default function ResourcesPage() {
             Manage syllabus outlines, past papers, study guides, and FAQs.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                onClick={() => handleSeedData("cbse")}
-                disabled={seeding}
-                className="gap-2"
-              >
-                {seeding ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Sparkles className="w-4 h-4" />
-                )}
-                Seed CBSE
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleSeedData("all")}
-                disabled={seeding}
-                className="gap-2"
-              >
-                {seeding ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Sparkles className="w-4 h-4" />
-                )}
-                Seed All Courses
-              </Button>
+        <div className="flex items-center gap-2 flex-wrap">
+              <Select value="" onValueChange={(v) => handleSeedData(v as any)}>
+                <SelectTrigger className="w-[160px]" disabled={seeding}>
+                  <span className="flex items-center gap-2">
+                    {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                    Seed Data
+                  </span>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="k12">K-12 (123 entries)</SelectItem>
+                  <SelectItem value="higher-ed">Higher Ed (15 entries)</SelectItem>
+                  <SelectItem value="professional">Professional (13 entries)</SelectItem>
+                  <SelectItem value="all">All Verticals (151 entries)</SelectItem>
+                </SelectContent>
+              </Select>
           <Button onClick={openAddDialog} className="gap-2">
             <Plus className="w-4 h-4" /> Add Resource
           </Button>
@@ -428,6 +437,17 @@ export default function ResourcesPage() {
             className="pl-9"
           />
         </div>
+        <Select value={filterVertical} onValueChange={setFilterVertical}>
+          <SelectTrigger className="w-[150px]">
+            <SelectValue placeholder="Vertical" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Verticals</SelectItem>
+            {VERTICALS.map((v) => (
+              <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Select value={filterCurriculum} onValueChange={setFilterCurriculum}>
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Curriculum" />
@@ -578,6 +598,23 @@ export default function ResourcesPage() {
             </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+            {/* Vertical */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Vertical</label>
+              <Select
+                value={form.vertical}
+                onValueChange={(v) => setForm((p) => ({ ...p, vertical: v }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {VERTICALS.map((v) => (
+                    <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             {/* Row 1: Type + Grade */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">

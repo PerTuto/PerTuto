@@ -663,6 +663,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
           })}
         </div>
       </div>
+    )}
 
       {/* ── Loading overlay ── */}
       {loading && (

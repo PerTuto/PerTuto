@@ -26,6 +26,8 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { MoreHorizontal, Globe, Mail, Briefcase, Phone, Check, ArrowRight, Plus, Pencil, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Badge } from '../ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface KanbanBoardProps {
   leads: Lead[];
@@ -148,8 +150,7 @@ function SortableLeadCard({ lead, isProcessing, onEditClick }: { lead: Lead, isP
   );
 }
 
-import { Badge } from '../ui/badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
 
 export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, onEditClick }: KanbanBoardProps) {
   const [activeLead, setActiveLead] = useState<Lead | null>(null);
@@ -258,8 +259,8 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, 
             );
           })}
         </div>
-      </TooltipProvider>
-    </div>
+      </div>
+    </TooltipProvider>
 
       <DragOverlay dropAnimation={dropAnimation}>
         {activeLead ? (

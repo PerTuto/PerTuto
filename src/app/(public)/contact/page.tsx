@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const CONTACT_INFO = [
-    { icon: Phone, label: '+971 55 600 6565', href: 'https://wa.me/971556006565', description: 'WhatsApp (preferred)' },
+    { icon: Phone, label: '+971 055 600 6565', href: 'https://wa.me/971556006565', description: 'WhatsApp (preferred)' },
     { icon: Mail, label: 'hello@pertuto.com', href: 'mailto:hello@pertuto.com', description: 'Email us anytime' },
     { icon: MapPin, label: 'Dubai, UAE', href: '#', description: 'Online sessions worldwide' },
     { icon: Clock, label: '9 AM – 9 PM GST', href: '#', description: 'Mon – Sat' },

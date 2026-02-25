@@ -115,7 +115,7 @@ export default function HomePage() {
                                     <GraduationCap className="w-7 h-7 text-primary" />
                                 </div>
 
-                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">K-12 Tutoring</h3>
+                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">K-12 <span className="text-primary">Tutoring</span></h3>
                                 <p className="text-muted-foreground leading-relaxed mb-8">
                                     Master the complexities of IB DP, Cambridge IGCSE, and A-Levels. From IA reviews to rigorous final exam prep.
                                 </p>

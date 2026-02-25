@@ -367,8 +367,6 @@ export default function ResourcesPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {totalCount === 0 && (
-            <>
               <Button
                 variant="outline"
                 onClick={() => handleSeedData("cbse")}
@@ -380,7 +378,7 @@ export default function ResourcesPage() {
                 ) : (
                   <Sparkles className="w-4 h-4" />
                 )}
-                Seed CBSE Only
+                Seed CBSE
               </Button>
               <Button
                 variant="outline"
@@ -395,8 +393,6 @@ export default function ResourcesPage() {
                 )}
                 Seed All Courses
               </Button>
-            </>
-          )}
           <Button onClick={openAddDialog} className="gap-2">
             <Plus className="w-4 h-4" /> Add Resource
           </Button>

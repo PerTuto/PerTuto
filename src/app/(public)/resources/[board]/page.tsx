@@ -29,8 +29,9 @@ const BOARD_METADATA: Record<string, { title: string, description: string }> = {
   "web-dev": { title: "Web Development", description: "Modern React, Next.js, and comprehensive backend engineering resources." }
 };
 
-export async function generateMetadata({ params }: { params: { board: string } }) {
-  const boardData = BOARD_METADATA[params.board.toLowerCase()];
+export async function generateMetadata({ params }: { params: Promise<{ board: string }> }) {
+  const resolvedParams = await params;
+  const boardData = BOARD_METADATA[resolvedParams.board.toLowerCase()];
   if (!boardData) return { title: "Resources | PerTuto" };
   return {
     title: `${boardData.title} | PerTuto Resources`,
@@ -38,8 +39,9 @@ export async function generateMetadata({ params }: { params: { board: string } }
   };
 }
 
-export default async function BoardPage({ params }: { params: { board: string } }) {
-  const boardId = params.board.toLowerCase();
+export default async function BoardPage({ params }: { params: Promise<{ board: string }> }) {
+  const resolvedParams = await params;
+  const boardId = resolvedParams.board.toLowerCase();
   const boardData = BOARD_METADATA[boardId];
 
   if (!boardData) {

@@ -73,6 +73,12 @@ service cloud.firestore {
         allow write: if userBelongsToTenant(tenantId) && isAdmin();
       }
 
+      match /resources/{resourceId} {
+        // Resources are explicitly public-facing.
+        allow read: true;
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
       // Default catch-all for other subcollections (assignments, attendance records, etc.)
       match /{allSubcollections=**} {
         allow read: if userBelongsToTenant(tenantId);

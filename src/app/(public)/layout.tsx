@@ -12,6 +12,7 @@ const NAV_LINKS = [
         label: 'Services',
         children: [
             { label: 'K-12 Tutoring', href: '/services/k12', description: 'IB, IGCSE, A-Level, CBSE' },
+            { label: 'Higher Education', href: '/services/university', description: 'University, Distance Learning, Adults' },
             { label: 'Professional Upskilling', href: '/services/professional', description: 'AI, Data Science, Programming' },
         ],
     },
@@ -118,6 +119,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                         <Link href="/services/k12" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
                             K-12 Tutoring
                         </Link>
+                        <Link href="/services/university" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
+                            Higher Education
+                        </Link>
                         <Link href="/services/professional" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
                             Professional Upskilling
                         </Link>
@@ -164,6 +168,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                             <h4 className="font-headline font-bold text-foreground mb-6">Services</h4>
                             <ul className="space-y-3 text-sm text-muted-foreground">
                                 <li><Link href="/services/k12" className="hover:text-primary transition-colors">K-12 Tutoring</Link></li>
+                                <li><Link href="/services/university" className="hover:text-primary transition-colors">Higher Education</Link></li>
                                 <li><Link href="/services/professional" className="hover:text-primary transition-colors">Professional Upskilling</Link></li>
                                 <li><Link href="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
                                 <li><Link href="/tutors" className="hover:text-primary transition-colors">Our Tutors</Link></li>

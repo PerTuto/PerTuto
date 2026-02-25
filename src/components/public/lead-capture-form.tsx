@@ -16,7 +16,7 @@ const SUBJECTS = [
     "Mathematics", "Physics", "Chemistry", "Biology",
     "Computer Science", "English", "Business Studies",
     "AI & Data Science", "Programming", "Professional Upskilling",
-    "Other"
+    "Higher Education", "Other"
 ];
 
 interface LeadFormData {

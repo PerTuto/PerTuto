@@ -43,7 +43,7 @@ export default function AboutPage() {
                                 We realized that the difference between an average grade and absolute excellence isn&apos;t intelligence—it&apos;s <strong>methodology</strong>. We built PerTuto to provide the 1-on-1 mentorship that unlocks a student&apos;s actual potential. 
                             </p>
                             <p>
-                                Today, we serve K-12 students navigating rigorous curricula (IB, IGCSE) and ambitious professionals seeking to upskill in AI and Data Science.
+                                Today, we serve K-12 students navigating rigorous curricula (IB, IGCSE), university scholars seeking thesis support, and ambitious professionals upskilling in AI and Data Science.
                             </p>
                         </div>
                     </div>

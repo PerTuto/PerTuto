@@ -49,7 +49,7 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
   }
 
   // Fetch only resources specifically matching this board
-  const [resources] = await getPublishedResources(DEFAULT_TENANT_ID);
+  const resources = await getPublishedResources(DEFAULT_TENANT_ID);
   const boardResources = resources.filter(
     (r: Resource) => r.board?.toLowerCase() === boardId || r.curriculum?.toLowerCase() === boardId
   );

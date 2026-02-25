@@ -75,7 +75,7 @@ service cloud.firestore {
 
       match /resources/{resourceId} {
         // Resources are explicitly public-facing.
-        allow read: true;
+        allow read: if true;
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 

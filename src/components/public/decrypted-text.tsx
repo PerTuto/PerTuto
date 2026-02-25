@@ -26,7 +26,7 @@ export function DecryptedText({ text, speed = 50, className }: DecryptedTextProp
                 clearInterval(interval);
                 setDisplayText(text);
             }
-            iter += 1 / 3;
+            iter += Math.max(1, text.length / 15);
         }, speed);
 
         return () => clearInterval(interval);

@@ -5,7 +5,7 @@ import { TestimonialGrid } from '@/components/public/testimonial-grid';
 import { AnimatedSection } from '@/components/public/animated-section';
 import { FluidBlob } from '@/components/public/fluid-blob';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowRight, GraduationCap, Briefcase, Target, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, GraduationCap, Briefcase, Target, Users, Sparkles, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { generateOrganizationSchema, generateFAQSchema } from '@/lib/schema';
 
@@ -107,7 +107,7 @@ export default function HomePage() {
                         <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Whether you&apos;re aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
                     </AnimatedSection>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {/* K-12 Card */}
                         <AnimatedSection delay={100}>
                             <div className="glass-panel p-8 md:p-10 flex flex-col group h-full">
@@ -162,6 +162,36 @@ export default function HomePage() {
                                 <Link href="/services/professional" className="mt-auto">
                                     <button className="w-full py-4 rounded-xl bg-secondary hover:bg-foreground/5 border border-border font-semibold text-foreground transition-all flex items-center justify-center gap-2 group-hover:border-foreground/20">
                                         View Career Tracks
+                                        <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                    </button>
+                                </Link>
+                            </div>
+                        </AnimatedSection>
+
+                        {/* University & Adult Learners Card */}
+                        <AnimatedSection delay={300}>
+                            <div className="glass-panel p-8 md:p-10 flex flex-col group h-full">
+                                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-8">
+                                    <BookOpen className="w-7 h-7 text-emerald-600" />
+                                </div>
+
+                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">Higher Ed & <span className="text-emerald-600">Adults</span></h3>
+                                <p className="text-muted-foreground leading-relaxed mb-8">
+                                    Bridge the gap between academia and industry. Deep support for university students and professionals in online degrees.
+                                </p>
+
+                                <ul className="mb-10 space-y-4">
+                                    {['Thesis & Research Help', 'Assignment Decoding', 'Career Trajectory'].map((item, i) => (
+                                        <li key={i} className="flex items-center gap-3 text-foreground/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <Link href="/services/university" className="mt-auto">
+                                    <button className="w-full py-4 rounded-xl bg-secondary hover:bg-emerald-500/5 border border-border font-semibold text-foreground transition-all flex items-center justify-center gap-2 group-hover:border-emerald-500/20">
+                                        View Advisory Tracks
                                         <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                                     </button>
                                 </Link>

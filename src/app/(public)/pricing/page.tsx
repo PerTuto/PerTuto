@@ -59,7 +59,7 @@ export default function PricingPage() {
             </div>
 
             {/* ===== PRICING TIERS ===== */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full items-start animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 w-full max-w-4xl mx-auto items-start animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 
                 {/* Tier 1: Diagnostic Trial */}
                 <div className="relative group flex flex-col p-8 rounded-3xl border border-border bg-white hover:border-primary/20 transition-all duration-300 mt-0 lg:mt-8 shadow-sm">
@@ -137,37 +137,6 @@ export default function PricingPage() {
                             {['8 hours of 1-on-1 live sessions/mo', 'Unlimited WhatsApp chat support', 'Bi-weekly progress analytics', 'Access to recorded session vault', 'Exam technique workshops'].map((item, i) => (
                                 <li key={i} className="flex items-start gap-3 text-sm text-foreground font-medium">
                                     <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Tier 3: Intensive Bootcamp */}
-                <div className="relative group flex flex-col p-8 rounded-3xl border border-border bg-white hover:border-primary/20 transition-all duration-300 mt-0 lg:mt-8 shadow-sm">
-                    <div className="mb-8">
-                        <h3 className="text-xl font-headline font-bold text-foreground mb-2">Intensive Bootcamp</h3>
-                        <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">High-impact, rapid preparation for critical examination periods.</p>
-                    </div>
-                    
-                    <div className="flex items-baseline gap-1 mb-8">
-                        <span className="text-5xl font-headline font-bold text-foreground tracking-tight">AED 5,500</span>
-                        <span className="text-muted-foreground font-medium text-sm">/block</span>
-                    </div>
-                    
-                    <Link href="/contact?package=bootcamp" className="w-full mb-8">
-                        <button className="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary/80 text-foreground font-bold text-sm border border-border transition-colors">
-                            Join Waitlist
-                        </button>
-                    </Link>
-                    
-                    <div className="space-y-6 flex-1">
-                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Targeted Focus</p>
-                        <ul className="space-y-4">
-                            {['20 hours of focused revision', 'Mock exams + examiner feedback', 'Targeted past-paper walkthroughs', 'Priority scheduling block'].map((item, i) => (
-                                <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
-                                    <CheckCircle className="w-5 h-5 text-muted-foreground/50 shrink-0 mt-0.5" />
                                     <span>{item}</span>
                                 </li>
                             ))}

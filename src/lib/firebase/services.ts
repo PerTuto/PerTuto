@@ -324,6 +324,24 @@ export async function getTenantById(tenantId: string): Promise<any | null> {
 
 // --- Availability Services ---
 
+/**
+ * Fetches classes owned by a specific teacher for the current week.
+ */
+export async function getClassesForTeacher(tenantId: string, userId: string): Promise<Class[]> {
+  const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
+  const q = query(classesRef, where("ownerId", "==", userId));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(d => {
+    const data = d.data();
+    return {
+      id: d.id,
+      ...data,
+      start: data.start?.toDate ? data.start.toDate() : new Date(data.start),
+      end: data.end?.toDate ? data.end.toDate() : new Date(data.end),
+    } as Class;
+  });
+}
+
 export async function getAvailability(tenantId: string, userId: string): Promise<any[]> {
   const availabilityRef = collection(firestore, `tenants/${tenantId}/availability`);
   const q = query(availabilityRef, where("userId", "==", userId));

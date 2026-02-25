@@ -146,6 +146,7 @@ export type Tenant = {
     noShowPolicy: string;
     logoUrl?: string;
     timezone?: string;
+    timeFormat?: '12h' | '24h';
   };
 };
 

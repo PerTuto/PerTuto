@@ -5,6 +5,7 @@ import type { Class, Course } from '@/lib/types';
 import { Clock, Video, User, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
+import { useSettings } from '@/hooks/use-settings';
 
 interface AgendaListViewProps {
   classes: Class[];
@@ -31,6 +32,8 @@ function getColorForCourse(courseId: string) {
 }
 
 export function AgendaListView({ classes, courses, onClassClick, timezone }: AgendaListViewProps) {
+  const { timeFormat } = useSettings();
+  const hour12 = timeFormat === '12h';
   // Group classes by date
   const groupedClasses = classes.reduce((groups, classItem) => {
     const date = format(classItem.start, 'yyyy-MM-dd');
@@ -87,11 +90,13 @@ export function AgendaListView({ classes, courses, onClassClick, timezone }: Age
                     {/* Time Column */}
                     <div className="flex flex-col items-center min-w-[60px] pt-1">
                       <span className="text-sm font-bold text-foreground">
-                        {format(c.start, 'h:mm')}
+                        {hour12 ? format(c.start, 'h:mm') : format(c.start, 'HH:mm')}
                       </span>
-                      <span className="text-[10px] font-medium text-muted-foreground uppercase">
-                        {format(c.start, 'a')}
-                      </span>
+                      {hour12 && (
+                        <span className="text-[10px] font-medium text-muted-foreground uppercase">
+                          {format(c.start, 'a')}
+                        </span>
+                      )}
                     </div>
 
                     {/* Content Column */}

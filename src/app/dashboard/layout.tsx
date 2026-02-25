@@ -1,4 +1,5 @@
 import { AuthProvider } from "@/hooks/use-auth";
+import { SettingsProvider } from "@/hooks/use-settings";
 import { AuthenticatedLayout } from "./authenticated-layout";
 
 export default function DashboardLayout({
@@ -8,7 +9,9 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <AuthenticatedLayout>{children}</AuthenticatedLayout>
+      <SettingsProvider>
+        <AuthenticatedLayout>{children}</AuthenticatedLayout>
+      </SettingsProvider>
     </AuthProvider>
   );
 }

@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { getTenantById } from "@/lib/firebase/services";
 import { updateDoc, doc } from "firebase/firestore";
 import { firestore } from "@/lib/firebase/client-app";
-import { Tenant } from "@/lib/types";
+import { Tenant, UserRole } from "@/lib/types";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,6 +32,7 @@ export default function OrganizationSettingsPage() {
   const [currency, setCurrency] = useState("USD");
   const [noShowPolicy, setNoShowPolicy] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
+  const [timeFormat, setTimeFormat] = useState<'12h' | '24h'>("12h");
 
   useEffect(() => {
     async function fetchSettings() {
@@ -45,6 +46,7 @@ export default function OrganizationSettingsPage() {
           setCurrency(data.settings?.currency || "USD");
           setNoShowPolicy(data.settings?.noShowPolicy || "100% charge for no-shows or cancellations within 24 hours.");
           setLogoUrl(data.settings?.logoUrl || "");
+          setTimeFormat(data.settings?.timeFormat || "12h");
         }
       } catch (error: any) {
         toast({ title: "Error", description: "Failed to load settings.", variant: "destructive" });
@@ -66,6 +68,7 @@ export default function OrganizationSettingsPage() {
       
       if (tabName === "profile") {
         payload.name = orgName;
+        payload["settings.timeFormat"] = timeFormat;
       } else if (tabName === "financials") {
         payload["settings.defaultHourlyRate"] = defaultHourlyRate;
         payload["settings.currency"] = currency;
@@ -93,8 +96,8 @@ export default function OrganizationSettingsPage() {
   }
 
   // RBAC protection
-  const canEdit = userProfile?.role === 'super' || userProfile?.role === 'executive' || userProfile?.role === 'admin' || 
-                 (Array.isArray(userProfile?.role) && (userProfile?.role.includes('executive') || userProfile?.role.includes('admin') || userProfile?.role.includes('super')));
+  const canEdit = userProfile?.role === UserRole.Super || userProfile?.role === UserRole.Executive || userProfile?.role === UserRole.Admin || 
+                 (Array.isArray(userProfile?.role) && (userProfile?.role.includes(UserRole.Executive) || userProfile?.role.includes(UserRole.Admin) || userProfile?.role.includes(UserRole.Super)));
                  
   if (!canEdit) {
     return (
@@ -140,6 +143,23 @@ export default function OrganizationSettingsPage() {
                 <Label>Tenant ID</Label>
                 <Input value={tenant?.id || ""} disabled className="bg-muted text-muted-foreground font-mono text-xs" />
                 <p className="text-xs text-muted-foreground">This is your unique system identifier. It cannot be changed.</p>
+              </div>
+
+              <div className="pt-4 border-t space-y-4">
+                <h3 className="text-sm font-medium">Application Preferences</h3>
+                <div className="space-y-1">
+                  <Label>Time Format</Label>
+                  <Select value={timeFormat} onValueChange={(v: any) => setTimeFormat(v)}>
+                    <SelectTrigger className="w-full md:w-[200px]">
+                      <SelectValue placeholder="Select Format" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="12h">12-hour (AM/PM)</SelectItem>
+                      <SelectItem value="24h">24-hour (Military)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">Set how time is displayed across the platform.</p>
+                </div>
               </div>
             </CardContent>
             <CardFooter>

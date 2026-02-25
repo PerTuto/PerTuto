@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { useToast } from '@/hooks/use-toast';
 import { Timestamp } from 'firebase/firestore';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useSettings } from '@/hooks/use-settings';
 import { AgendaListView } from './agenda-list-view';
 
 // ── Constants ──────────────────────────────────────────────────
@@ -65,9 +66,10 @@ function getColorForCourse(courseId: string) {
   return COURSE_COLORS[Math.abs(hash) % COURSE_COLORS.length];
 }
 
-function formatTimeInTz(date: Date, tz: string): string {
-  if (!tz) return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: tz });
+function formatTimeInTz(date: Date, tz: string, hour12: boolean = true): string {
+  const opts: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12 };
+  if (tz) opts.timeZone = tz;
+  return date.toLocaleTimeString([], opts);
 }
 
 function setTzTime(baseDate: Date, hours: number, minutes: number, tz: string): Date {
@@ -154,6 +156,8 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isClient, setIsClient] = useState(false);
   const isMobile = useIsMobile();
+  const { timeFormat } = useSettings();
+  const hour12 = timeFormat === '12h';
 
   // Drag state
   const [dragData, setDragData] = useState<{ classItem: Class; offsetY: number } | null>(null);
@@ -307,7 +311,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
         setClasses(prev => prev.map(c =>
           c.id === dragData.classItem.id ? { ...c, start: newStart, end: newEnd } : c
         ));
-        toast({ title: "Class Moved", description: `Moved to ${newStart.toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit' })}` });
+        toast({ title: "Class Moved", description: `Moved to ${newStart.toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit', hour12 })}` });
       }
     } catch (err) {
       toast({ title: "Error", description: "Failed to move class.", variant: "destructive" });
@@ -347,7 +351,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
         await updateClass(userProfile.tenantId, resizeData.classItem.id, {
           end: Timestamp.fromDate(newEnd),
         });
-        toast({ title: "Duration Updated", description: `Ends at ${newEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` });
+        toast({ title: "Duration Updated", description: `Ends at ${newEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12 })}` });
       } catch {
         toast({ title: "Error", description: "Failed to resize.", variant: "destructive" });
       }
@@ -403,7 +407,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
     const hour = START_HOUR + i;
     const d = new Date();
     d.setHours(hour, 0, 0, 0);
-    return formatTimeInTz(d, timezone);
+    return formatTimeInTz(d, timezone, hour12);
   });
 
   return (
@@ -608,7 +612,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                                 {pos.height > 40 && (
                                   <p className="text-[10px] opacity-75 truncate flex items-center gap-1">
                                     <Clock className="h-2.5 w-2.5" />
-                                    {formatTimeInTz(c.start, timezone)} – {formatTimeInTz(c.end, timezone)}
+                                    {formatTimeInTz(c.start, timezone, hour12)} – {formatTimeInTz(c.end, timezone, hour12)}
                                   </p>
                                 )}
                                 {pos.height > 56 && course && (
@@ -634,7 +638,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                               <p className="font-semibold text-sm">{c.title}</p>
                               {course && <p className="text-xs text-muted-foreground">{course.title}</p>}
                               <p className="text-xs mt-1">
-                                {formatTimeInTz(c.start, timezone)} – {formatTimeInTz(c.end, timezone)}
+                                {formatTimeInTz(c.start, timezone, hour12)} – {formatTimeInTz(c.end, timezone, hour12)}
                               </p>
                               {c.meetLink && <p className="text-xs text-primary mt-1 flex items-center gap-1"><Video className="h-3 w-3" /> Video Meeting</p>}
                               {c.recurrenceGroupId && <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1"><Repeat className="h-3 w-3" /> Recurring</p>}

@@ -175,7 +175,7 @@ export default function HomePage() {
                                     <BookOpen className="w-7 h-7 text-emerald-600" />
                                 </div>
 
-                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">Higher Ed & <span className="text-emerald-600">Adults</span></h3>
+                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">Higher <span className="text-emerald-600">Education</span></h3>
                                 <p className="text-muted-foreground leading-relaxed mb-8">
                                     Bridge the gap between academia and industry. Deep support for university students and professionals in online degrees.
                                 </p>

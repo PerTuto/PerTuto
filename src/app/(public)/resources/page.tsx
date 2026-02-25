@@ -1,232 +1,308 @@
-"use client";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { BookOpen, ArrowRight, GraduationCap, Code2, FunctionSquare, FlaskConical, Atom, Calculator, Microscope, Rocket } from 'lucide-react';
+import { AnimatedSection } from '@/components/public/animated-section';
+import { FluidBlob } from '@/components/public/fluid-blob';
+import { DecryptedText } from '@/components/public/decrypted-text';
+import { LeadCaptureForm } from '@/components/public/lead-capture-form';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { BookOpen, FileText, HelpCircle, Lightbulb, ArrowRight, Loader2, GraduationCap, Code2 } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { getPublishedResources } from "@/lib/firebase/services";
-import { SpotlightCard } from "@/components/public/spotlight-card";
-import { LeadCaptureForm } from "@/components/public/lead-capture-form";
-import { cn } from "@/lib/utils";
-
-const DEFAULT_TENANT_ID = "pertuto-default";
-
-type CourseCard = {
-  slug: string;
-  label: string;
-  description: string;
-  color: string;
-  icon: string;
-  curriculum: string;
-  subject: string;
-  grades: string[];
-};
-
-const VERTICALS = [
-  { id: "k12", label: "K-12 Tutoring", subtitle: "IB, IGCSE, A-Level, CBSE", icon: BookOpen },
-  { id: "higher-ed", label: "Higher Education", subtitle: "University, Research, Academic Writing", icon: GraduationCap },
-  { id: "professional", label: "Professional Upskilling", subtitle: "AI, Data Science, Web Dev, Cloud", icon: Code2 },
-];
-
-// ═══════════ K-12 CARDS ═══════════
-const K12_CARDS: CourseCard[] = [
-  { slug: "cbse-mathematics-8", label: "CBSE Math — Class 8", description: "Rational numbers, algebraic expressions, mensuration", color: "from-blue-500 to-blue-600", icon: "8", curriculum: "CBSE", subject: "Mathematics", grades: ["8"] },
-  { slug: "cbse-mathematics-9", label: "CBSE Math — Class 9", description: "Number systems, polynomials, coordinate geometry", color: "from-blue-600 to-blue-700", icon: "9", curriculum: "CBSE", subject: "Mathematics", grades: ["9"] },
-  { slug: "cbse-mathematics-10", label: "CBSE Math — Class 10", description: "Board exam — algebra, trigonometry, statistics", color: "from-blue-700 to-indigo-600", icon: "10", curriculum: "CBSE", subject: "Mathematics", grades: ["10"] },
-  { slug: "cbse-mathematics-11", label: "CBSE Math — Class 11", description: "Sets, calculus, complex numbers, conics", color: "from-indigo-500 to-indigo-600", icon: "11", curriculum: "CBSE", subject: "Mathematics", grades: ["11"] },
-  { slug: "cbse-mathematics-12", label: "CBSE Math — Class 12", description: "Board exam — calculus, vectors, probability", color: "from-indigo-600 to-violet-600", icon: "12", curriculum: "CBSE", subject: "Mathematics", grades: ["12"] },
-  { slug: "ib-mathematics-aa", label: "IB Math AA", description: "Analysis & Approaches — SL & HL", color: "from-violet-500 to-purple-600", icon: "IB", curriculum: "IB", subject: "Mathematics AA", grades: ["SL", "HL"] },
-  { slug: "ib-chemistry", label: "IB Chemistry", description: "Structure & Reactivity — SL & HL", color: "from-emerald-500 to-emerald-600", icon: "IB", curriculum: "IB", subject: "Chemistry", grades: ["SL", "HL"] },
-  { slug: "igcse-physics", label: "IGCSE Physics", description: "Motion, Waves, Electricity, Nuclear Physics", color: "from-orange-500 to-orange-600", icon: "IG", curriculum: "IGCSE", subject: "Physics", grades: ["Core"] },
-  { slug: "igcse-mathematics", label: "IGCSE Mathematics", description: "Number, Algebra, Geometry, Statistics", color: "from-amber-500 to-amber-600", icon: "IG", curriculum: "IGCSE", subject: "Mathematics", grades: ["Extended"] },
-  { slug: "a-level-biology", label: "A-Level Biology", description: "Cell Biology, Genetics, Ecology — AS & A2", color: "from-green-500 to-green-600", icon: "AL", curriculum: "A-Level", subject: "Biology", grades: ["AS", "A2"] },
-];
-
-// ═══════════ HIGHER ED CARDS ═══════════
-const HIGHER_ED_CARDS: CourseCard[] = [
-  { slug: "university-mathematics", label: "University Mathematics", description: "Calculus I/II/III, Linear Algebra, Differential Equations, Discrete Math", color: "from-sky-500 to-sky-600", icon: "∫", curriculum: "University", subject: "Mathematics", grades: ["Undergraduate"] },
-  { slug: "university-statistics", label: "Statistics & Probability", description: "Descriptive stats, distributions, hypothesis testing, regression", color: "from-cyan-500 to-cyan-600", icon: "σ", curriculum: "University", subject: "Statistics", grades: ["Undergraduate"] },
-  { slug: "research-methods", label: "Research Methods", description: "Research design, data collection, qualitative & quantitative analysis", color: "from-teal-500 to-teal-600", icon: "R", curriculum: "University", subject: "Research Methods", grades: ["Postgraduate"] },
-  { slug: "academic-writing", label: "Academic Writing", description: "Essay structure, thesis writing, critical analysis, APA/MLA", color: "from-slate-500 to-slate-600", icon: "✎", curriculum: "University", subject: "Academic Writing", grades: ["All Levels", "Postgraduate"] },
-];
-
-// ═══════════ PROFESSIONAL CARDS ═══════════
-const PROFESSIONAL_CARDS: CourseCard[] = [
-  { slug: "python-programming", label: "Python Programming", description: "Foundations → OOP → Concurrency & Production", color: "from-yellow-500 to-yellow-600", icon: "Py", curriculum: "Professional", subject: "Python", grades: ["Beginner", "Intermediate", "Advanced"] },
-  { slug: "data-science-ml", label: "Data Science & ML", description: "NumPy, Pandas, Scikit-learn, Deep Learning, NLP", color: "from-pink-500 to-pink-600", icon: "ML", curriculum: "Professional", subject: "Data Science", grades: ["Beginner", "Intermediate", "Advanced"] },
-  { slug: "sql-databases", label: "SQL & Databases", description: "Queries, joins, indexing, PostgreSQL, NoSQL", color: "from-rose-500 to-rose-600", icon: "DB", curriculum: "Professional", subject: "SQL & Databases", grades: ["Beginner", "Intermediate"] },
-  { slug: "web-development", label: "Web Development", description: "HTML/CSS/JS, React, Next.js, Node.js, APIs", color: "from-fuchsia-500 to-fuchsia-600", icon: "WD", curriculum: "Professional", subject: "Web Development", grades: ["Beginner", "Intermediate"] },
-  { slug: "cloud-devops", label: "Cloud & DevOps", description: "AWS/GCP, Docker, CI/CD, Terraform, Kubernetes", color: "from-lime-600 to-lime-700", icon: "☁", curriculum: "Professional", subject: "Cloud & DevOps", grades: ["Beginner", "Intermediate"] },
-];
-
-const ALL_CARDS: Record<string, CourseCard[]> = {
-  k12: K12_CARDS,
-  "higher-ed": HIGHER_ED_CARDS,
-  professional: PROFESSIONAL_CARDS,
+export const metadata: Metadata = {
+    title: 'Free Study Resources — Syllabus, Past Papers, Study Guides | PerTuto',
+    description: 'Access free syllabus outlines, past papers, study guides, and FAQs for CBSE, IB, IGCSE, A-Level, university, and professional courses.',
 };
 
 export default function ResourcesHubPage() {
-  const [activeVertical, setActiveVertical] = useState("k12");
-  const [resourceCounts, setResourceCounts] = useState<Record<string, number>>({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadCounts() {
-      try {
-        const allResources = await getPublishedResources(DEFAULT_TENANT_ID);
-        const counts: Record<string, number> = {};
-        allResources.forEach((r: any) => {
-          const key = `${r.curriculum}|${r.subject}|${r.grade}`;
-          counts[key] = (counts[key] || 0) + 1;
-        });
-        setResourceCounts(counts);
-      } catch {
-        // Silently handle
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadCounts();
-  }, []);
-
-  function getCountForCard(card: CourseCard): number {
-    let total = 0;
-    card.grades.forEach((g) => {
-      const key = `${card.curriculum}|${card.subject}|${g}`;
-      total += resourceCounts[key] || 0;
-    });
-    return total;
-  }
-
-  const cards = ALL_CARDS[activeVertical] || K12_CARDS;
-
-  return (
-    <>
-      {/* Hero */}
-      <section className="relative min-h-[45vh] flex items-center justify-center px-6 overflow-hidden bg-background">
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 pt-20 pb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm text-primary mb-4">
-            <BookOpen className="w-4 h-4" />
-            Free Study Resources
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold tracking-tight leading-[1.1]">
-            Study Resources Hub
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Syllabus outlines, past papers, study guides, and FAQs — covering K-12, university, and professional tracks.
-          </p>
-        </div>
-      </section>
-
-      {/* Vertical Tabs */}
-      <section className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex gap-1 overflow-x-auto py-2">
-            {VERTICALS.map((v) => {
-              const Icon = v.icon;
-              const isActive = activeVertical === v.id;
-              return (
-                <button
-                  key={v.id}
-                  onClick={() => setActiveVertical(v.id)}
-                  className={cn(
-                    "flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-medium whitespace-nowrap transition-colors",
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  )}
-                >
-                  <Icon className="w-4 h-4" />
-                  {v.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Content Type Legend */}
-      <section className="px-6 py-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>Syllabus Outlines</span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <FileText className="w-4 h-4 text-purple-600" />
-              <span>Past Year Papers</span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Lightbulb className="w-4 h-4 text-green-600" />
-              <span>Study Guides</span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <HelpCircle className="w-4 h-4 text-amber-600" />
-              <span>FAQs</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Card Grid */}
-      <section className="px-6 pb-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-6">
-            <p className="text-sm text-muted-foreground">
-              {VERTICALS.find(v => v.id === activeVertical)?.subtitle}
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {cards.map((card) => {
-              const count = getCountForCard(card);
-              return (
-                <Link key={card.slug} href={`/resources/${card.slug}`}>
-                  <SpotlightCard className="h-full group">
-                    <div className="flex flex-col h-full space-y-4">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center`}>
-                        <span className="text-white font-bold text-sm">{card.icon}</span>
-                      </div>
-                      <div>
-                        <h3 className="font-headline text-lg font-bold mb-1">{card.label}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{card.description}</p>
-                      </div>
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-                        {loading ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-                        ) : (
-                          <Badge variant="outline" className="text-xs">
-                            {count} {count === 1 ? "resource" : "resources"}
-                          </Badge>
-                        )}
-                        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Explore <ArrowRight className="w-4 h-4" />
+    return (
+        <main className="flex flex-col">
+            {/* ===== HERO ===== */}
+            <section className="relative pt-16 pb-20 px-6 overflow-hidden">
+                <FluidBlob />
+                <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+                    <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary uppercase">
+                        <span className="mr-2 flex h-2 w-2 relative">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                      </div>
+                        Free Resources
                     </div>
-                  </SpotlightCard>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                    <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground flex flex-col items-center justify-center">
+                        <DecryptedText text="Study Resources" speed={30} />
+                        <span className="text-primary mt-2"><DecryptedText text="Hub" speed={50} /></span>
+                    </h1>
+                    <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+                        Syllabus outlines, past papers, study guides, and FAQs — covering K-12, university, and professional tracks. All free, forever.
+                    </p>
+                </div>
+            </section>
 
-      {/* CTA */}
-      <section className="py-24 px-6 bg-primary/5 border-y border-primary/10">
-        <div className="max-w-lg mx-auto">
-          <div className="rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-md p-8 md:p-10 shadow-2xl">
-            <div className="text-center mb-8">
-              <h2 className="font-headline text-2xl md:text-3xl font-bold mb-2">
-                {activeVertical === "k12" ? "Need Expert Tutoring?" : activeVertical === "higher-ed" ? "Stuck on Your Studies?" : "Ready to Level Up?"}
-              </h2>
-              <p className="text-sm text-muted-foreground">Book a free consultation today. We&apos;ll call you within 2 hours.</p>
-            </div>
-            <LeadCaptureForm variant="minimal" />
-          </div>
-        </div>
-      </section>
-    </>
-  );
+            {/* ===== K-12 TUTORING ===== */}
+            <section className="mx-auto max-w-6xl px-6 py-24">
+                <AnimatedSection className="mb-16">
+                    <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-primary uppercase tracking-widest">
+                        <span className="h-px w-12 bg-primary"></span>
+                        K-12 Tutoring
+                    </div>
+                    <h2 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-4">School Curricula</h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl">CBSE, IB, Cambridge IGCSE, and A-Level — chapter-wise syllabi and exam resources.</p>
+                </AnimatedSection>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-2 h-auto md:h-[550px]">
+                    {/* Large Card: CBSE Mathematics */}
+                    <AnimatedSection delay={100} className="col-span-1 md:col-span-2 md:row-span-2">
+                        <Link href="/resources/cbse-mathematics-10" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 md:p-10 hover:border-primary/40 transition-colors">
+                                <div className="mb-auto">
+                                    <div className="mb-6 inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                        <FunctionSquare className="w-7 h-7" />
+                                    </div>
+                                    <h3 className="font-headline text-3xl font-bold text-foreground mb-3">CBSE Mathematics</h3>
+                                    <p className="text-muted-foreground leading-relaxed text-lg">Complete chapter-wise syllabus for Classes 8–12. Board exam prep with detailed topic breakdowns.</p>
+                                </div>
+                                <div className="mt-8 flex flex-wrap gap-2">
+                                    {['Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'].map((g) => (
+                                        <span key={g} className="px-3 py-1 rounded-full bg-primary/5 text-primary text-xs font-medium border border-primary/10">{g}</span>
+                                    ))}
+                                </div>
+                                <div className="mt-6 flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                                    Explore all grades <ArrowRight className="w-4 h-4" />
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+
+                    {/* IB Diploma */}
+                    <AnimatedSection delay={200} className="col-span-1 md:col-span-2 md:row-span-1">
+                        <div className="glass-panel group relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8">
+                            <div className="flex items-start justify-between">
+                                <div className="flex flex-col gap-3">
+                                    <div className="inline-flex size-12 items-center justify-center rounded-xl bg-violet-500/10 text-violet-600">
+                                        <BookOpen className="w-6 h-6" />
+                                    </div>
+                                    <h3 className="font-headline text-2xl font-bold text-foreground">IB Diploma Programme</h3>
+                                    <p className="text-muted-foreground">Math AA (SL & HL) and Chemistry (SL & HL) — the new Structure/Reactivity framework.</p>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex gap-3">
+                                <Link href="/resources/ib-mathematics-aa" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Math AA <ArrowRight className="w-3.5 h-3.5" /></Link>
+                                <Link href="/resources/ib-chemistry" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Chemistry <ArrowRight className="w-3.5 h-3.5" /></Link>
+                            </div>
+                        </div>
+                    </AnimatedSection>
+
+                    {/* IGCSE */}
+                    <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
+                        <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8">
+                            <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600">
+                                <Calculator className="w-6 h-6" />
+                            </div>
+                            <h3 className="font-headline text-xl font-bold text-foreground mb-2">Cambridge IGCSE</h3>
+                            <p className="text-sm text-muted-foreground mb-3">Physics & Mathematics</p>
+                            <div className="mt-auto flex flex-col gap-1.5">
+                                <Link href="/resources/igcse-physics" className="text-xs text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Physics <ArrowRight className="w-3 h-3" /></Link>
+                                <Link href="/resources/igcse-mathematics" className="text-xs text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Mathematics <ArrowRight className="w-3 h-3" /></Link>
+                            </div>
+                        </div>
+                    </AnimatedSection>
+
+                    {/* A-Level */}
+                    <AnimatedSection delay={400} className="col-span-1 md:col-span-1 md:row-span-1">
+                        <Link href="/resources/a-level-biology" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-primary/40 transition-colors">
+                                <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-green-500/10 text-green-600">
+                                    <Microscope className="w-6 h-6" />
+                                </div>
+                                <h3 className="font-headline text-xl font-bold text-foreground mb-2">A-Level Biology</h3>
+                                <p className="text-sm text-muted-foreground">AS & A2 — Cambridge 9700</p>
+                                <div className="mt-auto flex items-center gap-1 text-primary text-xs font-medium group-hover:gap-2 transition-all">
+                                    Explore <ArrowRight className="w-3 h-3" />
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+                </div>
+            </section>
+
+            {/* ===== HIGHER EDUCATION ===== */}
+            <section className="py-24 border-t border-border bg-secondary/30">
+                <div className="mx-auto max-w-6xl px-6">
+                    <AnimatedSection className="mb-16">
+                        <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-widest">
+                            <span className="h-px w-12 bg-blue-600"></span>
+                            Higher Education
+                        </div>
+                        <h2 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-4">University & Research</h2>
+                        <p className="text-lg text-muted-foreground max-w-2xl">From undergraduate calculus to postgraduate thesis writing — structured learning paths for every academic stage.</p>
+                    </AnimatedSection>
+
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-2 h-auto md:h-[500px]">
+                        {/* Large Card: University Mathematics */}
+                        <AnimatedSection delay={100} className="col-span-1 md:col-span-2 md:row-span-2">
+                            <Link href="/resources/university-mathematics" className="block h-full">
+                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 md:p-10 hover:border-blue-500/40 transition-colors">
+                                    <div className="mb-auto">
+                                        <div className="mb-6 inline-flex size-14 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-600">
+                                            <GraduationCap className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="font-headline text-3xl font-bold text-foreground mb-3">University Mathematics</h3>
+                                        <p className="text-muted-foreground leading-relaxed text-lg">Calculus I/II/III, Linear Algebra, Differential Equations, and Discrete Mathematics.</p>
+                                    </div>
+                                    <div className="mt-8 flex flex-wrap gap-2">
+                                        {['Calculus', 'Linear Algebra', 'DiffEq', 'Discrete Math'].map((t) => (
+                                            <span key={t} className="px-3 py-1 rounded-full bg-sky-500/5 text-sky-600 text-xs font-medium border border-sky-500/10">{t}</span>
+                                        ))}
+                                    </div>
+                                    <div className="mt-6 flex items-center gap-2 text-sky-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                                        Explore topics <ArrowRight className="w-4 h-4" />
+                                    </div>
+                                </div>
+                            </Link>
+                        </AnimatedSection>
+
+                        {/* Statistics */}
+                        <AnimatedSection delay={200} className="col-span-1 md:col-span-2 md:row-span-1">
+                            <Link href="/resources/university-statistics" className="block h-full">
+                                <div className="glass-panel group relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8 hover:border-cyan-500/40 transition-colors">
+                                    <div className="inline-flex size-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 mb-3">
+                                        <Atom className="w-6 h-6" />
+                                    </div>
+                                    <h3 className="font-headline text-2xl font-bold text-foreground">Statistics & Probability</h3>
+                                    <p className="text-muted-foreground">Descriptive stats, distributions, hypothesis testing, regression, Bayesian methods.</p>
+                                    <div className="mt-3 flex items-center gap-1 text-cyan-600 text-sm font-medium group-hover:gap-2 transition-all">
+                                        Explore <ArrowRight className="w-3.5 h-3.5" />
+                                    </div>
+                                </div>
+                            </Link>
+                        </AnimatedSection>
+
+                        {/* Research Methods */}
+                        <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
+                            <Link href="/resources/research-methods" className="block h-full">
+                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-teal-500/40 transition-colors">
+                                    <h3 className="font-headline text-xl font-bold text-foreground mb-2">Research Methods</h3>
+                                    <p className="text-sm text-muted-foreground">Design, data collection, qualitative & quantitative analysis.</p>
+                                    <div className="mt-auto flex items-center gap-1 text-teal-600 text-xs font-medium group-hover:gap-2 transition-all">
+                                        Explore <ArrowRight className="w-3 h-3" />
+                                    </div>
+                                </div>
+                            </Link>
+                        </AnimatedSection>
+
+                        {/* Academic Writing */}
+                        <AnimatedSection delay={400} className="col-span-1 md:col-span-1 md:row-span-1">
+                            <Link href="/resources/academic-writing" className="block h-full">
+                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-slate-500/40 transition-colors">
+                                    <h3 className="font-headline text-xl font-bold text-foreground mb-2">Academic Writing</h3>
+                                    <p className="text-sm text-muted-foreground">Essays, thesis writing, APA/MLA, critical analysis.</p>
+                                    <div className="mt-auto flex items-center gap-1 text-slate-600 text-xs font-medium group-hover:gap-2 transition-all">
+                                        Explore <ArrowRight className="w-3 h-3" />
+                                    </div>
+                                </div>
+                            </Link>
+                        </AnimatedSection>
+                    </div>
+                </div>
+            </section>
+
+            {/* ===== PROFESSIONAL UPSKILLING ===== */}
+            <section className="mx-auto max-w-6xl px-6 py-24">
+                <AnimatedSection className="mb-16">
+                    <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-emerald-600 uppercase tracking-widest">
+                        <span className="h-px w-12 bg-emerald-600"></span>
+                        Professional Upskilling
+                    </div>
+                    <h2 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-4">Tech & Engineering</h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl">Project-based learning paths for working professionals — from Python basics to production ML systems.</p>
+                </AnimatedSection>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-2 h-auto md:h-[500px]">
+                    {/* Large Card: Data Science & ML */}
+                    <AnimatedSection delay={100} className="col-span-1 md:col-span-2 md:row-span-2">
+                        <Link href="/resources/data-science-ml" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 md:p-10 hover:border-emerald-500/40 transition-colors">
+                                <div className="mb-auto">
+                                    <div className="mb-6 inline-flex size-14 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                                        <Code2 className="w-7 h-7" />
+                                    </div>
+                                    <h3 className="font-headline text-3xl font-bold text-foreground mb-3">Data Science & ML</h3>
+                                    <p className="text-muted-foreground leading-relaxed text-lg">NumPy, Pandas, Scikit-learn → Deep Learning, NLP, Transformers → MLOps and deployment.</p>
+                                </div>
+                                <div className="mt-8 flex flex-wrap gap-2">
+                                    {['Beginner', 'Intermediate', 'Advanced'].map((t) => (
+                                        <span key={t} className="px-3 py-1 rounded-full bg-emerald-500/5 text-emerald-600 text-xs font-medium border border-emerald-500/10">{t}</span>
+                                    ))}
+                                </div>
+                                <div className="mt-6 flex items-center gap-2 text-emerald-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                                    Start learning <ArrowRight className="w-4 h-4" />
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+
+                    {/* Python */}
+                    <AnimatedSection delay={200} className="col-span-1 md:col-span-2 md:row-span-1">
+                        <Link href="/resources/python-programming" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8 hover:border-yellow-500/40 transition-colors">
+                                <div className="inline-flex size-12 items-center justify-center rounded-xl bg-yellow-500/10 text-yellow-600 mb-3">
+                                    <Code2 className="w-6 h-6" />
+                                </div>
+                                <h3 className="font-headline text-2xl font-bold text-foreground">Python Programming</h3>
+                                <p className="text-muted-foreground">Foundations → OOP & Advanced Features → Concurrency & Production Code.</p>
+                                <div className="mt-3 flex items-center gap-1 text-yellow-600 text-sm font-medium group-hover:gap-2 transition-all">
+                                    Explore <ArrowRight className="w-3.5 h-3.5" />
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+
+                    {/* SQL */}
+                    <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
+                        <Link href="/resources/sql-databases" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-rose-500/40 transition-colors">
+                                <h3 className="font-headline text-xl font-bold text-foreground mb-2">SQL & Databases</h3>
+                                <p className="text-sm text-muted-foreground">Queries, joins, PostgreSQL, NoSQL.</p>
+                                <div className="mt-auto flex items-center gap-1 text-rose-600 text-xs font-medium group-hover:gap-2 transition-all">
+                                    Explore <ArrowRight className="w-3 h-3" />
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+
+                    {/* Web Dev + Cloud */}
+                    <AnimatedSection delay={400} className="col-span-1 md:col-span-1 md:row-span-1">
+                        <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8">
+                            <h3 className="font-headline text-xl font-bold text-foreground mb-3">More Tracks</h3>
+                            <div className="flex flex-col gap-2">
+                                <Link href="/resources/web-development" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                                    Web Development <ArrowRight className="w-3 h-3" />
+                                </Link>
+                                <Link href="/resources/cloud-devops" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                                    Cloud & DevOps <ArrowRight className="w-3 h-3" />
+                                </Link>
+                            </div>
+                        </div>
+                    </AnimatedSection>
+                </div>
+            </section>
+
+            {/* ===== CTA ===== */}
+            <section id="book-demo" className="py-24 px-6 bg-primary/[0.03]">
+                <AnimatedSection>
+                    <div className="mx-auto max-w-xl">
+                        <div className="glass-panel overflow-hidden rounded-3xl p-8 sm:p-12 text-center">
+                            <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                <Rocket className="w-8 h-8" />
+                            </div>
+                            <h2 className="font-headline text-3xl font-bold text-foreground sm:text-4xl tracking-tight mb-4">Need Expert Guidance?</h2>
+                            <p className="text-muted-foreground max-w-md mx-auto mb-10">
+                                Book a free consultation. We&apos;ll match you with the right tutor and create a personalized study plan.
+                            </p>
+                            <div className="max-w-md mx-auto text-left">
+                                <LeadCaptureForm variant="minimal" />
+                            </div>
+                        </div>
+                    </div>
+                </AnimatedSection>
+            </section>
+        </main>
+    );
 }

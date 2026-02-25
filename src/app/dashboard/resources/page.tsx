@@ -48,8 +48,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CBSE_MATH_SEED_DATA } from "./seed-data";
-import { ALL_ADDITIONAL_SEED_DATA } from "./seed-data-all";
+import { K12_ALL_SEED_DATA } from "./seed-data-k12-all";
 import { HIGHER_ED_SEED_DATA } from "./seed-data-higher-ed";
 import { PROFESSIONAL_SEED_DATA } from "./seed-data-professional";
 
@@ -346,7 +345,7 @@ export default function ResourcesPage() {
         await addResource(tenantId, {
           ...entry,
           tenantId,
-          tags: entry.tags || [],
+          tags: Array.isArray(entry.tags) ? entry.tags : (entry.tags ? [entry.tags] : []),
           sortOrder: entry.sortOrder || 0,
           published: true,
         });
@@ -358,10 +357,11 @@ export default function ResourcesPage() {
         description: `Added ${addedCount} new resources. Skipped ${skippedCount} existing.`,
       });
       fetchResources();
-    } catch (e) {
+    } catch (e: any) {
+      console.error("Seeding Error: ", e);
       toast({
         title: "Error",
-        description: "Failed to seed data",
+        description: `Failed to seed data: ${e.message}`,
         variant: "destructive",
       });
     } finally {

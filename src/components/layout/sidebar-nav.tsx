@@ -15,6 +15,7 @@ import {
   UserCog,
   Clock,
   Landmark,
+  MessageSquareQuote,
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -55,6 +56,7 @@ const menuItems: MenuItem[] = [
   { href: "/dashboard/financials", label: "Financials", icon: Landmark, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/organization/settings", label: "Org Settings", icon: Settings, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/testimonials", label: "Testimonials", icon: MessageSquareQuote, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/platform/tenants", label: "Platform Admin", icon: Settings, roles: ['super'] },
 ];
 

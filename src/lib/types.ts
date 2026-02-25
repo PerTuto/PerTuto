@@ -267,3 +267,22 @@ export type LedgerTransaction = {
   relatedPaymentId?: string;
   recordedBy: string;
 };
+
+// --- Testimonial Types ---
+
+export enum TestimonialStatus {
+  Pending = 'pending',
+  Approved = 'approved',
+  Rejected = 'rejected'
+}
+
+export type Testimonial = {
+  id: string;
+  tenantId: string;
+  name: string;
+  role: string; // e.g. "Parent of IB Student"
+  quote: string;
+  rating: number; // 1-5
+  status: TestimonialStatus;
+  createdAt: Date;
+};

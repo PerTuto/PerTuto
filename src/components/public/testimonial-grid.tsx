@@ -1,7 +1,11 @@
-import { Star } from 'lucide-react';
-import { SpotlightCard } from './spotlight-card';
+"use client";
 
-const TESTIMONIALS = [
+import { useState, useEffect } from 'react';
+import { Star, Loader2 } from 'lucide-react';
+import { SpotlightCard } from './spotlight-card';
+import { getApprovedTestimonials } from '@/lib/firebase/services';
+
+const FALLBACK_TESTIMONIALS = [
     {
         quote: "Ankur didn't just teach my son IB Math; he fundamentally changed how he approaches problem-solving. We saw a jump from a 4 to a 6 in just one term.",
         author: "Sarah M.",
@@ -28,7 +32,34 @@ const TESTIMONIALS = [
     },
 ];
 
+// Default tenant ID for the public website
+const DEFAULT_TENANT_ID = 'pertuto-default';
+
 export function TestimonialGrid() {
+    const [testimonials, setTestimonials] = useState(FALLBACK_TESTIMONIALS);
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        async function fetchTestimonials() {
+            try {
+                const approved = await getApprovedTestimonials(DEFAULT_TENANT_ID);
+                if (approved.length > 0) {
+                    setTestimonials(approved.map((t: any) => ({
+                        quote: t.quote,
+                        author: t.name,
+                        role: t.role,
+                        rating: t.rating,
+                    })));
+                }
+            } catch (e) {
+                // Silently fall back to hardcoded testimonials
+            } finally {
+                setLoaded(true);
+            }
+        }
+        fetchTestimonials();
+    }, []);
+
     return (
         <section className="py-24 px-6 relative overflow-hidden">
             <div className="max-w-6xl mx-auto">
@@ -45,7 +76,7 @@ export function TestimonialGrid() {
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-                    {TESTIMONIALS.map((testimonial, i) => (
+                    {testimonials.map((testimonial, i) => (
                         <SpotlightCard key={i} className="p-8 h-full flex flex-col">
                             <div className="flex gap-1 mb-6">
                                 {[...Array(testimonial.rating)].map((_, i) => (

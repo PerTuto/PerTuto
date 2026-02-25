@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import type { Lead } from '@/lib/types';
+import { type Lead, LeadStatus } from '@/lib/types';
 import { MoreHorizontal, Globe, Mail, Briefcase, Phone, Check, ArrowRight, Plus, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -23,12 +23,13 @@ function formatLeadDate(dateAdded: any): string {
     : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
-const COLUMNS: { id: Lead['status'], label: string, color: string }[] = [
-  { id: 'New', label: 'New', color: 'bg-blue-500' },
-  { id: 'Contacted', label: 'Contacted', color: 'bg-yellow-500' },
-  { id: 'Qualified', label: 'Qualified', color: 'bg-primary' },
-  { id: 'Converted', label: 'Converted', color: 'bg-green-500' },
-  { id: 'Lost', label: 'Lost', color: 'bg-red-500' },
+const COLUMNS: { id: LeadStatus, label: string, color: string }[] = [
+  { id: LeadStatus.New, label: 'New', color: 'bg-blue-500' },
+  { id: LeadStatus.Contacted, label: 'Contacted', color: 'bg-yellow-500' },
+  { id: LeadStatus.Qualified, label: 'Qualified', color: 'bg-primary' },
+  { id: LeadStatus.Converted, label: 'Converted', color: 'bg-green-500' },
+  { id: LeadStatus.Lost, label: 'Lost', color: 'bg-red-500' },
+  { id: LeadStatus.Waitlisted, label: 'Waitlisted', color: 'bg-yellow-600' }
 ];
 
 export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, onEditClick }: KanbanBoardProps) {
@@ -95,13 +96,13 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, 
                       key={lead.id} 
                       className={cn(
                         "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-left shadow-sm hover:shadow-md cursor-pointer",
-                        lead.status === 'Converted' ? "opacity-75 hover:opacity-100" : "",
+                        lead.status === LeadStatus.Converted ? "opacity-75 hover:opacity-100" : "",
                         isProcessing && "opacity-50 pointer-events-none"
                       )}
                       onClick={() => onEditClick(lead)}
                     >
                       <div className="flex justify-between items-start mb-2">
-                        <h4 className={cn("font-bold text-foreground text-base", lead.status === 'Converted' && "line-through text-muted-foreground")}>
+                        <h4 className={cn("font-bold text-foreground text-base", lead.status === LeadStatus.Converted && "line-through text-muted-foreground")}>
                           {lead.name}
                         </h4>
                         <div className="flex items-center gap-2">
@@ -141,7 +142,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, 
                             </button>
                           )}
                           
-                          {lead.status === 'Qualified' && (
+                          {lead.status === LeadStatus.Qualified && (
                             <button 
                               onClick={(e) => { e.stopPropagation(); handleConvert(lead); }}
                               className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-green-500 hover:text-white text-muted-foreground transition-colors"
@@ -157,7 +158,7 @@ export function KanbanBoard({ leads, onStatusChange, onConvert, onAddLeadClick, 
                 })}
 
                 {/* Quick Add Action (only for New/Contacted) */}
-                {(column.id === 'New' || column.id === 'Contacted') && (
+                {(column.id === LeadStatus.New || column.id === LeadStatus.Contacted) && (
                   <button 
                     onClick={onAddLeadClick}
                     className="w-full py-2.5 mt-2 flex items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm font-medium"

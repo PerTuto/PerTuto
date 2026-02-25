@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import type { Lead } from "@/lib/types";
+import { LeadStatus } from "@/lib/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,12 +17,13 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
-const statusColors: { [key in Lead['status']]: string } = {
-  New: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
-  Contacted: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300",
-  Qualified: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
-  Converted: "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300",
-  Lost: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+const statusColors: { [key in LeadStatus]: string } = {
+  [LeadStatus.New]: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+  [LeadStatus.Contacted]: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300",
+  [LeadStatus.Qualified]: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
+  [LeadStatus.Converted]: "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300",
+  [LeadStatus.Lost]: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+  [LeadStatus.Waitlisted]: "bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300",
 };
 
 
@@ -105,7 +107,7 @@ export const getColumns = (onConvert: (lead: Lead) => void): ColumnDef<Lead>[] =
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => onConvert(lead)}
-              disabled={lead.status === 'Converted'}
+              disabled={lead.status === LeadStatus.Converted}
             >
               Convert to Student
             </DropdownMenuItem>

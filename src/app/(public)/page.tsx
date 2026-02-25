@@ -29,6 +29,10 @@ const FAQ_ITEMS = [
     { q: "What subjects do you offer for professionals?", a: "We cover AI & Machine Learning, Data Science, Python/JavaScript programming, and professional degree assistance (MBA, certifications)." },
 ];
 
+import { DecryptedText } from '@/components/public/decrypted-text';
+
+// ... (existing code and imports)
+
 export default function HomePage() {
     return (
         <>
@@ -51,7 +55,8 @@ export default function HomePage() {
 
                     {/* Headline */}
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.05] mb-6 text-foreground">
-                        Expert Tutoring That<br />Delivers Results
+                        <DecryptedText text="Expert Tutoring That" speed={50} /><br />
+                        <DecryptedText text="Delivers Results" speed={40} />
                     </h1>
 
                     {/* Subheadline */}

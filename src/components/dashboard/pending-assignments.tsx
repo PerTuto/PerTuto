@@ -60,6 +60,17 @@ export function PendingAssignments() {
           <div className="space-y-4">
             {pendingAssignments.map((assignment) => {
               const course = courses.find(c => c.id === assignment.courseId);
+              
+              // Robust Date Parsing
+              let dueDate: Date;
+              if (assignment.dueDate instanceof Date) {
+                  dueDate = assignment.dueDate;
+              } else if (assignment.dueDate && typeof (assignment.dueDate as any).toDate === 'function') {
+                  dueDate = (assignment.dueDate as any).toDate();
+              } else {
+                  dueDate = new Date(assignment.dueDate);
+              }
+
               return (
                 <div key={assignment.id} className="flex items-start justify-between">
                     <div className="space-y-1">
@@ -70,7 +81,7 @@ export function PendingAssignments() {
                             </p>
                         )}
                         <p className="text-sm text-muted-foreground flex items-center gap-1.5">
-                            <Calendar className="h-3 w-3" /> Due on {new Date(assignment.dueDate).toLocaleDateString()}
+                            <Calendar className="h-3 w-3" /> Due on {dueDate.toLocaleDateString()}
                         </p>
                     </div>
                      <Badge className={cn("border-transparent text-xs", statusColors[assignment.status as keyof typeof statusColors])}>

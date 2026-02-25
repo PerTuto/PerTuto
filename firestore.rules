@@ -12,64 +12,31 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == uid;
     }
 
+    function userBelongsToTenant(tenantId) {
+      // Allow read/write if the user's profile specifies they belong to this tenant.
+      // E.g., request.auth.uid exists in /users/ and document.tenantId == tenantId
+      // AND if they're a Platform Super ('pertuto-default' or specific email)
+      return isAuthenticated() && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId == tenantId ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super'
+      );
+    }
+
     // ── User Profiles ──
     match /users/{userId} {
-      allow read: if isOwner(userId);
+      // Users can read and write their own profile
+      allow read: if isOwner(userId) || (isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super');
       allow write: if isOwner(userId);
     }
 
     // ── Tenant-Scoped Data ──
-    // All tenant data requires authentication.
     // The app assigns tenantId client-side based on user profile.
     match /tenants/{tenantId} {
-      allow read: if isAuthenticated();
-
-      // Leads
-      match /leads/{leadId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Students
-      match /students/{studentId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Courses
-      match /courses/{courseId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Classes (schedule)
-      match /classes/{classId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Availability
-      match /availability/{slotId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Assignments
-      match /assignments/{assignmentId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update, delete: if isAuthenticated();
-      }
-
-      // Catch-all for any other subcollections under tenants
-      match /{subcollection}/{docId} {
-        allow read: if isAuthenticated();
-        allow write: if isAuthenticated();
+      allow read: if userBelongsToTenant(tenantId);
+      
+      // Protect any subcollection inside a specific tenant
+      match /{document=**} {
+        allow read, write: if userBelongsToTenant(tenantId);
       }
     }
 

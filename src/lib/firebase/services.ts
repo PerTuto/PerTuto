@@ -1,7 +1,7 @@
 
 import { firestore } from './client-app';
 import { collection, doc, getDoc, setDoc, addDoc, deleteDoc, getDocs, query, where, Timestamp, writeBatch } from 'firebase/firestore';
-import type { Student, UserRole, Lead, Course, Assignment, Class } from '../types';
+import { type Student, type UserRole, type Lead, type Course, type Assignment, type Class, StudentStatus, LeadStatus } from '../types';
 
 export type UserProfile = {
   fullName: string;
@@ -67,7 +67,7 @@ export async function addStudent(tenantId: string, studentData: Omit<Student, 'i
 
   const newStudentData = {
     ...studentData,
-    status: 'Active' as const,
+    status: StudentStatus.Active,
     progress: 0,
     enrolledDate: new Date(),
   };
@@ -275,10 +275,43 @@ export async function updateCourse(
 
 
 /**
- * Deletes a course.
+ * Deletes a course and performs cascading deletes (removes from student enrollments, deletes associated assignments and classes).
  */
 export async function deleteCourse(tenantId: string, courseId: string): Promise<void> {
-  await deleteDoc(doc(firestore, `tenants/${tenantId}/courses`, courseId));
+  const batch = writeBatch(firestore);
+  const courseRef = doc(firestore, `tenants/${tenantId}/courses`, courseId);
+
+  // 1. Get the course to find enrolled students
+  const courseSnap = await getDoc(courseRef);
+  if (courseSnap.exists()) {
+    const studentIds: string[] = courseSnap.data().studentIds || [];
+    // Remove this course from all enrolled students' profiles
+    for (const studentId of studentIds) {
+      const studentRef = doc(firestore, `tenants/${tenantId}/students`, studentId);
+      batch.update(studentRef, { courses: arrayRemove(courseId) });
+    }
+  }
+
+  // 2. Delete associated assignments
+  const assignmentsRef = collection(firestore, `tenants/${tenantId}/assignments`);
+  const assignmentsQuery = query(assignmentsRef, where('courseId', '==', courseId));
+  const assignmentsSnap = await getDocs(assignmentsQuery);
+  assignmentsSnap.forEach((docSnap) => {
+    batch.delete(docSnap.ref);
+  });
+
+  // 3. Delete associated classes
+  const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
+  const classesQuery = query(classesRef, where('courseId', '==', courseId));
+  const classesSnap = await getDocs(classesQuery);
+  classesSnap.forEach((docSnap) => {
+    batch.delete(docSnap.ref);
+  });
+
+  // 4. Finally delete the course itself
+  batch.delete(courseRef);
+
+  await batch.commit();
 }
 
 /**
@@ -335,6 +368,22 @@ export async function updateCourseEnrollment(
 export async function getLeads(tenantId: string): Promise<Lead[]> {
   const leadsRef = collection(firestore, `tenants/${tenantId}/leads`);
   const querySnapshot = await getDocs(leadsRef);
+  const leads: Lead[] = [];
+  querySnapshot.forEach((doc) => {
+    leads.push({ id: doc.id, ...doc.data() } as Lead);
+  });
+  return leads;
+}
+
+import { orderBy, limit as firestoreLimit } from 'firebase/firestore';
+
+/**
+ * Fetches the most recent leads for a tenant (optimized for dashboard widgets).
+ */
+export async function getRecentLeads(tenantId: string, limitCount: number = 5): Promise<Lead[]> {
+  const leadsRef = collection(firestore, `tenants/${tenantId}/leads`);
+  const q = query(leadsRef, orderBy('dateAdded', 'desc'), firestoreLimit(limitCount));
+  const querySnapshot = await getDocs(q);
   const leads: Lead[] = [];
   querySnapshot.forEach((doc) => {
     leads.push({ id: doc.id, ...doc.data() } as Lead);
@@ -422,12 +471,12 @@ export async function convertLeadToStudent(tenantId: string, lead: Lead): Promis
     enrolledDate: new Date().toISOString().split('T')[0],
     courses: [],
     progress: 0,
-    status: 'Active',
+    status: StudentStatus.Active,
     timezone: lead.timezone || '',
   };
 
   batch.set(studentRef, studentData);
-  batch.update(leadRef, { status: 'Converted' });
+  batch.update(leadRef, { status: LeadStatus.Converted });
 
   await batch.commit();
 
@@ -472,13 +521,13 @@ export async function getAttendanceByClass(
 }
 
 /**
- * Fetches all attendance records for a tenant (recent first, max 50).
+ * Fetches the most recent attendance records for a tenant.
+ * Operates natively via Firestore to avoid downloading the entire collection.
  */
-export async function getRecentAttendance(tenantId: string): Promise<AttendanceRecord[]> {
+export async function getRecentAttendance(tenantId: string, limitCount: number = 50): Promise<AttendanceRecord[]> {
   const attendanceRef = collection(firestore, `tenants/${tenantId}/attendance`);
-  const snapshot = await getDocs(attendanceRef);
+  const q = query(attendanceRef, orderBy('date', 'desc'), firestoreLimit(limitCount));
+  const snapshot = await getDocs(q);
   const records = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AttendanceRecord));
-  // Sort by date descending
-  records.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  return records.slice(0, 50);
+  return records;
 }

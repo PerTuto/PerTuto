@@ -4,6 +4,7 @@ import { AnimatedSection } from '@/components/public/animated-section';
 import { FluidBlob } from '@/components/public/fluid-blob';
 import { Network, Database, Code2, Server, ArrowRight, CheckCircle, Rocket } from 'lucide-react';
 import Link from 'next/link';
+import { DecryptedText } from '@/components/public/decrypted-text';
 
 export const metadata: Metadata = {
     title: 'Professional Upskilling — AI, Data Science, Programming | PerTuto Dubai',
@@ -25,8 +26,8 @@ export default function ProfessionalPage() {
                         For Working Professionals
                     </div>
                     <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
-                        Learn the Critical <span className="text-primary">90%</span><br />
-                        in <span className="text-primary">10%</span> of the Time
+                        <DecryptedText text="Learn the Critical" speed={30} /> <span className="text-primary">90%</span><br />
+                        in <span className="text-primary">10%</span> <DecryptedText text="of the Time" speed={40} />
                     </h1>
                     <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
                         Personalized 1-on-1 coaching in AI, Data Science, and modern Engineering. Designed for busy professionals who need tangible results fast.

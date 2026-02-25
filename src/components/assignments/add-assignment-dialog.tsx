@@ -33,7 +33,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { addAssignment } from "@/lib/firebase/services";
-import { Course } from "@/lib/types";
+import { Course, AssignmentStatus } from "@/lib/types";
 
 const formSchema = z.object({
     title: z.string().min(2, "Title must be at least 2 characters."),
@@ -67,8 +67,8 @@ export function AddAssignmentDialog({ tenantId, courses, onAssignmentAdded }: Ad
             await addAssignment(tenantId, {
                 title: values.title,
                 courseId: values.courseId,
-                dueDate: values.dueDate,
-                status: "Pending",
+                dueDate: new Date(values.dueDate),
+                status: AssignmentStatus.Pending,
                 description: values.description || "",
             });
 

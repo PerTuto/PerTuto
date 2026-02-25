@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { getColumns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import type { Lead } from '@/lib/types';
+import { LeadStatus } from '@/lib/types';
 import { AddLeadForm } from '@/components/leads/add-lead-form';
 import { getLeads, addLead as addLeadToFirestore, convertLeadToStudent } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
@@ -39,7 +40,7 @@ export default function LeadsPage() {
     try {
       const newLeadData: Omit<Lead, 'id'> = {
         ...lead,
-        status: 'New',
+        status: LeadStatus.New,
         dateAdded: new Date().toISOString().split('T')[0],
       };
 
@@ -62,7 +63,7 @@ export default function LeadsPage() {
       const newStudent = await convertLeadToStudent(userProfile.tenantId, lead);
 
       // Update local state for lead status
-      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: 'Converted' } : l));
+      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: LeadStatus.Converted } : l));
 
       toast({
         title: "Success",

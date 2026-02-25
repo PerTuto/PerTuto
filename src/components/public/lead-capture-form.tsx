@@ -7,7 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicLead } from '@/app/actions/leads';
+import { trackEvent } from '@/components/analytics/google-analytics';
 import { Send, CheckCircle2, Loader2 } from 'lucide-react';
+
+// ... (Rest of imports and types stay the same)
 
 const SUBJECTS = [
     "Mathematics", "Physics", "Chemistry", "Biology",
@@ -43,14 +46,21 @@ export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCap
 
         setIsSubmitting(true);
         try {
+            const finalSubject = subject || data.subject || '';
             const result = await submitPublicLead({
                 name: data.name,
                 phone: data.phone,
                 email: data.email || '',
-                subject: subject || data.subject || '',
+                subject: finalSubject,
             });
 
             if (result.success) {
+                // Trigger GA4 Conversion Event
+                trackEvent('generate_lead', {
+                    subject: finalSubject,
+                    lead_type: variant
+                });
+
                 setIsSuccess(true);
                 reset();
                 setSubject('');

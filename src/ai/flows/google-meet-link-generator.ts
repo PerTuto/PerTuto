@@ -22,7 +22,11 @@ const GenerateMeetLinkOutputSchema = z.object({
 });
 export type GenerateMeetLinkOutput = z.infer<typeof GenerateMeetLinkOutputSchema>;
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function generateMeetLink(input: GenerateMeetLinkInput): Promise<GenerateMeetLinkOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) throw new Error("Rate limit exceeded. Please try again later.");
   return generateMeetLinkFlow(input);
 }
 

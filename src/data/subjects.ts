@@ -118,6 +118,99 @@ export const subjectsData: SubjectPageData[] = [
       { title: "Workflow Automation", description: "Learn to write robust scripts that automate repetitive daily data tasks instantly saving countless hours." },
       { title: "Executive Dashboards", description: "Build compelling, automated data visualizations that drive strategic, data-backed decision-making." }
     ]
+  },
+  {
+    slug: "ib-chemistry",
+    seoTitle: "Elite IB Chemistry Tutoring in Dubai | HL & SL Support",
+    seoDescription: "Secure your 7 in IB Chemistry with Dubai's top specialists. From stoichiometry to standard level and higher level IAs, we guarantee noticeable improvements.",
+    hero: {
+      headline: "Master IB Chemistry. Secure Your Top Tier Grade.",
+      subheadline: "Tailored IB Chemistry tutoring in Dubai. We transform overwhelming organic reactions and complex stoichiometry into clear, manageable mastery.",
+      ctaText: "Book Your Free Demo"
+    },
+    problemSection: {
+      heading: "Why Does IB Chemistry Break Top Students?",
+      paragraph: "IB Chemistry is notoriously unforgiving. The leap from foundational science to the IB Diploma requires synthesizing vast amounts of complex data, from molecular orbitals to intricate organic reaction mechanisms. The heavy emphasis on analytical problem-solving and the immense pressure of the Internal Assessment (IA) frequently leave even the brightest students overwhelmed and struggling to break past a 5."
+    },
+    agitateSection: {
+      heading: "A poor Chemistry score closes doors to Medical and Engineering programs.",
+      bulletPoints: [
+        "The mark scheme is ruthlessly specific; knowing the concept isn't enough without the exact terminology.",
+        "The sheer volume of the HL syllabus makes catching up nearly impossible once a student falls behind.",
+        "A poorly structured Internal Assessment (IA) can drag down an otherwise excellent exam performance."
+      ]
+    },
+    solutionSection: {
+      heading: "The PerTuto Method: Structure, Precision, and IA Excellence",
+      paragraph: "Our expert IB Chemistry tutors in Dubai cut through the noise. We teach students how to decode complex questions, apply exactly what the strict mark scheme demands, and master the specific wording required for top marks. Furthermore, we provide unparalleled guidance on the IA—helping students select high-scoring research questions, structure their methodology, and analyze data to guarantee top-band marks."
+    },
+    features: [
+      { title: "Syllabus Deconstruction", description: "Complex topics like organic synthesis and equilibrium broken down into logical, easy-to-remember frameworks." },
+      { title: "IA & EE Mastery", description: "Direct support in ideation, structuring, and critical analysis to ensure your coursework scores in the top bracket." },
+      { title: "Elite Exam Strategy", description: "Targeted drilling on difficult multi-part Paper 2 questions to build exam endurance and confidence." }
+    ]
+  },
+  {
+    slug: "igcse-math",
+    seoTitle: "IGCSE Math Tutors in Dubai | Guaranteed Grade Jumps",
+    seoDescription: "Boost your IGCSE Math grades with Dubai's highest-rated tutors. We fix knowledge gaps, drill past papers, and build exam confidence. Book your assessment today.",
+    hero: {
+      headline: "Transform Your IGCSE Math Grade in 90 Days",
+      subheadline: "Premium IGCSE Math tutoring in Dubai. We don't just teach formulas; we build bulletproof problem-solving skills to guarantee an A or A*.",
+      ctaText: "Start Your Grade Jump"
+    },
+    problemSection: {
+      heading: "The Silent Crisis in High School Math",
+      paragraph: "The transition to IGCSE Math is where foundational cracks begin to show. Students are suddenly expected to apply multiple concepts simultaneously—combining algebra, geometry, and trigonometry in a single unseen question. In crowded classrooms, teachers simply cannot pause to patch individual knowledge gaps, leading to a snowball effect of confusion, plummeting confidence, and dreaded exam anxiety."
+    },
+    agitateSection: {
+      heading: "Rote memorization completely fails under IGCSE exam conditions.",
+      bulletPoints: [
+        "Students freeze when they encounter questions formatted differently than their textbook examples.",
+        "Silly mistakes under time pressure consistently cost students 1 to 2 entire grade boundaries.",
+        "Without an A or A* in IGCSE Math, progression to A-Level or IB Math HL is routinely blocked by schools."
+      ]
+    },
+    solutionSection: {
+      heading: "The PerTuto Method: First Principles & Exam Resilience",
+      paragraph: "Our specialized IGCSE Math tutors in Dubai completely rebuild a student's mathematical foundation. We teach from 'first principles' so students understand the 'why' behind formulas, enabling them to tackle any curveball question Cambridge or Edexcel throws at them. Through rigorous timed drills and targeted error analysis, we eliminate careless mistakes and forge unshakeable exam-day confidence."
+    },
+    features: [
+      { title: "Gap Diagnostics", description: "We pinpoint and rapidly repair foundational weaknesses from previous years that are holding the student back." },
+      { title: "Pattern Recognition", description: "We train students to instantly recognize the underlying 'type' of question to apply the correct method immediately." },
+      { title: "Time Management", description: "Intensive pacing drills ensure students comfortably finish papers with time left for thorough checking." }
+    ]
+  },
+  {
+    slug: "a-level-biology",
+    seoTitle: "A-Level Biology Tutors in Dubai | Medical School Prep",
+    seoDescription: "Expert A-Level Biology tutoring in Dubai for aspiring medical and science students. Master complex theories and ace the exams. Free consultation available.",
+    hero: {
+      headline: "Ace A-Level Biology & Secure Your University Future",
+      subheadline: "Highly specialized A-Level Biology tutoring in Dubai. We bridge the massive gap between IGCSE and A-Level to ensure you hit your university conditional offers.",
+      ctaText: "Book Your Assessment"
+    },
+    problemSection: {
+      heading: "A-Level Biology is Not Just 'More Memorization'",
+      paragraph: "The jump from IGCSE to A-Level Biology is notoriously one of the steepest in the entire curriculum. The sheer density of content—from intricate biochemical pathways to complex genetic interactions—is staggering. But more importantly, A-Level exams heavily penalize students who simply regurgitate facts. Examiners demand deep analytical thinking and the ability to apply biological principles to novel, unseen scenarios."
+    },
+    agitateSection: {
+      heading: "Missing your target grade by one mark can derail medical school dreams.",
+      bulletPoints: [
+        "The mark schemes are mercilessly pedantic, requiring exact keywords; close enough gets zero marks.",
+        "Data analysis and experimental design questions frequently trip up even the most diligent students.",
+        "Falling behind in Year 12 creates an insurmountable mountain of revision for Year 13."
+      ]
+    },
+    solutionSection: {
+      heading: "The PerTuto Method: Analytical Mastery & Keyword Precision",
+      paragraph: "Our elite A-Level Biology tutors in Dubai are experts in examiner psychology. We don't just teach the textbook; we teach exactly how to write your answers to extract every possible point from the strict grading rubrics. We focus heavily on data interpretation, essay structuring (for certain boards), and the specific terminology required to transform a B grade into a secure A or A*."
+    },
+    features: [
+      { title: "Keyword Extraction", description: "We drill the exact terminology and phrasing that examiners are legally required to look for." },
+      { title: "Data Analysis Drills", description: "Extensive practice on interpreting complex graphs, statistical tests, and novel experimental setups." },
+      { title: "Medical Prep Integration", description: "For aspiring medics, we connect syllabus topics to real-world applications relevant to medical school interviews." }
+    ]
   }
 ];
 

@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { getLeads, getRecentAttendance, getClasses } from "@/lib/firebase/services";
-import { Loader2, UserPlus, CheckCircle2, Ticket } from "lucide-react";
+import { getRecentLeads, getRecentAttendance, getClasses } from "@/lib/firebase/services";
+import { Loader2, UserPlus, CheckCircle2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Lead, AttendanceRecord, Class } from "@/lib/types";
 
@@ -29,8 +29,8 @@ export function RecentActivity() {
       setLoading(true);
       try {
         const [leads, attendance, classes] = await Promise.all([
-          getLeads(userProfile.tenantId),
-          getRecentAttendance(userProfile.tenantId),
+          getRecentLeads(userProfile.tenantId, 5),
+          getRecentAttendance(userProfile.tenantId, 10),
           getClasses(userProfile.tenantId)
         ]);
 
@@ -55,7 +55,18 @@ export function RecentActivity() {
         const classMap = new Map(classes.map(c => [c.id, c.title]));
         
         attendance.forEach(record => {
-            const recordDate = record.createdAt?.toDate ? record.createdAt.toDate() : new Date(record.date);
+            // Check if it's already a JS Date, or a Firestore Timestamp (which has .toDate())
+            let recordDate: Date;
+            if (record.createdAt instanceof Date) {
+                recordDate = record.createdAt;
+            } else if (record.createdAt && typeof (record.createdAt as any).toDate === 'function') {
+                recordDate = (record.createdAt as any).toDate();
+            } else if (record.date instanceof Date) {
+               recordDate = record.date;
+            } else {
+               recordDate = new Date(record.date);
+            }
+
             const className = classMap.get(record.classId) || 'a class session';
             const presentCount = record.records.filter(r => r.present).length;
 

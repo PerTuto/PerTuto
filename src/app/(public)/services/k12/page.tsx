@@ -4,6 +4,7 @@ import { AnimatedSection } from '@/components/public/animated-section';
 import { FluidBlob } from '@/components/public/fluid-blob';
 import { FunctionSquare, FlaskConical, Languages, Edit3, CheckCircle, TrendingUp, ArrowRight, Rocket } from 'lucide-react';
 import Link from 'next/link';
+import { DecryptedText } from '@/components/public/decrypted-text';
 
 export const metadata: Metadata = {
     title: 'K-12 Tutoring — IB, IGCSE, A-Level, CBSE | PerTuto Dubai',
@@ -24,8 +25,9 @@ export default function K12Page() {
                         </span>
                         K-12 Curricula
                     </div>
-                    <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
-                        Master the complexities of <span className="text-primary">IB & IGCSE</span>
+                    <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground flex flex-col items-center justify-center">
+                        <DecryptedText text="Master the complexities of" speed={30} />
+                        <span className="text-primary mt-2"><DecryptedText text="IB & IGCSE" speed={50} /></span>
                     </h1>
                     <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
                         Elite tutoring infrastructure for high-performance students. We deconstruct complex curriculums into mastery-focused analytical frameworks to guarantee results.

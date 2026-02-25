@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import type { Lead } from '@/lib/types';
+import { type Lead, LeadStatus } from '@/lib/types';
 import { AddLeadForm } from '@/components/leads/add-lead-form';
 import { EditLeadDialog } from '@/components/leads/edit-lead-dialog';
 import { KanbanBoard } from '@/components/leads/kanban-board';
@@ -42,7 +42,7 @@ export default function LeadsPage() {
     try {
       const newLeadData: Omit<Lead, 'id'> = {
         ...lead,
-        status: 'New',
+        status: LeadStatus.New,
         dateAdded: new Date().toISOString().split('T')[0],
       };
 
@@ -114,7 +114,7 @@ export default function LeadsPage() {
       await convertLeadToStudent(userProfile.tenantId, lead);
 
       // Update local state for lead status
-      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: 'Converted' } : l));
+      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: LeadStatus.Converted } : l));
 
       toast({
         title: "Success",

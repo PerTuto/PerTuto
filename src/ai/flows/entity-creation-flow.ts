@@ -41,9 +41,13 @@ export const CreateEntityOutputSchema = z.union([
 export type CreateEntityOutput = z.infer<typeof CreateEntityOutputSchema>;
 
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function createEntityWithNaturalLanguage(
   input: CreateEntityInput
 ): Promise<CreateEntityOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) throw new Error("Rate limit exceeded. Please try again later.");
   return createEntityFlow(input);
 }
 

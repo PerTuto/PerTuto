@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { addClass, addRecurringClassSeries, getCourses, updateClass, deleteClass, getAvailability, getClasses } from "@/lib/firebase/services";
-import { Course, Class, AvailabilitySlot } from "@/lib/types";
+import { type Course, type Class, type AvailabilitySlot, ClassStatus } from "@/lib/types";
 import { smartScheduleAssistant } from "@/ai/flows/smart-schedule-assistant";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -180,7 +180,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                 end,
                 meetLink: values.meetLink,
                 students: selectedCourse?.studentIds || [],
-                status: 'scheduled'
+                status: ClassStatus.Scheduled
             };
 
             if (isEditing && classToEdit) {

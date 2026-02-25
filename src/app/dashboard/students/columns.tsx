@@ -1,7 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Student } from "@/lib/types";
+import { type Student, StudentStatus } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -19,11 +19,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const statusColors: { [key in Student['status']]: string } = {
-  Active: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
-  'On-hold': "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
-  Graduated: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
-  Dropped: "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300",
+const statusColors: { [key in StudentStatus]: string } = {
+  [StudentStatus.Active]: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
+  [StudentStatus.OnHold]: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
+  [StudentStatus.Graduated]: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+  [StudentStatus.Dropped]: "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300",
 };
 
 

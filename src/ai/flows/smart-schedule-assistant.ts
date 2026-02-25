@@ -51,9 +51,13 @@ export type SmartScheduleAssistantOutput = z.infer<
   typeof SmartScheduleAssistantOutputSchema
 >;
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function smartScheduleAssistant(
   input: SmartScheduleAssistantInput
 ): Promise<SmartScheduleAssistantOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) throw new Error("Rate limit exceeded. Please try again later.");
   return smartScheduleAssistantFlow(input);
 }
 

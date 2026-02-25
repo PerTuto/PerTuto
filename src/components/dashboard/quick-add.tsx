@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { createEntityWithNaturalLanguage } from "@/ai/flows/entity-creation-flow";
 import { useAuth } from "@/hooks/use-auth";
 import { addLead, addStudent } from "@/lib/firebase/services";
+import { LeadStatus } from "@/lib/types";
 
 type QuickAddProps = {
   onEntityAdd?: (entity: any, type: 'student' | 'lead' | 'class') => void;
@@ -44,7 +45,7 @@ export function QuickAdd({ onEntityAdd }: QuickAddProps) {
                 name: result.name,
                 email: result.email || '',
                 phone: result.phone || '',
-                status: 'New',
+                status: LeadStatus.New,
                 source: 'AI Quick Add',
                 dateAdded: new Date().toISOString().split('T')[0],
               });

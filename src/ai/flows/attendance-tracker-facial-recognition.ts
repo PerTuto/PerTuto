@@ -34,9 +34,13 @@ const TrackAttendanceOutputSchema = z.object({
 
 export type TrackAttendanceOutput = z.infer<typeof TrackAttendanceOutputSchema>;
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function trackAttendanceWithFacialRecognition(
   input: TrackAttendanceInput
 ): Promise<TrackAttendanceOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) throw new Error("Rate limit exceeded. Please try again later.");
   return trackAttendanceWithFacialRecognitionFlow(input);
 }
 

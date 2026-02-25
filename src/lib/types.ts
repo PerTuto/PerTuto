@@ -1,14 +1,30 @@
+export enum LeadStatus {
+  New = 'New',
+  Contacted = 'Contacted',
+  Qualified = 'Qualified',
+  Converted = 'Converted',
+  Lost = 'Lost',
+  Waitlisted = 'Waitlisted'
+}
+
 export type Lead = {
   id: string;
   name: string;
   email: string;
   phone: string;
-  status: 'New' | 'Contacted' | 'Qualified' | 'Converted' | 'Lost';
+  status: LeadStatus;
   source: string;
   dateAdded: string;
   notes?: string;
   timezone?: string;
 };
+
+export enum StudentStatus {
+  Active = 'Active',
+  OnHold = 'On-hold',
+  Graduated = 'Graduated',
+  Dropped = 'Dropped'
+}
 
 export type Student = {
   id: string;
@@ -19,13 +35,19 @@ export type Student = {
   enrolledDate: string;
   courses: string[];
   progress: number; // Percentage
-  status: 'Active' | 'On-hold' | 'Graduated' | 'Dropped';
+  status: StudentStatus;
   notes?: string;
   phone?: string;
   curriculum?: string;
   grade?: string;
   timezone?: string;
 };
+
+export enum CourseStatus {
+  Active = 'active',
+  Archived = 'archived',
+  Draft = 'draft'
+}
 
 export type Course = {
   id: string;
@@ -36,9 +58,15 @@ export type Course = {
   duration: string; // e.g., '8 Weeks'
   image: string;
   studentIds?: string[]; // Enrolled students
-  status: 'active' | 'archived' | 'draft';
+  status: CourseStatus;
   createdAt?: Date;
 };
+
+export enum ClassStatus {
+  Scheduled = 'scheduled',
+  Cancelled = 'cancelled',
+  Completed = 'completed'
+}
 
 export type Class = {
   id: string;
@@ -49,17 +77,23 @@ export type Class = {
   meetLink?: string;
   students: string[]; // array of student ids
   ownerId?: string;
-  status: 'scheduled' | 'cancelled' | 'completed';
+  status: ClassStatus;
   googleEventId?: string; // For Google Calendar Integration
+};
+
+export enum AssignmentStatus {
+  Pending = 'Pending',
+  Submitted = 'Submitted',
+  Graded = 'Graded'
 }
-  ;
 
 export type Assignment = {
   id: string;
   courseId: string;
   title: string;
-  dueDate: string;
-  status: 'Pending' | 'Submitted' | 'Graded';
+  description?: string;
+  dueDate: Date;
+  status: AssignmentStatus;
 };
 
 export type User = {
@@ -71,7 +105,14 @@ export type User = {
 
 // --- Multi-Tenant Types ---
 
-export type UserRole = 'super' | 'admin' | 'executive' | 'teacher' | 'parent' | 'student';
+export enum UserRole {
+  Super = 'super',
+  Admin = 'admin',
+  Executive = 'executive',
+  Teacher = 'teacher',
+  Parent = 'parent',
+  Student = 'student'
+}
 
 export type Tenant = {
   id: string;
@@ -94,6 +135,11 @@ export type TenantUser = {
   scopedTeacherIds?: string[];
 };
 
+export enum AvailabilityStatus {
+  Available = 'available',
+  Busy = 'busy'
+}
+
 export type AvailabilitySlot = {
   id: string;
   tenantId: string;
@@ -101,15 +147,15 @@ export type AvailabilitySlot = {
   dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6; // Sunday = 0
   startTime: string; // "09:00"
   endTime: string; // "17:00"
-  status: 'available' | 'busy';
+  status: AvailabilityStatus;
 };
 
 export type AttendanceRecord = {
   id: string;
   classId: string;
   courseId: string;
-  date: string; // ISO date string
+  date: Date; // Standardize to Date
   records: { studentId: string; studentName: string; present: boolean }[];
   markedBy: string; // userId
-  createdAt?: any;
+  createdAt?: Date;
 };

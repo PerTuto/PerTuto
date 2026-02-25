@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { DecryptedText } from '@/components/public/decrypted-text';
 
 export default function PricingPage() {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'termly'>('monthly');
@@ -13,8 +14,9 @@ export default function PricingPage() {
 
             {/* ===== HERO ===== */}
             <div className="text-center max-w-3xl mx-auto mb-14 animate-fade-in-up">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-headline font-bold tracking-tight mb-6 text-foreground">
-                    Predictable Pricing for Exceptional Results
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-headline font-bold tracking-tight mb-6 text-foreground flex flex-col items-center justify-center">
+                    <DecryptedText text="Predictable Pricing for" speed={40} />
+                    <span className="text-primary mt-2"><DecryptedText text="Exceptional Results" speed={40} /></span>
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
                     Invest in your academic future with elite mentorship. No hidden fees, just pure intellectual growth.

@@ -4,6 +4,7 @@ import { Resend } from 'resend';
 import { adminFirestore } from '@/lib/firebase/admin-app';
 import { FieldValue } from 'firebase-admin/firestore';
 import { sanitizeString, sanitizeEmail, sanitizePhone } from '@/lib/sanitize';
+import { z } from 'zod';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@pertuto.com';
@@ -30,6 +31,15 @@ function checkRateLimit(identifier: string): boolean {
   return true;
 }
 
+// ── Validation Schema ──
+const publicLeadSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  phone: z.string().min(7, "Phone must be at least 7 characters."),
+  email: z.string().email("Invalid email").optional().or(z.literal("")),
+  subject: z.string().max(150).optional(),
+  packageParams: z.string().max(500).optional(),
+});
+
 export async function submitPublicLead(data: {
     name: string;
     phone: string;
@@ -38,28 +48,30 @@ export async function submitPublicLead(data: {
     packageParams?: string;
 }) {
     try {
+        // Strict Server-Side Validation
+        const parsedData = publicLeadSchema.safeParse(data);
+        if (!parsedData.success) {
+            console.error("Validation failed:", parsedData.error.flatten());
+            return { success: false, error: 'Invalid submission data.' };
+        }
+
+        const validData = parsedData.data;
+
         // Rate limit by a hash of name+phone (no IP available in server actions)
-        const rateLimitKey = `${data.name}-${data.phone}`.toLowerCase().trim();
+        const rateLimitKey = `${validData.name}-${validData.phone}`.toLowerCase().trim();
         if (!checkRateLimit(rateLimitKey)) {
             return { success: false, error: 'Too many submissions. Please try again later.' };
         }
 
         // Sanitize all inputs
         const sanitized = {
-            name: sanitizeString(data.name),
-            phone: sanitizePhone(data.phone),
-            email: data.email ? sanitizeEmail(data.email) : '',
-            subject: data.subject ? sanitizeString(data.subject) : '',
-            packageParams: data.packageParams ? sanitizeString(data.packageParams) : '',
+            name: sanitizeString(validData.name),
+            phone: sanitizePhone(validData.phone),
+            email: validData.email ? sanitizeEmail(validData.email) : '',
+            subject: validData.subject ? sanitizeString(validData.subject) : '',
+            packageParams: validData.packageParams ? sanitizeString(validData.packageParams) : '',
         };
 
-        // Validate required fields
-        if (!sanitized.name || sanitized.name.length < 2) {
-            return { success: false, error: 'Please provide a valid name.' };
-        }
-        if (!sanitized.phone || sanitized.phone.length < 7) {
-            return { success: false, error: 'Please provide a valid phone number.' };
-        }
 
         // 1. Write the lead to Firestore using Admin SDK
         const leadsRef = adminFirestore.collection('tenants/pertuto-default/leads');

@@ -6,7 +6,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import type { Lead } from "@/lib/types";
+import { type Lead, LeadStatus } from "@/lib/types";
 import {
   Select,
   SelectContent,
@@ -24,7 +24,7 @@ const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
   phone: z.string().optional(),
   source: z.string().min(1, "Source is required."),
-  status: z.enum(["New", "Contacted", "Qualified", "Converted", "Lost"]),
+  status: z.nativeEnum(LeadStatus),
   notes: z.string().optional(),
   timezone: z.string().optional(),
 });

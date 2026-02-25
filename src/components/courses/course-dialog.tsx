@@ -26,6 +26,7 @@ import { addCourse, updateCourse } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import type { Course } from "@/lib/types";
+import { CourseStatus } from "@/lib/types";
 
 interface CourseDialogProps {
     courseToEdit?: Course;
@@ -47,7 +48,7 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
         instructor: "",
         duration: "",
         image: "",
-        status: "active" as "active" | "archived" | "draft",
+        status: CourseStatus.Active,
     });
 
     useEffect(() => {
@@ -68,7 +69,7 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
                     instructor: "",
                     duration: "",
                     image: "",
-                    status: "active",
+                    status: CourseStatus.Active,
                 });
             }
         }
@@ -194,7 +195,7 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
                             <Label htmlFor="status">Status</Label>
                             <Select
                                 value={formData.status}
-                                onValueChange={(value: "active" | "archived" | "draft") =>
+                                onValueChange={(value: CourseStatus) =>
                                     setFormData({ ...formData, status: value })
                                 }
                             >
@@ -202,9 +203,9 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
                                     <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="active">Active</SelectItem>
-                                    <SelectItem value="draft">Draft</SelectItem>
-                                    <SelectItem value="archived">Archived</SelectItem>
+                                    <SelectItem value={CourseStatus.Active}>Active</SelectItem>
+                                    <SelectItem value={CourseStatus.Draft}>Draft</SelectItem>
+                                    <SelectItem value={CourseStatus.Archived}>Archived</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

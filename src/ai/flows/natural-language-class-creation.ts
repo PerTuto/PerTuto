@@ -37,9 +37,13 @@ export type NaturalLanguageClassCreationOutput = z.infer<
   typeof NaturalLanguageClassCreationOutputSchema
 >;
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function naturalLanguageClassCreation(
   input: NaturalLanguageClassCreationInput
 ): Promise<NaturalLanguageClassCreationOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) throw new Error("Rate limit exceeded. Please try again later.");
   return naturalLanguageClassCreationFlow(input);
 }
 

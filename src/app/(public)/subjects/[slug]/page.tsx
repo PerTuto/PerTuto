@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle2, ArrowRight, BookOpen, AlertCircle, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 
+import { DecryptedText } from '@/components/public/decrypted-text';
+
 // Generate static params so these pages are built at compile time (SSG)
 export async function generateStaticParams() {
   return subjectsData.map((subject) => ({
@@ -42,8 +44,24 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: subject.seoTitle,
+    description: subject.seoDescription,
+    provider: {
+      '@type': 'EducationalOrganization',
+      name: 'PerTuto',
+      sameAs: 'https://pertuto.com'
+    }
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ===== HERO (Dynamic) ===== */}
       <section className="relative min-h-[70vh] flex items-center justify-center px-6 overflow-hidden bg-background">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10 pt-20">
@@ -53,7 +71,7 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight leading-[1.1]">
-            {subject.hero.headline}
+            <DecryptedText text={subject.hero.headline} speed={40} />
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">

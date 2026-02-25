@@ -3,7 +3,7 @@
 import { WeeklyCalendar } from "@/components/schedule/weekly-calendar";
 import { ClassDialog } from "@/components/schedule/class-dialog";
 import { useState, useMemo } from "react";
-import { Class } from "@/lib/types";
+import { type Class, ClassStatus } from "@/lib/types";
 import { AIQuickAdd } from "@/components/schedule/ai-quick-add";
 import { parse, addHours, format, startOfWeek, addDays } from "date-fns";
 
@@ -53,7 +53,7 @@ export default function SchedulePage() {
             title: result.className,
             start: startTime,
             end: endTime,
-            status: 'scheduled',
+            status: ClassStatus.Scheduled,
             students: [],
             // courseId will be handled by the dialog if we can find a match or leave empty
         };

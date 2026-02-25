@@ -22,7 +22,13 @@ const VoiceCommandClassManagementOutputSchema = z.object({
 });
 export type VoiceCommandClassManagementOutput = z.infer<typeof VoiceCommandClassManagementOutputSchema>;
 
+import { checkAIRateLimit } from '@/ai/rate-limiter';
+
 export async function voiceCommandClassManagement(input: VoiceCommandClassManagementInput): Promise<VoiceCommandClassManagementOutput> {
+  const allowed = await checkAIRateLimit();
+  if (!allowed) {
+    return { success: false, message: "Rate limit exceeded. Please try again later." };
+  }
   return voiceCommandClassManagementFlow(input);
 }
 

@@ -104,7 +104,7 @@ export function AttendanceForm() {
       await saveAttendance(userProfile.tenantId, {
         classId: selectedClassId,
         courseId: cls?.courseId || '',
-        date: selectedDate,
+        date: new Date(selectedDate),
         records: attendance,
         markedBy: user.uid,
       });

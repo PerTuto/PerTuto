@@ -29,6 +29,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const SUPER_USER_EMAIL = process.env.NEXT_PUBLIC_SUPER_USER_EMAIL || 'super@pertuto.com';
 
+import { doc, onSnapshot } from 'firebase/firestore';
+import { firestore } from '@/lib/firebase/client-app';
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -36,7 +39,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const auth = getAuth(firebaseApp);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    let profileUnsubscribe: () => void;
+
+    const authUnsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
         // SUPER USER BYPASS - check by email
@@ -52,20 +57,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        try {
-          const profile = await getUserProfile(user.uid);
-          setUserProfile(profile);
-        } catch (error) {
-          console.error("Failed to fetch user profile:", error);
-          setUserProfile(null);
-        }
+        // Listen for real-time profile updates
+        const userRef = doc(firestore, 'users', user.uid);
+        profileUnsubscribe = onSnapshot(
+          userRef,
+          (docSnap) => {
+            if (docSnap.exists()) {
+              setUserProfile(docSnap.data() as UserProfile);
+            } else {
+              setUserProfile(null);
+            }
+            setLoading(false);
+          },
+          (error) => {
+            console.error("Failed to fetch user profile:", error);
+            setUserProfile(null);
+            setLoading(false);
+          }
+        );
       } else {
         setUserProfile(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      authUnsubscribe();
+      if (profileUnsubscribe) profileUnsubscribe();
+    };
   }, [auth]);
 
   const signup = (email: string, pass: string) => {

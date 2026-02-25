@@ -3,6 +3,7 @@ import { SpotlightCard } from '@/components/public/spotlight-card';
 import { GraduationCap, Target, ShieldCheck, Users } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { DecryptedText } from '@/components/public/decrypted-text';
 
 export const metadata: Metadata = {
     title: 'About PerTuto — Our Story & Philosophy',
@@ -16,8 +17,9 @@ export default function AboutPage() {
             {/* ===== HERO ===== */}
             <section className="relative pt-32 pb-20 px-6">
                 <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold tracking-tight">
-                        Elevating Education in <span className="text-primary">Dubai</span>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold tracking-tight flex flex-col items-center justify-center">
+                        <DecryptedText text="Elevating Education in" speed={40} />
+                        <span className="text-primary mt-2"><DecryptedText text="Dubai" speed={60} /></span>
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                         We don&apos;t just teach subjects. We build systems of thought. PerTuto was founded to bridge the gap between rote memorization and true, intuitive understanding.

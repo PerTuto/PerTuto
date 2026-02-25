@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from '@/hooks/use-toast';
 import { Timestamp } from 'firebase/firestore';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { AgendaListView } from './agenda-list-view';
 
 // ── Constants ──────────────────────────────────────────────────
 const START_HOUR = 6;   // 6 AM
@@ -151,6 +153,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isClient, setIsClient] = useState(false);
+  const isMobile = useIsMobile();
 
   // Drag state
   const [dragData, setDragData] = useState<{ classItem: Class; offsetY: number } | null>(null);
@@ -478,9 +481,18 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
         ))}
       </div>
 
-      {/* ── Time Grid (scrollable) ── */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative" style={{ maxHeight: 'calc(100vh - 280px)' }}>
-        <div className="grid relative" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)`, height: TOTAL_HEIGHT }}>
+      {/* ── Time Grid (scrollable) or Agenda List ── */}
+      {isMobile ? (
+        <AgendaListView 
+          classes={filteredClasses}
+          courses={courses}
+          onClassClick={onClassClick}
+          timezone={timezone}
+        />
+      ) : (
+        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+          <div className="grid relative" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)`, height: TOTAL_HEIGHT }}>
+            {/* ... rest of the grid ... */}
 
           {/* ── Hour labels + gridlines ── */}
           <div className="relative border-r">

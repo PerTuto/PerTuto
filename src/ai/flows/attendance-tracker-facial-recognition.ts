@@ -12,10 +12,10 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const TrackAttendanceInputSchema = z.object({
-  videoDataUri: z
+  imageDataUri: z
     .string()
     .describe(
-      'A video feed of the class, as a data URI that must include a MIME type and use Base64 encoding. Expected format: data:<mimetype>;base64,<encoded_data>.'
+      'A snapshot image of the class, as a data URI that must include a MIME type and use Base64 encoding. Expected format: data:<mimetype>;base64,<encoded_data>.'
     ),
   knownFacesDataUris: z
     .array(z.string())
@@ -48,9 +48,9 @@ const prompt = ai.definePrompt({
   name: 'trackAttendanceWithFacialRecognitionPrompt',
   input: {schema: TrackAttendanceInputSchema},
   output: {schema: TrackAttendanceOutputSchema},
-  prompt: `You are an AI attendance tracker. Given a video of a class and a list of known faces, determine which students are present.
+  prompt: `You are an AI attendance tracker. Given an image of a class and a list of known faces, determine which students are present.
 
-Video: {{media url=videoDataUri}}
+Image: {{media url=imageDataUri}}
 
 Known Faces: {{#each knownFacesDataUris}}{{media url=this}}{{#unless @last}}, {{/unless}}{{/each}}
 
@@ -60,10 +60,10 @@ Output the attendance records as a JSON object with student names as keys and bo
 Also, provide a summary of the attendance tracking process and any issues encountered.
 
 Considerations:
-*  Take into account lighting, angle of capture, and clarity of video to accurately identify students.
+*  Take into account lighting, angle of capture, and clarity of image to accurately identify students.
 *  Be aware of possible occlusions of student faces that could result in misidentification or inability to identify.
 *  For those students who are not confidently identified or cannot be verified, mark them as absent.
-*  If there are issues with the video or known faces, report these in the summary.
+*  If there are issues with the image or known faces, report these in the summary.
 `,
 });
 

@@ -17,6 +17,10 @@ export type Lead = {
   dateAdded: string;
   notes?: string;
   timezone?: string;
+  // AI Lead Scoring
+  aiScore?: number;
+  aiCategory?: 'Hot' | 'Warm' | 'Cold';
+  aiReasoning?: string;
 };
 
 export enum StudentStatus {

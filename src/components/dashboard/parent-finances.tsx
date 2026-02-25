@@ -25,15 +25,19 @@ export function ParentFinances({ children, selectedChild }: ParentFinancesProps)
   const [payingInvoiceId, setPayingInvoiceId] = useState<string | null>(null);
 
   const fetchFinancials = async () => {
-    if (!userProfile?.tenantId || !selectedChild) return;
+    if (!userProfile?.tenantId || !user?.uid) return;
     setLoadingFinance(true);
     try {
+      // Fetch Family-level balance + All Invoices for the tenant
       const [bal, allInvoices] = await Promise.all([
-        getLedgerBalance(userProfile.tenantId, selectedChild.id),
+        getLedgerBalance(userProfile.tenantId, { parentId: user.uid }),
         getInvoices(userProfile.tenantId)
       ]);
       setBalance(bal);
-      setInvoices(allInvoices.filter(inv => inv.studentId === selectedChild.id));
+      
+      // Filter invoices for all children of this parent
+      const childIds = children.map(c => c.id);
+      setInvoices(allInvoices.filter(inv => inv.parentId === user.uid || childIds.includes(inv.studentId)));
     } catch (error: any) {
       console.error("Error fetching financial data:", error);
     } finally {

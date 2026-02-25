@@ -154,30 +154,52 @@ export async function recordPayment(tenantId: string, paymentData: Omit<Payment,
 }
 
 /**
- * Calculates a family's current Ledger Balance.
+ * Calculates a family's or student's current Ledger Balance.
  * Positive = They have credit. Negative = They owe money.
  */
-export async function getLedgerBalance(tenantId: string, studentId: string): Promise<number> {
+export async function getLedgerBalance(
+  tenantId: string, 
+  params: { studentId?: string; parentId?: string }
+): Promise<number> {
   const ledgerRef = collection(firestore, `tenants/${tenantId}/ledger`);
-  // Note: We might want to sum by parentId instead if siblings share a billing account.
-  // For MVP, summing by studentId is safer and simpler.
-  const q = query(ledgerRef, where("studentId", "==", studentId));
+  
+  let q;
+  if (params.parentId) {
+    q = query(ledgerRef, where("parentId", "==", params.parentId));
+  } else if (params.studentId) {
+    q = query(ledgerRef, where("studentId", "==", params.studentId));
+  } else {
+    return 0;
+  }
+
   const querySnapshot = await getDocs(q);
   
   let balance = 0;
   querySnapshot.forEach((doc) => {
-    balance += doc.data().amount;
+    balance += (doc.data().amount || 0);
   });
   
   return balance;
 }
 
 /**
- * Fetches ledger history for a student.
+ * Fetches ledger history for a student or parent.
  */
-export async function getLedgerHistory(tenantId: string, studentId: string): Promise<LedgerTransaction[]> {
+export async function getLedgerHistory(
+  tenantId: string, 
+  params: { studentId?: string; parentId?: string }
+): Promise<LedgerTransaction[]> {
   const ledgerRef = collection(firestore, `tenants/${tenantId}/ledger`);
-  const q = query(ledgerRef, where("studentId", "==", studentId), orderBy("date", "desc"));
+  
+  let q;
+  if (params.parentId) {
+    q = query(ledgerRef, where("parentId", "==", params.parentId), orderBy("date", "desc"));
+  } else if (params.studentId) {
+    q = query(ledgerRef, where("studentId", "==", params.studentId), orderBy("date", "desc"));
+  } else {
+    return [];
+  }
+
   const querySnapshot = await getDocs(q);
   
   const transactions: LedgerTransaction[] = [];

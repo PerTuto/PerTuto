@@ -9,12 +9,40 @@ type CreateUserResponse = {
     userId?: string;
 };
 
+import { z } from "zod";
+
+const createTenantUserSchema = z.object({
+  currentUserUid: z.string().min(1),
+  targetTenantId: z.string().min(1),
+  userData: z.object({
+    email: z.string().email(),
+    password: z.string().min(8).optional(),
+    fullName: z.string().min(2),
+    role: z.enum(['admin', 'teacher']),
+  }),
+});
+
+const createTenantSchema = z.object({
+  currentUserUid: z.string().min(1),
+  data: z.object({
+    tenantName: z.string().min(3),
+    adminFullName: z.string().min(2),
+    adminEmail: z.string().email(),
+    adminPassword: z.string().min(8).optional(),
+  }),
+});
+
 export async function createTenantUser(
     currentUserUid: string, // We accept UID but verification is crucial
     targetTenantId: string,
     userData: { email: string; password?: string; fullName: string; role: 'admin' | 'teacher' }
 ): Promise<CreateUserResponse> {
     try {
+        const validation = createTenantUserSchema.safeParse({ currentUserUid, targetTenantId, userData });
+        if (!validation.success) {
+          return { success: false, message: "Invalid user data: " + validation.error.message };
+        }
+
         // 1. Verify Authentication & Authorization
         // In a real app, we would verify the session cookie here.
         // For now/MVP with Client SDK Auth + Server Actions, we trust the caller BUT 
@@ -94,6 +122,11 @@ export async function createTenant(
     }
 ): Promise<{ success: boolean; message?: string; tenantId?: string }> {
     try {
+        const validation = createTenantSchema.safeParse({ currentUserUid, data });
+        if (!validation.success) {
+          return { success: false, message: "Invalid tenant data: " + validation.error.message };
+        }
+        
         // 1. Verify caller is super admin
         const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
         if (!callerDoc.exists) {

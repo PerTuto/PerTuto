@@ -21,6 +21,16 @@ type CreateInviteResponse = {
     message?: string;
 };
 
+import { z } from "zod";
+
+const createInviteSchema = z.object({
+    currentUserUid: z.string().min(1),
+    tenantId: z.string().min(1),
+    tenantName: z.string().min(1),
+    role: z.enum(['admin', 'teacher', 'student', 'parent']),
+    studentId: z.string().optional().nullable(),
+});
+
 /**
  * Creates a new invite token for a tenant.
  * Only admins or super users can create invites.
@@ -33,6 +43,11 @@ export async function createInviteToken(
     studentId?: string // Optional metadata for mapping the user to a student profile
 ): Promise<CreateInviteResponse> {
     try {
+        // Strict Validation
+        const validation = createInviteSchema.safeParse({ currentUserUid, tenantId, tenantName, role, studentId });
+        if (!validation.success) {
+            return { success: false, message: "Invalid invite data: " + validation.error.message };
+        }
         // Verify caller authorization
         const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
         if (!callerDoc.exists) {

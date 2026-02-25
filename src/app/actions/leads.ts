@@ -5,6 +5,7 @@ import { adminFirestore } from '@/lib/firebase/admin-app';
 import { FieldValue } from 'firebase-admin/firestore';
 import { sanitizeString, sanitizeEmail, sanitizePhone } from '@/lib/sanitize';
 import { z } from 'zod';
+import { scoreLeadWithAI } from '@/ai/flows/lead-scoring';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@pertuto.com';
@@ -72,6 +73,24 @@ export async function submitPublicLead(data: {
             packageParams: validData.packageParams ? sanitizeString(validData.packageParams) : '',
         };
 
+        // ── AI Lead Scoring ──
+        let aiScore = 50;
+        let aiCategory = 'Warm';
+        let aiReasoning = 'Manual analysis required.';
+
+        try {
+            const scoreResult = await scoreLeadWithAI({
+                name: sanitized.name,
+                subject: sanitized.subject,
+                packageParams: sanitized.packageParams,
+            });
+            aiScore = scoreResult.score;
+            aiCategory = scoreResult.category;
+            aiReasoning = scoreResult.reasoning;
+        } catch (e) {
+            console.error("AI Scoring failed:", e);
+        }
+
 
         // 1. Write the lead to Firestore using Admin SDK
         const leadsRef = adminFirestore.collection('tenants/pertuto-default/leads');
@@ -83,6 +102,9 @@ export async function submitPublicLead(data: {
             packageParams: sanitized.packageParams,
             source: 'website',
             status: 'New',
+            aiScore,
+            aiCategory,
+            aiReasoning,
             dateAdded: FieldValue.serverTimestamp(),
         });
 
@@ -100,6 +122,9 @@ export async function submitPublicLead(data: {
                         <p><strong>Email:</strong> ${sanitized.email || 'N/A'}</p>
                         <p><strong>Subject/Interest:</strong> ${sanitized.subject || 'N/A'}</p>
                         <p><strong>Package Interest:</strong> ${sanitized.packageParams || 'N/A'}</p>
+                        <hr />
+                        <p><strong>AI Rank:</strong> <span style="color: ${aiCategory === 'Hot' ? '#ef4444' : aiCategory === 'Warm' ? '#f59e0b' : '#3b82f6'}">${aiCategory} (${aiScore}/100)</span></p>
+                        <p><strong>AI Reasoning:</strong> ${aiReasoning}</p>
                         <p><a href="https://pertuto.com/dashboard/leads">View in Dashboard</a></p>
                     `,
                 });

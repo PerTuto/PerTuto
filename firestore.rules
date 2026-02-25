@@ -8,39 +8,76 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isOwner(uid) {
-      return isAuthenticated() && request.auth.uid == uid;
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isSuper() {
+      return isAuthenticated() && getUserData().role == 'super';
     }
 
     function userBelongsToTenant(tenantId) {
-      // Allow read/write if the user's profile specifies they belong to this tenant.
-      // E.g., request.auth.uid exists in /users/ and document.tenantId == tenantId
-      // AND if they're a Platform Super ('pertuto-default' or specific email)
       return isAuthenticated() && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId == tenantId ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super'
+        getUserData().tenantId == tenantId || isSuper()
       );
+    }
+
+    function hasRole(role) {
+      return isAuthenticated() && (
+        getUserData().role == role || 
+        (getUserData().role is list && role in getUserData().role) ||
+        isSuper()
+      );
+    }
+
+    function isAdmin() {
+      return hasRole('admin') || hasRole('executive');
+    }
+
+    function isTeacher() {
+      return hasRole('teacher');
     }
 
     // ── User Profiles ──
     match /users/{userId} {
-      // Users can read and write their own profile
-      allow read: if isOwner(userId) || (isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super');
-      allow write: if isOwner(userId);
+      allow read: if request.auth.uid == userId || isSuper();
+      allow write: if request.auth.uid == userId;
     }
 
     // ── Tenant-Scoped Data ──
-    // The app assigns tenantId client-side based on user profile.
     match /tenants/{tenantId} {
       allow read: if userBelongsToTenant(tenantId);
       
-      // Protect any subcollection inside a specific tenant
-      match /{document=**} {
-        allow read, write: if userBelongsToTenant(tenantId);
+      match /classes/{classId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      match /students/{studentId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
+
+      match /leads/{leadId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
+
+      match /invoices/{invoiceId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
+
+      match /ledger/{txId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
+
+      // Default catch-all for other subcollections (assignments, attendance records, etc.)
+      match /{allSubcollections=**} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
     }
-
-    // ── Default Deny ──
-    // Any path not matched above is denied by default.
   }
 }

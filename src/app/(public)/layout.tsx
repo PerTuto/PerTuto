@@ -17,6 +17,7 @@ const NAV_LINKS = [
         ],
     },
     { label: 'Pricing', href: '/pricing' },
+    { label: 'Resources', href: '/resources' },
     { label: 'About', href: '/about' },
 ];
 
@@ -128,6 +129,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                         <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
                             Pricing
                         </Link>
+                        <Link href="/resources" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
+                            Resources
+                        </Link>
                         <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block py-3 text-sm font-medium text-foreground hover:text-primary">
                             About
                         </Link>
@@ -180,6 +184,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                 <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
                                 <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
                                 <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+                                <li><Link href="/resources" className="hover:text-primary transition-colors">Resources</Link></li>
                             </ul>
                         </div>
                         <div>

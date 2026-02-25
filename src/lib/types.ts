@@ -286,3 +286,32 @@ export type Testimonial = {
   status: TestimonialStatus;
   createdAt: Date;
 };
+
+// --- Resource Types ---
+
+export enum ResourceType {
+  Syllabus = 'syllabus',
+  PastPaper = 'past-paper',
+  StudyGuide = 'study-guide',
+  FAQ = 'faq'
+}
+
+export type Resource = {
+  id: string;
+  tenantId: string;
+  type: ResourceType;
+  curriculum: string;      // e.g. "CBSE"
+  subject: string;         // e.g. "Mathematics"
+  grade: string;           // e.g. "10"
+  title: string;           // e.g. "Ch 3: Pair of Linear Equations"
+  content: string;         // Markdown body
+  fileUrl?: string;        // Firebase Storage URL for PDFs
+  fileName?: string;       // Original filename
+  year?: string;           // For past papers
+  session?: string;        // "March" | "Compartment"
+  tags: string[];
+  sortOrder: number;
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};

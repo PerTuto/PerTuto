@@ -53,3 +53,27 @@ export async function getAssignmentFiles(
     return [];
   }
 }
+
+/**
+ * Uploads a resource file (PDF) to Firebase Storage.
+ * Returns the download URL.
+ */
+export async function uploadResourceFile(
+  file: File,
+  resourceId: string,
+  tenantId: string
+): Promise<string> {
+  const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const filePath = `tenants/${tenantId}/resources/${resourceId}/${sanitizedName}`;
+  const storageRef = ref(storage, filePath);
+
+  const snapshot = await uploadBytes(storageRef, file, {
+    contentType: file.type || 'application/pdf',
+    customMetadata: {
+      resourceId,
+      uploadedAt: new Date().toISOString(),
+    },
+  });
+
+  return await getDownloadURL(snapshot.ref);
+}

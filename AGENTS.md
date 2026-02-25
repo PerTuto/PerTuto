@@ -289,6 +289,9 @@ git push origin master
 - Full public marketing site (homepage, services, blog, pricing, contact, privacy, terms, about)
 - SEO: sitemap.xml, robots.txt, OG tags, JSON-LD schemas, GA4
 - Lead capture form → Firestore + email notification
+- **NEW Phase 9**: Dynamic subject landing pages (IB Chemistry, IGCSE Math, A-Level Biology) with `Course` JSON-LD schema
+- **NEW Phase 9**: High-end `DecryptedText` UI polish integrated across all major entry points
+- **NEW Phase 9**: GA4 `generate_lead` conversion tracking tied to the lead capture form
 - Dashboard: login, leads kanban (edit/delete/status), students table, courses CRUD, schedule calendar, assignments list, availability grid, settings, org users
 - Team invite flow (`/join/[token]`)
 - Input sanitization + rate limiting on public lead form

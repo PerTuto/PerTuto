@@ -166,6 +166,7 @@ export default function LeadsPage() {
         onOpenChange={(open) => { if (!open) setEditingLead(null); }}
         onSave={handleEditLead}
         onDelete={handleDeleteLead}
+        onConvert={handleConvert}
       />
     </div>
   );

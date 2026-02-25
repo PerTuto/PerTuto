@@ -148,6 +148,18 @@ export const columns: ColumnDef<Student>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Edit student</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={(e) => {
+                e.preventDefault();
+                // We dispatch a custom event to the parent page because the column definitions 
+                // in Tanstack table don't hold state nicely for Dialogs per row.
+                window.dispatchEvent(new CustomEvent('openInviteDialog', { detail: student }));
+              }}
+              className="text-emerald-600 dark:text-emerald-400 font-medium cursor-pointer focus:text-emerald-700 dark:focus:text-emerald-300"
+            >
+              Generate Login Link
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -35,6 +35,7 @@ type EditLeadDialogProps = {
   onOpenChange: (open: boolean) => void;
   onSave: (leadId: string, data: Partial<Omit<Lead, 'id'>>) => Promise<void>;
   onDelete: (leadId: string) => Promise<void>;
+  onConvert?: (lead: Lead) => Promise<void>;
 };
 
 const majorTimezones = [
@@ -53,9 +54,10 @@ const majorTimezones = [
   { tzCode: 'Africa/Dakar', label: '(GMT+00:00) Dakar' },
 ];
 
-export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete }: EditLeadDialogProps) {
+export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete, onConvert }: EditLeadDialogProps) {
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [converting, setConverting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -90,6 +92,17 @@ export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete }: E
       setConfirmDelete(false);
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleConvert() {
+    if (!lead || !onConvert) return;
+    setConverting(true);
+    try {
+      await onConvert(lead);
+      onOpenChange(false);
+    } finally {
+      setConverting(false);
     }
   }
 
@@ -201,26 +214,40 @@ export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete }: E
               </FormItem>
             )} />
 
-            <DialogFooter className="flex items-center justify-between gap-2 pt-2">
-              <div>
+            <DialogFooter className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border mt-4">
+              <div className="w-full sm:w-auto">
                 {confirmDelete ? (
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-destructive font-medium">Delete this lead?</span>
-                    <Button type="button" variant="destructive" size="sm" onClick={handleDelete} disabled={saving}>
-                      {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Yes, delete"}
+                    <Button type="button" variant="destructive" size="sm" onClick={handleDelete} disabled={saving || converting}>
+                      {saving || converting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Yes, delete"}
                     </Button>
                     <Button type="button" variant="outline" size="sm" onClick={() => setConfirmDelete(false)}>Cancel</Button>
                   </div>
                 ) : (
-                  <Button type="button" variant="ghost" size="sm" onClick={() => setConfirmDelete(true)} className="text-muted-foreground hover:text-destructive">
-                    <Trash2 className="w-4 h-4 mr-1" /> Delete
+                  <Button type="button" variant="ghost" size="sm" onClick={() => setConfirmDelete(true)} className="text-muted-foreground hover:text-destructive w-full sm:w-auto justify-start px-2">
+                    <Trash2 className="w-4 h-4 mr-2" /> Delete Lead
                   </Button>
                 )}
               </div>
-              <Button type="submit" disabled={saving}>
-                {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                Save Changes
-              </Button>
+              <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+                {lead.status === LeadStatus.Converted && onConvert && (
+                  <Button 
+                    type="button" 
+                    variant="default" 
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white w-full sm:w-auto"
+                    onClick={handleConvert}
+                    disabled={saving || converting}
+                  >
+                    {converting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    Convert to Student
+                  </Button>
+                )}
+                <Button type="submit" disabled={saving || converting} className="w-full sm:w-auto">
+                  {saving && !converting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                  Save Changes
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </Form>

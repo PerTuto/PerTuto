@@ -1,7 +1,7 @@
 # PerTuto — AI Agent Project Context
 
 > **One-file reference for any AI agent working on this codebase.**
-> Last updated: 2026-02-25
+> Last updated: 2026-02-26
 
 ---
 
@@ -292,6 +292,12 @@ git push origin master
 - **NEW Phase 9**: Dynamic subject landing pages (IB Chemistry, IGCSE Math, A-Level Biology) with `Course` JSON-LD schema
 - **NEW Phase 9**: High-end `DecryptedText` UI polish integrated across all major entry points
 - **NEW Phase 9**: GA4 `generate_lead` conversion tracking tied to the lead capture form
+- **NEW Phase 12**: Parent financials (Pay Now button, dynamic invoice status updates)
+- **NEW Phase 12**: Assignment management (dialogs, student uploads, teacher grading, auto-status transitions)
+- **NEW Phase 12**: Reschedule requests with visual indicators (amber/green borders, ⏳ icons) for pending/approved
+- **Apple Calendar Redesign V2**: Fixed timezone positioning bugs, implemented collision detection for overlapping events, corrected DST drift in recurring series updates, and integrated `RecurringEditPrompt` into the `ClassDialog`.
+- **iCal Import**: Added bulk-import capability for `.ics` files using `ical.js` with event preview and selection logic.
+- **Multi-tenancy & ID Safety**: Added runtime assertions for `tenantId` in Firestore services and fixed polymorphic `isEditing` logic to prevent ID-less operations.
 - Dashboard: login, leads kanban (edit/delete/status), students table, courses CRUD, schedule calendar, assignments list, availability grid, settings, org users
 - Team invite flow (`/join/[token]`)
 - Input sanitization + rate limiting on public lead form
@@ -302,8 +308,11 @@ git push origin master
 - **Attendance page**: Currently an AI facial recognition stub — needs rewrite to manual attendance
 - **Sidebar nav**: `hasRole()` exists but only used for admin Users link — needs full role-based filtering
 - **Sidebar org link bug**: Points to `/organization/users` instead of `/dashboard/organization/users`
-- **Dashboard stats**: May not be wired to real Firestore data
 - **Role-based access**: No page-level restrictions yet (any logged-in user sees everything)
+
+### Recently Audited Gaps (None) 🟢
+
+- _All previously identified calendar and multi-tenancy gaps have been resolved in the 2026-02-26 audit update._
 
 ---
 
@@ -321,3 +330,30 @@ git push origin master
 10. **Styling**: Use Tailwind classes + `cn()` utility for conditional classes
 11. **Fonts**: `font-headline` for headings (DM Sans), default sans for body
 12. **Colors**: Primary = teal (`#0D9488`), Sidebar = dark navy (`#0f172a`)
+
+---
+
+## 12. Implementation History (Phases)
+
+| Phase  | Focus              | Key Deliverables                                                                   |
+| :----- | :----------------- | :--------------------------------------------------------------------------------- |
+| **0**  | **Foundation**     | Next.js 16 + React 19 setup, Tailwind/shadcn init, Firebase Auth/Firestore config. |
+| **1**  | **Marketing**      | Public homepage, services, about, pricing, contact, and global meta/SEO tags.      |
+| **2**  | **CRM (Leads)**    | Kanban board for lead management, source tracking, and status transitions.         |
+| **3**  | **LMS (Students)** | Student database, enrollment management, course progress, and search.              |
+| **4**  | **LMS (Courses)**  | Course CRUD, instructor assignments, and enrollment-to-course mapping.             |
+| **5**  | **Scheduling V1**  | First iteration of the calendar with list/grid views and basic class creation.     |
+| **6**  | **Content**        | MDX blog engine, dynamic sitemap, and robots.txt generation.                       |
+| **7**  | **Dashboard**      | Home dashboard with stats, upcoming classes widget, and recent activity feed.      |
+| **8**  | **Audit**          | Comprehensive security and architectural audit (Phase 8 Audit doc).                |
+| **9**  | **Growth/Polish**  | Dynamic subject pillar pages, `DecryptedText` animations, GA4 lead tracking.       |
+| **10** | **Team Ops**       | Onboarding (`/welcome`), Team user management, and tokenized invite flows.         |
+| **11** | **Hardening**      | Firestore security rules (tenant isolation) and server-side validation.            |
+| **12** | **Full LMS**       | Parent financials (Pay Now), assignment hand-ins, and reschedule flows.            |
+| **13** | **Calendar V2**    | **Apple Calendar redesign**: weekly time-grid, drag-and-drop, timezone support.    |
+| **14** | **Safety**         | Runtime `tenantId` assertions and ID-creation logic fixes (Audit Resolution).      |
+| **15** | **iCal Import**    | Bulk `.ics` file import using `ical.js`, with event preview and UX refinements.    |
+
+---
+
+> _This file is the source of truth for all AI agents. Keep it updated with every major architectural change._

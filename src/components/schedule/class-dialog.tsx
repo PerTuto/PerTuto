@@ -50,6 +50,8 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { syncClassToGoogleAction, deleteGoogleCalendarEvent } from "@/app/actions/google-calendar";
+import { RecurringEditPrompt, type RecurringEditChoice } from "@/components/schedule/recurring-edit-prompt";
+import { updateFutureClassesInSeries, updateSingleClassDetached } from "@/lib/firebase/services";
 
 const formSchema = z.object({
     title: z.string().min(2, "Title must be at least 2 characters."),
@@ -76,9 +78,10 @@ interface ClassDialogProps {
     trigger?: React.ReactNode;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    timezone?: string;
 }
 
-export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpen, onOpenChange }: ClassDialogProps) {
+export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpen, onOpenChange, timezone }: ClassDialogProps) {
     const [internalOpen, setInternalOpen] = useState(false);
     const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
     const setOpen = onOpenChange || setInternalOpen;
@@ -95,6 +98,9 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
         suggestedEndTime?: string;
     } | null>(null);
     const [isCheckingConflicts, setIsCheckingConflicts] = useState(false);
+
+    const [recurringPromptOpen, setRecurringPromptOpen] = useState(false);
+    const [pendingEdit, setPendingEdit] = useState<{ classData: any } | null>(null);
 
     // Initial values logic
     const defaultDate = classToEdit ? new Date(classToEdit.start).toISOString().split("T")[0] : new Date().toISOString().split("T")[0];
@@ -137,7 +143,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
 
 
     const isRecurring = form.watch("isRecurring");
-    const isEditing = !!classToEdit;
+    const isEditing = !!classToEdit?.id;
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -184,6 +190,12 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
             };
 
             if (isEditing && classToEdit) {
+                if (classToEdit.recurrenceGroupId) {
+                    setPendingEdit({ classData });
+                    setRecurringPromptOpen(true);
+                    return; // Pause submission and wait for recurring choice
+                }
+
                 await updateClass(userProfile.tenantId, classToEdit.id, classData);
                 // Trigger Sync
                 syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
@@ -227,6 +239,46 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
             });
         }
     }
+
+    const handleRecurringChoice = async (choice: RecurringEditChoice) => {
+        setRecurringPromptOpen(false);
+        if (!pendingEdit || !userProfile?.tenantId || !classToEdit || !user) return;
+
+        try {
+            if (choice === 'this') {
+                await updateSingleClassDetached(userProfile.tenantId, classToEdit.id, pendingEdit.classData);
+                syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
+                toast({ title: "Event Updated", description: "Only this event was changed." });
+            } else if (choice === 'future') {
+                const newStart = pendingEdit.classData.start as Date;
+                const newEnd = pendingEdit.classData.end as Date;
+                const durationMins = (newEnd.getTime() - newStart.getTime()) / 60000;
+                
+                const startHour = newStart.getHours();
+                const startMinute = newStart.getMinutes();
+
+                const { start, end, ...otherUpdates } = pendingEdit.classData;
+
+                await updateFutureClassesInSeries(
+                    userProfile.tenantId,
+                    classToEdit.recurrenceGroupId!,
+                    classToEdit.start,
+                    { startHour, startMinute, durationMins, timezone },
+                    otherUpdates
+                );
+                
+                syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
+                toast({ title: "Series Updated", description: "This and all future events were updated." });
+            }
+            
+            setPendingEdit(null);
+            setOpen(false);
+            if (onSaved) onSaved();
+            
+        } catch (error: any) {
+            toast({ title: "Error", description: error.message || "Failed to update.", variant: "destructive" });
+        }
+    };
 
     const handleDelete = async () => {
         if (!user || !userProfile?.tenantId || !classToEdit) return;
@@ -316,8 +368,9 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+        <>
+            <Dialog open={isOpen} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
                 {trigger || (
                     <Button size="sm" className="gap-1">
                         <Plus className="h-4 w-4" />
@@ -543,5 +596,12 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                 </Form>
             </DialogContent>
         </Dialog>
+
+        <RecurringEditPrompt
+            open={recurringPromptOpen}
+            onChoice={handleRecurringChoice}
+            eventTitle={pendingEdit?.classData.title}
+        />
+        </>
     );
 }

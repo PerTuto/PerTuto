@@ -6,11 +6,12 @@ import crypto from "crypto";
 export type InviteTokenData = {
     tenantId: string;
     tenantName: string;
-    role: 'admin' | 'teacher';
+    role: 'admin' | 'teacher' | 'student' | 'parent';
     createdBy: string;
     createdAt: Date;
     expiresAt: Date;
     used: boolean;
+    studentId?: string | null;
 };
 
 type CreateInviteResponse = {
@@ -28,7 +29,8 @@ export async function createInviteToken(
     currentUserUid: string,
     tenantId: string,
     tenantName: string,
-    role: 'admin' | 'teacher'
+    role: 'admin' | 'teacher' | 'student' | 'parent',
+    studentId?: string // Optional metadata for mapping the user to a student profile
 ): Promise<CreateInviteResponse> {
     try {
         // Verify caller authorization
@@ -67,6 +69,7 @@ export async function createInviteToken(
             createdAt: new Date(),
             expiresAt,
             used: false,
+            studentId: studentId || null,
         });
 
         // Construct the invite URL

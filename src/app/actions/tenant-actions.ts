@@ -83,3 +83,68 @@ export async function createTenantUser(
         return { success: false, message: error.message || "Failed to create user." };
     }
 }
+
+export async function createTenant(
+    currentUserUid: string,
+    data: {
+        tenantName: string;
+        adminFullName: string;
+        adminEmail: string;
+        adminPassword?: string;
+    }
+): Promise<{ success: boolean; message?: string; tenantId?: string }> {
+    try {
+        // 1. Verify caller is super admin
+        const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
+        if (!callerDoc.exists) {
+            return { success: false, message: "Unauthorized: Caller not found." };
+        }
+        const callerData = callerDoc.data();
+        const isSuper = callerData?.role === 'super' || (Array.isArray(callerData?.role) && callerData?.role.includes('super'));
+        
+        if (!isSuper) {
+            return { success: false, message: "Unauthorized: Only Platform Admins can create tenants." };
+        }
+
+        // 2. Create the Tenant document
+        const tenantRef = adminFirestore.collection("tenants").doc();
+        const tenantId = tenantRef.id;
+
+        await tenantRef.set({
+            name: data.tenantName,
+            createdAt: new Date(),
+            status: "active",
+        });
+
+        // 3. Create the initial Admin User in Auth
+        const newUser = await adminAuth.createUser({
+            email: data.adminEmail,
+            password: data.adminPassword || "tempPassword123!",
+            displayName: data.adminFullName,
+        });
+
+        // 4. Save the admin user to global users collection
+        await adminFirestore.collection("users").doc(newUser.uid).set({
+            email: data.adminEmail,
+            fullName: data.adminFullName,
+            role: "admin",
+            tenantId: tenantId,
+            createdAt: new Date(),
+        });
+
+        // 5. Save the admin user to the tenant's subcollection
+        await adminFirestore.collection(`tenants/${tenantId}/users`).doc(newUser.uid).set({
+            email: data.adminEmail,
+            fullName: data.adminFullName,
+            role: "admin",
+            tenantId: tenantId,
+            createdAt: new Date(),
+            status: "Active"
+        });
+
+        return { success: true, tenantId };
+    } catch (error: any) {
+        console.error("Error creating tenant:", error);
+        return { success: false, message: error.message || "Failed to create tenant." };
+    }
+}

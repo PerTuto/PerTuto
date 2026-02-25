@@ -9,10 +9,12 @@ import { getStudents, getCourses, addStudent as addStudentService } from '@/lib/
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import { InviteStudentDialog } from '@/components/students/invite-student-dialog';
 
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
+  const [inviteStudent, setInviteStudent] = useState<Student | null>(null);
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
 
@@ -51,6 +53,14 @@ export default function StudentsPage() {
     if (userProfile?.tenantId) {
       fetchData();
     }
+    
+    // Listen for invite dialog triggers from the DataTable columns
+    const handleOpenInvite = (e: CustomEvent<Student>) => {
+        setInviteStudent(e.detail);
+    };
+    
+    window.addEventListener('openInviteDialog', handleOpenInvite as EventListener);
+    return () => window.removeEventListener('openInviteDialog', handleOpenInvite as EventListener);
   }, [userProfile, fetchData]);
 
   const addStudent = async (studentData: Omit<Student, 'id' | 'enrolledDate' | 'progress' | 'status' | 'ownerId'>) => {
@@ -99,6 +109,16 @@ export default function StudentsPage() {
           dialogContent: <AddStudentForm addStudent={addStudent} />,
         }}
       />
+
+      {inviteStudent && (
+        <InviteStudentDialog 
+          student={inviteStudent} 
+          open={!!inviteStudent} 
+          onOpenChange={(open) => {
+            if (!open) setInviteStudent(null);
+          }} 
+        />
+      )}
     </div>
   );
 }

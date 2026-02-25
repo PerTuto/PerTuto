@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { getStudents, getCourses, getAssignments } from "@/lib/firebase/services";
 import type { Student, Course, Assignment } from "@/lib/types";
+import { InviteStudentDialog } from "@/components/students/invite-student-dialog";
+import { Button } from "@/components/ui/button";
 
 const statusColors: { [key in Student['status']]: string } = {
     Active: "bg-green-100 text-green-800",
@@ -28,6 +30,7 @@ export default function StudentProfilePage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -95,7 +98,16 @@ export default function StudentProfilePage() {
             <div className="text-right">
                 <div className="text-sm text-muted-foreground">Overall Progress</div>
                 <div className="text-3xl font-bold font-headline text-primary">{student.progress || 0}%</div>
-                <Progress value={student.progress || 0} className="w-32 mt-2"/>
+                <Progress value={student.progress || 0} className="w-32 mt-2 mb-4"/>
+                <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setIsInviteDialogOpen(true)}
+                    className="w-full text-emerald-600 border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 dark:border-emerald-800 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                >
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    Generate Login
+                </Button>
             </div>
         </CardHeader>
         {student.notes && (
@@ -151,6 +163,12 @@ export default function StudentProfilePage() {
           </CardContent>
         </Card>
       </div>
+
+      <InviteStudentDialog 
+        student={student}
+        open={isInviteDialogOpen}
+        onOpenChange={setIsInviteDialogOpen}
+      />
     </div>
   );
 }

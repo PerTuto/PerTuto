@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { CourseDialog } from "@/components/courses/course-dialog";
 import { ManageEnrollmentDialog } from "@/components/courses/manage-enrollment-dialog";
-import type { Course, Student } from "@/lib/types";
+import type { Course, Student, UserRole } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertDialog,
@@ -36,6 +36,9 @@ export default function CoursesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile } = useAuth();
   const { toast } = useToast();
+
+  const canManage = userProfile ? (userProfile.role === 'super' || userProfile.role === 'admin' || userProfile.role === 'teacher' || 
+                    (Array.isArray(userProfile.role) && (userProfile.role.includes('super' as UserRole) || userProfile.role.includes('admin' as UserRole) || userProfile.role.includes('teacher' as UserRole)))) : false;
 
   const fetchData = async () => {
     if (!userProfile?.tenantId) return;
@@ -134,7 +137,7 @@ export default function CoursesPage() {
             Manage your courses and curriculum
           </p>
         </div>
-        <CourseDialog onCourseSaved={handleCourseSaved} />
+        {canManage && <CourseDialog onCourseSaved={handleCourseSaved} />}
       </div>
 
       {isLoading ? (
@@ -144,7 +147,7 @@ export default function CoursesPage() {
       ) : courses.length === 0 ? (
         <Card className="flex flex-col items-center justify-center py-16">
           <p className="text-muted-foreground mb-4">No courses yet</p>
-          <CourseDialog onCourseSaved={handleCourseSaved} />
+          {canManage && <CourseDialog onCourseSaved={handleCourseSaved} />}
         </Card>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -193,45 +196,48 @@ export default function CoursesPage() {
                   </div>
 
                   {/* Insights Section */}
-                  <div className="pt-2 border-t mt-2 grid grid-cols-2 gap-2">
-                    <div className="flex flex-col">
-                      <span className="text-xs font-semibold text-foreground">Enrolled</span>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="link" className="p-0 h-auto font-normal text-muted-foreground hover:text-primary flex items-center gap-1 justify-start">
-                            <Users className="h-3 w-3" />
-                            <span>{count} Students</span>
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-60 p-0">
-                          <div className="p-2 bg-muted/50 border-b">
-                            <h4 className="font-medium text-sm">Enrolled Students</h4>
-                          </div>
-                          <ScrollArea className="h-48">
-                            <div className="p-2 space-y-1">
-                              {enrolledStudents.length > 0 ? (
-                                enrolledStudents.map(s => (
-                                  <div key={s.id} className="text-sm px-2 py-1 rounded hover:bg-muted/50">
-                                    {s.name}
-                                  </div>
-                                ))
-                              ) : (
-                                <p className="text-sm text-muted-foreground px-2 py-1">No students enrolled</p>
-                              )}
-                            </div>
-                          </ScrollArea>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-semibold text-foreground">Avg. Progress</span>
-                      <span>{avgProgress}%</span>
-                    </div>
-                  </div>
+                  {canManage && (
+                      <div className="pt-2 border-t mt-2 grid grid-cols-2 gap-2">
+                        <div className="flex flex-col">
+                          <span className="text-xs font-semibold text-foreground">Enrolled</span>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button variant="link" className="p-0 h-auto font-normal text-muted-foreground hover:text-primary flex items-center gap-1 justify-start">
+                                <Users className="h-3 w-3" />
+                                <span>{count} Students</span>
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-60 p-0">
+                              <div className="p-2 bg-muted/50 border-b">
+                                <h4 className="font-medium text-sm">Enrolled Students</h4>
+                              </div>
+                              <ScrollArea className="h-48">
+                                <div className="p-2 space-y-1">
+                                  {enrolledStudents.length > 0 ? (
+                                    enrolledStudents.map(s => (
+                                      <div key={s.id} className="text-sm px-2 py-1 rounded hover:bg-muted/50">
+                                        {s.name}
+                                      </div>
+                                    ))
+                                  ) : (
+                                    <p className="text-sm text-muted-foreground px-2 py-1">No students enrolled</p>
+                                  )}
+                                </div>
+                              </ScrollArea>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-semibold text-foreground">Avg. Progress</span>
+                          <span>{avgProgress}%</span>
+                        </div>
+                      </div>
+                  )}
 
                 </CardContent>
-                <CardFooter className="flex gap-2">
-                  <ManageEnrollmentDialog
+                {canManage && (
+                    <CardFooter className="flex gap-2">
+                      <ManageEnrollmentDialog
                     course={course}
                     onEnrollmentSaved={fetchData}
                     trigger={
@@ -276,6 +282,7 @@ export default function CoursesPage() {
                     </AlertDialogContent>
                   </AlertDialog>
                 </CardFooter>
+                )}
               </Card>
             );
           })}

@@ -14,6 +14,7 @@ import {
   Users,
   UserCog,
   Clock,
+  Landmark,
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -36,21 +37,25 @@ type MenuItem = {
   href: string;
   label: string;
   icon: React.ElementType;
-  roles: UserRole[]; // Empty = visible to all
+  roles: string[]; // Empty = visible to all
 };
 
-const ALL_ROLES: UserRole[] = ['super', 'admin', 'executive', 'teacher', 'parent', 'student'];
+const ALL_ROLES = ['super', 'admin', 'executive', 'teacher', 'parent', 'student'];
 
 const menuItems: MenuItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: [] },
-  { href: "/dashboard/schedule", label: "Schedule", icon: Calendar, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/schedule", label: "Schedule", icon: Calendar, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
   { href: "/dashboard/availability", label: "Availability", icon: Clock, roles: ['super', 'admin', 'teacher'] },
   { href: "/dashboard/students", label: "Students", icon: GraduationCap, roles: ['super', 'admin', 'executive', 'teacher'] },
   { href: "/dashboard/leads", label: "Leads", icon: Users, roles: ['super', 'admin', 'executive'] },
-  { href: "/dashboard/courses", label: "Courses", icon: Book, roles: ['super', 'admin', 'teacher'] },
-  { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList, roles: ['super', 'admin', 'teacher'] },
+  { href: "/dashboard/courses", label: "Courses", icon: Book, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
+  { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
   { href: "/dashboard/attendance", label: "Attendance", icon: Users, roles: ['super', 'admin', 'teacher'] },
-  { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin'] },
+  { href: "/dashboard/family", label: "Family Portal", icon: Users, roles: ['parent'] },
+  { href: "/dashboard/financials", label: "Financials", icon: Landmark, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/organization/settings", label: "Org Settings", icon: Settings, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/platform/tenants", label: "Platform Admin", icon: Settings, roles: ['super'] },
 ];
 
 export function SidebarNav() {
@@ -90,7 +95,7 @@ export function SidebarNav() {
     <>
       <SidebarHeader>
         <div className="flex items-center gap-3 px-2 py-4">
-          <PerTutoLogo size="sm" variant="icon" className="text-sidebar-primary" />
+          <PerTutoLogo size="sm" variant="icon-only" className="text-sidebar-primary" />
           <div className="flex flex-col">
             <h1 className="text-sidebar-foreground text-base font-bold leading-tight font-headline">PerTuto</h1>
             <p className="text-sidebar-foreground/60 text-xs font-normal">Workspace</p>

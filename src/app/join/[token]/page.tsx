@@ -12,6 +12,7 @@ import { Loader2, UserPlus, AlertTriangle } from "lucide-react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/client-app";
 import { createUserProfile } from "@/lib/firebase/services";
+import type { UserRole } from "@/lib/types";
 
 export default function JoinPage() {
     const params = useParams();
@@ -103,9 +104,22 @@ export default function JoinPage() {
             await createUserProfile(userCredential.user.uid, {
                 fullName: formData.fullName,
                 email: formData.email,
-                role: invite.role,
+                role: invite.role as UserRole,
                 tenantId: invite.tenantId,
             });
+
+            // If this is a student invite, link the newly created Auth User to the existing Student Profile
+            if (invite.role === 'student' && invite.studentId) {
+                const { doc, updateDoc } = await import('firebase/firestore');
+                const { firestore } = await import('@/lib/firebase/client-app');
+                
+                const studentRef = doc(firestore, `tenants/${invite.tenantId}/students`, invite.studentId);
+                await updateDoc(studentRef, {
+                    userId: userCredential.user.uid,
+                     // Optionally sync the name if they changed it during signup
+                    name: formData.fullName 
+                });
+            }
 
             // Mark invite as used
             await markInviteUsed(token);

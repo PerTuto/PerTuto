@@ -1,6 +1,6 @@
 
 import { firestore } from './client-app';
-import { collection, doc, getDoc, setDoc, addDoc, deleteDoc, getDocs, query, where, Timestamp, writeBatch } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, addDoc, deleteDoc, getDocs, query, where, Timestamp, writeBatch, getCountFromServer } from 'firebase/firestore';
 import { type Student, type UserRole, type Lead, type Course, type Assignment, type Class, StudentStatus, LeadStatus } from '../types';
 
 export type UserProfile = {
@@ -60,6 +60,25 @@ export async function getStudents(tenantId: string): Promise<Student[]> {
 }
 
 /**
+ * Fetches all students linked to a specific parent user.
+ */
+export async function getChildrenForParent(tenantId: string, parentUserId: string): Promise<Student[]> {
+  const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
+  const q = query(studentsRef, where("parentId", "==", parentUserId));
+  const querySnapshot = await getDocs(q);
+  const students: Student[] = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    students.push({
+      id: doc.id,
+      ...data,
+      enrolledDate: data.enrolledDate?.toDate ? (data.enrolledDate as Timestamp).toDate().toISOString().split('T')[0] : data.enrolledDate,
+    } as Student);
+  });
+  return students;
+}
+
+/**
  * Adds a new student to a tenant.
  */
 export async function addStudent(tenantId: string, studentData: Omit<Student, 'id' | 'enrolledDate' | 'progress' | 'status' | 'ownerId'>): Promise<Student> {
@@ -113,36 +132,56 @@ export async function getClasses(tenantId: string): Promise<any[]> {
 }
 
 export async function addClass(tenantId: string, classData: any): Promise<Class> {
+  if (!tenantId) throw new Error("tenantId is required for addClass");
   const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
   const docRef = await addDoc(classesRef, classData);
   return { id: docRef.id, ...classData } as Class;
 }
 
 
+export async function batchAddClasses(tenantId: string, classesData: any[]): Promise<void> {
+  if (!tenantId) throw new Error("tenantId is required for batchAddClasses");
+  const batch = writeBatch(firestore);
+  const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
+
+  classesData.forEach(data => {
+    const docRef = doc(classesRef);
+    batch.set(docRef, data);
+  });
+
+  await batch.commit();
+}
+
+
 export async function deleteClass(tenantId: string, classId: string): Promise<void> {
+  if (!tenantId) throw new Error("tenantId is required for deleteClass");
   await deleteDoc(doc(firestore, `tenants/${tenantId}/classes`, classId));
 }
 
 export async function updateClass(tenantId: string, classId: string, classData: any): Promise<void> {
+  if (!tenantId) throw new Error("tenantId is required for updateClass");
   const classRef = doc(firestore, `tenants/${tenantId}/classes`, classId);
   await setDoc(classRef, classData, { merge: true });
 }
 
 
 /**
- * Adds a series of recurring classes.
+ * Adds a series of recurring classes with a shared recurrenceGroupId.
  */
 export async function addRecurringClassSeries(
   tenantId: string,
   baseClassData: any,
   recurrence: { frequency: 'weekly'; endDate: Date }
 ): Promise<void> {
+  if (!tenantId) throw new Error("tenantId is required for addRecurringClassSeries");
   const batch = writeBatch(firestore);
   const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
 
+  // Generate a shared group ID for the series
+  const recurrenceGroupId = doc(classesRef).id;
+
   let currentDate = new Date(baseClassData.start);
   const endDate = recurrence.endDate;
-  // Ensure we stop at end of day of end date
   const endThreshold = new Date(endDate);
   endThreshold.setHours(23, 59, 59, 999);
 
@@ -151,7 +190,9 @@ export async function addRecurringClassSeries(
     const classData = {
       ...baseClassData,
       start: new Date(currentDate),
-      end: new Date(currentDate.getTime() + (baseClassData.end.getTime() - baseClassData.start.getTime()))
+      end: new Date(currentDate.getTime() + (baseClassData.end.getTime() - baseClassData.start.getTime())),
+      recurrenceGroupId,
+      recurrencePattern: recurrence.frequency,
     };
     batch.set(docRef, classData);
 
@@ -161,6 +202,84 @@ export async function addRecurringClassSeries(
 
   await batch.commit();
 }
+
+/**
+ * Updates all future classes in a recurring series from a given date.
+ * Uses strict hour/minute assignments to prevent Daylight Saving Time drift.
+ */
+export async function updateFutureClassesInSeries(
+  tenantId: string,
+  recurrenceGroupId: string,
+  fromDate: Date,
+  updates: { startHour: number; startMinute: number; durationMins: number; timezone?: string },
+  otherUpdates?: Partial<any>
+): Promise<void> {
+  const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
+  const q = query(
+    classesRef,
+    where('recurrenceGroupId', '==', recurrenceGroupId),
+    where('start', '>=', Timestamp.fromDate(fromDate))
+  );
+  const snapshot = await getDocs(q);
+
+  if (snapshot.empty) return;
+
+  // Helper to set time in specific timezone without external libs
+  const setTzTime = (baseDate: Date, h: number, m: number, tz?: string) => {
+    const d = new Date(baseDate);
+    d.setHours(h, m, 0, 0);
+    if (!tz) return d;
+    
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: 'numeric', hour12: false });
+    let offsetMs = 0;
+    for (let i = 0; i < 2; i++) {
+        const parts = formatter.formatToParts(new Date(d.getTime() - offsetMs));
+        let curH = 0, curM = 0;
+        for (const p of parts) {
+            if (p.type === 'hour') curH = parseInt(p.value, 10);
+            if (p.type === 'minute') curM = parseInt(p.value, 10);
+        }
+        if (curH === 24) curH = 0;
+        offsetMs += ((curH * 60 + curM) - (h * 60 + m)) * 60000;
+    }
+    return new Date(d.getTime() - offsetMs);
+  };
+
+  const batch = writeBatch(firestore);
+  snapshot.docs.forEach(docSnap => {
+    const data = docSnap.data();
+    const oldStart = data.start.toDate();
+    
+    const newStart = setTzTime(oldStart, updates.startHour, updates.startMinute, updates.timezone);
+    const newEnd = new Date(newStart.getTime() + updates.durationMins * 60000);
+
+    batch.update(docSnap.ref, {
+      ...(otherUpdates || {}),
+      start: Timestamp.fromDate(newStart),
+      end: Timestamp.fromDate(newEnd),
+    });
+  });
+
+  await batch.commit();
+}
+
+/**
+ * Updates a single class and detaches it from its recurring series.
+ * Used for "Only This Event" flow.
+ */
+export async function updateSingleClassDetached(
+  tenantId: string,
+  classId: string,
+  updates: Partial<any>,
+): Promise<void> {
+  const classRef = doc(firestore, `tenants/${tenantId}/classes`, classId);
+  await setDoc(classRef, {
+    ...updates,
+    recurrenceGroupId: null, // Detach from series
+    recurrencePattern: null,
+  }, { merge: true });
+}
+
 
 // --- Tenant Services ---
 
@@ -179,7 +298,12 @@ export async function getTenants(): Promise<any[]> {
   const querySnapshot = await getDocs(tenantsCollection);
   const tenants: any[] = [];
   querySnapshot.forEach((d) => {
-    tenants.push({ id: d.id, ...d.data() });
+    const data = d.data();
+    tenants.push({ 
+      id: d.id, 
+      ...data,
+      createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : (data.createdAt ? new Date(data.createdAt) : new Date())
+    });
   });
   return tenants;
 }
@@ -531,3 +655,44 @@ export async function getRecentAttendance(tenantId: string, limitCount: number =
   const records = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AttendanceRecord));
   return records;
 }
+
+// --- Analytics Services ---
+
+export async function getDashboardStats(tenantId: string) {
+  const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
+  const leadsRef = collection(firestore, `tenants/${tenantId}/leads`);
+  const classesRef = collection(firestore, `tenants/${tenantId}/classes`);
+
+  // Active Students Count
+  const activeStudentsQuery = query(studentsRef, where('status', '==', StudentStatus.Active));
+  
+  // Active/New Leads Count (excluding Converted/Lost)
+  const activeLeadsQuery = query(
+    leadsRef, 
+    where('status', 'in', [LeadStatus.New, LeadStatus.Contacted, LeadStatus.Qualified, LeadStatus.Waitlisted])
+  );
+
+  // Upcoming Classes (from now to 7 days from now)
+  const now = new Date();
+  const nextWeek = new Date();
+  nextWeek.setDate(now.getDate() + 7);
+  
+  const upcomingClassesQuery = query(
+    classesRef,
+    where('start', '>=', now),
+    where('start', '<=', nextWeek)
+  );
+
+  const [studentsSnap, leadsSnap, classesSnap] = await Promise.all([
+    getCountFromServer(activeStudentsQuery),
+    getCountFromServer(activeLeadsQuery),
+    getCountFromServer(upcomingClassesQuery),
+  ]);
+
+  return {
+    activeStudents: studentsSnap.data().count,
+    activeLeads: leadsSnap.data().count,
+    upcomingClassesThisWeek: classesSnap.data().count,
+  };
+}
+

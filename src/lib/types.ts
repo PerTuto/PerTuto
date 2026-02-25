@@ -29,6 +29,7 @@ export enum StudentStatus {
 export type Student = {
   id: string;
   ownerId?: string; // UID of the user who owns this student record (Legacy or specific owner)
+  parentId?: string; // UID of the parent user linked to this student
   name: string;
   email: string;
   avatar: string;
@@ -74,11 +75,21 @@ export type Class = {
   title: string;
   start: Date;
   end: Date;
+  startTime?: Date; // Alias used in some components
   meetLink?: string;
-  students: string[]; // array of student ids
+  students?: string[]; // array of student ids
+  studentIds?: string[]; // alias
   ownerId?: string;
   status: ClassStatus;
   googleEventId?: string; // For Google Calendar Integration
+  // Smart Rescheduling fields
+  rescheduleStatus?: 'requested' | 'approved' | 'rejected';
+  requestedTime?: Date; // The new proposed start time
+  requestedBy?: string; // UID of the user who requested
+  rescheduleReason?: string;
+  // Recurring series tracking
+  recurrenceGroupId?: string; // Shared UUID linking all classes in a recurring series
+  recurrencePattern?: 'weekly'; // Recurrence frequency
 };
 
 export enum AssignmentStatus {
@@ -94,6 +105,11 @@ export type Assignment = {
   description?: string;
   dueDate: Date;
   status: AssignmentStatus;
+  submissionUrls?: string[]; // URLs of uploaded files
+  submittedBy?: string; // Student UID
+  submittedAt?: Date;
+  grade?: string;
+  feedback?: string;
 };
 
 export type User = {
@@ -120,6 +136,13 @@ export type Tenant = {
   plan: 'basic' | 'pro' | 'enterprise';
   createdAt: Date;
   ownerId: string; // Platform Super who created it
+  settings?: {
+    defaultHourlyRate: number;
+    currency: string;
+    noShowPolicy: string;
+    logoUrl?: string;
+    timezone?: string;
+  };
 };
 
 export type TenantUser = {
@@ -158,4 +181,84 @@ export type AttendanceRecord = {
   records: { studentId: string; studentName: string; present: boolean }[];
   markedBy: string; // userId
   createdAt?: Date;
+};
+
+// --- Financial & Billing Types ---
+
+export enum InvoiceStatus {
+  Draft = 'Draft',
+  Unpaid = 'Unpaid',
+  Paid = 'Paid',
+  Overdue = 'Overdue',
+  Cancelled = 'Cancelled'
+}
+
+export type InvoiceLineItem = {
+  id: string; // Unique for the item
+  description: string; // e.g. "8 Sessions of SAT Math"
+  quantity: number;
+  unitPrice: number;
+  total: number;
+};
+
+export type Invoice = {
+  id: string;
+  tenantId: string;
+  studentId: string; // The primary student this invoice is for
+  parentId?: string; // Optional: Link to the parent user who pays
+  status: InvoiceStatus;
+  issueDate: Date;
+  dueDate: Date;
+  items: InvoiceLineItem[];
+  subtotal: number;
+  taxAmount: number;
+  totalAmount: number;
+  amountPaid: number;
+  balanceDue: number;
+  notes?: string;
+  createdAt: Date;
+  createdBy: string; // Admin UID
+};
+
+export enum PaymentMethod {
+  CreditCard = 'Credit Card',
+  BankTransfer = 'Bank Transfer',
+  Cash = 'Cash',
+  Check = 'Check',
+  Other = 'Other'
+}
+
+export type Payment = {
+  id: string;
+  tenantId: string;
+  invoiceId?: string; // Optional: Some payments are direct ledger credits, not tied to a specific invoice yet
+  studentId: string;
+  parentId?: string;
+  amount: number;
+  method: PaymentMethod;
+  date: Date;
+  referenceId?: string; // e.g., Stripe Charge ID
+  notes?: string;
+  recordedBy: string; // Admin UID
+};
+
+export enum LedgerTransactionType {
+  Charge = 'Charge', // An invoice was finalized
+  Payment = 'Payment', // A parent paid money
+  Credit = 'Credit', // An admin gave a manual credit (e.g. refund/discount)
+  Adjustment = 'Adjustment' // Admin manual fix
+}
+
+export type LedgerTransaction = {
+  id: string;
+  tenantId: string;
+  studentId: string;
+  parentId?: string;
+  type: LedgerTransactionType;
+  amount: number; // Positive for payments/credits (adds to balance), Negative for charges (reduces balance)
+  description: string;
+  date: Date;
+  relatedInvoiceId?: string;
+  relatedPaymentId?: string;
+  recordedBy: string;
 };

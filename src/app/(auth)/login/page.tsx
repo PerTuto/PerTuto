@@ -35,7 +35,7 @@ export default function LoginPage() {
     try {
       await login(values.email, values.password);
       toast({ title: "Login Successful", description: "Welcome back!" });
-      router.push("/dashboard/leads");
+      router.push("/dashboard");
     } catch (error: any) {
       console.error(error);
       let errorMessage = error.message || "An unexpected error occurred.";

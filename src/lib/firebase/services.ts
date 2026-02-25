@@ -290,6 +290,12 @@ export async function createTenant(data: { name: string; plan: 'basic' | 'pro' |
     ...data,
     ownerId,
     createdAt: Timestamp.now(),
+    settings: {
+      defaultHourlyRate: 50,
+      currency: 'USD',
+      noShowPolicy: '100% charge for no-shows or cancellations within 24 hours.',
+      timeFormat: '12h',
+    },
   });
   return docRef.id;
 }

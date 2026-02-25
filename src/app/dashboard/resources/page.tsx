@@ -84,6 +84,7 @@ const TYPE_LABELS: Record<string, string> = {
 type FormData = {
   vertical: string;
   type: ResourceType;
+  board: string;
   curriculum: string;
   subject: string;
   grade: string;
@@ -99,6 +100,7 @@ type FormData = {
 const emptyForm: FormData = {
   vertical: "k12",
   type: ResourceType.Syllabus,
+  board: "CBSE",
   curriculum: "CBSE",
   subject: "Mathematics",
   grade: "10",
@@ -189,6 +191,7 @@ export default function ResourcesPage() {
     setForm({
       vertical: r.vertical || "k12",
       type: r.type,
+      board: r.board || r.curriculum || "",
       curriculum: r.curriculum,
       subject: r.subject,
       grade: r.grade,
@@ -220,6 +223,7 @@ export default function ResourcesPage() {
       const data: any = {
         vertical: form.vertical,
         type: form.type,
+        board: form.board,
         curriculum: form.curriculum,
         subject: form.subject,
         grade: form.grade,
@@ -316,20 +320,29 @@ export default function ResourcesPage() {
     }
   }
 
-  async function handleSeedData(dataSet: "k12" | "higher-ed" | "professional" | "all") {
+  async function handleSeedAll() {
     if (!tenantId) return;
     setSeeding(true);
     try {
-      let entries: any[] = [];
-      const k12Entries = [...CBSE_MATH_SEED_DATA, ...ALL_ADDITIONAL_SEED_DATA];
-      switch (dataSet) {
-        case "k12": entries = k12Entries; break;
-        case "higher-ed": entries = HIGHER_ED_SEED_DATA; break;
-        case "professional": entries = PROFESSIONAL_SEED_DATA; break;
-        case "all": entries = [...k12Entries, ...HIGHER_ED_SEED_DATA, ...PROFESSIONAL_SEED_DATA]; break;
-      }
-      let count = 0;
-      for (const entry of entries) {
+      const allEntries = [...K12_ALL_SEED_DATA, ...HIGHER_ED_SEED_DATA, ...PROFESSIONAL_SEED_DATA];
+      let addedCount = 0;
+      let skippedCount = 0;
+
+      for (const entry of allEntries) {
+        // Check for duplicates to prevent redundancies
+        const exists = resources.some(
+          (r) => 
+            r.title === entry.title &&
+            r.board === entry.board &&
+            r.subject === entry.subject &&
+            r.grade === entry.grade
+        );
+
+        if (exists) {
+          skippedCount++;
+          continue;
+        }
+
         await addResource(tenantId, {
           ...entry,
           tenantId,
@@ -337,12 +350,12 @@ export default function ResourcesPage() {
           sortOrder: entry.sortOrder || 0,
           published: true,
         });
-        count++;
+        addedCount++;
       }
-      const labels: Record<string, string> = { k12: "K-12", "higher-ed": "Higher Ed", professional: "Professional", all: "all verticals" };
+      
       toast({
-        title: "Seeded!",
-        description: `${count} entries created for ${labels[dataSet]}.`,
+        title: "Seeding Complete",
+        description: `Added ${addedCount} new resources. Skipped ${skippedCount} existing.`,
       });
       fetchResources();
     } catch (e) {
@@ -388,20 +401,10 @@ export default function ResourcesPage() {
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-              <Select value="" onValueChange={(v) => handleSeedData(v as any)}>
-                <SelectTrigger className="w-[160px]" disabled={seeding}>
-                  <span className="flex items-center gap-2">
-                    {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                    Seed Data
-                  </span>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="k12">K-12 (123 entries)</SelectItem>
-                  <SelectItem value="higher-ed">Higher Ed (15 entries)</SelectItem>
-                  <SelectItem value="professional">Professional (13 entries)</SelectItem>
-                  <SelectItem value="all">All Verticals (151 entries)</SelectItem>
-                </SelectContent>
-              </Select>
+          <Button onClick={handleSeedAll} disabled={seeding} variant="secondary" className="gap-2">
+            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-emerald-600" />}
+            {seeding ? "Seeding..." : "Seed All Verticals"}
+          </Button>
           <Button onClick={openAddDialog} className="gap-2">
             <Plus className="w-4 h-4" /> Add Resource
           </Button>
@@ -539,7 +542,7 @@ export default function ResourcesPage() {
                     </div>
                     <div className="text-xs text-muted-foreground flex items-center gap-2">
                       <span>
-                        {r.curriculum} · {r.subject}
+                        Board: {r.board || r.curriculum} · Legacy: {r.curriculum} · Subject: {r.subject}
                       </span>
                       {r.year && <span>· {r.year}</span>}
                       {r.fileName && (
@@ -657,10 +660,20 @@ export default function ResourcesPage() {
               </div>
             </div>
 
-            {/* Row 2: Curriculum + Subject */}
+            {/* Row 2: Board + Curriculum */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Curriculum</label>
+                <label className="text-sm font-medium">Board / Domain</label>
+                <Input
+                  value={form.board}
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, board: e.target.value }))
+                  }
+                  placeholder="e.g. IB, CAIE, Engineering"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Legacy Curriculum Name</label>
                 <Input
                   value={form.curriculum}
                   onChange={(e) =>
@@ -669,16 +682,18 @@ export default function ResourcesPage() {
                   placeholder="CBSE"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Subject</label>
-                <Input
-                  value={form.subject}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, subject: e.target.value }))
-                  }
-                  placeholder="Mathematics"
-                />
-              </div>
+            </div>
+
+            {/* Row 3: Subject */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Subject</label>
+              <Input
+                value={form.subject}
+                onChange={(e) =>
+                  setForm((p) => ({ ...p, subject: e.target.value }))
+                }
+                placeholder="Mathematics"
+              />
             </div>
 
             {/* Title */}

@@ -301,7 +301,8 @@ export type Resource = {
   tenantId: string;
   vertical: 'k12' | 'higher-ed' | 'professional';
   type: ResourceType;
-  curriculum: string;      // e.g. "CBSE", "University", "Professional"
+  board: string;           // e.g. "IB", "CAIE", "CBSE", "Engineering", "AI-ML"
+  curriculum: string;      // Legacy/display name
   subject: string;         // e.g. "Mathematics"
   grade: string;           // e.g. "10", "SL", "Beginner"
   title: string;           // e.g. "Ch 3: Pair of Linear Equations"

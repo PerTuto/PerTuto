@@ -212,7 +212,6 @@ export function AttendanceTracker() {
             <AlertTitle className="font-headline">Analysis Summary</AlertTitle>
             <AlertDescription>{result.summary}</AlertDescription>
           </Alert>
-          </div>
           <div className="flex justify-end">
             <Button onClick={handleSubmitAttendance} disabled={isSaving} className="gap-2">
               {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle className="h-4 w-4" />}

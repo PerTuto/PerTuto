@@ -39,35 +39,15 @@ function GradePageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const slug = params.slug as string;
+  const boardParam = (params.board as string)?.toLowerCase();
 
-  // Slug-to-config mapping for all curricula
-  const SLUG_CONFIG: Record<string, { curriculum: string; subject: string; grades: string[]; title: string }> = {
-    // K-12
-    "cbse-mathematics-8":  { curriculum: "CBSE", subject: "Mathematics", grades: ["8"],  title: "CBSE Mathematics — Class 8" },
-    "cbse-mathematics-9":  { curriculum: "CBSE", subject: "Mathematics", grades: ["9"],  title: "CBSE Mathematics — Class 9" },
-    "cbse-mathematics-10": { curriculum: "CBSE", subject: "Mathematics", grades: ["10"], title: "CBSE Mathematics — Class 10" },
-    "cbse-mathematics-11": { curriculum: "CBSE", subject: "Mathematics", grades: ["11"], title: "CBSE Mathematics — Class 11" },
-    "cbse-mathematics-12": { curriculum: "CBSE", subject: "Mathematics", grades: ["12"], title: "CBSE Mathematics — Class 12" },
-    "ib-mathematics-aa":   { curriculum: "IB",  subject: "Mathematics AA", grades: ["SL", "HL"], title: "IB Math Analysis & Approaches" },
-    "ib-chemistry":        { curriculum: "IB",  subject: "Chemistry", grades: ["SL", "HL"], title: "IB Chemistry" },
-    "igcse-physics":       { curriculum: "IGCSE", subject: "Physics", grades: ["Core"],  title: "IGCSE Physics" },
-    "igcse-mathematics":   { curriculum: "IGCSE", subject: "Mathematics", grades: ["Extended"], title: "IGCSE Mathematics" },
-    "a-level-biology":     { curriculum: "A-Level", subject: "Biology", grades: ["AS", "A2"], title: "A-Level Biology" },
-    // Higher Education
-    "university-mathematics": { curriculum: "University", subject: "Mathematics", grades: ["Undergraduate"], title: "University Mathematics" },
-    "university-statistics":  { curriculum: "University", subject: "Statistics", grades: ["Undergraduate"], title: "Statistics & Probability" },
-    "research-methods":       { curriculum: "University", subject: "Research Methods", grades: ["Postgraduate"], title: "Research Methods" },
-    "academic-writing":       { curriculum: "University", subject: "Academic Writing", grades: ["All Levels", "Postgraduate"], title: "Academic Writing" },
-    // Professional
-    "python-programming": { curriculum: "Professional", subject: "Python", grades: ["Beginner", "Intermediate", "Advanced"], title: "Python Programming" },
-    "data-science-ml":    { curriculum: "Professional", subject: "Data Science", grades: ["Beginner", "Intermediate", "Advanced"], title: "Data Science & Machine Learning" },
-    "sql-databases":      { curriculum: "Professional", subject: "SQL & Databases", grades: ["Beginner", "Intermediate"], title: "SQL & Databases" },
-    "web-development":    { curriculum: "Professional", subject: "Web Development", grades: ["Beginner", "Intermediate"], title: "Web Development" },
-    "cloud-devops":       { curriculum: "Professional", subject: "Cloud & DevOps", grades: ["Beginner", "Intermediate"], title: "Cloud & DevOps" },
-  };
+  // Create a clean title from the slug (e.g., mathematics-aa-sl -> Mathematics Aa Sl)
+  const cleanTitle = slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
-  const config = SLUG_CONFIG[slug] || { curriculum: "CBSE", subject: "Mathematics", grades: [slug?.split("-").pop() || ""], title: `Resources — ${slug}` };
-  const { curriculum, subject, grades, title } = config;
+  const title = `${boardParam.toUpperCase()} — ${cleanTitle}`;
 
   const activeTab = searchParams.get("tab") || "syllabus";
 
@@ -78,21 +58,29 @@ function GradePageContent() {
   useEffect(() => {
     async function load() {
       try {
-        // Fetch resources for all grades belonging to this course
-        const promises = grades.map((g) =>
-          getPublishedResources(DEFAULT_TENANT_ID, { grade: g, curriculum })
-        );
-        const results = await Promise.all(promises);
-        const allData = results.flat();
-        setResources(allData.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0)));
+        // Fetch all published resources
+        const [allResources] = await getPublishedResources(DEFAULT_TENANT_ID);
+        
+        // Filter by board matching and slug keywords matching
+        const slugKeywords = slug.toLowerCase().split("-");
+        
+        const filtered = allResources.filter((r: Resource) => {
+          const matchesBoard = r.board?.toLowerCase() === boardParam || r.curriculum?.toLowerCase() === boardParam;
+          if (!matchesBoard) return false;
+          
+          const searchString = `${r.subject} ${r.grade}`.toLowerCase();
+          return slugKeywords.every(kw => searchString.includes(kw));
+        });
+
+        setResources(filtered.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0)));
       } catch {
         // Silently handle
       } finally {
         setLoading(false);
       }
     }
-    if (slug) load();
-  }, [slug, curriculum, grades]);
+    if (slug && boardParam) load();
+  }, [slug, boardParam]);
 
   const activeTabData = TABS.find((t) => t.id === activeTab) || TABS[0];
   const filteredResources = useMemo(

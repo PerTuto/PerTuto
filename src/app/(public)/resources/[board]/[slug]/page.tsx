@@ -61,7 +61,7 @@ function GradePageContent() {
     async function load() {
       try {
         // Fetch all published resources
-        const [allResources] = await getPublishedResources(DEFAULT_TENANT_ID);
+        const allResources = await getPublishedResources(DEFAULT_TENANT_ID);
         
         // Filter by board matching and slug keywords matching
         const slugKeywords = slug.toLowerCase().split("-");
@@ -141,10 +141,10 @@ function GradePageContent() {
       <section className="pt-24 pb-8 px-6 bg-background">
         <div className="max-w-5xl mx-auto">
           <Link
-            href="/resources"
+            href={`/resources/${boardParam}`}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" /> All Resources
+            <ArrowLeft className="w-4 h-4" /> Back to {boardParam.toUpperCase()} Resources
           </Link>
           <h1 className="text-3xl md:text-4xl font-headline font-bold tracking-tight mb-2">
             {title}

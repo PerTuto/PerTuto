@@ -468,40 +468,65 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
         </div>
       </div>
 
-      {/* ── Day Headers ── */}
-      <div className="grid border-b bg-muted/20" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)` }}>
-        <div className="p-2 border-r" /> {/* Gutter for time labels */}
-        {days.map(day => (
-          <div
-            key={day.toISOString()}
-            className={cn(
-              "text-center py-2 border-r last:border-r-0 transition-colors",
-              isToday(day) && "bg-primary/5"
-            )}
-          >
-            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-              {day.toLocaleDateString(undefined, { weekday: 'short' })}
-            </p>
-            <p className={cn(
-              "text-lg font-semibold font-headline leading-none mt-0.5",
-              isToday(day) && "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center mx-auto"
-            )}>
-              {day.getDate()}
-            </p>
-          </div>
-        ))}
-      </div>
-
       {/* ── Time Grid (scrollable) or Agenda List ── */}
       {isMobile ? (
-        <AgendaListView 
-          classes={filteredClasses}
-          courses={courses}
-          onClassClick={onClassClick}
-          timezone={timezone}
-        />
+        <div className="flex flex-col flex-1 overflow-y-auto">
+          {/* ── Day Headers ── */}
+          <div className="grid border-b bg-muted/20 shrink-0" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)` }}>
+            <div className="p-2 border-r" /> {/* Gutter for time labels */}
+            {days.map(day => (
+              <div
+                key={day.toISOString()}
+                className={cn(
+                  "text-center py-2 border-r last:border-r-0 transition-colors",
+                  isToday(day) && "bg-primary/5"
+                )}
+              >
+                <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  {day.toLocaleDateString(undefined, { weekday: 'short' })}
+                </p>
+                <p className={cn(
+                  "text-lg font-semibold font-headline leading-none mt-0.5",
+                  isToday(day) && "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center mx-auto"
+                )}>
+                  {day.getDate()}
+                </p>
+              </div>
+            ))}
+          </div>
+          <AgendaListView 
+            classes={filteredClasses}
+            courses={courses}
+            onClassClick={onClassClick}
+            timezone={timezone}
+          />
+        </div>
       ) : (
-        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth bg-background" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+          {/* ── Day Headers (Sticky) ── */}
+          <div className="grid border-b bg-background shadow-sm sticky top-0 z-40" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)` }}>
+            <div className="p-2 border-r bg-muted/5 backdrop-blur-md" /> {/* Gutter for time labels */}
+            {days.map(day => (
+              <div
+                key={day.toISOString()}
+                className={cn(
+                  "text-center py-2 border-r last:border-r-0 transition-colors bg-background/95 backdrop-blur-md",
+                  isToday(day) && "bg-primary/5"
+                )}
+              >
+                <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  {day.toLocaleDateString(undefined, { weekday: 'short' })}
+                </p>
+                <p className={cn(
+                  "text-lg font-semibold font-headline leading-none mt-0.5",
+                  isToday(day) && "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center mx-auto"
+                )}>
+                  {day.getDate()}
+                </p>
+              </div>
+            ))}
+          </div>
+
           <div className="grid relative" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)`, height: TOTAL_HEIGHT, minWidth: '100%' }}>
             {/* ... rest of the grid ... */}
 

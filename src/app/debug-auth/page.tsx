@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuth } from "@/hooks/use-auth";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
+import { useAuth } from "@/hooks/use-auth";
 import { firebaseApp } from "@/lib/firebase/client-app";
 
 export default function DebugAuthPage() {
@@ -26,7 +26,7 @@ export default function DebugAuthPage() {
             <div className="space-y-2">
                 <p><strong>UID:</strong> {user.uid}</p>
                 <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Email Verified:</strong> {user.emailVerified ? 'bYes' : 'No'}</p>
+                <p><strong>Email Verified:</strong> {user.emailVerified ? 'Yes' : 'No'}</p>
                 <div className="bg-slate-100 p-4 rounded mt-4">
                     <strong>Token Claims:</strong>
                     <pre>{JSON.stringify(tokenClaims, null, 2)}</pre>

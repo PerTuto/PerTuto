@@ -51,9 +51,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { K12_ALL_SEED_DATA } from "./seed-data-k12-all";
-import { HIGHER_ED_SEED_DATA } from "./seed-data-higher-ed";
-import { PROFESSIONAL_SEED_DATA } from "./seed-data-professional";
 
 const VERTICALS = [
   { value: "k12", label: "K-12 Tutoring" },
@@ -126,7 +123,6 @@ export default function ResourcesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [seeding, setSeeding] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
 
@@ -322,56 +318,6 @@ export default function ResourcesPage() {
     }
   }
 
-  async function handleSeedAll() {
-    if (!tenantId) return;
-    setSeeding(true);
-    try {
-      const allEntries = [...K12_ALL_SEED_DATA, ...HIGHER_ED_SEED_DATA, ...PROFESSIONAL_SEED_DATA];
-      let addedCount = 0;
-      let skippedCount = 0;
-
-      for (const entry of allEntries) {
-        // Check for duplicates to prevent redundancies
-        const exists = resources.some(
-          (r) => 
-            r.title === entry.title &&
-            r.board === entry.board &&
-            r.subject === entry.subject &&
-            r.grade === entry.grade
-        );
-
-        if (exists) {
-          skippedCount++;
-          continue;
-        }
-
-        await addResource(tenantId, {
-          ...entry,
-          tenantId,
-          tags: Array.isArray(entry.tags) ? entry.tags : (entry.tags ? [entry.tags] : []),
-          sortOrder: entry.sortOrder || 0,
-          published: true,
-        });
-        addedCount++;
-      }
-      
-      toast({
-        title: "Seeding Complete",
-        description: `Added ${addedCount} new resources. Skipped ${skippedCount} existing.`,
-      });
-      fetchResources();
-    } catch (e: any) {
-      console.error("Seeding Error: ", e);
-      toast({
-        title: "Error",
-        description: `Failed to seed data: ${e.message}`,
-        variant: "destructive",
-      });
-    } finally {
-      setSeeding(false);
-    }
-  }
-
   // Stats (calculated only for the currently active vertical tab)
   const verticalResources = resources.filter((r) => (r as any).vertical === filterVertical);
   const totalCount = verticalResources.length;
@@ -405,10 +351,6 @@ export default function ResourcesPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <Button onClick={handleSeedAll} disabled={seeding} variant="secondary" className="gap-2">
-            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-emerald-600" />}
-            {seeding ? "Seeding..." : "Seed All Verticals"}
-          </Button>
           <Button onClick={openAddDialog} className="gap-2 bg-emerald-700 hover:bg-emerald-800 text-white">
             <Plus className="w-4 h-4" /> Add Resource
           </Button>
@@ -545,7 +487,7 @@ export default function ResourcesPage() {
                 <h3 className="text-xl font-headline font-semibold text-slate-900 mb-2">No Resources Found</h3>
                 <p className="max-w-md">
                   {totalCount === 0
-                    ? `You don't have any materials stored for ${VERTICALS.find(v => v.value === filterVertical)?.label}. Click "Seed All Verticals" or add them manually.`
+                    ? `You don't have any materials stored for ${VERTICALS.find(v => v.value === filterVertical)?.label}. Click "Add Resource" to add missing materials.`
                     : "No resources matched your active filter criteria."}
                 </p>
                 {totalCount === 0 && (

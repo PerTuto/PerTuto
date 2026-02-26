@@ -145,11 +145,11 @@ export default function ResourcesHubPage() {
                                         <div className="mb-6 inline-flex size-14 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-600">
                                             <GraduationCap className="w-7 h-7" />
                                         </div>
-                                        <h3 className="font-headline text-3xl font-bold text-foreground mb-3">University Mathematics</h3>
-                                        <p className="text-muted-foreground leading-relaxed text-lg">Calculus I/II/III, Linear Algebra, Differential Equations, and Discrete Mathematics.</p>
+                                        <h3 className="font-headline text-3xl font-bold text-foreground mb-3">University Engineering</h3>
+                                        <p className="text-muted-foreground leading-relaxed text-lg">Advanced calculus, physics, and major-specific resources for engineering undergraduates.</p>
                                     </div>
                                     <div className="mt-8 flex flex-wrap gap-2">
-                                        {['Calculus', 'Linear Algebra', 'DiffEq', 'Discrete Math'].map((t) => (
+                                        {['Calculus', 'Linear Algebra', 'DiffEq', 'Physics'].map((t) => (
                                             <span key={t} className="px-3 py-1 rounded-full bg-sky-500/5 text-sky-600 text-xs font-medium border border-sky-500/10">{t}</span>
                                         ))}
                                     </div>
@@ -167,8 +167,8 @@ export default function ResourcesHubPage() {
                                     <div className="inline-flex size-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 mb-3">
                                         <Atom className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-headline text-2xl font-bold text-foreground">Statistics & Probability</h3>
-                                    <p className="text-muted-foreground">Descriptive stats, distributions, hypothesis testing, regression, Bayesian methods.</p>
+                                    <h3 className="font-headline text-2xl font-bold text-foreground">Computer Science</h3>
+                                    <p className="text-muted-foreground">Algorithms, data structures, programming paradigms, and system design.</p>
                                     <div className="mt-3 flex items-center gap-1 text-cyan-600 text-sm font-medium group-hover:gap-2 transition-all">
                                         Explore <ArrowRight className="w-3.5 h-3.5" />
                                     </div>
@@ -180,8 +180,8 @@ export default function ResourcesHubPage() {
                         <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
                             <Link href="/resources/business" className="block h-full">
                                 <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-teal-500/40 transition-colors">
-                                    <h3 className="font-headline text-xl font-bold text-foreground mb-2">Research Methods</h3>
-                                    <p className="text-sm text-muted-foreground">Design, data collection, qualitative & quantitative analysis.</p>
+                                    <h3 className="font-headline text-xl font-bold text-foreground mb-2">Business & Finance</h3>
+                                    <p className="text-sm text-muted-foreground">Accounting, microeconomics, and corporate finance.</p>
                                     <div className="mt-auto flex items-center gap-1 text-teal-600 text-xs font-medium group-hover:gap-2 transition-all">
                                         Explore <ArrowRight className="w-3 h-3" />
                                     </div>
@@ -191,15 +191,17 @@ export default function ResourcesHubPage() {
 
                         {/* Academic Writing */}
                         <AnimatedSection delay={400} className="col-span-1 md:col-span-1 md:row-span-1">
-                            <Link href="/resources/academic-writing" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-slate-500/40 transition-colors">
-                                    <h3 className="font-headline text-xl font-bold text-foreground mb-2">Academic Writing</h3>
-                                    <p className="text-sm text-muted-foreground">Essays, thesis writing, APA/MLA, critical analysis.</p>
-                                    <div className="mt-auto flex items-center gap-1 text-slate-600 text-xs font-medium group-hover:gap-2 transition-all">
-                                        Explore <ArrowRight className="w-3 h-3" />
-                                    </div>
+                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8">
+                                <h3 className="font-headline text-xl font-bold text-foreground mb-3">More Tracks</h3>
+                                <div className="flex flex-col gap-2">
+                                    <Link href="/resources/engineering" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                                        Mathematics <ArrowRight className="w-3 h-3" />
+                                    </Link>
+                                    <Link href="/resources/business" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                                        Research Methods <ArrowRight className="w-3 h-3" />
+                                    </Link>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
                     </div>
                 </div>
@@ -258,7 +260,7 @@ export default function ResourcesHubPage() {
 
                     {/* SQL */}
                     <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
-                        <Link href="/resources/web-dev" className="block h-full">
+                        <Link href="/resources/data-science" className="block h-full">
                             <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-rose-500/40 transition-colors">
                                 <h3 className="font-headline text-xl font-bold text-foreground mb-2">SQL & Databases</h3>
                                 <p className="text-sm text-muted-foreground">Queries, joins, PostgreSQL, NoSQL.</p>

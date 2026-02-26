@@ -2,12 +2,19 @@ import type { Metadata } from 'next';
 import { adminFirestore } from '@/lib/firebase/admin-app';
 
 type Props = {
-  params: { board: string; slug: string };
+  params: Promise<{ board: string; slug: string }>;
   children: React.ReactNode;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { board, slug } = params;
+  const resolvedParams = await params;
+  const board = resolvedParams?.board;
+  const slug = resolvedParams?.slug;
+
+  if (!board || !slug) {
+    return { title: 'Resources | PerTuto' };
+  }
+
   const boardParam = board.toLowerCase();
   
   // Create a fallback title
@@ -62,6 +69,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ResourceLayout({ children }: Props) {
+export default function ResourceLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

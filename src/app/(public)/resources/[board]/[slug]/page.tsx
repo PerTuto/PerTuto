@@ -108,7 +108,7 @@ function GradePageContent() {
   }
 
   function setTab(tab: string) {
-    router.push(`/resources/${slug}?tab=${tab}`, { scroll: false });
+    router.push(`/resources/${boardParam}/${slug}?tab=${tab}`, { scroll: false });
   }
 
   // Schema.org FAQPage (only for FAQ tab)

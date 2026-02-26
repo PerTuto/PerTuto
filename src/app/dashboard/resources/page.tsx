@@ -395,21 +395,21 @@ export default function ResourcesPage() {
   return (
     <div className="space-y-6 max-w-6xl">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline">
             Resources
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-1">
             Manage syllabus outlines, past papers, study guides, and FAQs.
           </p>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-3">
           <Button onClick={handleSeedAll} disabled={seeding} variant="secondary" className="gap-2">
             {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-emerald-600" />}
             {seeding ? "Seeding..." : "Seed All Verticals"}
           </Button>
-          <Button onClick={openAddDialog} className="gap-2">
+          <Button onClick={openAddDialog} className="gap-2 bg-emerald-700 hover:bg-emerald-800 text-white">
             <Plus className="w-4 h-4" /> Add Resource
           </Button>
         </div>
@@ -417,9 +417,9 @@ export default function ResourcesPage() {
 
       {/* Main Tabs Container */}
       <Tabs value={filterVertical} onValueChange={setFilterVertical} className="space-y-6">
-        <TabsList className="bg-white border rounded-lg p-1 h-auto flex flex-wrap max-w-fit shadow-sm">
+        <TabsList className="bg-white border rounded-lg p-1 h-12 flex w-full max-w-md shadow-sm">
           {VERTICALS.map(v => (
-            <TabsTrigger key={v.value} value={v.value} className="min-w-[150px] py-2 data-[state=active]:bg-emerald-50 data-[state=active]:text-emerald-700">
+            <TabsTrigger key={v.value} value={v.value} className="flex-1 py-2 data-[state=active]:bg-emerald-50 data-[state=active]:text-emerald-700 font-medium">
               {v.label}
             </TabsTrigger>
           ))}

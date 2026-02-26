@@ -494,8 +494,8 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
           timezone={timezone}
         />
       ) : (
-        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative" style={{ maxHeight: 'calc(100vh - 280px)' }}>
-          <div className="grid relative" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)`, height: TOTAL_HEIGHT }}>
+        <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+          <div className="grid relative" style={{ gridTemplateColumns: `56px repeat(${days.length}, 1fr)`, height: TOTAL_HEIGHT, minWidth: '100%' }}>
             {/* ... rest of the grid ... */}
 
           {/* ── Hour labels + gridlines ── */}

@@ -1,0 +1,675 @@
+{
+  "board": "CBSE",
+  "subject": "Mathematics",
+  "grade": "12",
+  "vertical": "higher-ed",
+  "curriculum": "CBSE",
+  "syllabus": [
+    {
+      "title": "Relations and Functions",
+      "sortOrder": 1,
+      "tags": [
+        "relations",
+        "functions",
+        "equivalence-relation",
+        "one-one",
+        "onto",
+        "composite-functions"
+      ],
+      "overview": "This chapter extends the Class 11 concepts to classify relations (reflexive, symmetric, transitive) and functions (injective, surjective, bijective), framing the foundation for calculus.",
+      "weightage": "Shared 8 marks",
+      "unit": "Relations and Functions",
+      "keyTopics": [
+        "Types of Relations (Empty, Universal, Reflexive, Symmetric, Transitive)",
+        "Equivalence Relation",
+        "Types of Functions (One-One/Injective, Onto/Surjective)",
+        "Bijective Functions"
+      ],
+      "formulas": [
+        {
+          "name": "Reflexive",
+          "formula": "(a, a) ∈ R for every a ∈ A"
+        },
+        {
+          "name": "Symmetric",
+          "formula": "(a, b) ∈ R ⇒ (b, a) ∈ R"
+        },
+        {
+          "name": "Transitive",
+          "formula": "(a, b) ∈ R and (b, c) ∈ R ⇒ (a, c) ∈ R"
+        },
+        {
+          "name": "One-One (Injective)",
+          "formula": "f(x₁) = f(x₂) ⇒ x₁ = x₂"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=1-13",
+      "examTips": [
+        "Proving a relation is an Equivalence Relation is a guaranteed question. You must explicitly prove it is Reflexive, Symmetric, and Transitive.",
+        "To prove a function is NOT one-one, finding a single counter-example (e.g., f(-1) = f(1) = 1 for f(x)=x²) is sufficient.",
+        "Pay very close attention to the domain and codomain given (e.g., N → N vs R → R) as it completely changes whether a function is onto."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Inverse Trigonometric Functions",
+      "sortOrder": 2,
+      "tags": [
+        "trigonometry",
+        "inverse-functions",
+        "principal-value-branch"
+      ],
+      "overview": "Explores the inverses of standard trigonometric functions by restricting their domains to make them bijective, focusing on their principal value branches.",
+      "weightage": "Shared 8 marks",
+      "unit": "Relations and Functions",
+      "keyTopics": [
+        "Basic Concepts & Restrictions on Domain/Range",
+        "Principal Value Branches",
+        "Properties of Inverse Trigonometric Functions"
+      ],
+      "formulas": [
+        {
+          "name": "Domain of sin⁻¹x",
+          "formula": "[-1, 1]"
+        },
+        {
+          "name": "Range of sin⁻¹x (Principal)",
+          "formula": "[-π/2, π/2]"
+        },
+        {
+          "name": "Domain of cos⁻¹x",
+          "formula": "[-1, 1]"
+        },
+        {
+          "name": "Range of cos⁻¹x (Principal)",
+          "formula": "[0, π]"
+        },
+        {
+          "name": "Negative Angles (sin)",
+          "formula": "sin⁻¹(-x) = -sin⁻¹x"
+        },
+        {
+          "name": "Negative Angles (cos)",
+          "formula": "cos⁻¹(-x) = π - cos⁻¹x"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=2-13",
+      "examTips": [
+        "Memorize the Principal Value Branch for all 6 inverse trigonometric functions. The most common mistake is writing answers outside this branch.",
+        "Questions asking to evaluate sin⁻¹(sin(2π/3)) require bringing the angle back into the principal branch before cancelling sin and sin⁻¹."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Matrices",
+      "sortOrder": 3,
+      "tags": [
+        "matrices",
+        "algebra",
+        "transpose",
+        "symmetric-matrix"
+      ],
+      "overview": "Introduces matrices as ordered rectangular arrays of numbers or functions, covering matrix algebra and special types of matrices.",
+      "weightage": "Shared 10 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Matrix, its Order, and Types",
+        "Equality of Matrices",
+        "Operations (Addition, Scalar Multiplication, Matrix Multiplication)",
+        "Transpose of a Matrix",
+        "Symmetric and Skew-Symmetric Matrices"
+      ],
+      "formulas": [
+        {
+          "name": "Multiplication Condition",
+          "formula": "(m×n) matrix × (n×p) matrix = (m×p) matrix"
+        },
+        {
+          "name": "Transpose Reversal",
+          "formula": "(AB)' = B'A'"
+        },
+        {
+          "name": "Symmetric",
+          "formula": "A' = A"
+        },
+        {
+          "name": "Skew-Symmetric",
+          "formula": "A' = -A (Diagonal elements must be 0)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=3-13",
+      "examTips": [
+        "Remember that matrix multiplication is NOT commutative (AB ≠ BA generally).",
+        "Writing a matrix as the sum of a symmetric and a skew-symmetric matrix (½(A+A') + ½(A-A')) is a frequent long-answer question.",
+        "Be extremely careful with arithmetic signs during matrix multiplication."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Determinants",
+      "sortOrder": 4,
+      "tags": [
+        "determinants",
+        "matrices",
+        "inverse-matrix",
+        "system-of-equations",
+        "cramers-rule"
+      ],
+      "overview": "Connects to matrices by assigning a unique real number to every square matrix. It is essential for solving systems of linear equations and finding matrix inverses.",
+      "weightage": "Shared 10 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Evaluating Determinants (up to 3x3)",
+        "Area of a Triangle using Determinants",
+        "Minors and Cofactors",
+        "Adjoint and Inverse of a Matrix",
+        "Solving Systems of Linear Equations (Matrix Method)"
+      ],
+      "formulas": [
+        {
+          "name": "Determinant of Product",
+          "formula": "|AB| = |A| |B|"
+        },
+        {
+          "name": "Inverse of a Matrix",
+          "formula": "A⁻¹ = (1/|A|) × adj(A)"
+        },
+        {
+          "name": "Existence of Inverse",
+          "formula": "|A| ≠ 0 (Non-singular matrix)"
+        },
+        {
+          "name": "Matrix Method Solution",
+          "formula": "X = A⁻¹B"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=4-13",
+      "examTips": [
+        "Solving a system of 3 linear equations using the Matrix method (X = A⁻¹B) is almost guaranteed to be a 5-mark or 6-mark question. Practice finding the adjoint accurately.",
+        "Remember the checkerboard sign pattern (+ - +) when expanding determinants or finding cofactors.",
+        "Use determinants to prove three points are collinear (Area = 0)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Continuity and Differentiability",
+      "sortOrder": 5,
+      "tags": [
+        "calculus",
+        "continuity",
+        "differentiability",
+        "derivatives",
+        "chain-rule"
+      ],
+      "overview": "Bridges the limits from Class 11 to formal calculus, defining when a function is continuous, and introducing advanced differentiation techniques.",
+      "weightage": "Shared 35 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Continuity at a point and on an interval",
+        "Differentiability",
+        "Chain Rule",
+        "Derivatives of Implicit Functions",
+        "Derivatives of Inverse Trigonometric Functions",
+        "Exponential and Logarithmic Differentiation",
+        "Derivative of Parametric Functions",
+        "Second Order Derivatives"
+      ],
+      "formulas": [
+        {
+          "name": "Condition for Continuity",
+          "formula": "LHL(a) = RHL(a) = f(a)"
+        },
+        {
+          "name": "Chain Rule",
+          "formula": "dy/dx = (dy/du) × (du/dx)"
+        },
+        {
+          "name": "Log Differentiation",
+          "formula": "Use for y = [f(x)]^g(x)"
+        },
+        {
+          "name": "Parametric Form",
+          "formula": "dy/dx = (dy/dt) / (dx/dt)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=5-13",
+      "examTips": [
+        "Finding unknown constants (like 'k') to make a piecewise function continuous is a very common question type.",
+        "Always use Logarithmic Differentiation when you see a variable raised to the power of a variable (e.g., x^sin(x)).",
+        "For second-order derivatives in parametric form, remember that d²y/dx² is NOT simply (d²y/dt²)/(d²x/dt²). You must differentiate dy/dx with respect to x."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Application of Derivatives",
+      "sortOrder": 6,
+      "tags": [
+        "calculus",
+        "derivatives",
+        "rate-of-change",
+        "maxima-minima",
+        "increasing-decreasing"
+      ],
+      "overview": "Applies differentiation to real-world physical problems, graphing, and optimization (finding maximum/minimum values).",
+      "weightage": "Shared 35 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Rate of Change of Quantities",
+        "Increasing and Decreasing Functions",
+        "Maxima and Minima",
+        "First and Second Derivative Tests",
+        "Optimization Word Problems"
+      ],
+      "formulas": [
+        {
+          "name": "Increasing Function",
+          "formula": "f'(x) > 0 on interval I"
+        },
+        {
+          "name": "Decreasing Function",
+          "formula": "f'(x) < 0 on interval I"
+        },
+        {
+          "name": "Critical Points",
+          "formula": "Set f'(x) = 0"
+        },
+        {
+          "name": "Second Derivative Test",
+          "formula": "If f''(c) < 0 ⇒ Local Max; If f''(c) > 0 ⇒ Local Min"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh1=6-13",
+      "examTips": [
+        "An Optimization word problem (e.g., finding the maximum volume of a cone inscribed in a sphere) will almost certainly be the hardest 6-mark question on the paper. Practice converting geometric relationships into a single-variable function.",
+        "For Rate of Change problems, write down what is given (e.g., dV/dt = 10) and what is asked (e.g., dr/dt at r=5) before differentiating.",
+        "Draw a number line to test intervals for Increasing/Decreasing functions."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Integrals",
+      "sortOrder": 7,
+      "tags": [
+        "calculus",
+        "integration",
+        "indefinite-integrals",
+        "definite-integrals",
+        "partial-fractions"
+      ],
+      "overview": "Introduces integration as the inverse process of differentiation, covering various techniques to evaluate both indefinite and definite integrals.",
+      "weightage": "Shared 35 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Integration as Inverse of Differentiation",
+        "Integration by Substitution",
+        "Integration using Partial Fractions",
+        "Integration by Parts",
+        "Definite Integrals and their Properties"
+      ],
+      "formulas": [
+        {
+          "name": "By Parts (ILATE rule)",
+          "formula": "∫u v dx = u ∫v dx - ∫(u' ∫v dx) dx"
+        },
+        {
+          "name": "Definite Integral Property (King)",
+          "formula": "∫[a,b] f(x) dx = ∫[a,b] f(a+b-x) dx"
+        },
+        {
+          "name": "Even/Odd Property",
+          "formula": "∫[-a,a] f(x)dx = 0 (if odd), 2∫[0,a] f(x)dx (if even)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=1-6",
+      "examTips": [
+        "The property ∫[a,b] f(x) dx = ∫[a,b] f(a+b-x) dx is nicknamed the 'King Property' because it is used to solve 80% of tricky definite integral questions.",
+        "Use the ILATE rule (Inverse, Logarithmic, Algebraic, Trig, Exponential) to choose 'u' (first function) for Integration by Parts.",
+        "Don't forget the '+ C' for indefinite integrals. You will lose marks."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Application of Integrals",
+      "sortOrder": 8,
+      "tags": [
+        "calculus",
+        "integration",
+        "area-under-curve"
+      ],
+      "overview": "Applies the concepts from Chapter 7 specifically to find the geometric area bounded by curves, lines, the x-axis, or the y-axis.",
+      "weightage": "Shared 35 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Area under Simple Curves",
+        "Area bounded by a Curve and a Line"
+      ],
+      "formulas": [
+        {
+          "name": "Area with x-axis",
+          "formula": "A = ∫[a,b] |y| dx = ∫[a,b] f(x) dx"
+        },
+        {
+          "name": "Area with y-axis",
+          "formula": "A = ∫[c,d] |x| dy = ∫[c,d] f(y) dy"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=2-6",
+      "examTips": [
+        "Drawing a rough sketch of the curves is MANDATORY. You must correctly identify the points of intersection to set your integration limits.",
+        "If a curve dips below the x-axis, integral evaluates to negative. Take the absolute value for Area.",
+        "Equations of Parabolas and Circles are the most frequently used boundaries."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Differential Equations",
+      "sortOrder": 9,
+      "tags": [
+        "calculus",
+        "differential-equations",
+        "order-degree",
+        "variable-separable",
+        "linear-differential-equation"
+      ],
+      "overview": "Combines differentiation and integration to solve equations containing derivatives, which model dynamic real-world systems.",
+      "weightage": "Shared 35 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Order and Degree of a D.E.",
+        "General and Particular Solutions",
+        "Methods of Solving: Variable Separable",
+        "Methods of Solving: Homogeneous D.E.",
+        "Methods of Solving: Linear D.E. (Integrating Factor)"
+      ],
+      "formulas": [
+        {
+          "name": "Linear D.E. Form",
+          "formula": "dy/dx + P(x)y = Q(x)"
+        },
+        {
+          "name": "Integrating Factor (I.F.)",
+          "formula": "I.F. = e^(∫P dx)"
+        },
+        {
+          "name": "Solution of Linear D.E.",
+          "formula": "y × (I.F.) = ∫(Q × I.F.) dx + C"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=3-6",
+      "examTips": [
+        "To find the 'Degree', the equation must be a polynomial in its derivatives. (e.g., sin(dy/dx) means degree is not defined).",
+        "The Integrating Factor (I.F.) method for solving Linear Differential Equations is a very common 4-mark question.",
+        "For Homogeneous equations, always use the substitution y = vx, which makes dy/dx = v + x(dv/dx)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Vector Algebra",
+      "sortOrder": 10,
+      "tags": [
+        "vectors",
+        "dot-product",
+        "cross-product",
+        "magnitude",
+        "direction-cosines"
+      ],
+      "overview": "Introduces quantities with both magnitude and direction. This chapter forms the foundation for 3D Geometry and physics applications.",
+      "weightage": "Shared 14 marks",
+      "unit": "Vectors and 3D Geometry",
+      "keyTopics": [
+        "Vectors and Scalars, Magnitude and Direction",
+        "Direction Cosines and Direction Ratios",
+        "Types of Vectors, Addition, Scalar Multiplication",
+        "Section Formula",
+        "Dot (Scalar) Product of Vectors",
+        "Cross (Vector) Product of Vectors"
+      ],
+      "formulas": [
+        {
+          "name": "Unit Vector",
+          "formula": "â = a / |a|"
+        },
+        {
+          "name": "Dot Product",
+          "formula": "a·b = |a||b|cosθ"
+        },
+        {
+          "name": "Cross Product",
+          "formula": "a×b = |a||b|sinθ n̂"
+        },
+        {
+          "name": "Orthogonal Condition",
+          "formula": "a·b = 0"
+        },
+        {
+          "name": "Parallel Condition",
+          "formula": "a×b = 0 or a = kb"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=4-6",
+      "examTips": [
+        "Questions asking for a 'unit vector perpendicular to both a and b' require calculating the cross product, and then dividing by its magnitude.",
+        "Use the dot product to find the angle between two vectors.",
+        "The projection of vector a on vector b is (a·b) / |b|."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Three Dimensional Geometry",
+      "sortOrder": 11,
+      "tags": [
+        "3d-geometry",
+        "lines",
+        "planes",
+        "shortest-distance",
+        "direction-cosines"
+      ],
+      "overview": "Applies vector algebra to study the mathematics of Lines and Planes in 3D space. It involves visualizing geometric intersections.",
+      "weightage": "Shared 14 marks",
+      "unit": "Vectors and 3D Geometry",
+      "keyTopics": [
+        "Direction Cosines and Ratios of a Line",
+        "Equation of a Line in Space (Vector & Cartesian)",
+        "Angle between Two Lines",
+        "Shortest Distance between Two Skew Lines"
+      ],
+      "formulas": [
+        {
+          "name": "Line Eq (Vector)",
+          "formula": "r = a + λb"
+        },
+        {
+          "name": "Line Eq (Cartesian)",
+          "formula": "(x-x₁)/a = (y-y₁)/b = (z-z₁)/c"
+        },
+        {
+          "name": "Shortest Distance (Skew)",
+          "formula": "d = |(b₁×b₂)·(a₂-a₁)| / |b₁×b₂|"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=5-6",
+      "examTips": [
+        "The 'Shortest Distance between two Skew Lines' is one of the most frequently asked 5/6 mark questions in the entire syllabus. Master the formula.",
+        "Always convert Cartesian equations to standard form before extracting direction ratios. For example, if you see (3-x)/2, rewrite it as (x-3)/(-2).",
+        "Remember that cos²α + cos²β + cos²γ = 1 (where α, β, γ are angles made with axes)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Linear Programming",
+      "sortOrder": 12,
+      "tags": [
+        "linear-programming",
+        "optimization",
+        "graphical-method",
+        "feasible-region"
+      ],
+      "overview": "A largely standalone, practical chapter dealing with optimizing a linear objective function subject to linear inequality constraints (mostly resource allocation).",
+      "weightage": "5 marks",
+      "unit": "Linear Programming",
+      "keyTopics": [
+        "Introduction and Related Terminology",
+        "Mathematical Formulation of L.P. Problems",
+        "Graphical Method of Solution for two variables",
+        "Feasible and Infeasible Regions",
+        "Optimal Feasible Solutions (Corner Point Method)"
+      ],
+      "formulas": [
+        {
+          "name": "Objective Function",
+          "formula": "Z = ax + by (to be maximized/minimized)"
+        },
+        {
+          "name": "Corner Point Theorem",
+          "formula": "Optimal value always occurs at corner points of feasible region"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=6-6",
+      "examTips": [
+        "This is an 'easy marks' chapter. The formulation of the equations from the word problem is 50% of the marks; the graph is the other 50%.",
+        "Always shade the feasible region neatly and clearly calculate coordinates for all corner points.",
+        "If the feasible region is UNBOUNDED, calculating the maximum/minimum requires checking if the open half-plane intersects the feasible region."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Probability",
+      "sortOrder": 13,
+      "tags": [
+        "probability",
+        "conditional-probability",
+        "bayes-theorem",
+        "random-variable",
+        "probability-distribution"
+      ],
+      "overview": "Advances Class 11 probability into conditional events, introducing the highly important Bayes' Theorem and random variables.",
+      "weightage": "8 marks",
+      "unit": "Probability",
+      "keyTopics": [
+        "Conditional Probability",
+        "Multiplication Theorem on Probability",
+        "Independent Events",
+        "Bayes' Theorem",
+        "Random Variable and its Probability Distribution",
+        "Mean of a Random Variable"
+      ],
+      "formulas": [
+        {
+          "name": "Conditional Probability",
+          "formula": "P(A|B) = P(A ∩ B) / P(B)"
+        },
+        {
+          "name": "Independent Events Check",
+          "formula": "P(A ∩ B) = P(A) × P(B)"
+        },
+        {
+          "name": "Bayes' Theorem",
+          "formula": "P(E₁|A) = [P(E₁)P(A|E₁)] / [Σ P(Eᵢ)P(A|Eᵢ)]"
+        },
+        {
+          "name": "Mean (Expected Value)",
+          "formula": "μ = E(X) = Σ(xᵢ pᵢ)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?lemh2=7-6",
+      "examTips": [
+        "Bayes' Theorem is guaranteed to appear as a 4, 5, or 6 mark Case Study question. Practice defining your events (E1, E2, A) clearly.",
+        "Conditional Probability problems often start with 'Given that...'. The event that has already occurred is placed in the denominator condition P(X|Given).",
+        "Sum of all probabilities in a probability distribution table must exactly equal 1."
+      ],
+      "content": ""
+    }
+  ],
+  "pastPapers": [
+    {
+      "title": "CBSE Class 12 Maths — Sample Paper 2024-25",
+      "year": "2025",
+      "session": "Sample",
+      "sortOrder": 1,
+      "paperCode": "041",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassXII_2024_25/Maths-SQP.pdf",
+      "fileName": "CBSE-Class12-Maths-SQP-2024-25.pdf",
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassXII_2024_25/Maths-MS.pdf",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ & Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-based (Source based)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "content": "Official CBSE sample paper indicating the exact pattern, difficulty, and chapter weightages for the upcoming 2025 board examinations."
+    },
+    {
+      "title": "CBSE Class 12 Maths — Board Paper 2023-24",
+      "year": "2024",
+      "session": "Main Board",
+      "sortOrder": 2,
+      "paperCode": "041",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassXII_2023_24/Maths-SQP.pdf",
+      "fileName": "CBSE-Class12-Maths-Board-2023-24.pdf",
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassXII_2023_24/Maths-MS.pdf",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ & Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-based (Source based)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "content": "The actual board paper administered in the year 2024."
+    }
+  ]
+}

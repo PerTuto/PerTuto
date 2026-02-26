@@ -1,0 +1,618 @@
+{
+  "board": "CBSE",
+  "subject": "Mathematics",
+  "grade": "9",
+  "vertical": "k12",
+  "curriculum": "CBSE",
+  "syllabus": [
+    {
+      "title": "Number Systems",
+      "sortOrder": 1,
+      "tags": [
+        "number-systems",
+        "rational-numbers",
+        "irrational-numbers",
+        "real-numbers",
+        "rationalisation"
+      ],
+      "overview": "This chapter extends the concept of numbers beyond rational numbers to introduce irrational numbers, forming the complete set of Real Numbers.",
+      "weightage": "8 marks",
+      "unit": "Number Systems",
+      "keyTopics": [
+        "Irrational Numbers",
+        "Real Numbers and their Decimal Expansions",
+        "Representing Real Numbers on the Number Line",
+        "Operations on Real Numbers",
+        "Rationalisation of Denominators",
+        "Laws of Exponents for Real Numbers"
+      ],
+      "formulas": [
+        {
+          "name": "Law of multiplication",
+          "formula": "aᵐ × aⁿ = aᵐ⁺ⁿ"
+        },
+        {
+          "name": "Power of a power",
+          "formula": "(aᵐ)ⁿ = aᵐⁿ"
+        },
+        {
+          "name": "Law of division",
+          "formula": "aᵐ / aⁿ = aᵐ⁻ⁿ"
+        },
+        {
+          "name": "Power of a product",
+          "formula": "aᵐbᵐ = (ab)ᵐ"
+        },
+        {
+          "name": "Basic rationalisation",
+          "formula": "(1/√a) × (√a/√a) = √a/a"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=1-12",
+      "examTips": [
+        "Rationalisation is guaranteed to appear in exams. Master questions like rationalising 1 / (√a ± √b).",
+        "Practice expressing non-terminating recurring decimals (like 0.333...) in p/q form.",
+        "Understand how to locate irrational numbers like √2 or √3 on the number line using Pythagoras theorem."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Polynomials",
+      "sortOrder": 2,
+      "tags": [
+        "polynomials",
+        "factor-theorem",
+        "remainder-theorem",
+        "algebraic-identities"
+      ],
+      "overview": "Polynomials introduce formal algebraic expressions, their degrees, zeroes, and the fundamental theorems used to factorise them.",
+      "weightage": "17 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Polynomials in One Variable",
+        "Zeroes of a Polynomial",
+        "Remainder Theorem",
+        "Factor Theorem",
+        "Factorisation of Polynomials",
+        "Algebraic Identities"
+      ],
+      "formulas": [
+        {
+          "name": "Identity 1",
+          "formula": "(x + y)² = x² + 2xy + y²"
+        },
+        {
+          "name": "Identity 2",
+          "formula": "(x - y)² = x² - 2xy + y²"
+        },
+        {
+          "name": "Identity 3",
+          "formula": "x² - y² = (x + y)(x - y)"
+        },
+        {
+          "name": "Identity 4",
+          "formula": "(x + a)(x + b) = x² + (a + b)x + ab"
+        },
+        {
+          "name": "Identity 5",
+          "formula": "(x + y + z)² = x² + y² + z² + 2xy + 2yz + 2zx"
+        },
+        {
+          "name": "Identity 6 & 7",
+          "formula": "(x ± y)³ = x³ ± y³ ± 3xy(x ± y)"
+        },
+        {
+          "name": "Identity 8",
+          "formula": "x³ + y³ + z³ - 3xyz = (x + y + z)(x² + y² + z² - xy - yz - zx)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=2-12",
+      "examTips": [
+        "The Factor Theorem is critical for finding unknown coefficients (e.g., 'Find k if x-1 is a factor of...').",
+        "Memorise the expanded version of (x+y+z)² and x³+y³+z³-3xyz as these are high-scoring 4-mark questions.",
+        "Practice splitting the middle term for quadratics, as it's heavily relied upon in Class 10."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Coordinate Geometry",
+      "sortOrder": 3,
+      "tags": [
+        "coordinate-geometry",
+        "cartesian-system",
+        "quadrants",
+        "plotting-points"
+      ],
+      "overview": "This chapter introduces the Cartesian plane, the concept of coordinate axes, and how to define the exact position of a point in a 2D space.",
+      "weightage": "4 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "Cartesian System",
+        "Coordinates of a Point",
+        "Plotting Points",
+        "Mirror Images"
+      ],
+      "formulas": [
+        {
+          "name": "Quadrant I",
+          "formula": "(+, +)"
+        },
+        {
+          "name": "Quadrant II",
+          "formula": "(-, +)"
+        },
+        {
+          "name": "Quadrant III",
+          "formula": "(-, -)"
+        },
+        {
+          "name": "Quadrant IV",
+          "formula": "(+, -)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=3-12",
+      "examTips": [
+        "This is a highly scoring, conceptual chapter. Very little calculation is required.",
+        "Points on the X-axis always have a y-coordinate of 0 (e.g., (5,0)).",
+        "Points on the Y-axis always have an x-coordinate of 0 (e.g., (0, -4)).",
+        "Pay attention to questions asking for the 'perpendicular distance from the x-axis' (which is the y-coordinate value)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Linear Equations in Two Variables",
+      "sortOrder": 4,
+      "tags": [
+        "linear-equations",
+        "two-variables",
+        "graphing",
+        "solutions"
+      ],
+      "overview": "This chapter expands linear equations from one variable to two, exploring their infinite solutions and how they are represented as straight lines on the Cartesian plane.",
+      "weightage": "Shared 17 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Standard Form",
+        "Solutions of a Linear Equation",
+        "Graph of a Linear Equation",
+        "Equations of Lines Parallel to Axes"
+      ],
+      "formulas": [
+        {
+          "name": "Slanted straight line",
+          "formula": "ax + by + c = 0"
+        },
+        {
+          "name": "Vertical line",
+          "formula": "x = a"
+        },
+        {
+          "name": "Horizontal line",
+          "formula": "y = b"
+        },
+        {
+          "name": "Line passing origin",
+          "formula": "y = mx"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=4-12",
+      "examTips": [
+        "Be prepared to draw graphs. Always find at least 3 solutions (points) to draw a perfectly straight line.",
+        "Recognize that y = 3 is a line parallel to the x-axis. In two variables, write it as 0.x + 1.y = 3.",
+        "A common question is checking whether a given point lies on a given line — just substitute x and y to check if LHS = RHS."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Introduction to Euclid's Geometry",
+      "sortOrder": 5,
+      "tags": [
+        "euclidean-geometry",
+        "axioms",
+        "postulates",
+        "theorems",
+        "geometry"
+      ],
+      "overview": "This chapter provides the historical and logical foundation of geometry, distinguishing between axioms (universal truths) and postulates (geometry-specific truths).",
+      "weightage": "2–3 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Euclid's Definitions",
+        "Euclid's Axioms",
+        "Euclid's 5 Postulates",
+        "Equivalent Versions of the 5th Postulate"
+      ],
+      "formulas": [
+        {
+          "name": "Postulate 1",
+          "formula": "A straight line may be drawn from any one point to any other point."
+        },
+        {
+          "name": "Postulate 2",
+          "formula": "A terminated line can be produced indefinitely."
+        },
+        {
+          "name": "Postulate 3",
+          "formula": "A circle can be drawn with any centre and any radius."
+        },
+        {
+          "name": "Postulate 4",
+          "formula": "All right angles are equal to one another."
+        },
+        {
+          "name": "Postulate 5",
+          "formula": "Parallel Postulate"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=5-12",
+      "examTips": [
+        "Memorise the 5 postulates, especially the 5th one, as they are frequently asked as direct 2-mark questions.",
+        "Understand the difference between an Axiom (general math) and a Postulate (specifically geometry).",
+        "'Two distinct intersecting lines cannot be parallel to the same line' is a common conceptual question."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Lines and Angles",
+      "sortOrder": 6,
+      "tags": [
+        "lines",
+        "angles",
+        "transversal",
+        "parallel-lines",
+        "angle-sum-property",
+        "geometry"
+      ],
+      "overview": "This chapter introduces fundamental geometric relationships between intersecting lines, parallel lines cut by a transversal, and angles within a triangle.",
+      "weightage": "3–4 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Basic Terms",
+        "Intersecting Lines",
+        "Linear Pair Axiom",
+        "Parallel Lines and a Transversal",
+        "Angle Sum Property of a Triangle",
+        "Exterior Angle Theorem"
+      ],
+      "formulas": [
+        {
+          "name": "Linear Pair",
+          "formula": "∠1 + ∠2 = 180°"
+        },
+        {
+          "name": "Vertically Opposite",
+          "formula": "∠1 = ∠3 (when two lines intersect)"
+        },
+        {
+          "name": "Alternate Interior",
+          "formula": "Equal (if lines are parallel)"
+        },
+        {
+          "name": "Co-interior Angles",
+          "formula": "Sum to 180° (if lines are parallel)"
+        },
+        {
+          "name": "Triangle Angle Sum",
+          "formula": "∠A + ∠B + ∠C = 180°"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=6-12",
+      "examTips": [
+        "Look for the 'Z' shape for alternate interior angles, and the 'F' shape for corresponding angles.",
+        "Problems often combine the Linear Pair axiom with Parallel line theorems.",
+        "When given ratios of angles, assume them to be 2x, 3x, and 4x and use the Angle Sum property to solve for x."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Triangles",
+      "sortOrder": 7,
+      "tags": [
+        "triangles",
+        "congruence",
+        "sas",
+        "asa",
+        "sss",
+        "rhs",
+        "geometry"
+      ],
+      "overview": "This heavily weighted chapter focuses on the Congruence of Triangles — proving that two triangles are exactly the same size and shape, and using CPCT for deductions.",
+      "weightage": "4–5 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Concept of Congruence",
+        "Criteria for Congruence (SAS, ASA, AAS, SSS, RHS)",
+        "Properties of a Triangle",
+        "Inequalities in a Triangle"
+      ],
+      "formulas": [
+        {
+          "name": "CPCT",
+          "formula": "Corresponding Parts of Congruent Triangles are equal."
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=7-12",
+      "examTips": [
+        "Order matters! If △ABC ≅ △PQR, it means A maps to P, B to Q. Writing △ABC ≅ △RQP is entirely different.",
+        "Never use 'ASS' or 'SSA' — it is not a valid congruence criterion.",
+        "The proof for the Isosceles Triangle Theorem (angles opp. equal sides are equal) is frequently asked."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Quadrilaterals",
+      "sortOrder": 8,
+      "tags": [
+        "quadrilaterals",
+        "parallelogram",
+        "rectangle",
+        "rhombus",
+        "square",
+        "mid-point-theorem",
+        "geometry"
+      ],
+      "overview": "This chapter explores 4-sided figures, heavily emphasizing the properties of parallelograms and the vital Mid-Point Theorem.",
+      "weightage": "4–5 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Angle Sum Property",
+        "Types of Quadrilaterals",
+        "Properties of a Parallelogram",
+        "Conditions for a Quadrilateral to be a Parallelogram",
+        "The Mid-Point Theorem"
+      ],
+      "formulas": [
+        {
+          "name": "Angle Sum",
+          "formula": "∠A + ∠B + ∠C + ∠D = 360°"
+        },
+        {
+          "name": "Parallelogram Properties",
+          "formula": "Opposite sides equal, opposite angles equal, diagonals bisect"
+        },
+        {
+          "name": "Mid-Point Theorem",
+          "formula": "Line joining mid-points is ∥ and ½ of third side"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=8-12",
+      "examTips": [
+        "You MUST know the statement and proof of the Mid-Point Theorem by heart. It is the most imported theorem in Class 9.",
+        "To prove a figure is a rectangle, first prove it is a parallelogram, then prove one angle is 90° or diagonals are equal.",
+        "Many quadrilateral proofs actually require you to draw a diagonal and use Triangle Congruence on the two resulting triangles."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Circles",
+      "sortOrder": 9,
+      "tags": [
+        "circles",
+        "chord",
+        "arc",
+        "cyclic-quadrilateral",
+        "subtended-angle",
+        "geometry"
+      ],
+      "overview": "This chapter introduces the fundamental theorems regarding chords, arcs, and angles subtended within a circle, concluding the pure geometry unit.",
+      "weightage": "4–5 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Basic Terms",
+        "Perpendicular from the Centre to a Chord",
+        "Equal Chords and their Distances from the Centre",
+        "Angle Subtended by an Arc",
+        "Angles in the Same Segment",
+        "Cyclic Quadrilaterals"
+      ],
+      "formulas": [
+        {
+          "name": "Perpendicular Bisector",
+          "formula": "If OM ⊥ AB, then AM = MB"
+        },
+        {
+          "name": "Angle at Centre",
+          "formula": "∠AOB = 2 × ∠APB"
+        },
+        {
+          "name": "Angles in Same Segment",
+          "formula": "∠APB = ∠AQB"
+        },
+        {
+          "name": "Semicircle Angle",
+          "formula": "Angle in a semicircle is a right angle (90°)"
+        },
+        {
+          "name": "Cyclic Quadrilateral",
+          "formula": "∠A + ∠C = 180° and ∠B + ∠D = 180°"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=9-12",
+      "examTips": [
+        "The theorem 'Angle at the centre is double the angle at the remaining part' is used in almost 50% of circle problems.",
+        "If you see a cyclic quadrilateral with one of its sides extended, remember: Exterior angle = Interior opposite angle.",
+        "Draw clear diagrams; radii are always equal, which creates hidden isosceles triangles in many problems."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Heron's Formula",
+      "sortOrder": 10,
+      "tags": [
+        "herons-formula",
+        "area",
+        "triangle",
+        "semi-perimeter",
+        "mensuration"
+      ],
+      "overview": "This purely formula-based chapter teaches how to find the area of a scalene triangle when only the lengths of its three sides are known, without knowing its height.",
+      "weightage": "Shared 13 marks",
+      "unit": "Mensuration",
+      "keyTopics": [
+        "Area of a Triangle",
+        "Heron's Formula",
+        "Semi-perimeter",
+        "Application to Quadrilaterals"
+      ],
+      "formulas": [
+        {
+          "name": "Semi-perimeter",
+          "formula": "s = (a+b+c)/2"
+        },
+        {
+          "name": "Heron's Formula",
+          "formula": "Area = √[s(s-a)(s-b)(s-c)]"
+        },
+        {
+          "name": "Equilateral triangle",
+          "formula": "Area = (√3/4)a²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=10-12",
+      "examTips": [
+        "The most common mistake is in the square root extraction. Instead of multiplying all numbers inside the root, factorize them inside the root and pair them up to pull them out.",
+        "For rhombus/parallelogram area problems where diagonal is given, simply use Heron's formula on one triangle and multiply by 2.",
+        "Always double-check your addition for the semi-perimeter 's'. If 's' is wrong, the entire calculation fails."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Surface Areas and Volumes",
+      "sortOrder": 11,
+      "tags": [
+        "surface-area",
+        "volume",
+        "cone",
+        "sphere",
+        "hemisphere",
+        "mensuration"
+      ],
+      "overview": "This chapter deals with calculating the 3D space occupied by objects (volume) and the amount of material needed to cover them (surface area). The focus is exclusively on Cones and Spheres in the rationalised syllabus.",
+      "weightage": "Shared 13 marks",
+      "unit": "Mensuration",
+      "keyTopics": [
+        "Right Circular Cone (CSA, TSA, Volume)",
+        "Sphere (Surface Area, Volume)",
+        "Hemisphere (CSA, TSA, Volume)"
+      ],
+      "formulas": [
+        {
+          "name": "Cone Volume",
+          "formula": "⅓πr²h"
+        },
+        {
+          "name": "Cone CSA & TSA",
+          "formula": "CSA = πrl, TSA = πr(l + r)"
+        },
+        {
+          "name": "Sphere Volume",
+          "formula": "⁴⁄₃πr³"
+        },
+        {
+          "name": "Sphere Surface Area",
+          "formula": "4πr²"
+        },
+        {
+          "name": "Hemisphere Volume",
+          "formula": "⅔πr³"
+        },
+        {
+          "name": "Hemisphere CSA & TSA",
+          "formula": "CSA = 2πr², TSA = 3πr²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=11-12",
+      "examTips": [
+        "Remember that a hemisphere's TSA includes the flat circular base (2πr² + πr² = 3πr²). This is the #1 trick question.",
+        "When painting a hemispherical dome from the inside or outside, calculate CSA, not TSA.",
+        "Use π = 22/7 unless the question explicitly asks you to use 3.14. Wait until the very last step to multiply by π, as terms often cancel out."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Statistics",
+      "sortOrder": 12,
+      "tags": [
+        "statistics",
+        "bar-graph",
+        "histogram",
+        "frequency-polygon",
+        "data-handling"
+      ],
+      "overview": "Statistics involves the collection, presentation, and graphical representation of data. The focus is largely on graphical representation in the rationalised syllabus.",
+      "weightage": "6 marks",
+      "unit": "Statistics",
+      "keyTopics": [
+        "Collection and Presentation of Data",
+        "Graphical Representation",
+        "Bar Graphs",
+        "Histograms",
+        "Frequency Polygons"
+      ],
+      "formulas": [
+        {
+          "name": "Bar Graph",
+          "formula": "Equal width, gaps between bars"
+        },
+        {
+          "name": "Histogram",
+          "formula": "Continuous intervals, no gaps"
+        },
+        {
+          "name": "Frequency Polygon",
+          "formula": "Connects class marks (midpoints) with straight lines"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?iemh1=12-12",
+      "examTips": [
+        "For a Histogram, if the class intervals are not continuous (e.g., 10-19, 20-29), you must make them continuous (9.5-19.5, 19.5-29.5) before drawing.",
+        "If the first class interval does not start at 0, use a kink (zigzag line) on the x-axis to indicate a break.",
+        "A Frequency Polygon must always be 'closed' by connecting the first and last points to the x-axis at the imaginary preceding and succeeding class marks."
+      ],
+      "content": ""
+    }
+  ],
+  "pastPapers": [
+    {
+      "title": "KVS Regional Class 9 Maths — Annual Exam Paper 2023-24",
+      "year": "2024",
+      "session": "Annual",
+      "sortOrder": 1,
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ / Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-Based",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "content": "CBSE does not release official board papers for Class 9 as exams are conducted internally by schools. However, Kendriya Vidyalaya (KVS) papers are considered the gold standard for Class 9 preparation, as they strictly follow the latest CBSE rationalized syllabus and exam pattern.\n\n*(Note: As this is a sample placeholder, PDF download links are not currently active for Class 9 papers. They will be uploaded soon.)*"
+    }
+  ]
+}

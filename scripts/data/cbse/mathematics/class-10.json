@@ -1,0 +1,858 @@
+{
+  "board": "CBSE",
+  "subject": "Mathematics",
+  "grade": "10",
+  "vertical": "k12",
+  "curriculum": "CBSE",
+  "syllabus": [
+    {
+      "title": "Real Numbers",
+      "sortOrder": 1,
+      "tags": [
+        "real-numbers",
+        "euclid-division",
+        "hcf-lcm",
+        "irrational-numbers",
+        "number-theory"
+      ],
+      "overview": "Real Numbers forms the foundation of the CBSE Class 10 Number Systems unit. It introduces rigorous methods for finding HCF/LCM and proving the irrationality of certain numbers — key skills tested in board exams.",
+      "weightage": "6 marks",
+      "unit": "Number Systems",
+      "keyTopics": [
+        "Euclid's Division Lemma",
+        "Euclid's Division Algorithm",
+        "Fundamental Theorem of Arithmetic",
+        "HCF & LCM using Prime Factorisation",
+        "Proving Irrationality (√2, √3, √5)",
+        "Decimal Expansions of Rationals"
+      ],
+      "formulas": [
+        {
+          "name": "Euclid's Division Lemma",
+          "formula": "a = bq + r, where 0 ≤ r < b"
+        },
+        {
+          "name": "HCF × LCM relationship",
+          "formula": "HCF(a,b) × LCM(a,b) = a × b"
+        },
+        {
+          "name": "Terminating Decimal",
+          "formula": "p/q where q = 2ⁿ × 5ᵐ"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=1-17",
+      "examTips": [
+        "Proof questions are frequently asked — practice proving √2, √3, √5 are irrational using contradiction.",
+        "Always use the prime factorisation method for HCF/LCM — it's faster and more reliable.",
+        "If the denominator (in simplest form) has only factors of 2 and 5, the decimal terminates."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Polynomials",
+      "sortOrder": 2,
+      "tags": [
+        "polynomials",
+        "zeroes",
+        "quadratic",
+        "cubic",
+        "factorisation"
+      ],
+      "overview": "This chapter revisits polynomials with a focus on the relationship between zeroes and coefficients of quadratic polynomials, and the division algorithm for polynomials.",
+      "weightage": "3–4 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Geometrical Meaning of Zeroes",
+        "Relationship: Zeroes & Coefficients",
+        "Division Algorithm for Polynomials",
+        "Finding All Zeroes of a Polynomial"
+      ],
+      "formulas": [
+        {
+          "name": "Sum of zeroes (quadratic)",
+          "formula": "α + β = −b/a"
+        },
+        {
+          "name": "Product of zeroes (quadratic)",
+          "formula": "αβ = c/a"
+        },
+        {
+          "name": "Sum of zeroes (cubic)",
+          "formula": "α + β + γ = −b/a"
+        },
+        {
+          "name": "Product of zeroes (cubic)",
+          "formula": "αβγ = −d/a"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=2-17",
+      "examTips": [
+        "Finding a quadratic polynomial given its zeroes is common — use x² − (sum)x + product.",
+        "Practice the division algorithm to find remaining zeroes when two are given.",
+        "Graph-based MCQs on number of zeroes appear frequently."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Pair of Linear Equations in Two Variables",
+      "sortOrder": 3,
+      "tags": [
+        "linear-equations",
+        "simultaneous-equations",
+        "graphical-method",
+        "substitution",
+        "elimination"
+      ],
+      "overview": "This chapter covers methods to solve pairs of linear equations — graphically and algebraically. It's one of the most heavily tested chapters in CBSE board exams.",
+      "weightage": "3–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Graphical Method",
+        "Consistency of Equations",
+        "Substitution Method",
+        "Elimination Method",
+        "Cross-Multiplication Method",
+        "Word Problems (Age, Speed, Fractions)"
+      ],
+      "formulas": [
+        {
+          "name": "Unique solution",
+          "formula": "a₁/a₂ ≠ b₁/b₂ → Intersecting lines"
+        },
+        {
+          "name": "Infinite solutions",
+          "formula": "a₁/a₂ = b₁/b₂ = c₁/c₂ → Coincident lines"
+        },
+        {
+          "name": "No solution",
+          "formula": "a₁/a₂ = b₁/b₂ ≠ c₁/c₂ → Parallel lines"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=3-17",
+      "examTips": [
+        "Cross-multiplication is the fastest method for solving — master it.",
+        "For word problems, carefully define variables and form equations before solving.",
+        "Always verify your answer by substituting back into both equations."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Quadratic Equations",
+      "sortOrder": 4,
+      "tags": [
+        "quadratic-equations",
+        "discriminant",
+        "roots",
+        "factorisation",
+        "quadratic-formula"
+      ],
+      "overview": "Quadratic equations are foundational to algebra. This chapter teaches three methods of solving them and introduces the discriminant to determine the nature of roots.",
+      "weightage": "3–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Standard Form: ax² + bx + c = 0",
+        "Solving by Factorisation",
+        "Completing the Square",
+        "Quadratic Formula",
+        "Nature of Roots (Discriminant)",
+        "Word Problems"
+      ],
+      "formulas": [
+        {
+          "name": "Quadratic formula",
+          "formula": "x = (−b ± √D) / 2a"
+        },
+        {
+          "name": "Discriminant",
+          "formula": "D = b² − 4ac"
+        },
+        {
+          "name": "Two distinct real roots",
+          "formula": "D > 0"
+        },
+        {
+          "name": "Two equal roots",
+          "formula": "D = 0"
+        },
+        {
+          "name": "No real roots",
+          "formula": "D < 0"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=4-17",
+      "examTips": [
+        "Always check if factorisation works first — it's quicker than the formula.",
+        "For \"find k such that the equation has equal roots\", set D = 0 and solve for k.",
+        "Time-speed-distance and area problems are favourite word problem types."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Arithmetic Progressions",
+      "sortOrder": 5,
+      "tags": [
+        "arithmetic-progressions",
+        "ap",
+        "nth-term",
+        "sum-of-n-terms",
+        "common-difference"
+      ],
+      "overview": "Arithmetic Progressions (AP) is a high-scoring chapter. It involves finding specific terms, the sum of terms, and solving real-life problems modelled as APs.",
+      "weightage": "3–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Definition & Common Difference",
+        "nth Term Formula",
+        "Sum of First n Terms",
+        "Finding Number of Terms",
+        "Word Problems Using AP"
+      ],
+      "formulas": [
+        {
+          "name": "nth term of AP",
+          "formula": "aₙ = a + (n−1)d"
+        },
+        {
+          "name": "Sum of first n terms",
+          "formula": "Sₙ = n/2 [2a + (n−1)d]"
+        },
+        {
+          "name": "Sum (first + last)",
+          "formula": "Sₙ = n/2 (a + l)"
+        },
+        {
+          "name": "nth term from sum",
+          "formula": "aₙ = Sₙ − Sₙ₋₁"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=5-17",
+      "examTips": [
+        "If the last term (l) is known, use Sₙ = n/2 (a + l) — it's simpler.",
+        "For 3 terms in AP, take them as (a−d), a, (a+d) — this simplifies equations.",
+        "\"How many terms are needed for sum to equal X?\" → Solve the quadratic Sₙ = X."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Coordinate Geometry",
+      "sortOrder": 6,
+      "tags": [
+        "coordinate-geometry",
+        "distance-formula",
+        "section-formula",
+        "midpoint",
+        "area-of-triangle"
+      ],
+      "overview": "Coordinate Geometry connects algebra with geometry, providing formulas to calculate distances, divide line segments, and find areas using coordinates.",
+      "weightage": "6 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "Distance Formula",
+        "Section Formula",
+        "Midpoint Formula",
+        "Area of a Triangle",
+        "Collinearity of Points"
+      ],
+      "formulas": [
+        {
+          "name": "Distance formula",
+          "formula": "√[(x₂−x₁)² + (y₂−y₁)²]"
+        },
+        {
+          "name": "Section formula (m:n)",
+          "formula": "((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))"
+        },
+        {
+          "name": "Midpoint formula",
+          "formula": "((x₁+x₂)/2, (y₁+y₂)/2)"
+        },
+        {
+          "name": "Area of triangle",
+          "formula": "½ |x₁(y₂−y₃) + x₂(y₃−y₁) + x₃(y₁−y₂)|"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=6-17",
+      "examTips": [
+        "Questions combining distance + section formula are common (e.g., \"find the ratio in which...\").",
+        "For proving a quadrilateral type, use distance formula on all sides and diagonals.",
+        "Remember: area = 0 means the points are collinear."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Triangles",
+      "sortOrder": 7,
+      "tags": [
+        "triangles",
+        "similarity",
+        "bpt",
+        "pythagoras",
+        "geometry"
+      ],
+      "overview": "Triangles is one of the most important geometry chapters. It covers similarity criteria, Basic Proportionality Theorem (BPT), and the Pythagorean theorem — all heavily tested.",
+      "weightage": "4–5 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Similar Figures",
+        "Basic Proportionality Theorem (BPT)",
+        "Criteria for Similarity (AA, SSS, SAS)",
+        "Areas of Similar Triangles",
+        "Pythagoras Theorem & Converse"
+      ],
+      "formulas": [
+        {
+          "name": "BPT (Thales' Theorem)",
+          "formula": "AD/DB = AE/EC (when DE ∥ BC)"
+        },
+        {
+          "name": "Ratio of areas",
+          "formula": "ar(△ABC)/ar(△DEF) = (AB/DE)²"
+        },
+        {
+          "name": "Pythagoras Theorem",
+          "formula": "AC² = AB² + BC²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=7-17",
+      "examTips": [
+        "BPT proof is a must-learn — it appears frequently as a 3–4 mark question.",
+        "For similarity problems, always identify the AA criterion first — it's the most commonly applicable.",
+        "Pythagoras questions often combine with coordinate geometry or trigonometry."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Circles",
+      "sortOrder": 8,
+      "tags": [
+        "circles",
+        "tangent",
+        "secant",
+        "chord",
+        "geometry"
+      ],
+      "overview": "This chapter focuses on tangent properties — a tangent is perpendicular to the radius at the point of contact, and tangents from an external point are equal.",
+      "weightage": "3–4 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Tangent to a Circle",
+        "Tangent ⊥ Radius at Point of Contact",
+        "Equal Tangents from External Point",
+        "Number of Tangents from a Point"
+      ],
+      "formulas": [
+        {
+          "name": "Tangent ⊥ Radius",
+          "formula": "OA ⊥ PA"
+        },
+        {
+          "name": "Equal tangents",
+          "formula": "PA = PB (from external point P)"
+        },
+        {
+          "name": "Equal angles",
+          "formula": "∠OPA = ∠OPB"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=8-17",
+      "examTips": [
+        "The equal tangent theorem proof is a frequent 3-mark question.",
+        "Combine tangent properties with Pythagoras theorem in many problems.",
+        "Draw clear diagrams — they help identify right angles and equal lengths."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Introduction to Trigonometry",
+      "sortOrder": 9,
+      "tags": [
+        "trigonometry",
+        "sin-cos-tan",
+        "trigonometric-ratios",
+        "identities"
+      ],
+      "overview": "This chapter introduces trigonometric ratios for acute angles and establishes fundamental identities that form the basis for all trigonometric calculations.",
+      "weightage": "6–8 marks",
+      "unit": "Trigonometry",
+      "keyTopics": [
+        "Trigonometric Ratios (sin, cos, tan)",
+        "Values at Standard Angles (0°–90°)",
+        "Complementary Angle Identities",
+        "Fundamental Trigonometric Identities"
+      ],
+      "formulas": [
+        {
+          "name": "Identity 1",
+          "formula": "sin²A + cos²A = 1"
+        },
+        {
+          "name": "Identity 2",
+          "formula": "1 + tan²A = sec²A"
+        },
+        {
+          "name": "Identity 3",
+          "formula": "1 + cot²A = cosec²A"
+        },
+        {
+          "name": "Complementary",
+          "formula": "sin(90°−A) = cosA"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=9-17",
+      "examTips": [
+        "Memorise the standard angle table — it's needed in almost every trig problem.",
+        "For identity proofs, start from the more complex side (usually LHS).",
+        "Convert everything to sin and cos when stuck on an identity proof."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Some Applications of Trigonometry",
+      "sortOrder": 10,
+      "tags": [
+        "trigonometry",
+        "heights-and-distances",
+        "angle-of-elevation",
+        "angle-of-depression"
+      ],
+      "overview": "This chapter applies trigonometric ratios to solve real-world problems involving heights and distances — calculating the height of towers, mountains, and width of rivers.",
+      "weightage": "4–5 marks",
+      "unit": "Trigonometry",
+      "keyTopics": [
+        "Line of Sight",
+        "Angle of Elevation",
+        "Angle of Depression",
+        "Two Observation Points",
+        "Two Object Problems"
+      ],
+      "formulas": [
+        {
+          "name": "Height from angle",
+          "formula": "h = d × tan θ"
+        },
+        {
+          "name": "Distance from height",
+          "formula": "d = h / tan θ"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=10-17",
+      "examTips": [
+        "Always draw the diagram first — label all angles, heights, and distances.",
+        "Angle of depression from A = Angle of elevation from B (alternate angles).",
+        "Most problems use only 30°, 45°, 60° — so the standard table is essential."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Areas Related to Circles",
+      "sortOrder": 11,
+      "tags": [
+        "circles",
+        "area",
+        "sector",
+        "segment",
+        "mensuration"
+      ],
+      "overview": "This chapter extends circle concepts to calculate areas and perimeters of sectors and segments — important for mensuration problems in board exams.",
+      "weightage": "4–5 marks",
+      "unit": "Mensuration",
+      "keyTopics": [
+        "Perimeter & Area of a Circle",
+        "Area of a Sector",
+        "Length of an Arc",
+        "Area of a Segment",
+        "Combinations of Figures"
+      ],
+      "formulas": [
+        {
+          "name": "Area of sector",
+          "formula": "(θ/360) × πr²"
+        },
+        {
+          "name": "Length of arc",
+          "formula": "(θ/360) × 2πr"
+        },
+        {
+          "name": "Area of segment",
+          "formula": "Sector area − Triangle area"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=11-17",
+      "examTips": [
+        "Shaded area problems are very common — break them into sectors, triangles, and rectangles.",
+        "Use π = 22/7 unless the question specifies π = 3.14.",
+        "For 60° sector, the triangle is equilateral — use A = (√3/4)r²."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Surface Areas and Volumes",
+      "sortOrder": 12,
+      "tags": [
+        "surface-area",
+        "volume",
+        "cylinder",
+        "cone",
+        "sphere",
+        "frustum",
+        "mensuration"
+      ],
+      "overview": "This chapter deals with combinations of solids — calculating surface areas and volumes when shapes are joined or carved out. The frustum of a cone is a new concept introduced here.",
+      "weightage": "4–5 marks",
+      "unit": "Mensuration",
+      "keyTopics": [
+        "Combination of Solids",
+        "Converting Solids (Melting & Recasting)",
+        "Frustum of a Cone"
+      ],
+      "formulas": [
+        {
+          "name": "Cylinder volume",
+          "formula": "πr²h"
+        },
+        {
+          "name": "Cone volume",
+          "formula": "⅓πr²h"
+        },
+        {
+          "name": "Sphere volume",
+          "formula": "⁴⁄₃πr³"
+        },
+        {
+          "name": "Frustum volume",
+          "formula": "⅓πh(r₁² + r₂² + r₁r₂)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=12-17",
+      "examTips": [
+        "For conversion problems, equate volumes of the original and new shape.",
+        "Frustum slant height: l = √[h² + (r₁−r₂)²].",
+        "When shapes are combined, add volumes but subtract contact areas for surface area."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Statistics",
+      "sortOrder": 13,
+      "tags": [
+        "statistics",
+        "mean",
+        "median",
+        "mode",
+        "grouped-data",
+        "ogive"
+      ],
+      "overview": "Statistics covers measures of central tendency for grouped data — mean, median, and mode using different methods, plus graphical representation through ogives.",
+      "weightage": "5–6 marks",
+      "unit": "Statistics & Probability",
+      "keyTopics": [
+        "Mean of Grouped Data (3 methods)",
+        "Mode of Grouped Data",
+        "Median of Grouped Data",
+        "Ogive (Cumulative Frequency Curve)",
+        "Finding Median from Ogive"
+      ],
+      "formulas": [
+        {
+          "name": "Mean (direct)",
+          "formula": "x̄ = Σfᵢxᵢ / Σfᵢ"
+        },
+        {
+          "name": "Mean (step deviation)",
+          "formula": "x̄ = a + (Σfᵢuᵢ / Σfᵢ) × h"
+        },
+        {
+          "name": "Mode",
+          "formula": "l + [(f₁−f₀)/(2f₁−f₀−f₂)] × h"
+        },
+        {
+          "name": "Median",
+          "formula": "l + [(n/2 − cf)/f] × h"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=13-17",
+      "examTips": [
+        "Step deviation method is the fastest for calculating mean — always use it.",
+        "For median, first create the cumulative frequency column, then find n/2.",
+        "Ogive problems often ask you to verify the median graphically — draw carefully."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Probability",
+      "sortOrder": 14,
+      "tags": [
+        "probability",
+        "classical-probability",
+        "events",
+        "outcomes",
+        "dice",
+        "cards"
+      ],
+      "overview": "This chapter covers classical (theoretical) probability with applications to dice, coins, cards, and real-life events. It's a relatively easy chapter with guaranteed marks.",
+      "weightage": "3–5 marks",
+      "unit": "Statistics & Probability",
+      "keyTopics": [
+        "Classical Probability Formula",
+        "Complementary Events",
+        "Impossible & Sure Events",
+        "Dice, Coins & Playing Cards"
+      ],
+      "formulas": [
+        {
+          "name": "Basic probability",
+          "formula": "P(E) = n(E)/n(S)"
+        },
+        {
+          "name": "Complement rule",
+          "formula": "P(not E) = 1 − P(E)"
+        },
+        {
+          "name": "Deck of cards",
+          "formula": "52 total = 4 suits × 13 each"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?jemh1=14-17",
+      "examTips": [
+        "For playing card problems, remember: 52 cards = 4 suits × 13 cards each, 26 red and 26 black.",
+        "Two dice problems: use a 6×6 grid to list all 36 outcomes systematically.",
+        "The complement rule P(not E) = 1 − P(E) is often quicker than direct counting."
+      ],
+      "content": ""
+    }
+  ],
+  "pastPapers": [
+    {
+      "title": "CBSE Class 10 Maths Standard — Sample Paper 2024-25",
+      "year": "2025",
+      "session": "Sample",
+      "sortOrder": 1,
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandard-SQP.pdf",
+      "fileName": "CBSE-Class10-MathsStandard-SQP-2024-25.pdf",
+      "paperCode": "041",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ / Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-Based (Integrated)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "topicsCovered": [
+        "Real Numbers",
+        "Polynomials",
+        "Linear Equations",
+        "Quadratic Equations",
+        "AP",
+        "Triangles",
+        "Coordinate Geometry",
+        "Trigonometry",
+        "Mensuration",
+        "Statistics",
+        "Probability"
+      ],
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandard-MS.pdf",
+      "content": ""
+    },
+    {
+      "title": "CBSE Class 10 Maths Standard (VIC) — Sample Paper 2024-25",
+      "year": "2025",
+      "session": "Sample",
+      "sortOrder": 2,
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandardVIC-SQP.pdf",
+      "fileName": "CBSE-Class10-MathsStandardVIC-SQP-2024-25.pdf",
+      "paperCode": "041",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ / Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-Based (Integrated)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "topicsCovered": [
+        "Real Numbers",
+        "Polynomials",
+        "Linear Equations",
+        "Quadratic Equations",
+        "AP",
+        "Triangles",
+        "Coordinate Geometry",
+        "Trigonometry",
+        "Mensuration",
+        "Statistics",
+        "Probability"
+      ],
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandardVIC-MS.pdf",
+      "content": "Adapted version for visually impaired candidates with modified diagram-based questions."
+    },
+    {
+      "title": "CBSE Class 10 Maths Basic — Sample Paper 2024-25",
+      "year": "2025",
+      "session": "Sample",
+      "sortOrder": 3,
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsBasic-SQP.pdf",
+      "fileName": "CBSE-Class10-MathsBasic-SQP-2024-25.pdf",
+      "paperCode": "241",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ / Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-Based (Integrated)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "topicsCovered": [
+        "Real Numbers",
+        "Polynomials",
+        "Linear Equations",
+        "Quadratic Equations",
+        "AP",
+        "Triangles",
+        "Coordinate Geometry",
+        "Trigonometry",
+        "Mensuration",
+        "Statistics",
+        "Probability"
+      ],
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsBasic-MS.pdf",
+      "content": "For students who opted for Basic level Mathematics. Simpler proof-based questions and less complex word problems."
+    },
+    {
+      "title": "CBSE Class 10 Maths Basic (VIC) — Sample Paper 2024-25",
+      "year": "2025",
+      "session": "Sample",
+      "sortOrder": 4,
+      "fileUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsBasicVIC-SQP.pdf",
+      "fileName": "CBSE-Class10-MathsBasicVIC-SQP-2024-25.pdf",
+      "paperCode": "241",
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ / Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-Based (Integrated)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "topicsCovered": [
+        "Real Numbers",
+        "Polynomials",
+        "Linear Equations",
+        "Quadratic Equations",
+        "AP",
+        "Triangles",
+        "Coordinate Geometry",
+        "Trigonometry",
+        "Mensuration",
+        "Statistics",
+        "Probability"
+      ],
+      "markingSchemeUrl": "https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsBasicVIC-MS.pdf",
+      "content": "Adapted Basic Maths paper for visually impaired candidates."
+    }
+  ]
+}

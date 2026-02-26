@@ -1,0 +1,539 @@
+{
+  "board": "CBSE",
+  "subject": "Mathematics",
+  "grade": "8",
+  "vertical": "k12",
+  "curriculum": "CBSE",
+  "syllabus": [
+    {
+      "title": "Rational Numbers",
+      "sortOrder": 1,
+      "tags": [
+        "rational-numbers",
+        "number-properties",
+        "number-line"
+      ],
+      "overview": "This chapter introduces Rational Numbers and their properties (closure, commutativity, associativity), teaching how to perform operations and represent them on a number line.",
+      "weightage": "5–6 marks",
+      "unit": "Number Systems",
+      "keyTopics": [
+        "Properties of Rational Numbers",
+        "Representation on the Number Line",
+        "Rational Numbers between two Rational Numbers"
+      ],
+      "formulas": [
+        {
+          "name": "Standard form",
+          "formula": "p/q where p, q are integers and q ≠ 0"
+        },
+        {
+          "name": "Multiplicative Inverse",
+          "formula": "a/b × b/a = 1"
+        },
+        {
+          "name": "Additive Inverse",
+          "formula": "a/b + (-a/b) = 0"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=1-13",
+      "examTips": [
+        "Finding rational numbers between two given numbers using the LCM method is a very common question.",
+        "Remember that 0 is a rational number, but division by 0 is not defined.",
+        "Questions on writing the additive/multiplicative inverse are guaranteed 1-mark questions."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Linear Equations in One Variable",
+      "sortOrder": 2,
+      "tags": [
+        "linear-equations",
+        "algebra",
+        "word-problems"
+      ],
+      "overview": "Focuses on solving linear equations where the highest power of the variable is 1, and heavily emphasizes translating real-world problems into algebraic equations.",
+      "weightage": "7–8 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Solving Equations with Variable on one side",
+        "Solving Equations with Variable on both sides",
+        "Reducing Equations to Simpler Form",
+        "Word Problems (Age, Numbers, Digits)"
+      ],
+      "formulas": [
+        {
+          "name": "General form",
+          "formula": "ax + b = c (where a ≠ 0)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=2-13",
+      "examTips": [
+        "Word problems involving ages (e.g., '10 years ago, father was 3 times...') are excellent 4-mark questions.",
+        "In 2-digit number problems, remember the number is represented as 10y + x (where x is units digit, y is tens digit).",
+        "Always verify your answer by substituting the value of the variable back into the original equation."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Understanding Quadrilaterals",
+      "sortOrder": 3,
+      "tags": [
+        "geometry",
+        "quadrilaterals",
+        "polygons",
+        "parallelogram"
+      ],
+      "overview": "Introduces polygons and dives deep into the properties of various quadrilaterals like parallelograms, rhombuses, rectangles, and squares.",
+      "weightage": "6–7 marks",
+      "unit": "Geometry",
+      "keyTopics": [
+        "Polygons (Convex vs Concave, Regular vs Irregular)",
+        "Angle Sum Property of Polygons",
+        "Exterior Angles of a Polygon",
+        "Properties of Parallelograms",
+        "Special Quadrilaterals (Rhombus, Rectangle, Square, Kite)"
+      ],
+      "formulas": [
+        {
+          "name": "Interior Angle Sum",
+          "formula": "(n - 2) × 180°"
+        },
+        {
+          "name": "Exterior Angle Sum",
+          "formula": "360° (for any convex polygon)"
+        },
+        {
+          "name": "Each Exterior Angle",
+          "formula": "360° / n (for a regular polygon)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=3-13",
+      "examTips": [
+        "You must know the distinction between the properties of a Rhombus (all sides equal, diagonals bisect at 90°) and a Rectangle (all angles 90°, diagonals equal).",
+        "Using the sum of exterior angles = 360° is the fastest way to find the number of sides of a regular polygon."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Data Handling",
+      "sortOrder": 4,
+      "tags": [
+        "statistics",
+        "data-handling",
+        "pie-chart",
+        "probability"
+      ],
+      "overview": "Teaches organizing and presenting data visually. Focuses significantly on Pie Charts and introduces the basic concept of Probability.",
+      "weightage": "6 marks",
+      "unit": "Data Handling",
+      "keyTopics": [
+        "Organizing Data (Frequency Distribution)",
+        "Circle Graphs or Pie Charts",
+        "Drawing a Pie Chart",
+        "Chance and Probability"
+      ],
+      "formulas": [
+        {
+          "name": "Central Angle (Pie Chart)",
+          "formula": "(Value of component / Total value) × 360°"
+        },
+        {
+          "name": "Probability",
+          "formula": "Number of favorable outcomes / Total outcomes"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=4-13",
+      "examTips": [
+        "Drawing a Pie Chart requires calculating the central angle correctly. Make a table first!",
+        "Probability questions in Class 8 are basic (coins, dice, colorful balls in a bag).",
+        "A tally mark table is usually a 2-mark or 3-mark question."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Squares and Square Roots",
+      "sortOrder": 5,
+      "tags": [
+        "squares",
+        "square-roots",
+        "pythagorean-triplet",
+        "long-division"
+      ],
+      "overview": "Covers finding squares, properties of squares, and methods of finding square roots (Prime Factorisation and Long Division).",
+      "weightage": "6–7 marks",
+      "unit": "Arithmetic",
+      "keyTopics": [
+        "Properties of Square Numbers",
+        "Some More Interesting Patterns",
+        "Finding the Square of a Number",
+        "Pythagorean Triplets",
+        "Square Roots by Prime Factorisation",
+        "Square Roots by Division Method"
+      ],
+      "formulas": [
+        {
+          "name": "Pythagorean Triplet",
+          "formula": "For m > 1, the triplet is 2m, m² - 1, m² + 1"
+        },
+        {
+          "name": "Sum of First n Odd Nos",
+          "formula": "1 + 3 + 5 + ... + (2n - 1) = n²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=5-13",
+      "examTips": [
+        "The Long Division method is crucial and takes practice. Step 1: Pair the digits from the decimal point.",
+        "Questions asking 'What is the smallest number by which X should be multiplied to make it a perfect square?' require the Prime Factorisation method.",
+        "Questions asking 'What is the smallest number that should be subtracted from X to make it a perfect square?' require the Long Division method."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Cubes and Cube Roots",
+      "sortOrder": 6,
+      "tags": [
+        "cubes",
+        "cube-roots",
+        "prime-factorisation",
+        "hardy-ramanujan-number"
+      ],
+      "overview": "Extends the concepts from Chapter 5 to cubes and cube roots, focusing primarily on the prime factorisation method.",
+      "weightage": "4 marks",
+      "unit": "Arithmetic",
+      "keyTopics": [
+        "Properties of Cubes",
+        "Prime Factors of a Cube",
+        "Cube Roots by Prime Factorisation",
+        "Cube Roots through Estimation"
+      ],
+      "formulas": [
+        {
+          "name": "Cube",
+          "formula": "x³ = x × x × x"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=6-13",
+      "examTips": [
+        "Remember that the cube of an even number is even, and the cube of an odd number is odd.",
+        "Memorize cubes from 1 to 10. It speeds up calculations significantly.",
+        "The prime factorisation of a perfect cube must have factors grouped in triplets (groups of 3). If a prime number is not part of a triplet, the main number is not a perfect cube."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Comparing Quantities",
+      "sortOrder": 7,
+      "tags": [
+        "ratio",
+        "percentage",
+        "profit-loss",
+        "discount",
+        "compound-interest"
+      ],
+      "overview": "A heavily application-based chapter involving ratios, percentages, discount, profit & loss, tax/VAT, and Compound Interest.",
+      "weightage": "8–10 marks",
+      "unit": "Commercial Mathematics",
+      "keyTopics": [
+        "Ratios and Percentages",
+        "Finding Discounts",
+        "Prices related to Buying and Selling (Profit/Loss, Tax/VAT/GST)",
+        "Compound Interest (Formula and Concepts)",
+        "Applications of Compound Interest Formula"
+      ],
+      "formulas": [
+        {
+          "name": "Percentage Change",
+          "formula": "(Change / Original) × 100"
+        },
+        {
+          "name": "Discount",
+          "formula": "Printed Price - Sale Price"
+        },
+        {
+          "name": "Compound Interest Amount",
+          "formula": "A = P(1 + R/100)ⁿ"
+        },
+        {
+          "name": "Compound Interest",
+          "formula": "CI = A - P"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=7-13",
+      "examTips": [
+        "Discount is always calculated on the Marked Price (MP), while Profit/Loss is always calculated on the Cost Price (CP).",
+        "For 'compounded half-yearly' problems, halve the Rate (R/2) and double the Time (2n).",
+        "Population growth/depreciation problems use the Compound Interest formula."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Algebraic Expressions and Identities",
+      "sortOrder": 8,
+      "tags": [
+        "algebra",
+        "expressions",
+        "polynomials",
+        "identities"
+      ],
+      "overview": "Focuses on the multiplication of algebraic expressions (monomials, binomials, polynomials) and introduces standard algebraic identities.",
+      "weightage": "7–8 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Addition and Subtraction of Algebraic Expressions",
+        "Multiplication of Expressions",
+        "Standard Identities",
+        "Applying Identities"
+      ],
+      "formulas": [
+        {
+          "name": "Identity 1",
+          "formula": "(a + b)² = a² + 2ab + b²"
+        },
+        {
+          "name": "Identity 2",
+          "formula": "(a - b)² = a² - 2ab + b²"
+        },
+        {
+          "name": "Identity 3",
+          "formula": "(a + b)(a - b) = a² - b²"
+        },
+        {
+          "name": "Identity 4",
+          "formula": "(x + a)(x + b) = x² + (a+b)x + ab"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=8-13",
+      "examTips": [
+        "Memorize the 4 standard identities. They form the basis of factorisation in Chapter 12 and algebra in Class 9/10.",
+        "Questions like 'Evaluate 103 × 104 using suitable identity' are extremely common. (Hint: Use Identity 4 with x=100, a=3, b=4)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Mensuration",
+      "sortOrder": 9,
+      "tags": [
+        "mensuration",
+        "area",
+        "volume",
+        "surface-area",
+        "cuboid",
+        "cylinder"
+      ],
+      "overview": "Extends area/perimeter to shapes like trapeziums and general quadrilaterals, and introduces Surface Area and Volume of 3D solids (Cube, Cuboid, Cylinder).",
+      "weightage": "8 marks",
+      "unit": "Mensuration",
+      "keyTopics": [
+        "Area of a Trapezium",
+        "Area of General Quadrilaterals and Special Polygons",
+        "Surface Area of Cube, Cuboid, and Cylinder",
+        "Volume of Cube, Cuboid, and Cylinder"
+      ],
+      "formulas": [
+        {
+          "name": "Area of Trapezium",
+          "formula": "½ × (Sum of parallel sides) × height"
+        },
+        {
+          "name": "TSA of Cuboid",
+          "formula": "2(lb + bh + hl)"
+        },
+        {
+          "name": "Volume of Cylinder",
+          "formula": "πr²h"
+        },
+        {
+          "name": "TSA of Cylinder",
+          "formula": "2πr(r + h)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=9-13",
+      "examTips": [
+        "Read carefully if the question asks for Total Surface Area (TSA) or Lateral/Curved Surface Area (LSA/CSA). An open box has no top lid!",
+        "Volume is the amount a container can hold (Capacity). 1 m³ = 1000 Litres, 1 Litre = 1000 cm³.",
+        "To find the area of an irregular polygon field, divide it into triangles and trapeziums based on a diagonal."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Exponents and Powers",
+      "sortOrder": 10,
+      "tags": [
+        "exponents",
+        "powers",
+        "negative-exponents",
+        "standard-form"
+      ],
+      "overview": "Introduces negative exponents and standard form notation for expressing very large and very small numbers.",
+      "weightage": "5–6 marks",
+      "unit": "Arithmetic",
+      "keyTopics": [
+        "Powers with Negative Exponents",
+        "Laws of Exponents",
+        "Use of Exponents to Express Small Numbers in Standard Form"
+      ],
+      "formulas": [
+        {
+          "name": "Negative Power",
+          "formula": "a⁻ᵐ = 1 / aᵐ"
+        },
+        {
+          "name": "Power 0",
+          "formula": "a⁰ = 1 (where a ≠ 0)"
+        },
+        {
+          "name": "Multiplication Law",
+          "formula": "aᵐ × aⁿ = aᵐ⁺ⁿ"
+        },
+        {
+          "name": "Division Law",
+          "formula": "aᵐ ÷ aⁿ = aᵐ⁻ⁿ"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=10-13",
+      "examTips": [
+        "Standard form has exactly one non-zero digit before the decimal point: m × 10ⁿ, where 1 ≤ m < 10.",
+        "Moving the decimal point to the right results in a negative exponent (e.g., 0.0034 = 3.4 × 10⁻³).",
+        "Always convert expressions to have positive exponents in your final answer unless asked otherwise."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Direct and Inverse Proportions",
+      "sortOrder": 11,
+      "tags": [
+        "proportions",
+        "direct-proportion",
+        "inverse-proportion",
+        "unitary-method"
+      ],
+      "overview": "Explores relations where an increase in one quantity causes a corresponding increase (Direct) or decrease (Inverse) in another.",
+      "weightage": "6 marks",
+      "unit": "Arithmetic",
+      "keyTopics": [
+        "Direct Proportion",
+        "Inverse Proportion"
+      ],
+      "formulas": [
+        {
+          "name": "Direct Proportion",
+          "formula": "x₁/y₁ = x₂/y₂"
+        },
+        {
+          "name": "Inverse Proportion",
+          "formula": "x₁y₁ = x₂y₂"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=11-13",
+      "examTips": [
+        "Cost and Quantity = Direct. Speed and Time = Inverse. Workers and Days = Inverse.",
+        "First, create a table with two rows (e.g., Workers and Days). Identifying if it's Direct or Inverse is 50% of the battle."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Factorisation",
+      "sortOrder": 12,
+      "tags": [
+        "factorisation",
+        "algebra",
+        "identities",
+        "division-of-polynomials"
+      ],
+      "overview": "The reverse of algebraic multiplication — converting an expression into a product of factors using common factors, regrouping, or identities.",
+      "weightage": "7 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Method of Common Factors",
+        "Factorisation by Regrouping Terms",
+        "Factorisation using Identities",
+        "Division of Algebraic Expressions"
+      ],
+      "formulas": [
+        {
+          "name": "Difference of Squares",
+          "formula": "a² - b² = (a - b)(a + b)"
+        },
+        {
+          "name": "Perfect Square Trinomial",
+          "formula": "a² ± 2ab + b² = (a ± b)²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=12-13",
+      "examTips": [
+        "Always look for the greatest common factor (GCF) FIRST before applying any identities or splitting the middle term.",
+        "Identity a² - b² = (a-b)(a+b) is the most heavily tested factorization concept.",
+        "In division problems, factorise the numerator first, and usually, the denominator will cancel out with one of the factors."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Introduction to Graphs",
+      "sortOrder": 13,
+      "tags": [
+        "graphs",
+        "line-graph",
+        "linear-graphs",
+        "coordinates"
+      ],
+      "overview": "Introduces coordinate geometry basics and focuses on reading and drawing line graphs linking dependent and independent variables.",
+      "weightage": "5 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "A Line Graph",
+        "Linear Graphs",
+        "Location of a Point (Coordinates)",
+        "Some Applications (e.g., Time-Distance Graphs)"
+      ],
+      "formulas": [
+        {
+          "name": "Coordinates",
+          "formula": "(x-coordinate, y-coordinate) = (Abscissa, Ordinate)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?hemh1=13-13",
+      "examTips": [
+        "A 'Linear Graph' is a straight, unbroken line connecting points. A 'Line Graph' can be jagged (connecting different line segments).",
+        "Remember that the x-axis typically represents the independent variable (like Time), and the y-axis represents the dependent variable (like Distance or Temperature)."
+      ],
+      "content": ""
+    }
+  ],
+  "pastPapers": [
+    {
+      "title": "CBSE Class 8 Maths Half-Yearly Sample Paper",
+      "year": "2023",
+      "session": "Half-Yearly",
+      "sortOrder": 1,
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "MCQ",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Short Answer I",
+          "marksPerQ": 2,
+          "count": 6
+        },
+        {
+          "name": "C",
+          "type": "Short Answer II",
+          "marksPerQ": 3,
+          "count": 8
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 4,
+          "count": 6
+        }
+      ],
+      "content": "Since board exams do not happen for Class 8, schools determine their own papers. This sample represents the standard difficulty and pattern followed by top CBSE-affiliated schools for the half-yearly syllabus.\n\n*(Note: This is a placeholder record.)*"
+    }
+  ]
+}

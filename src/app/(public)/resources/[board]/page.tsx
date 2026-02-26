@@ -87,7 +87,14 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
           </div>
         ) : (
           <div className="space-y-16">
-            {Object.keys(groupedResources).sort().map(level => {
+            {Object.keys(groupedResources).sort((a, b) => {
+              if (a === "K") return -1;
+              if (b === "K") return 1;
+              const numA = parseInt(a);
+              const numB = parseInt(b);
+              if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+              return a.localeCompare(b);
+            }).map(level => {
               const levelResources = groupedResources[level];
               
               // Group within level by subject

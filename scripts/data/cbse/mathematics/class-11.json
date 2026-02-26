@@ -1,0 +1,686 @@
+{
+  "board": "CBSE",
+  "subject": "Mathematics",
+  "grade": "11",
+  "vertical": "higher-ed",
+  "curriculum": "CBSE",
+  "syllabus": [
+    {
+      "title": "Sets",
+      "sortOrder": 1,
+      "tags": [
+        "sets",
+        "subsets",
+        "venn-diagrams",
+        "operations-on-sets"
+      ],
+      "overview": "This foundational chapter introduces the concept of a Set, which is used in defining relations, functions, probability, and sequences.",
+      "weightage": "Shared 23 marks",
+      "unit": "Sets and Functions",
+      "keyTopics": [
+        "Sets and their representations",
+        "Types of Sets",
+        "Subsets & Intervals",
+        "Power Set & Universal Set",
+        "Venn Diagrams",
+        "Operations on Sets (Union, Intersection)",
+        "Complement of a Set"
+      ],
+      "formulas": [
+        {
+          "name": "De Morgan's Law 1",
+          "formula": "(A ∪ B)' = A' ∩ B'"
+        },
+        {
+          "name": "De Morgan's Law 2",
+          "formula": "(A ∩ B)' = A' ∪ B'"
+        },
+        {
+          "name": "Number of Elements",
+          "formula": "n(A ∪ B) = n(A) + n(B) - n(A ∩ B)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=1-14",
+      "examTips": [
+        "You MUST know how to translate word problems into set notation (e.g., 'Students who play cricket AND football' = Intersection).",
+        "Venn diagrams should be your first step for any word problem.",
+        "Understand the difference between ∈ (belongs to an element) and ⊂ (is a subset of a set)."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Relations and Functions",
+      "sortOrder": 2,
+      "tags": [
+        "relations",
+        "functions",
+        "domain",
+        "range",
+        "cartesian-product"
+      ],
+      "overview": "This chapter builds on Sets to explain how elements of one set map to elements of another, forming the mathematical definition of a 'Function'.",
+      "weightage": "Shared 23 marks",
+      "unit": "Sets and Functions",
+      "keyTopics": [
+        "Cartesian Product of Sets",
+        "Relations (Domain, co-domain, range)",
+        "Functions",
+        "Standard Functions & Graphs",
+        "Algebra of Real Functions"
+      ],
+      "formulas": [
+        {
+          "name": "Modulus Function",
+          "formula": "|x| = x (x≥0), -x (x<0)"
+        },
+        {
+          "name": "Domain",
+          "formula": "Set of all possible input x-values"
+        },
+        {
+          "name": "Range",
+          "formula": "Set of all actual output y-values"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=2-14",
+      "examTips": [
+        "Finding Domain and Range of complex rational and irrational functions is the most common 3/4-mark question.",
+        "For Domain of √(f(x)), always set f(x) ≥ 0 and solve the inequality.",
+        "For Domain of 1/f(x), always set f(x) ≠ 0.",
+        "Memorize the graphs of Modulus, Signum, and Greatest Integer functions."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Trigonometric Functions",
+      "sortOrder": 3,
+      "tags": [
+        "trigonometry",
+        "radians",
+        "trigonometric-identities",
+        "sine-formula",
+        "cosine-formula"
+      ],
+      "overview": "This chapter transitions from the right-triangle trigonometry of Class 10 to a circular, function-based understanding, extending domain to all real numbers.",
+      "weightage": "Shared 23 marks",
+      "unit": "Sets and Functions",
+      "keyTopics": [
+        "Angles (Radian & Degree measure)",
+        "Trigonometric Functions & Graphs",
+        "Compound Angle Identities",
+        "Multiple & Submultiple Angles",
+        "Sum to Product Formulas"
+      ],
+      "formulas": [
+        {
+          "name": "Arc Length",
+          "formula": "l = rθ (θ in radians)"
+        },
+        {
+          "name": "Sum of Angles (sin)",
+          "formula": "sin(A+B) = sinA cosB + cosA sinB"
+        },
+        {
+          "name": "Sum of Angles (cos)",
+          "formula": "cos(A+B) = cosA cosB - sinA sinB"
+        },
+        {
+          "name": "Double Angle",
+          "formula": "cos2x = cos²x - sin²x = 2cos²x - 1 = 1 - 2sin²x"
+        },
+        {
+          "name": "Factoring",
+          "formula": "sinC + sinD = 2sin((C+D)/2)cos((C-D)/2)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=3-14",
+      "examTips": [
+        "Remember the 'ASTC' rule for signs: All (Q1), Sine (Q2), Tan (Q3), Cos (Q4).",
+        "The four formulas for cos2x are the most frequently used transformations in algebra and calculus.",
+        "Always convert angles to radians before applying the arc length formula l = rθ."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Complex Numbers and Quadratic Equations",
+      "sortOrder": 4,
+      "tags": [
+        "complex-numbers",
+        "iota",
+        "conjugate",
+        "modulus",
+        "argand-plane"
+      ],
+      "overview": "This chapter introduces the imaginary unit i (iota) to solve quadratic equations with negative discriminants, extending the number system to Complex Numbers.",
+      "weightage": "Shared 25 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Need for Complex Numbers",
+        "Algebra of Complex Numbers",
+        "Modulus and Conjugate",
+        "Argand Plane",
+        "Quadratic Equations in Complex Number System"
+      ],
+      "formulas": [
+        {
+          "name": "Iota Powers",
+          "formula": "i = √-1, i² = -1, i³ = -i, i⁴ = 1"
+        },
+        {
+          "name": "Modulus",
+          "formula": "|z| = √(x² + y²)"
+        },
+        {
+          "name": "Conjugate",
+          "formula": "z̄ = x - iy (for z = x + iy)"
+        },
+        {
+          "name": "Multiplicative Inverse",
+          "formula": "z⁻¹ = z̄ / |z|²"
+        },
+        {
+          "name": "Quadratic Roots",
+          "formula": "x = (-b ± i√|D|) / 2a (when D < 0)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=4-14",
+      "examTips": [
+        "Converting a complex fraction to the standard form a + ib by multiplying numerator and denominator by the conjugate of the denominator is a guaranteed question.",
+        "The property z × z̄ = |z|² is incredibly useful for algebraic proofs.",
+        "Remember that the square root of a negative real number must include i."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Linear Inequalities",
+      "sortOrder": 5,
+      "tags": [
+        "inequalities",
+        "number-line",
+        "graphical-solution",
+        "algebra"
+      ],
+      "overview": "This chapter covers how to solve algebraic inequalities (both in one and two variables) and represent their solutions on a number line or Cartesian plane.",
+      "weightage": "4–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Algebraic Solutions of Linear Inequalities",
+        "Graphical Solution in Two Variables",
+        "System of Linear Inequalities"
+      ],
+      "formulas": [
+        {
+          "name": "Rule 1",
+          "formula": "Addition/subtraction does not change sign"
+        },
+        {
+          "name": "Rule 2",
+          "formula": "Multiplying/dividing by positive does not change sign"
+        },
+        {
+          "name": "Rule 3 (Critical)",
+          "formula": "Multiplying/dividing by negative REVERSES sign"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=5-14",
+      "examTips": [
+        "The most common mistake is forgetting to flip the inequality sign when dividing by a negative number.",
+        "In graphical solutions, < or > means dotted/dashed line, while ≤ or ≥ requires a solid line.",
+        "Use a test point (like Origin (0,0)) to find which side to shade. If it makes the inequality true, shade towards the origin."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Permutations and Combinations",
+      "sortOrder": 6,
+      "tags": [
+        "permutations",
+        "combinations",
+        "factorials",
+        "fundamental-principle-of-counting"
+      ],
+      "overview": "This chapter explores techniques for counting the number of possible arrangements (permutations) and selections (combinations) of objects.",
+      "weightage": "4–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Fundamental Principle of Counting",
+        "Factorial Notation (!)",
+        "Permutations (nPr)",
+        "Permutations of Objects Not All Distinct",
+        "Combinations (nCr)"
+      ],
+      "formulas": [
+        {
+          "name": "Permutation (Distinct)",
+          "formula": "ⁿPᵣ = n! / (n-r)!"
+        },
+        {
+          "name": "Permutation (Identical)",
+          "formula": "n! / (p! q! r!...)"
+        },
+        {
+          "name": "Combination",
+          "formula": "ⁿCᵣ = n! / [r! (n-r)!]"
+        },
+        {
+          "name": "Pascal's Rule",
+          "formula": "ⁿCᵣ + ⁿCᵣ₋₁ = ⁿ⁺¹Cᵣ"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=6-14",
+      "examTips": [
+        "Order matters = Permutation (Passwords, Seating). Order doesn't matter = Combination (Committees, Teams).",
+        "'Dictionary word rank' problems are very common.",
+        "When forming committees with conditions (e.g., 'at least one girl'), doing 'Total possible - combinations with NO girls' is often much faster."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Binomial Theorem",
+      "sortOrder": 7,
+      "tags": [
+        "binomial-theorem",
+        "expansion",
+        "general-term"
+      ],
+      "overview": "This chapter provides a formula to expand the algebraic expression (a+b)ⁿ for any positive integer 'n', avoiding tedious manual multiplication.",
+      "weightage": "3–4 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "History and Pascal's Triangle",
+        "Binomial Theorem for Positive Indices",
+        "General Term",
+        "Middle Term"
+      ],
+      "formulas": [
+        {
+          "name": "Binomial Expansion",
+          "formula": "(a+b)ⁿ = ⁿC₀aⁿ + ⁿC₁aⁿ⁻¹b¹ + ... + ⁿCₙbⁿ"
+        },
+        {
+          "name": "General Term",
+          "formula": "Tᵣ₊₁ = ⁿCᵣ aⁿ⁻ᵣ bᵣ"
+        },
+        {
+          "name": "Total Terms",
+          "formula": "n + 1"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=7-14",
+      "examTips": [
+        "Finding the 'term independent of x' or the 'coefficient of xᵏ' is the most frequently asked question type. Use the General Term formula.",
+        "Remember that the index of combinations starts at 0 (ⁿC₀), so the absolute 5th term corresponds to r=4 in the formula."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Sequences and Series",
+      "sortOrder": 8,
+      "tags": [
+        "sequences",
+        "series",
+        "gp",
+        "geometric-progression",
+        "arithmetic-mean",
+        "geometric-mean"
+      ],
+      "overview": "Building on the AP covered in Class 10, this chapter introduces Geometric Progressions (G.P.) and the relationship between different mathematical means.",
+      "weightage": "4–5 marks",
+      "unit": "Algebra",
+      "keyTopics": [
+        "Geometric Progression (G.P.)",
+        "Infinite G.P. and its Sum",
+        "Geometric Mean (G.M.)",
+        "Relationship between A.M. and G.M."
+      ],
+      "formulas": [
+        {
+          "name": "nth term of GP",
+          "formula": "aₙ = arⁿ⁻¹"
+        },
+        {
+          "name": "Sum of n terms GP",
+          "formula": "Sₙ = a(1-rⁿ)/(1-r) [for |r| < 1]"
+        },
+        {
+          "name": "Sum of Infinite GP",
+          "formula": "S_∞ = a / (1-r) [converges if |r| < 1]"
+        },
+        {
+          "name": "AM-GM Inequality",
+          "formula": "(a+b)/2 ≥ √(ab)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=8-14",
+      "examTips": [
+        "Word problems involving bacterial growth or compound depreciation use G.P. formulas.",
+        "The AM-GM inequality is frequently used to prove minimum values of algebraic expressions.",
+        "When inserting m numbers between a and b such that the sequence is a GP, the common ratio r = (b/a)^(1/(m+1))."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Straight Lines",
+      "sortOrder": 9,
+      "tags": [
+        "straight-lines",
+        "slope",
+        "coordinate-geometry",
+        "intercepts",
+        "distance-of-point"
+      ],
+      "overview": "This chapter advances the 2D coordinate geometry of Class 10 by systematically exploring the slope, various forms of line equations, and distances.",
+      "weightage": "Shared 12 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "Slope of a Line",
+        "Angle between Two Lines",
+        "Forms of Equations of a Line",
+        "General Equation of a Line",
+        "Distance of a Point From a Line",
+        "Distance between Parallel Lines"
+      ],
+      "formulas": [
+        {
+          "name": "Slope (m)",
+          "formula": "m = tan θ = (y₂ - y₁) / (x₂ - x₁)"
+        },
+        {
+          "name": "Angle between lines",
+          "formula": "tan θ = |(m₂ - m₁) / (1 + m₁m₂)|"
+        },
+        {
+          "name": "Point to Line Distance",
+          "formula": "d = |Ax₁ + By₁ + C| / √(A² + B²)"
+        },
+        {
+          "name": "Dist between Parallel Lines",
+          "formula": "d = |C₁ - C₂| / √(A² + B²)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=9-14",
+      "examTips": [
+        "Always convert the General Equation Ax + By + C = 0 to Slope-Intercept form y = mx + c to quickly find the slope m = -A/B.",
+        "The Point to Line Distance formula is tested very frequently, sometimes disguised as finding the height of a triangle given its vertices."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Conic Sections",
+      "sortOrder": 10,
+      "tags": [
+        "conic-sections",
+        "circle",
+        "parabola",
+        "ellipse",
+        "hyperbola"
+      ],
+      "overview": "This chapter introduces curves obtained by intersecting a right circular cone with a plane — circles, parabolas, ellipses, and hyperbolas.",
+      "weightage": "4–5 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "Sections of a Cone",
+        "Circle",
+        "Parabola",
+        "Ellipse",
+        "Hyperbola"
+      ],
+      "formulas": [
+        {
+          "name": "Circle Equation",
+          "formula": "(x-h)² + (y-k)² = r²"
+        },
+        {
+          "name": "Parabola (Horizontal)",
+          "formula": "y² = 4ax (e = 1)"
+        },
+        {
+          "name": "Ellipse (Horizontal)",
+          "formula": "x²/a² + y²/b² = 1 (e < 1)"
+        },
+        {
+          "name": "Hyperbola (Horizontal)",
+          "formula": "x²/a² - y²/b² = 1 (e > 1)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=10-14",
+      "examTips": [
+        "You MUST memorize the formulas for vertices, foci, eccentricity, and latus rectum for the 4 orientations of Parabola, 2 of Ellipse, and 2 of Hyperbola.",
+        "Completing the square is an essential algebraic skill here to convert a general 2nd-degree equation back into the standard central form."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Introduction to Three Dimensional Geometry",
+      "sortOrder": 11,
+      "tags": [
+        "3d-geometry",
+        "octants",
+        "distance-formula",
+        "coordinates"
+      ],
+      "overview": "This chapter takes coordinate geometry into three dimensions (x, y, z), extending familiar concepts from the 2D plane to 3D space.",
+      "weightage": "2–3 marks",
+      "unit": "Coordinate Geometry",
+      "keyTopics": [
+        "Coordinate Axes and Coordinate Planes",
+        "Coordinates of a Point in Space",
+        "Octants",
+        "Distance between Two Points"
+      ],
+      "formulas": [
+        {
+          "name": "Origin",
+          "formula": "(0, 0, 0)"
+        },
+        {
+          "name": "Point on X-Axis",
+          "formula": "(x, 0, 0)"
+        },
+        {
+          "name": "Point on YZ-Plane",
+          "formula": "(0, y, z)"
+        },
+        {
+          "name": "3D Distance",
+          "formula": "d = √[(x₂-x₁)² + (y₂-y₁)² + (z₂-z₁)²]"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=11-14",
+      "examTips": [
+        "This is a highly scoring chapter. Most questions are direct applications of the 3D distance formula.",
+        "Memorize the sign convention for the 8 Octants. You will be asked 'In which octant does (-3, 4, -2) lie?'",
+        "Proving points are collinear by showing that sum of two distances equals the third is a common 3-mark question."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Limits and Derivatives",
+      "sortOrder": 12,
+      "tags": [
+        "calculus",
+        "limits",
+        "derivatives",
+        "first-principle"
+      ],
+      "overview": "This is the seminal chapter introducing Calculus. It builds the concept of a 'Limit' approaching a point, and uses it to define the 'Derivative' (instantaneous rate of change).",
+      "weightage": "10 marks",
+      "unit": "Calculus",
+      "keyTopics": [
+        "Intuitive Idea of Limits",
+        "Algebra of Limits",
+        "Limits of Polynomials/Trigonometric Functions",
+        "Derivatives by First Principle",
+        "Algebra of Derivatives"
+      ],
+      "formulas": [
+        {
+          "name": "Standard Limit",
+          "formula": "lim(x→a) [xⁿ - aⁿ]/(x - a) = n aⁿ⁻¹"
+        },
+        {
+          "name": "Trig Limit",
+          "formula": "lim(x→0) (sin x)/x = 1 (x in radians)"
+        },
+        {
+          "name": "First Principle",
+          "formula": "f'(x) = lim(h→0) [f(x+h) - f(x)]/h"
+        },
+        {
+          "name": "Power Rule",
+          "formula": "d/dx (xⁿ) = n xⁿ⁻¹"
+        },
+        {
+          "name": "Product Rule",
+          "formula": "d/dx (uv) = u'v + uv'"
+        },
+        {
+          "name": "Quotient Rule",
+          "formula": "d/dx (u/v) = (u'v - uv') / v²"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=12-14",
+      "examTips": [
+        "The Derivative by First Principle is almost guaranteed to be asked as a 4/5-mark question. Master doing this for sin x, cos x, and xⁿ.",
+        "For evaluating limits evaluating to 0/0, try factorising both numerator and denominator and cancelling the common factor.",
+        "Always convert limits containing trigonometric functions to utilize the sin x / x = 1 identity."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Statistics",
+      "sortOrder": 13,
+      "tags": [
+        "statistics",
+        "mean-deviation",
+        "variance",
+        "standard-deviation",
+        "dispersion"
+      ],
+      "overview": "Class 10 statistics focused on central tendency. This chapter focuses on 'Dispersion' — quantifying how scattered or spread out the data points are from the mean/median.",
+      "weightage": "Shared 12 marks",
+      "unit": "Statistics & Probability",
+      "keyTopics": [
+        "Measures of Dispersion",
+        "Mean Deviation",
+        "Variance",
+        "Standard Deviation",
+        "Coefficient of Variation"
+      ],
+      "formulas": [
+        {
+          "name": "Mean Deviation (from mean)",
+          "formula": "M.D.(x̄) = Σfᵢ|xᵢ - x̄| / N"
+        },
+        {
+          "name": "Variance (σ²)",
+          "formula": "σ² = Σfᵢ(xᵢ - x̄)² / N"
+        },
+        {
+          "name": "Standard Deviation (σ)",
+          "formula": "σ = √Variance"
+        },
+        {
+          "name": "Coefficient of Variation",
+          "formula": "C.V. = (σ / x̄) × 100"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=13-14",
+      "examTips": [
+        "Use the Step Deviation method shortcut formula for calculating Variance/SD of grouped continuous data to avoid dealing with huge decimal numbers.",
+        "Draw large, neat tables with specific columns: classes, xi, fi, uᵢ, fiuᵢ, fiuᵢ². Mistakes in row summations will derail the entire problem.",
+        "If a question asks 'which team is more consistent', calculate and compare their C.V. The team with LOWER C.V. is more consistent."
+      ],
+      "content": ""
+    },
+    {
+      "title": "Probability",
+      "sortOrder": 14,
+      "tags": [
+        "probability",
+        "sample-space",
+        "mutually-exclusive",
+        "independent-events",
+        "axiomatic-approach"
+      ],
+      "overview": "This chapter shifts from the classical probability of Class 10 to a formal Axiomatic approach based on set theory, handling much more complex Event structures.",
+      "weightage": "4–5 marks",
+      "unit": "Statistics & Probability",
+      "keyTopics": [
+        "Random Experiments",
+        "Events (Occurrence, 'Not', 'And', 'Or')",
+        "Types of Events",
+        "Axiomatic Approach to Probability",
+        "Probability of 'A or B'"
+      ],
+      "formulas": [
+        {
+          "name": "Addition Rule",
+          "formula": "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)"
+        },
+        {
+          "name": "Mutually Exclusive",
+          "formula": "If separate: P(A ∪ B) = P(A) + P(B)"
+        },
+        {
+          "name": "'Not' Event",
+          "formula": "P(A') = 1 - P(A)"
+        },
+        {
+          "name": "P('A but not B')",
+          "formula": "P(A ∩ B') = P(A) - P(A ∩ B)"
+        }
+      ],
+      "ncertUrl": "https://ncert.nic.in/textbook.php?kemh1=14-14",
+      "examTips": [
+        "The foundation of 90% of these problems is rewriting English terms into Sets notation: 'At least one' = Union (∪). 'Both' = Intersection (∩).",
+        "Use the De Morgan’s Laws from Chapter 1 to solve 'Neither A nor B' probability problems.",
+        "When building a complex Sample Space, follow a systematic tree diagram so you don't miss permutations like HTT or THT."
+      ],
+      "content": ""
+    }
+  ],
+  "pastPapers": [
+    {
+      "title": "KVS Regional Class 11 Maths — Annual Exam Paper 2023-24",
+      "year": "2024",
+      "session": "Annual",
+      "sortOrder": 1,
+      "totalMarks": 80,
+      "duration": "3 hours",
+      "sections": [
+        {
+          "name": "A",
+          "type": "Multiple Choice & Assertion-Reason",
+          "marksPerQ": 1,
+          "count": 20
+        },
+        {
+          "name": "B",
+          "type": "Very Short Answer",
+          "marksPerQ": 2,
+          "count": 5
+        },
+        {
+          "name": "C",
+          "type": "Short Answer",
+          "marksPerQ": 3,
+          "count": 6
+        },
+        {
+          "name": "D",
+          "type": "Long Answer",
+          "marksPerQ": 5,
+          "count": 4
+        },
+        {
+          "name": "E",
+          "type": "Case-based (Integrated)",
+          "marksPerQ": 4,
+          "count": 3
+        }
+      ],
+      "content": "CBSE does not conduct centralized board exams for Class 11. Schools conduct their own internal exams based on CBSE guidelines. KVS papers are the most standardized representation of the CBSE standard for Class 11 and offer excellent preparation for final exams.\n\n*(Note: This is a placeholder entry. PDF download links will be added once the document is hosted on our storage servers.)*"
+    }
+  ]
+}

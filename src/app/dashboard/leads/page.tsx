@@ -10,6 +10,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { RoleGuard } from "@/components/auth/role-guard";
+import type { UserRole } from "@/lib/types";
 
 export default function LeadsPage() {
   const { userProfile } = useAuth();
@@ -139,35 +141,37 @@ export default function LeadsPage() {
   }
 
   return (
-    <div className="space-y-4 flex flex-col h-full">
-      <KanbanBoard 
-        leads={leads}
-        onStatusChange={handleStatusChange}
-        onConvert={handleConvert}
-        onAddLeadClick={() => setIsAddDialogOpen(true)}
-        onEditClick={(lead) => setEditingLead(lead)}
-      />
+    <RoleGuard allowedRoles={['super', 'admin', 'executive'] as UserRole[]}>
+      <div className="space-y-4 flex flex-col h-full">
+        <KanbanBoard 
+          leads={leads}
+          onStatusChange={handleStatusChange}
+          onConvert={handleConvert}
+          onAddLeadClick={() => setIsAddDialogOpen(true)}
+          onEditClick={(lead) => setEditingLead(lead)}
+        />
 
-      {/* Add Lead Dialog */}
-      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add a new lead</DialogTitle>
-            <DialogDescription>Fill in the details below to add a new lead to the pipeline.</DialogDescription>
-          </DialogHeader>
-          <AddLeadForm addLead={addLead} setIsAddDialogOpen={setIsAddDialogOpen} />
-        </DialogContent>
-      </Dialog>
+        {/* Add Lead Dialog */}
+        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Add a new lead</DialogTitle>
+              <DialogDescription>Fill in the details below to add a new lead to the pipeline.</DialogDescription>
+            </DialogHeader>
+            <AddLeadForm addLead={addLead} setIsAddDialogOpen={setIsAddDialogOpen} />
+          </DialogContent>
+        </Dialog>
 
-      {/* Edit Lead Dialog */}
-      <EditLeadDialog
-        lead={editingLead}
-        open={!!editingLead}
-        onOpenChange={(open) => { if (!open) setEditingLead(null); }}
-        onSave={handleEditLead}
-        onDelete={handleDeleteLead}
-        onConvert={handleConvert}
-      />
-    </div>
+        {/* Edit Lead Dialog */}
+        <EditLeadDialog
+          lead={editingLead}
+          open={!!editingLead}
+          onOpenChange={(open) => { if (!open) setEditingLead(null); }}
+          onSave={handleEditLead}
+          onDelete={handleDeleteLead}
+          onConvert={handleConvert}
+        />
+      </div>
+    </RoleGuard>
   );
 }

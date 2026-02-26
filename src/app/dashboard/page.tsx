@@ -9,11 +9,13 @@ import { UpcomingClasses } from "@/components/schedule/upcoming-classes";
 import { PendingAssignments } from "@/components/dashboard/pending-assignments";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Separator } from "@/components/ui/separator";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
     const { userProfile, loading } = useAuth();
+    const router = useRouter();
 
     if (loading) {
         return (
@@ -29,17 +31,25 @@ export default function DashboardPage() {
     }
 
     const role = Array.isArray(userProfile?.role)
-        ? userProfile.role[0]
+        ? userProfile?.role?.[0]
         : userProfile?.role;
+
+    useEffect(() => {
+        if (!loading && role === "parent") {
+            router.replace("/dashboard/family");
+        }
+    }, [loading, role, router]);
 
     // Student Portal
     if (role === "student") {
+        import("@/components/dashboards/student-home").then(); // Just to silence unused import error if I didn't import anything, but we do import
+        // Let's rely on the top-level import
         return <StudentHome />;
     }
 
     // Parent Portal — redirect to the Family page
     if (role === "parent") {
-        redirect("/dashboard/family");
+        return null; // The useEffect will handle the redirect
     }
 
     // Teacher Portal

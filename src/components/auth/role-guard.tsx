@@ -12,14 +12,25 @@ interface RoleGuardProps {
     redirectTo?: string;
 }
 
-export function RoleGuard({ children, allowedRoles, redirectTo = "/" }: RoleGuardProps) {
+export function RoleGuard({ children, allowedRoles, redirectTo = "/dashboard" }: RoleGuardProps) {
     const { userProfile, loading } = useAuth();
     const router = useRouter();
 
+    const isAuthorized = (): boolean => {
+        if (!userProfile?.role) return false;
+        const userRoles = Array.isArray(userProfile.role) ? userProfile.role : [userProfile.role];
+        
+        // Super bypasses all guards
+        if (userRoles.includes("super" as UserRole)) return true;
+        
+        return allowedRoles.some((role) => userRoles.includes(role));
+    };
+
     useEffect(() => {
         if (!loading) {
-            if (!userProfile || !allowedRoles.includes(userProfile.role)) {
-                router.push(redirectTo);
+            if (!userProfile || !isAuthorized()) {
+                console.warn(`RoleGuard: Access denied for role ${userProfile?.role}. Redirecting to ${redirectTo}`);
+                router.replace(redirectTo);
             }
         }
     }, [userProfile, loading, allowedRoles, router, redirectTo]);
@@ -32,7 +43,7 @@ export function RoleGuard({ children, allowedRoles, redirectTo = "/" }: RoleGuar
         );
     }
 
-    if (!userProfile || !allowedRoles.includes(userProfile.role)) {
+    if (!userProfile || !isAuthorized()) {
         return null; // Don't render anything while redirecting
     }
 

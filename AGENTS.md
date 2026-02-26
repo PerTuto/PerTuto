@@ -1,7 +1,7 @@
 # PerTuto — AI Agent Project Context
 
 > **One-file reference for any AI agent working on this codebase.**
-> Last updated: 2026-02-26
+> Last updated: 2026-02-26 (Phase 14: Multi-Tenant User Role Dashboards)
 
 ---
 
@@ -54,7 +54,7 @@ pertuto-tutoring/
 │   │   │   ├── subjects/[slug]/   # Subject pillar pages (SSG)
 │   │   │   └── terms/             # Terms of service
 │   │   ├── dashboard/             # Auth-gated internal dashboard
-│   │   │   ├── page.tsx           # Dashboard home (stats, upcoming classes)
+│   │   │   ├── page.tsx           # Role-switch home (student/teacher/parent/admin)
 │   │   │   ├── leads/             # CRM — Kanban board
 │   │   │   ├── students/          # Student management table + [id] detail
 │   │   │   ├── courses/           # Course cards with enrollment
@@ -62,12 +62,14 @@ pertuto-tutoring/
 │   │   │   ├── assignments/       # Assignment list
 │   │   │   ├── attendance/        # Attendance tracking (stub)
 │   │   │   ├── availability/      # Teacher availability grid
+│   │   │   ├── family/            # Parent Family Portal (multi-child tabs)
 │   │   │   ├── organization/users/# Team/org user management
 │   │   │   ├── settings/          # Settings (availability, calendar, team)
-│   │   │   └── welcome/           # Onboarding page
+│   │   │   └── welcome/           # Onboarding page (parent/student/teacher)
 │   │   ├── actions/               # Server Actions
 │   │   │   ├── leads.ts           # Public lead submission (Admin SDK)
-│   │   │   └── invite-actions.ts  # Team invite token CRUD
+│   │   │   ├── invite-actions.ts  # Team invite token CRUD (5 roles + executive)
+│   │   │   └── admin-create-user-action.ts  # Admin SDK createUser (any email domain)
 │   │   ├── api/auth/google/       # Google OAuth callback routes
 │   │   ├── join/[token]/          # Team invite acceptance page
 │   │   ├── sitemap.ts             # Dynamic sitemap generation
@@ -86,9 +88,12 @@ pertuto-tutoring/
 │   │   ├── attendance/            # Attendance tracker (stub)
 │   │   ├── availability/          # Availability grid
 │   │   ├── settings/              # Settings forms, calendar connect
-│   │   ├── tenant/                # Add user dialog, tenant components
+│   │   ├── tenant/                # Invite dialog (5 roles + Direct Create mode)
 │   │   ├── dashboard/             # Quick-add, stats, pending assignments
-│   │   ├── layout/                # Sidebar nav, header
+│   │   ├── dashboards/            # Role-specific portals
+│   │   │   ├── student-home.tsx   # Student: courses, classes, assignments, stats
+│   │   │   └── teacher-home.tsx   # Teacher: schedule, students, grading queue
+│   │   ├── layout/                # Sidebar nav (role-gated), header
 │   │   ├── brand/                 # Logo component
 │   │   └── analytics/             # GA4 tracking component
 │   ├── hooks/
@@ -173,9 +178,10 @@ type UserRole =
 
 - **super**: Platform owner (hardcoded: `super@pertuto.com` or env var `NEXT_PUBLIC_SUPER_USER_EMAIL`). Gets `tenantId: 'pertuto-default'` automatically.
 - **admin**: Tenant admin — full access to tenant data
-- **executive**: Sales/business development — access to leads and students
-- **teacher**: Instructor — access to schedule, courses, students, assignments
-- **parent/student**: Future roles (not yet implemented in UI)
+- **executive**: Sales/business development — read-only access to analytics/reports
+- **teacher**: Instructor — schedule, courses, students, assignments, grading, attendance
+- **student**: Learner — enrolled courses, upcoming classes, assignment submission
+- **parent**: Guardian — Family Portal with per-child progress, assignments, invoices
 
 ---
 
@@ -191,10 +197,10 @@ type UserRole =
 
 ### Team Invite Flow
 
-1. Admin creates invite via `AddUserDialog` → writes to `invites/{token}` via `invite-actions.ts`
-2. Invite link: `/join/{token}`
-3. New user fills name/email/password → creates Firebase Auth account + user profile
-4. Invite marked as used
+1. Admin creates invite via `InviteUserDialog` (supports all 5 non-super roles)
+2. **Invite Link mode**: generates `/join/{token}` URL → new user fills name/email/password → creates Firebase Auth account + user profile → invite marked as used
+3. **Direct Create mode**: admin fills email/password/name/role → calls `adminCreateUser()` server action → Firebase Admin SDK `createUser()` + Firestore profile → supports any email domain (e.g., `student@myacademy.edu`)
+4. Parent/student invites can link to existing student records
 
 ---
 
@@ -212,8 +218,14 @@ type UserRole =
 
 Rules are auth-gated (deployed via `firebase deploy --only firestore:rules --project pertutoclasses`):
 
-- All `tenants/{tid}/*` collections require `request.auth != null`
-- `users/{uid}` requires `request.auth.uid == uid`
+- Helper functions: `isSuper()`, `isAdmin()`, `isTeacher()`, `isStudent()`, `isParent()`, `hasRole()`, `userBelongsToTenant()`
+- All `tenants/{tid}/*` collections require `userBelongsToTenant(tenantId)`
+- `users/{uid}` read: own doc OR super/admin; write: own doc OR super
+- Students can update their own profile (via `resource.data.userId == auth.uid`)
+- Assignments: teachers/admins create, students can update (submit)
+- Invoices/ledger: admin write, tenant read
+- Leads: admin/super only
+- Invites: public read (for link validation), admin/super write
 - Default deny for unmatched paths
 
 ### Component Architecture
@@ -306,13 +318,16 @@ git push origin master
 ### Known Issues / TODOs 🟡
 
 - **Attendance page**: Currently an AI facial recognition stub — needs rewrite to manual attendance
-- **Sidebar nav**: `hasRole()` exists but only used for admin Users link — needs full role-based filtering
-- **Sidebar org link bug**: Points to `/organization/users` instead of `/dashboard/organization/users`
-- **Role-based access**: No page-level restrictions yet (any logged-in user sees everything)
+- **Assignments page role-scoping**: Students/teachers currently see all assignments — needs filtering by enrolled courses
+- **Service function efficiency**: Student/Teacher dashboards use client-side `filter()` instead of dedicated query functions (`getStudentByUserId`, `getCoursesForTeacher`)
+- **Firestore granular helpers**: Missing `isStudentOwner()` and `isParentOfStudent()` document-level Firestore rule helpers
+- **Family Portal attendance chart**: `getAttendanceForStudent()` not yet implemented
 
-### Recently Audited Gaps (None) 🟢
+### Recently Resolved 🟢
 
-- _All previously identified calendar and multi-tenancy gaps have been resolved in the 2026-02-26 audit update._
+- ~~Sidebar nav role-based filtering~~ → Fully implemented with per-role menu items
+- ~~Role-based access~~ → Dashboard page now role-switches (student/teacher/parent/admin)
+- ~~Parent/student roles not in UI~~ → Both roles now have dedicated portals
 
 ---
 
@@ -335,24 +350,25 @@ git push origin master
 
 ## 12. Implementation History (Phases)
 
-| Phase  | Focus              | Key Deliverables                                                                   |
-| :----- | :----------------- | :--------------------------------------------------------------------------------- |
-| **0**  | **Foundation**     | Next.js 16 + React 19 setup, Tailwind/shadcn init, Firebase Auth/Firestore config. |
-| **1**  | **Marketing**      | Public homepage, services, about, pricing, contact, and global meta/SEO tags.      |
-| **2**  | **CRM (Leads)**    | Kanban board for lead management, source tracking, and status transitions.         |
-| **3**  | **LMS (Students)** | Student database, enrollment management, course progress, and search.              |
-| **4**  | **LMS (Courses)**  | Course CRUD, instructor assignments, and enrollment-to-course mapping.             |
-| **5**  | **Scheduling V1**  | First iteration of the calendar with list/grid views and basic class creation.     |
-| **6**  | **Content**        | MDX blog engine, dynamic sitemap, and robots.txt generation.                       |
-| **7**  | **Dashboard**      | Home dashboard with stats, upcoming classes widget, and recent activity feed.      |
-| **8**  | **Audit**          | Comprehensive security and architectural audit (Phase 8 Audit doc).                |
-| **9**  | **Growth/Polish**  | Dynamic subject pillar pages, `DecryptedText` animations, GA4 lead tracking.       |
-| **10** | **Team Ops**       | Onboarding (`/welcome`), Team user management, and tokenized invite flows.         |
-| **11** | **Hardening**      | Firestore security rules (tenant isolation) and server-side validation.            |
-| **12** | **Full LMS**       | Parent financials (Pay Now), assignment hand-ins, and reschedule flows.            |
-| **13** | **Calendar V2**    | **Apple Calendar redesign**: weekly time-grid, drag-and-drop, timezone support.    |
-| **14** | **Safety**         | Runtime `tenantId` assertions and ID-creation logic fixes (Audit Resolution).      |
-| **15** | **iCal Import**    | Bulk `.ics` file import using `ical.js`, with event preview and UX refinements.    |
+| Phase  | Focus              | Key Deliverables                                                                                                                                                                     |
+| :----- | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0**  | **Foundation**     | Next.js 16 + React 19 setup, Tailwind/shadcn init, Firebase Auth/Firestore config.                                                                                                   |
+| **1**  | **Marketing**      | Public homepage, services, about, pricing, contact, and global meta/SEO tags.                                                                                                        |
+| **2**  | **CRM (Leads)**    | Kanban board for lead management, source tracking, and status transitions.                                                                                                           |
+| **3**  | **LMS (Students)** | Student database, enrollment management, course progress, and search.                                                                                                                |
+| **4**  | **LMS (Courses)**  | Course CRUD, instructor assignments, and enrollment-to-course mapping.                                                                                                               |
+| **5**  | **Scheduling V1**  | First iteration of the calendar with list/grid views and basic class creation.                                                                                                       |
+| **6**  | **Content**        | MDX blog engine, dynamic sitemap, and robots.txt generation.                                                                                                                         |
+| **7**  | **Dashboard**      | Home dashboard with stats, upcoming classes widget, and recent activity feed.                                                                                                        |
+| **8**  | **Audit**          | Comprehensive security and architectural audit (Phase 8 Audit doc).                                                                                                                  |
+| **9**  | **Growth/Polish**  | Dynamic subject pillar pages, `DecryptedText` animations, GA4 lead tracking.                                                                                                         |
+| **10** | **Team Ops**       | Onboarding (`/welcome`), Team user management, and tokenized invite flows.                                                                                                           |
+| **11** | **Hardening**      | Firestore security rules (tenant isolation) and server-side validation.                                                                                                              |
+| **12** | **Full LMS**       | Parent financials (Pay Now), assignment hand-ins, and reschedule flows.                                                                                                              |
+| **13** | **Calendar V2**    | **Apple Calendar redesign**: weekly time-grid, drag-and-drop, timezone support.                                                                                                      |
+| **14** | **Safety**         | Runtime `tenantId` assertions and ID-creation logic fixes (Audit Resolution).                                                                                                        |
+| **15** | **iCal Import**    | Bulk `.ics` file import using `ical.js`, with event preview and UX refinements.                                                                                                      |
+| **16** | **User Portals**   | Multi-tenant role dashboards: Student/Teacher/Parent portals, admin `createUser()` with custom domain emails, Direct Create invite mode, enhanced Firestore rules with role helpers. |
 
 ---
 

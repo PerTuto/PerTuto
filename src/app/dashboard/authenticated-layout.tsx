@@ -10,6 +10,22 @@ import { Sidebar } from "@/components/ui/sidebar";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { Header } from "@/components/layout/header";
 import { VoiceAssistant } from "@/components/voice-assistant";
+import { type UserRole } from "@/lib/types";
+
+// Source of truth for route permissions
+const ROUTE_PERMISSIONS: Record<string, string[]> = {
+  "/dashboard/leads": ["super", "admin", "executive"],
+  "/dashboard/financials": ["super", "admin", "executive"],
+  "/dashboard/organization/users": ["super", "admin", "executive"],
+  "/dashboard/testimonials": ["super", "admin", "executive"],
+  "/dashboard/resources": ["super", "admin", "executive"],
+  "/dashboard/website": ["super"],
+  "/dashboard/platform/tenants": ["super"],
+  "/dashboard/availability": ["super", "admin", "teacher"],
+  "/dashboard/attendance": ["super", "admin", "teacher"],
+  "/dashboard/students": ["super", "admin", "executive", "teacher"],
+  "/dashboard/family": ["parent"],
+};
 
 export function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   const { user, userProfile, loading } = useAuth();
@@ -21,8 +37,36 @@ export function AuthenticatedLayout({ children }: { children: React.ReactNode })
 
     if (!user) {
       router.push("/login");
-    } else if (!userProfile && pathname !== "/welcome") {
+      return;
+    } 
+    
+    if (!userProfile && pathname !== "/welcome") {
       router.push("/welcome");
+      return;
+    }
+
+    // Role-based route guard
+    if (userProfile?.role) {
+      const userRoles = Array.isArray(userProfile.role) 
+        ? userProfile.role 
+        : [userProfile.role];
+      const isSuper = userRoles.includes("super" as UserRole);
+      
+      let isAuthorized = true;
+
+      for (const [routePrefix, allowedRoles] of Object.entries(ROUTE_PERMISSIONS)) {
+        if (pathname.startsWith(routePrefix)) {
+          if (!isSuper && !allowedRoles.some(role => userRoles.includes(role as UserRole))) {
+            isAuthorized = false;
+            break;
+          }
+        }
+      }
+
+      if (!isAuthorized) {
+        console.warn(`Unauthorized access attempt to ${pathname} by role ${userProfile.role}`);
+        router.replace("/dashboard");
+      }
     }
   }, [user, userProfile, loading, router, pathname]);
 

@@ -9,28 +9,7 @@ interface DecryptedTextProps {
 }
 
 export function DecryptedText({ text, speed = 50, className }: DecryptedTextProps) {
-    const [displayText, setDisplayText] = useState(text);
-
-    useEffect(() => {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        let iter = 0;
-        const interval = setInterval(() => {
-            setDisplayText(
-                text.split("").map((letter, index) => {
-                    if (index < iter) return text[index];
-                    if (letter === ' ') return ' ';
-                    return chars[Math.floor(Math.random() * chars.length)];
-                }).join("")
-            );
-            if (iter >= text.length) {
-                clearInterval(interval);
-                setDisplayText(text);
-            }
-            iter += Math.max(1, text.length / 15);
-        }, speed);
-
-        return () => clearInterval(interval);
-    }, [text, speed]);
-
-    return <span className={className}>{displayText}</span>;
+    // Replaced the scramble effect with a stable output to fix Critical Bug #1 (Garbled Text)
+    // The scramble animation was occasionally halting midway or causing hydration mismatches.
+    return <span className={className}>{text}</span>;
 }

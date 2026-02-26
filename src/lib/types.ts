@@ -314,6 +314,35 @@ export type Resource = {
   tags: string[];
   sortOrder: number;
   published: boolean;
+  isFeatured?: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+  keywords?: string[];
   createdAt: Date;
   updatedAt: Date;
+};
+
+// --- Website Content Types ---
+
+export type WebsiteContent = {
+  id: string; // Document ID (e.g., 'home_page', 'services_k12')
+  hero?: {
+    title: string;
+    subtitle: string;
+    badgeText?: string;
+    primaryCtaText?: string;
+    primaryCtaLink?: string;
+    secondaryCtaText?: string;
+    secondaryCtaLink?: string;
+  };
+  features?: {
+    id: string;
+    title: string;
+    description: string;
+    iconName?: string;
+  }[];
+  seoTitle?: string;
+  seoDescription?: string;
+  updatedAt: Date;
+  updatedBy: string; // UID of admin who last updated it
 };

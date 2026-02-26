@@ -24,6 +24,8 @@ import { ResourceType } from "@/lib/types";
 import type { Resource } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { LeadCaptureForm } from "@/components/public/lead-capture-form";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const DEFAULT_TENANT_ID = "pertuto-default";
 
@@ -232,28 +234,10 @@ function GradePageContent() {
                       </button>
                       {expanded && (
                         <CardContent className="pt-0 pb-5 px-5">
-                          <div className="pl-11 prose prose-sm dark:prose-invert max-w-none">
-                            {r.content.split("\n").map((line, i) => {
-                              if (line.startsWith("**") && line.endsWith("**")) {
-                                return (
-                                  <p key={i} className="font-semibold text-primary mb-2 mt-3 first:mt-0">
-                                    {line.replace(/\*\*/g, "")}
-                                  </p>
-                                );
-                              }
-                              if (line.startsWith("- ")) {
-                                return (
-                                  <div key={i} className="flex items-start gap-2 text-muted-foreground">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 shrink-0"></span>
-                                    <span>{line.replace("- ", "")}</span>
-                                  </div>
-                                );
-                              }
-                              if (line.trim()) {
-                                return <p key={i} className="text-muted-foreground">{line}</p>;
-                              }
-                              return null;
-                            })}
+                          <div className="pl-11 prose prose-sm dark:prose-invert max-w-none text-slate-700">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                              {r.content}
+                            </ReactMarkdown>
                           </div>
                           {r.tags && r.tags.length > 0 && (
                             <div className="flex items-center gap-1.5 pl-11 mt-4">
@@ -304,7 +288,11 @@ function GradePageContent() {
                         )}
                       </div>
                       {r.content && (
-                        <p className="text-sm text-muted-foreground mt-3 pl-[52px]">{r.content}</p>
+                        <div className="prose prose-sm dark:prose-invert max-w-none text-slate-700 mt-3 pl-[52px]">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {r.content}
+                          </ReactMarkdown>
+                        </div>
                       )}
                     </CardContent>
                   </Card>
@@ -321,22 +309,10 @@ function GradePageContent() {
                         </div>
                         <h3 className="font-semibold text-lg">{r.title}</h3>
                       </div>
-                      <div className="prose prose-sm dark:prose-invert max-w-none pl-[52px]">
-                        {r.content.split("\n").map((line, i) => {
-                          if (line.startsWith("**") && line.endsWith("**")) {
-                            return <p key={i} className="font-semibold mt-4 first:mt-0">{line.replace(/\*\*/g, "")}</p>;
-                          }
-                          if (line.startsWith("- ")) {
-                            return (
-                              <div key={i} className="flex items-start gap-2 text-muted-foreground">
-                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0"></span>
-                                <span>{line.replace("- ", "")}</span>
-                              </div>
-                            );
-                          }
-                          if (line.trim()) return <p key={i} className="text-muted-foreground">{line}</p>;
-                          return null;
-                        })}
+                      <div className="prose prose-sm dark:prose-invert max-w-none pl-[52px] text-slate-700">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {r.content}
+                        </ReactMarkdown>
                       </div>
                     </CardContent>
                   </Card>
@@ -366,10 +342,10 @@ function GradePageContent() {
                       </button>
                       {expanded && (
                         <CardContent className="pt-0 pb-5 px-5">
-                          <div className="pl-11 text-sm text-muted-foreground leading-relaxed">
-                            {r.content.split("\n").map((line, i) =>
-                              line.trim() ? <p key={i} className="mb-2">{line}</p> : null
-                            )}
+                          <div className="pl-11 prose prose-sm dark:prose-invert max-w-none text-slate-700">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                              {r.content}
+                            </ReactMarkdown>
                           </div>
                         </CardContent>
                       )}

@@ -8,16 +8,35 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ArrowRight, GraduationCap, Briefcase, Target, Users, Sparkles, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { generateOrganizationSchema, generateFAQSchema } from '@/lib/schema';
+import { adminFirestore } from '@/lib/firebase/admin-app';
+import type { WebsiteContent } from '@/lib/types';
 
-export const metadata: Metadata = {
-    title: 'PerTuto — Expert Tutoring for Students & Professionals in Dubai',
-    description: 'Personalized tutoring for IB, IGCSE, CBSE, A-Level students and AI/Data Science upskilling for professionals. Book your free demo class today.',
-    openGraph: {
-        title: 'PerTuto — Expert Tutoring That Delivers Results',
-        description: 'Personalized tutoring for students and professionals in Dubai.',
-        type: 'website',
-    },
-};
+export const revalidate = 3600; // Enable ISR (revalidate every hour)
+
+async function getHomePageContent() {
+    try {
+        const docSnap = await adminFirestore.collection('website_content').doc('home_page').get();
+        if (docSnap.exists) {
+            return docSnap.data() as WebsiteContent;
+        }
+    } catch (e) {
+        console.error("Failed to fetch home page content:", e);
+    }
+    return null;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+    const content = await getHomePageContent();
+    return {
+        title: content?.seoTitle || 'PerTuto — Expert Tutoring for Students & Professionals in Dubai',
+        description: content?.seoDescription || 'Personalized tutoring for IB, IGCSE, CBSE, A-Level students and AI/Data Science upskilling for professionals. Book your free demo class today.',
+        openGraph: {
+            title: content?.seoTitle || 'PerTuto — Expert Tutoring That Delivers Results',
+            description: content?.seoDescription || 'Personalized tutoring for students and professionals in Dubai.',
+            type: 'website',
+        },
+    };
+}
 
 const CURRICULA = ['IB', 'IGCSE', 'CBSE', 'A-Level', 'MYP', 'AP'];
 
@@ -33,7 +52,26 @@ import { DecryptedText } from '@/components/public/decrypted-text';
 
 // ... (existing code and imports)
 
-export default function HomePage() {
+export default async function HomePage() {
+    const content = await getHomePageContent();
+    
+    // Fallbacks to default marketing copy if the CMS is empty
+    const hero = content?.hero?.title ? content.hero : {
+        badgeText: "Book Your Free Demo",
+        title: "Expert Tutoring That Delivers Results",
+        subtitle: "Personalized mentorship for K-12 students, university learners, and working professionals. IB, Cambridge, CBSE, AI & Data Science — we cover it all.",
+        primaryCtaText: "Book Free Demo",
+        primaryCtaLink: "#book-demo",
+        secondaryCtaText: "Explore Services",
+        secondaryCtaLink: "/services/k12"
+    };
+
+    // To gracefully animate the large text, we split it in half
+    const titleParts = hero.title ? hero.title.split(" ") : [];
+    const midIndex = Math.ceil(titleParts.length / 2);
+    const titleLine1 = titleParts.slice(0, midIndex).join(" ");
+    const titleLine2 = titleParts.slice(midIndex).join(" ");
+
     return (
         <>
             {/* JSON-LD Structured Data */}
@@ -45,36 +83,38 @@ export default function HomePage() {
                 <FluidBlob />
                 <div className="max-w-5xl mx-auto text-center flex flex-col items-center relative z-10">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-xs font-medium text-primary mb-8 animate-fade-in-up">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        Book Your Free Demo
-                    </div>
+                    {hero.badgeText && (
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-xs font-medium text-primary mb-8 animate-fade-in-up">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            {hero.badgeText}
+                        </div>
+                    )}
 
                     {/* Headline */}
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.05] mb-6 text-foreground">
-                        <DecryptedText text="Expert Tutoring That" speed={50} /><br />
-                        <DecryptedText text="Delivers Results" speed={40} />
+                        {titleLine1 && <><DecryptedText text={titleLine1} speed={50} /><br /></>}
+                        {titleLine2 && <DecryptedText text={titleLine2} speed={40} />}
                     </h1>
 
                     {/* Subheadline */}
                     <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-                        Personalized mentorship for K-12 students, university learners, and working professionals. IB, Cambridge, CBSE, AI & Data Science — we cover it all.
+                        {hero.subtitle}
                     </p>
 
                     {/* Actions */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                        <Link href="#book-demo" className="w-full sm:w-auto">
+                        <Link href={hero.primaryCtaLink || "#book-demo"} className="w-full sm:w-auto">
                             <button className="btn-primary px-8 py-4 rounded-xl font-semibold text-lg w-full flex items-center justify-center gap-2 font-headline">
-                                Book Free Demo
+                                {hero.primaryCtaText || "Book Free Demo"}
                                 <ArrowRight className="w-5 h-5" />
                             </button>
                         </Link>
-                        <Link href="/services/k12" className="w-full sm:w-auto">
+                        <Link href={hero.secondaryCtaLink || "/services/k12"} className="w-full sm:w-auto">
                             <button className="px-8 py-4 rounded-xl font-semibold text-foreground/70 hover:text-foreground hover:bg-secondary transition-colors w-full flex items-center justify-center gap-2 group border border-border hover:border-primary/20 font-headline">
-                                Explore Services
+                                {hero.secondaryCtaText || "Explore Services"}
                             </button>
                         </Link>
                     </div>

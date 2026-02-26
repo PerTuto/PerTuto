@@ -51,6 +51,13 @@ service cloud.firestore {
       allow write: if request.auth.uid == userId;
     }
 
+    // ── Public Website Content ──
+    match /website_content/{documentId} {
+      // Anyone can read public site data, only super admins can edit.
+      allow read: if true;
+      allow write: if isSuper();
+    }
+
     // ── Tenant-Scoped Data ──
     match /tenants/{tenantId} {
       allow read: if userBelongsToTenant(tenantId);

@@ -49,6 +49,7 @@ import {
   X,
   Database,
 } from "lucide-react";
+import MDEditor from '@uiw/react-md-editor';
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
@@ -94,6 +95,10 @@ type FormData = {
   tags: string;
   sortOrder: number;
   published: boolean;
+  isFeatured: boolean;
+  seoTitle: string;
+  seoDescription: string;
+  keywords: string;
 };
 
 const emptyForm: FormData = {
@@ -110,6 +115,10 @@ const emptyForm: FormData = {
   tags: "",
   sortOrder: 0,
   published: true,
+  isFeatured: false,
+  seoTitle: "",
+  seoDescription: "",
+  keywords: "",
 };
 
 export default function ResourcesPage() {
@@ -200,6 +209,10 @@ export default function ResourcesPage() {
       tags: r.tags?.join(", ") || "",
       sortOrder: r.sortOrder || 0,
       published: r.published,
+      isFeatured: r.isFeatured || false,
+      seoTitle: r.seoTitle || "",
+      seoDescription: r.seoDescription || "",
+      keywords: r.keywords?.join(", ") || "",
     });
     setFile(null);
     setDialogOpen(true);
@@ -233,6 +246,13 @@ export default function ResourcesPage() {
           .filter(Boolean),
         sortOrder: form.sortOrder,
         published: form.published,
+        isFeatured: form.isFeatured,
+        seoTitle: form.seoTitle.trim(),
+        seoDescription: form.seoDescription.trim(),
+        keywords: form.keywords
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
       };
 
       if (form.type === ResourceType.PastPaper) {
@@ -768,28 +788,41 @@ export default function ResourcesPage() {
               </div>
 
               {/* Markdown Content */}
-              <div className="space-y-2 flex-1 flex flex-col">
-                <label className="text-sm font-medium">
-                  Body{" "}
-                  <span className="text-slate-400 font-normal">
-                    (Markdown supported)
-                  </span>
-                </label>
-                <Textarea
+              <div className="space-y-2 flex-1 flex flex-col pt-2" data-color-mode="light">
+                <div className="flex justify-between items-center mb-1">
+                  <label className="text-sm font-medium flex items-center gap-2">Body <span className="text-xs text-slate-400 font-normal border border-slate-200 px-2 py-0.5 rounded-md bg-white shadow-sm">Markdown Supported</span></label>
+                  <label className="flex items-center gap-2 text-sm font-medium cursor-pointer bg-amber-50 text-amber-900 border border-amber-200 px-3 py-1 rounded-full">
+                    <input type="checkbox" checked={form.isFeatured} onChange={e => setForm(p => ({...p, isFeatured: e.target.checked}))} className="rounded border-amber-300 text-amber-600 focus:ring-amber-500 w-4 h-4 cursor-pointer" />
+                    Feature this resource
+                  </label>
+                </div>
+                <MDEditor
                   value={form.content}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, content: e.target.value }))
+                  onChange={(val) =>
+                    setForm((p) => ({ ...p, content: val || "" }))
                   }
-                  rows={form.type === ResourceType.PastPaper ? 3 : 8}
-                  placeholder={
-                    form.type === ResourceType.FAQ
-                      ? "The answer to the question..."
-                      : form.type === ResourceType.Syllabus
-                      ? "- Topic 1: ...\n- Topic 2: ..."
-                      : "Write your content here..."
-                  }
-                  className="bg-slate-50 border-slate-200 resize-y flex-1"
+                  preview="edit"
+                  height={320}
+                  className="w-full font-sans border border-slate-200 shadow-sm"
                 />
+              </div>
+
+              {/* SEO Enrichment */}
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">SEO Title <span className="text-xs font-normal text-slate-400">(Meta label)</span></label>
+                    <Input value={form.seoTitle} onChange={e => setForm(p => ({...p, seoTitle: e.target.value}))} placeholder="Optimized Meta Title" className="bg-slate-50 border-slate-200" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">SEO Keywords <span className="text-xs font-normal text-slate-400">(CSV)</span></label>
+                    <Input value={form.keywords} onChange={e => setForm(p => ({...p, keywords: e.target.value}))} placeholder="igcse, physics, 2024" className="bg-slate-50 border-slate-200" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">SEO Description</label>
+                  <Textarea value={form.seoDescription} onChange={e => setForm(p => ({...p, seoDescription: e.target.value}))} placeholder="Optimal meta description for search engine ranking (Keep below 160 characters)..." className="bg-slate-50 border-slate-200 h-16 resize-y" />
+                </div>
               </div>
 
               {/* File upload for past papers */}

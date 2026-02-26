@@ -14,9 +14,10 @@ import {
   Users,
   UserCog,
   Clock,
-  Landmark,
   MessageSquareQuote,
   BookOpen,
+  Globe,
+  Landmark,
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -56,9 +57,9 @@ const menuItems: MenuItem[] = [
   { href: "/dashboard/family", label: "Family Portal", icon: Users, roles: ['parent'] },
   { href: "/dashboard/financials", label: "Financials", icon: Landmark, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin', 'executive'] },
-  { href: "/dashboard/organization/settings", label: "Org Settings", icon: Settings, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/testimonials", label: "Testimonials", icon: MessageSquareQuote, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/resources", label: "Resources", icon: BookOpen, roles: ['super', 'admin', 'executive'] },
+  { href: "/dashboard/website", label: "Public Site CMS", icon: Globe, roles: ['super'] },
   { href: "/dashboard/platform/tenants", label: "Platform Admin", icon: Settings, roles: ['super'] },
 ];
 
@@ -110,8 +111,9 @@ export function SidebarNav() {
         <SidebarMenu>
           {visibleItems.map((item) => (
             <SidebarMenuItem key={item.href}>
+              {/* @ts-ignore - Next.js LinkProps missing children type in this version */}
               <SidebarMenuButton
-                as={Link}
+                as={Link as any}
                 href={item.href}
                 isActive={pathname === item.href}
               >
@@ -126,8 +128,9 @@ export function SidebarNav() {
         <Separator className="my-2 bg-sidebar-border" />
         <SidebarMenu>
           <SidebarMenuItem>
+            {/* @ts-ignore - Next.js LinkProps missing children type in this version */}
             <SidebarMenuButton
-              as={Link}
+              as={Link as any}
               href="/dashboard/settings"
               isActive={pathname === "/dashboard/settings"}
             >

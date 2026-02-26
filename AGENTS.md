@@ -372,4 +372,19 @@ git push origin master
 
 ---
 
+## 13. Testing Progress
+
+> We are currently executing exhaustive production tests out of `test_strategy.md`.
+
+- **Pass 0 (Smoke):** Completed (Public site ping, Auth, CRUD, Auth Guards).
+- **Suite 1 & 2 (Public Site & Auth):** Completed (All 11 public pages, navigation, onboarding redirects).
+- **Suite 3 (CRM/Leads):** Completed (Kanban columns, DND, CRUD flow verified).
+- **Suite 4 (Students & Courses):** Completed (Listings, Add/Edit/Delete, and Enrollments verified. Two minor UI bugs noted).
+- **Phase 1 (Suites 5-7):** Completed (Scheduling, Assignments, Financials. Major bugs found in Scheduling edit flow and Assignment dates).
+- **Phase 2 (Suite 8):** Completed (All 5 roles verified — Super/Admin/Teacher/Student/Parent dashboards and RBAC sidebar. 14/14 pass).
+- **Phase 3 (Suites 9-10):** Completed (Security access control 3/3, SEO 6/7 — only og:image missing).
+- **🎯 All test suites complete!** Final score: **123 tests, 111 passed, 11 issues.**
+
+---
+
 > _This file is the source of truth for all AI agents. Keep it updated with every major architectural change._

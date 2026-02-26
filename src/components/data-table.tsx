@@ -31,11 +31,20 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterColumn: string;
+  facetedFilterColumn?: string;
+  facetedFilterOptions?: string[];
   addEntityContext?: {
     addLabel: string;
     dialogTitle: string;
@@ -48,6 +57,8 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   filterColumn,
+  facetedFilterColumn,
+  facetedFilterOptions,
   addEntityContext
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -78,15 +89,35 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <Input
-          placeholder={`Filter by ${filterColumn}...`}
-          value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 flex-1">
+          <Input
+            placeholder={`Filter by ${filterColumn}...`}
+            value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          {facetedFilterColumn && facetedFilterOptions && (
+            <Select
+              value={(table.getColumn(facetedFilterColumn)?.getFilterValue() as string) ?? "all"}
+              onValueChange={(value) =>
+                table.getColumn(facetedFilterColumn)?.setFilterValue(value === "all" ? "" : value)
+              }
+            >
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="All statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All statuses</SelectItem>
+                {facetedFilterOptions.map((option) => (
+                  <SelectItem key={option} value={option}>{option}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        </div>
         {addEntityContext && (
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>

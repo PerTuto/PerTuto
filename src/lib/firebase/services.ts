@@ -100,6 +100,13 @@ export async function addStudent(tenantId: string, studentData: Omit<Student, 'i
   };
 }
 
+/**
+ * Deletes a student from a tenant.
+ */
+export async function deleteStudent(tenantId: string, studentId: string): Promise<void> {
+  await deleteDoc(doc(firestore, `tenants/${tenantId}/students`, studentId));
+}
+
 // --- Classes Services ---
 
 /**

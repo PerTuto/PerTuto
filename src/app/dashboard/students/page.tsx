@@ -5,16 +5,27 @@ import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import type { Student } from '@/lib/types';
 import { AddStudentForm } from '@/components/students/add-student-form';
-import { getStudents, getCourses, addStudent as addStudentService } from '@/lib/firebase/services';
+import { getStudents, getCourses, addStudent as addStudentService, deleteStudent as deleteStudentService } from '@/lib/firebase/services';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { InviteStudentDialog } from '@/components/students/invite-student-dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [inviteStudent, setInviteStudent] = useState<Student | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Student | null>(null);
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
 
@@ -58,9 +69,18 @@ export default function StudentsPage() {
     const handleOpenInvite = (e: CustomEvent<Student>) => {
         setInviteStudent(e.detail);
     };
+
+    // Listen for delete triggers from the DataTable columns
+    const handleDeleteStudent = (e: CustomEvent<Student>) => {
+        setDeleteTarget(e.detail);
+    };
     
     window.addEventListener('openInviteDialog', handleOpenInvite as EventListener);
-    return () => window.removeEventListener('openInviteDialog', handleOpenInvite as EventListener);
+    window.addEventListener('deleteStudent', handleDeleteStudent as EventListener);
+    return () => {
+      window.removeEventListener('openInviteDialog', handleOpenInvite as EventListener);
+      window.removeEventListener('deleteStudent', handleDeleteStudent as EventListener);
+    };
   }, [userProfile, fetchData]);
 
   const addStudent = async (studentData: Omit<Student, 'id' | 'enrolledDate' | 'progress' | 'status' | 'ownerId'>) => {
@@ -79,6 +99,27 @@ export default function StudentsPage() {
         description: "Could not add student.",
         variant: "destructive",
       });
+    }
+  };
+
+  const confirmDeleteStudent = async () => {
+    if (!deleteTarget || !userProfile?.tenantId) return;
+    try {
+      await deleteStudentService(userProfile.tenantId, deleteTarget.id);
+      setStudents(prev => prev.filter(s => s.id !== deleteTarget.id));
+      toast({
+        title: "Student Deleted",
+        description: `${deleteTarget.name} has been removed.`,
+      });
+    } catch (error) {
+      console.error("Error deleting student:", error);
+      toast({
+        title: "Error",
+        description: "Could not delete student.",
+        variant: "destructive",
+      });
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -102,6 +143,8 @@ export default function StudentsPage() {
         columns={columns}
         data={students}
         filterColumn="name"
+        facetedFilterColumn="status"
+        facetedFilterOptions={["Active", "On Hold", "Graduated", "Dropped"]}
         addEntityContext={{
           addLabel: 'Add Student',
           dialogTitle: 'Add a new student',
@@ -119,6 +162,24 @@ export default function StudentsPage() {
           }} 
         />
       )}
+
+      {/* Delete confirmation dialog */}
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Student?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently remove &quot;{deleteTarget?.name}&quot; from the system. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDeleteStudent} className="bg-destructive text-destructive-foreground">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

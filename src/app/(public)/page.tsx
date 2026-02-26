@@ -34,6 +34,14 @@ export async function generateMetadata(): Promise<Metadata> {
             title: content?.seoTitle || 'PerTuto — Expert Tutoring That Delivers Results',
             description: content?.seoDescription || 'Personalized tutoring for students and professionals in Dubai.',
             type: 'website',
+            images: [
+                {
+                    url: 'https://pertuto.com/og-image.png',
+                    width: 1200,
+                    height: 630,
+                    alt: 'PerTuto — Personalized Expert Tutoring',
+                },
+            ],
         },
     };
 }

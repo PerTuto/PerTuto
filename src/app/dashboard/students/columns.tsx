@@ -149,6 +149,16 @@ export const columns: ColumnDef<Student>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>Edit student</DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent('deleteStudent', { detail: student }));
+              }}
+              className="text-destructive focus:text-destructive font-medium cursor-pointer"
+            >
+              Delete Student
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem 
               onClick={(e) => {
                 e.preventDefault();

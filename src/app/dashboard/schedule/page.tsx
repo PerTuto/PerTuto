@@ -63,11 +63,24 @@ export default function SchedulePage() {
         setIsDialogOpen(true);
     };
 
-    const handleClassDragged = (classItem: Class, newStart: Date, newEnd: Date, durationMins: number, newStartHour: number, newStartMinute: number, timezone: string) => {
+    const handleClassDragged = async (classItem: Class, newStart: Date, newEnd: Date, durationMins: number, newStartHour: number, newStartMinute: number, timezone: string) => {
         // If it's a recurring event, show the prompt
         if (classItem.recurrenceGroupId) {
             setPendingDrag({ classItem, newStart, newEnd, durationMins, newStartHour, newStartMinute, timezone });
             setRecurringPromptOpen(true);
+        } else {
+            // Single (non-recurring) event: update directly
+            if (!userProfile?.tenantId) return;
+            try {
+                await updateClass(userProfile.tenantId, classItem.id, {
+                    start: Timestamp.fromDate(newStart),
+                    end: Timestamp.fromDate(newEnd),
+                });
+                toast({ title: "Event Moved", description: `"${classItem.title}" rescheduled successfully.` });
+                setCalendarKey(prev => prev + 1);
+            } catch (error: any) {
+                toast({ title: "Error", description: error.message || "Failed to reschedule.", variant: "destructive" });
+            }
         }
     };
 

@@ -174,7 +174,7 @@ export function AssignmentDetailDialog({
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 pt-1">
             <Calendar className="h-4 w-4" />
-            Due: {new Date(assignment.dueDate).toLocaleDateString()}
+            Due: {(assignment.dueDate && typeof assignment.dueDate === 'object' && 'toDate' in assignment.dueDate ? (assignment.dueDate as any).toDate() : new Date(assignment.dueDate)).toLocaleDateString()}
             <Badge
               className={cn(
                 "ml-2 border-transparent",

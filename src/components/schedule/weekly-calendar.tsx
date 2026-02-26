@@ -407,7 +407,14 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
     const hour = START_HOUR + i;
     const d = new Date();
     d.setHours(hour, 0, 0, 0);
-    return formatTimeInTz(d, timezone, hour12);
+    
+    if (hour12) {
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour % 12 || 12;
+      return `${displayHour} ${ampm}`;
+    }
+    
+    return formatTimeInTz(d, timezone, false).substring(0, 5); // 09:00, 14:00
   });
 
   return (
@@ -499,14 +506,14 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
             {/* ... rest of the grid ... */}
 
           {/* ── Hour labels + gridlines ── */}
-          <div className="relative border-r">
+          <div className="relative border-r bg-muted/5">
             {hourLabels.map((label, i) => (
               <div
                 key={i}
-                className="absolute w-full text-right pr-2 -translate-y-1/2"
-                style={{ top: i * HOUR_HEIGHT }}
+                className="absolute w-full text-right"
+                style={{ top: i * HOUR_HEIGHT - 6 }} // slight offset to align text vertically with the line below it
               >
-                <span className="text-[10px] text-muted-foreground font-medium">{label}</span>
+                <span className="text-[10px] text-muted-foreground pr-2 font-medium bg-transparent whitespace-nowrap block">{label}</span>
               </div>
             ))}
           </div>
@@ -528,17 +535,17 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                 {/* Hour gridlines */}
                 {hourLabels.map((_, i) => (
                   <div
-                    key={i}
-                    className="absolute w-full border-t border-border/40"
-                    style={{ top: i * HOUR_HEIGHT }}
+                    key={`line-${i}`}
+                    className="absolute w-full border-t border-border/40 pointer-events-none"
+                    style={{ top: i * HOUR_HEIGHT, height: 0 }}
                   />
                 ))}
                 {/* Half-hour dashed lines */}
                 {hourLabels.map((_, i) => (
                   <div
                     key={`half-${i}`}
-                    className="absolute w-full border-t border-dashed border-border/20"
-                    style={{ top: i * HOUR_HEIGHT + HOUR_HEIGHT / 2 }}
+                    className="absolute w-full border-t border-dashed border-border/20 pointer-events-none"
+                    style={{ top: i * HOUR_HEIGHT + HOUR_HEIGHT / 2, height: 0 }}
                   />
                 ))}
 

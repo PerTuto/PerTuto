@@ -13,25 +13,55 @@ import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, GraduationCap, BookOpen, Users } from "lucide-react";
 import { createUserProfile } from '@/lib/firebase/services';
+import { useEffect } from 'react';
+import { PerTutoLogo } from "@/components/brand/logo";
 
 const formSchema = z.object({
   fullName: z.string().min(3, "Full name must be at least 3 characters."),
-  role: z.enum(["teacher", "student"], {
+  role: z.enum(["teacher", "student", "parent"], {
     required_error: "You need to select a role.",
   }),
 });
 
+const ROLE_OPTIONS = [
+  {
+    value: "teacher",
+    label: "Teacher / Instructor",
+    description: "I teach classes and manage students",
+    icon: BookOpen,
+  },
+  {
+    value: "student",
+    label: "Student",
+    description: "I'm here to learn and attend classes",
+    icon: GraduationCap,
+  },
+  {
+    value: "parent",
+    label: "Parent / Guardian",
+    description: "I'm monitoring my child's education",
+    icon: Users,
+  },
+];
+
 export default function WelcomePage() {
-  const { user, loading } = useAuth();
+  const { user, userProfile, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+
+  // If the user already has a complete profile with tenantId, skip onboarding
+  useEffect(() => {
+    if (!loading && userProfile?.tenantId && userProfile?.role) {
+      router.push("/dashboard");
+    }
+  }, [loading, userProfile, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
+      fullName: user?.displayName || "",
     },
   });
 
@@ -40,15 +70,27 @@ export default function WelcomePage() {
         toast({ title: "Error", description: "You are not logged in.", variant: "destructive" });
         return;
     }
+
+    // If user has no tenantId from invite, they can't proceed
+    const existingTenantId = userProfile?.tenantId;
+    if (!existingTenantId) {
+      toast({
+        title: "No Organization Found",
+        description: "Please ask your administrator to send you an invite link to join an organization.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     try {
       await createUserProfile(user.uid, {
         fullName: values.fullName,
         email: user.email!,
-        role: values.role as 'teacher' | 'student',
+        role: values.role as any,
+        tenantId: existingTenantId,
       });
-      toast({ title: "Profile Created", description: "Welcome to ChronoClass!" });
-      router.push("/");
+      toast({ title: "Profile Created", description: "Welcome to PerTuto!" });
+      router.push("/dashboard");
     } catch (error: any) {
       console.error(error);
       toast({
@@ -68,11 +110,14 @@ export default function WelcomePage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background to-muted/50 p-4">
         <Card className="w-full max-w-lg">
-          <CardHeader className="text-center">
+          <CardHeader className="text-center space-y-4">
+            <div className="flex justify-center">
+              <PerTutoLogo size="md" />
+            </div>
             <CardTitle className="font-headline text-2xl">Welcome to PerTuto!</CardTitle>
-            <CardDescription>Let's set up your tutoring center profile.</CardDescription>
+            <CardDescription>Let's set up your profile to get started.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -84,7 +129,7 @@ export default function WelcomePage() {
                     <FormItem>
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., John Doe" {...field} />
+                        <Input placeholder="e.g., Ahmed Khan" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -100,24 +145,26 @@ export default function WelcomePage() {
                         <RadioGroup
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          className="flex flex-col space-y-1"
+                          className="grid gap-3"
                         >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="teacher" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Teacher / Instructor
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="student" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Student
-                            </FormLabel>
-                          </FormItem>
+                          {ROLE_OPTIONS.map((option) => (
+                            <FormItem key={option.value} className="flex items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value={option.value} />
+                              </FormControl>
+                              <div className="flex items-center gap-3">
+                                <option.icon className="h-5 w-5 text-muted-foreground" />
+                                <div>
+                                  <FormLabel className="font-medium cursor-pointer">
+                                    {option.label}
+                                  </FormLabel>
+                                  <p className="text-xs text-muted-foreground">
+                                    {option.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </FormItem>
+                          ))}
                         </RadioGroup>
                       </FormControl>
                       <FormMessage />

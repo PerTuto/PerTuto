@@ -6,7 +6,7 @@ import crypto from "crypto";
 export type InviteTokenData = {
     tenantId: string;
     tenantName: string;
-    role: 'admin' | 'teacher' | 'student' | 'parent';
+    role: 'admin' | 'teacher' | 'student' | 'parent' | 'executive';
     createdBy: string;
     createdAt: Date;
     expiresAt: Date;
@@ -27,7 +27,7 @@ const createInviteSchema = z.object({
     currentUserUid: z.string().min(1),
     tenantId: z.string().min(1),
     tenantName: z.string().min(1),
-    role: z.enum(['admin', 'teacher', 'student', 'parent']),
+    role: z.enum(['admin', 'teacher', 'student', 'parent', 'executive']),
     studentId: z.string().optional().nullable(),
 });
 
@@ -39,7 +39,7 @@ export async function createInviteToken(
     currentUserUid: string,
     tenantId: string,
     tenantName: string,
-    role: 'admin' | 'teacher' | 'student' | 'parent',
+    role: 'admin' | 'teacher' | 'student' | 'parent' | 'executive',
     studentId?: string // Optional metadata for mapping the user to a student profile
 ): Promise<CreateInviteResponse> {
     try {

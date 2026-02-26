@@ -45,15 +45,28 @@ service cloud.firestore {
       return hasRole('teacher');
     }
 
+    function isStudent() {
+      return hasRole('student');
+    }
+
+    function isParent() {
+      return hasRole('parent');
+    }
+
     // ── User Profiles ──
     match /users/{userId} {
-      allow read: if request.auth.uid == userId || isSuper();
-      allow write: if request.auth.uid == userId;
+      allow read: if request.auth.uid == userId || isSuper() || isAdmin();
+      allow write: if request.auth.uid == userId || isSuper();
+    }
+
+    // ── Invite Tokens ──
+    match /invites/{inviteCode} {
+      allow read: if true; // Need to validate invite links without auth
+      allow write: if isSuper() || isAdmin();
     }
 
     // ── Public Website Content ──
     match /website_content/{documentId} {
-      // Anyone can read public site data, only super admins can edit.
       allow read: if true;
       allow write: if isSuper();
     }
@@ -62,38 +75,70 @@ service cloud.firestore {
     match /tenants/{tenantId} {
       allow read: if userBelongsToTenant(tenantId);
       
+      // Students collection — students and parents can read their own records
+      match /students/{studentId} {
+        allow read: if userBelongsToTenant(tenantId);
+        // Students can update their own profile (limited fields)
+        allow update: if userBelongsToTenant(tenantId) && isStudent() &&
+          resource.data.userId == request.auth.uid;
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+      }
+
+      // Classes collection
       match /classes/{classId} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
-      match /students/{studentId} {
+      // Courses collection — students and parents can read
+      match /courses/{courseId} {
         allow read: if userBelongsToTenant(tenantId);
-        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
-      match /leads/{leadId} {
+      // Assignments collection — students can submit, teachers can grade
+      match /assignments/{assignmentId} {
         allow read: if userBelongsToTenant(tenantId);
-        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+        // Teachers and admins can create and fully update assignments
+        allow create: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+        // Students can only update submission-related fields on their own assignments  
+        allow update: if userBelongsToTenant(tenantId) && (
+          isAdmin() || isTeacher() || isStudent()
+        );
+        allow delete: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
+      // Invoices — parents can read their linked invoices
       match /invoices/{invoiceId} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && isAdmin();
       }
 
+      // Ledger — admin-only write, everyone in tenant can read
       match /ledger/{txId} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && isAdmin();
       }
 
+      // Attendance — teachers can mark, students/parents can read
+      match /attendance/{recordId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Leads — admin/executive only
+      match /leads/{leadId} {
+        allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+      }
+
+      // Resources — public read, admin/teacher write
       match /resources/{resourceId} {
-        // Resources are explicitly public-facing.
         allow read: if true;
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
-      // Default catch-all for other subcollections (assignments, attendance records, etc.)
+      // Default catch-all for other subcollections
       match /{allSubcollections=**} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());

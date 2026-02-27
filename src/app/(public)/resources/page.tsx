@@ -46,7 +46,7 @@ export default function ResourcesHubPage() {
                     <p className="text-lg text-muted-foreground max-w-2xl">CBSE, IB, Cambridge IGCSE, and A-Level — chapter-wise syllabi and exam resources.</p>
                 </AnimatedSection>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-2 h-auto md:h-[550px]">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
                     {/* Large Card: CBSE Mathematics */}
                     <AnimatedSection delay={100} className="col-span-1 md:col-span-2 md:row-span-2">
                         <Link href="/resources/cbse" className="block h-full">
@@ -90,8 +90,28 @@ export default function ResourcesHubPage() {
                         </div>
                     </AnimatedSection>
 
+                    {/* ICSE Board */}
+                    <AnimatedSection delay={250} className="col-span-1 md:col-span-2">
+                        <Link href="/resources/icse" className="block h-full">
+                            <div className="glass-panel group relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8 hover:border-emerald-500/40 transition-colors">
+                                <div className="flex items-start justify-between">
+                                    <div className="flex flex-col gap-3">
+                                        <div className="inline-flex size-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
+                                            <BookOpen className="w-6 h-6" />
+                                        </div>
+                                        <h3 className="font-headline text-2xl font-bold text-foreground">ICSE / ISC Board</h3>
+                                        <p className="text-muted-foreground">Rigorous K-12 resources, early science bifurcations, and comprehensive past papers.</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 flex gap-3">
+                                    <span className="text-sm text-emerald-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">Explore ICSE <ArrowRight className="w-3.5 h-3.5" /></span>
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+
                     {/* IGCSE */}
-                    <AnimatedSection delay={300} className="col-span-1 md:col-span-1 md:row-span-1">
+                    <AnimatedSection delay={300} className="col-span-1 md:col-span-2">
                         <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8">
                             <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600">
                                 <Calculator className="w-6 h-6" />
@@ -107,7 +127,7 @@ export default function ResourcesHubPage() {
                     </AnimatedSection>
 
                     {/* A-Level */}
-                    <AnimatedSection delay={400} className="col-span-1 md:col-span-1 md:row-span-1">
+                    <AnimatedSection delay={400} className="col-span-1 md:col-span-2">
                         <Link href="/resources/edexcel" className="block h-full">
                             <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-primary/40 transition-colors">
                                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-green-500/10 text-green-600">

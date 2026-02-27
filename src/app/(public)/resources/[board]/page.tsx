@@ -81,18 +81,30 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
         </div>
 
         {/* Dynamic Level Sections */}
-        {Object.keys(groupedResources).length === 0 ? (
+        {Object.keys(groupedResources).length === 0 && (
           <div className="py-24 text-center">
             <p className="text-lg text-slate-500">We are currently updating our {boardData.title} materials. Check back soon!</p>
           </div>
-        ) : (
+        )}
+
+        {Object.keys(groupedResources).length > 0 && (
           <div className="space-y-16">
             {Object.keys(groupedResources).sort((a, b) => {
-              if (a.toUpperCase() === "K") return -1;
-              if (b.toUpperCase() === "K") return 1;
+              const strA = a.toUpperCase();
+              const strB = b.toUpperCase();
+              if (strA === strB) return 0;
+              if (strA === "K") return -1;
+              if (strB === "K") return 1;
+              
               const numA = parseInt(a);
               const numB = parseInt(b);
-              if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+              const isValidA = !isNaN(numA);
+              const isValidB = !isNaN(numB);
+              
+              if (isValidA && isValidB) return numA - numB;
+              if (isValidA && !isValidB) return -1;
+              if (!isValidA && isValidB) return 1;
+              
               return a.localeCompare(b);
             }).map(level => {
               const levelResources = groupedResources[level];

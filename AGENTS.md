@@ -1,7 +1,7 @@
 # PerTuto — AI Agent Project Context
 
 > **One-file reference for any AI agent working on this codebase.**
-> Last updated: 2026-02-26 (Phase 14: Multi-Tenant User Role Dashboards)
+> Last updated: 2026-02-27 (Phase 17: Curriculum UI & Scaffolding)
 
 ---
 
@@ -310,6 +310,8 @@ git push origin master
 - **Apple Calendar Redesign V2**: Fixed timezone positioning bugs, implemented collision detection for overlapping events, corrected DST drift in recurring series updates, and integrated `RecurringEditPrompt` into the `ClassDialog`.
 - **iCal Import**: Added bulk-import capability for `.ics` files using `ical.js` with event preview and selection logic.
 - **Multi-tenancy & ID Safety**: Added runtime assertions for `tenantId` in Firestore services and fixed polymorphic `isEditing` logic to prevent ID-less operations.
+- **NEW Phase 17**: Scalable curriculum scaffolding for CBSE and ICSE boards, complete with subject bifurcation logic and dynamic sorting by grade.
+- **NEW Phase 17**: Robust resource retrieval bypassing implicit Firestore batch limits, coupled with a deterministic Next.js client-server rendering tree to eliminate hydration mismatches.
 - Dashboard: login, leads kanban (edit/delete/status), students table, courses CRUD, schedule calendar, assignments list, availability grid, settings, org users
 - Team invite flow (`/join/[token]`)
 - Input sanitization + rate limiting on public lead form
@@ -350,25 +352,26 @@ git push origin master
 
 ## 12. Implementation History (Phases)
 
-| Phase  | Focus              | Key Deliverables                                                                                                                                                                     |
-| :----- | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **0**  | **Foundation**     | Next.js 16 + React 19 setup, Tailwind/shadcn init, Firebase Auth/Firestore config.                                                                                                   |
-| **1**  | **Marketing**      | Public homepage, services, about, pricing, contact, and global meta/SEO tags.                                                                                                        |
-| **2**  | **CRM (Leads)**    | Kanban board for lead management, source tracking, and status transitions.                                                                                                           |
-| **3**  | **LMS (Students)** | Student database, enrollment management, course progress, and search.                                                                                                                |
-| **4**  | **LMS (Courses)**  | Course CRUD, instructor assignments, and enrollment-to-course mapping.                                                                                                               |
-| **5**  | **Scheduling V1**  | First iteration of the calendar with list/grid views and basic class creation.                                                                                                       |
-| **6**  | **Content**        | MDX blog engine, dynamic sitemap, and robots.txt generation.                                                                                                                         |
-| **7**  | **Dashboard**      | Home dashboard with stats, upcoming classes widget, and recent activity feed.                                                                                                        |
-| **8**  | **Audit**          | Comprehensive security and architectural audit (Phase 8 Audit doc).                                                                                                                  |
-| **9**  | **Growth/Polish**  | Dynamic subject pillar pages, `DecryptedText` animations, GA4 lead tracking.                                                                                                         |
-| **10** | **Team Ops**       | Onboarding (`/welcome`), Team user management, and tokenized invite flows.                                                                                                           |
-| **11** | **Hardening**      | Firestore security rules (tenant isolation) and server-side validation.                                                                                                              |
-| **12** | **Full LMS**       | Parent financials (Pay Now), assignment hand-ins, and reschedule flows.                                                                                                              |
-| **13** | **Calendar V2**    | **Apple Calendar redesign**: weekly time-grid, drag-and-drop, timezone support.                                                                                                      |
-| **14** | **Safety**         | Runtime `tenantId` assertions and ID-creation logic fixes (Audit Resolution).                                                                                                        |
-| **15** | **iCal Import**    | Bulk `.ics` file import using `ical.js`, with event preview and UX refinements.                                                                                                      |
-| **16** | **User Portals**   | Multi-tenant role dashboards: Student/Teacher/Parent portals, admin `createUser()` with custom domain emails, Direct Create invite mode, enhanced Firestore rules with role helpers. |
+| Phase  | Focus                      | Key Deliverables                                                                                                                                                                     |
+| :----- | :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0**  | **Foundation**             | Next.js 16 + React 19 setup, Tailwind/shadcn init, Firebase Auth/Firestore config.                                                                                                   |
+| **1**  | **Marketing**              | Public homepage, services, about, pricing, contact, and global meta/SEO tags.                                                                                                        |
+| **2**  | **CRM (Leads)**            | Kanban board for lead management, source tracking, and status transitions.                                                                                                           |
+| **3**  | **LMS (Students)**         | Student database, enrollment management, course progress, and search.                                                                                                                |
+| **4**  | **LMS (Courses)**          | Course CRUD, instructor assignments, and enrollment-to-course mapping.                                                                                                               |
+| **5**  | **Scheduling V1**          | First iteration of the calendar with list/grid views and basic class creation.                                                                                                       |
+| **6**  | **Content**                | MDX blog engine, dynamic sitemap, and robots.txt generation.                                                                                                                         |
+| **7**  | **Dashboard**              | Home dashboard with stats, upcoming classes widget, and recent activity feed.                                                                                                        |
+| **8**  | **Audit**                  | Comprehensive security and architectural audit (Phase 8 Audit doc).                                                                                                                  |
+| **9**  | **Growth/Polish**          | Dynamic subject pillar pages, `DecryptedText` animations, GA4 lead tracking.                                                                                                         |
+| **10** | **Team Ops**               | Onboarding (`/welcome`), Team user management, and tokenized invite flows.                                                                                                           |
+| **11** | **Hardening**              | Firestore security rules (tenant isolation) and server-side validation.                                                                                                              |
+| **12** | **Full LMS**               | Parent financials (Pay Now), assignment hand-ins, and reschedule flows.                                                                                                              |
+| **13** | **Calendar V2**            | **Apple Calendar redesign**: weekly time-grid, drag-and-drop, timezone support.                                                                                                      |
+| **14** | **Safety**                 | Runtime `tenantId` assertions and ID-creation logic fixes (Audit Resolution).                                                                                                        |
+| **15** | **iCal Import**            | Bulk `.ics` file import using `ical.js`, with event preview and UX refinements.                                                                                                      |
+| **16** | **User Portals**           | Multi-tenant role dashboards: Student/Teacher/Parent portals, admin `createUser()` with custom domain emails, Direct Create invite mode, enhanced Firestore rules with role helpers. |
+| **17** | **Curriculum Scaffolding** | Dynamic K-12 board pages (CBSE/ICSE), sorting bug fixes, Firestore 1000-limit resolution, React hydration error fixes, and robust UI rendering for syllabuses & past papers.         |
 
 ---
 

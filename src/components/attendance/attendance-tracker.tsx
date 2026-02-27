@@ -1,34 +1,28 @@
 "use client";
 
-import React, { useState, useTransition, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, CheckCircle, XCircle, User, Camera, Upload } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { trackAttendanceWithFacialRecognition, TrackAttendanceOutput } from "@/ai/flows/attendance-tracker-facial-recognition";
 import { getStudents, getClasses, saveAttendance } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
 import type { Student, Class } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
-
-// Real implementation using Gemini Vision
+import { Switch } from "@/components/ui/switch";
 
 export function AttendanceTracker() {
-  const [isPending, startTransition] = useTransition();
-  const [result, setResult] = useState<TrackAttendanceOutput | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
   const [selectedClassId, setSelectedClassId] = useState<string>("");
+  const [attendanceState, setAttendanceState] = useState<Record<string, boolean>>({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [fileInputKey, setFileInputKey] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -42,95 +36,53 @@ export function AttendanceTracker() {
           setClasses(classData.filter(c => c.status !== 'cancelled').sort((a,b) => b.start.getTime() - a.start.getTime()));
         } catch (error) {
           console.error("Failed to fetch data for attendance:", error);
+          toast({ title: "Error", description: "Could not load classes.", variant: "destructive" });
+        } finally {
+          setIsLoading(false);
         }
       }
     }
     fetchData();
-  }, [userProfile?.tenantId]);
+  }, [userProfile?.tenantId, toast]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const selectedClass = classes.find(c => c.id === selectedClassId);
+  
+  useEffect(() => {
+    if (selectedClass) {
+      // Initialize attendance state
+      const classStudentIds = selectedClass.students || [];
+      const relevantStudents = classStudentIds.length > 0 
+        ? students.filter(s => classStudentIds.includes(s.id))
+        : students; // fallback
+        
+      const initialState: Record<string, boolean> = {};
+      relevantStudents.forEach(s => {
+        initialState[s.id] = true; // Default to present
+      });
+      setAttendanceState(initialState);
     }
-  };
+  }, [selectedClassId, selectedClass, students]);
 
-  const handleTrackAttendance = () => {
-    if (students.length === 0) {
-      toast({ title: "No students found", description: "Add students to your roster first.", variant: "destructive" });
-      return;
-    }
-
-    if (!selectedImage) {
-      toast({ title: "No image selected", description: "Please upload a class snapshot first.", variant: "destructive" });
-      return;
-    }
-
-    startTransition(async () => {
-      setResult(null);
-      toast({ title: "Starting AI Attendance Scan...", description: "Please wait while Gemini analyzes the class snapshot." });
-      try {
-        const knownFacesDataUris = students.map(s => s.avatar || "").filter(Boolean);
-
-        const aiResult = await trackAttendanceWithFacialRecognition({
-          imageDataUri: selectedImage,
-          knownFacesDataUris: knownFacesDataUris,
-          classRoster: students.map(s => s.name),
-        });
-
-        setResult(aiResult);
-        toast({ title: "Attendance Scan Complete", description: aiResult.summary });
-
-      } catch (error) {
-        console.error(error);
-        toast({
-          title: "Error",
-          description: "Failed to process attendance with AI. Using simulation fallback.",
-          variant: "destructive"
-        });
-
-        // Fallback simulation if the actual AI flow fails (e.g. invalid API key or media)
-        const mockAttendance: Record<string, boolean> = {};
-        students.forEach(student => {
-          mockAttendance[student.name] = Math.random() > 0.2;
-        });
-        const mockResultOnError: TrackAttendanceOutput = {
-          attendanceRecords: mockAttendance,
-          summary: "Simulation mode enabled: Failed to connect to Gemini Vision Pro for real-time analysis."
-        };
-        setResult(mockResultOnError);
-      }
-    });
+  const toggleStudent = (studentId: string) => {
+    setAttendanceState(prev => ({ ...prev, [studentId]: !prev[studentId] }));
   };
 
   const handleSubmitAttendance = async () => {
-    if (!result || !userProfile?.tenantId || !user?.uid) return;
-    
-    if (!selectedClassId) {
-      toast({ title: "Select a class", description: "Please assign this attendance to a class session.", variant: "destructive" });
-      return;
-    }
-
-    const selectedClass = classes.find(c => c.id === selectedClassId);
-    if (!selectedClass) return;
+    if (!userProfile?.tenantId || !user?.uid || !selectedClass) return;
 
     setIsSaving(true);
     try {
-      const records = Object.entries(result.attendanceRecords).map(([name, isPresent]) => {
-        const student = students.find(s => s.name === name);
+      const records = Object.entries(attendanceState).map(([studentId, isPresent]) => {
+        const student = students.find(s => s.id === studentId);
         return {
-          studentId: student?.id || "unknown",
-          studentName: name,
+          studentId: studentId,
+          studentName: student?.name || "Unknown",
           present: isPresent
         };
       });
 
       await saveAttendance(userProfile.tenantId, {
-        classId: selectedClassId,
+        classId: selectedClass.id,
         courseId: selectedClass.courseId,
         date: selectedClass.start,
         records,
@@ -138,9 +90,7 @@ export function AttendanceTracker() {
       });
 
       toast({ title: "Success", description: "Attendance records have been saved." });
-      setResult(null);
-      setSelectedImage(null);
-      setFileInputKey(k => k + 1);
+      setSelectedClassId("");
     } catch (error) {
       console.error(error);
       toast({ title: "Error", description: "Failed to save attendance.", variant: "destructive" });
@@ -149,6 +99,15 @@ export function AttendanceTracker() {
     }
   };
 
+  if (isLoading) {
+    return <div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin" /></div>;
+  }
+
+  const classStudentIds = selectedClass?.students || [];
+  const displayStudents = selectedClass 
+    ? (classStudentIds.length > 0 ? students.filter(s => classStudentIds.includes(s.id)) : students)
+    : [];
+
   return (
     <div className="space-y-6">
       <div className="grid gap-4 max-w-xl">
@@ -156,7 +115,7 @@ export function AttendanceTracker() {
           <Label className="text-base font-medium">Select Class</Label>
           <Select value={selectedClassId} onValueChange={setSelectedClassId}>
             <SelectTrigger>
-              <SelectValue placeholder="Choose a class session..." />
+              <SelectValue placeholder="Choose a class session to mark attendance..." />
             </SelectTrigger>
             <SelectContent>
               {classes.map((c) => (
@@ -167,57 +126,60 @@ export function AttendanceTracker() {
             </SelectContent>
           </Select>
         </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="class-snapshot" className="text-base font-medium flex items-center gap-2">
-            <Camera className="h-4 w-4" /> Class Snapshot
-          </Label>
-          <div className="flex items-center gap-4">
-            <Input 
-              id="class-snapshot" 
-              key={fileInputKey}
-              type="file" 
-              accept="image/*" 
-              onChange={handleImageChange}
-              className="cursor-pointer"
-            />
-            {selectedImage && (
-              <Button variant="ghost" size="sm" onClick={() => { setSelectedImage(null); setFileInputKey(k => k + 1); }}>
-                Clear
-              </Button>
-            )}
-          </div>
-          <p className="text-xs text-muted-foreground">Upload a clear photo of the students in the class for AI identification.</p>
-        </div>
-
-        {selectedImage && (
-          <div className="relative aspect-video rounded-lg overflow-hidden border bg-muted">
-            <img src={selectedImage} alt="Class Snapshot" className="object-cover w-full h-full" />
-          </div>
-        )}
-
-        <Button onClick={handleTrackAttendance} disabled={isPending || !selectedImage || students.length === 0} size="lg">
-          {isPending ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Upload className="mr-2 h-4 w-4" />
-          )}
-          {isPending ? "Analyzing..." : "Analyze Attendance"}
-        </Button>
       </div>
 
-      {result && (
-        <div className="space-y-4">
-          <Alert>
-            <AlertTitle className="font-headline">Analysis Summary</AlertTitle>
-            <AlertDescription>{result.summary}</AlertDescription>
-          </Alert>
-          <div className="flex justify-end">
-            <Button onClick={handleSubmitAttendance} disabled={isSaving} className="gap-2">
-              {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle className="h-4 w-4" />}
-              {isSaving ? "Saving..." : "Confirm & Save Attendance"}
-            </Button>
-          </div>
+      {selectedClass && (
+        <div className="space-y-4 rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Student</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Present?</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayStudents.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center text-muted-foreground">
+                    No students found for this class.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                displayStudents.map((student) => {
+                  const isPresent = attendanceState[student.id] ?? false;
+                  return (
+                    <TableRow key={student.id}>
+                      <TableCell className="font-medium">{student.name}</TableCell>
+                      <TableCell>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          isPresent ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                        }`}>
+                          {isPresent ? <CheckCircle className="h-3.5 w-3.5" /> : <XCircle className="h-3.5 w-3.5" />}
+                          {isPresent ? "Present" : "Absent"}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Switch 
+                          checked={isPresent} 
+                          onCheckedChange={() => toggleStudent(student.id)} 
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              )}
+            </TableBody>
+          </Table>
+          
+          {displayStudents.length > 0 && (
+            <div className="p-4 flex justify-end border-t bg-muted/50">
+              <Button onClick={handleSubmitAttendance} disabled={isSaving} className="gap-2">
+                {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}
+                {isSaving ? "Saving..." : "Save Attendance"}
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>

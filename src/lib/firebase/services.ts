@@ -79,6 +79,25 @@ export async function getChildrenForParent(tenantId: string, parentUserId: strin
 }
 
 /**
+ * Fetches a student document by their linked user ID.
+ */
+export async function getStudentByUserId(tenantId: string, userId: string): Promise<Student | null> {
+  const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
+  const q = query(studentsRef, where("userId", "==", userId));
+  const querySnapshot = await getDocs(q);
+  
+  if (querySnapshot.empty) return null;
+  
+  const docSnap = querySnapshot.docs[0];
+  const data = docSnap.data();
+  return {
+    id: docSnap.id,
+    ...data,
+    enrolledDate: data.enrolledDate?.toDate ? (data.enrolledDate as Timestamp).toDate().toISOString().split('T')[0] : data.enrolledDate,
+  } as Student;
+}
+
+/**
  * Adds a new student to a tenant.
  */
 export async function addStudent(tenantId: string, studentData: Omit<Student, 'id' | 'enrolledDate' | 'progress' | 'status' | 'ownerId'>): Promise<Student> {
@@ -396,6 +415,25 @@ export async function getCourses(tenantId: string): Promise<Course[]> {
 }
 
 /**
+ * Fetches all courses assigned to a specific teacher.
+ */
+export async function getCoursesForTeacher(tenantId: string, instructorId: string): Promise<Course[]> {
+  const coursesRef = collection(firestore, `tenants/${tenantId}/courses`);
+  const q = query(coursesRef, where("instructorId", "==", instructorId));
+  const querySnapshot = await getDocs(q);
+  const courses: Course[] = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    courses.push({
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(),
+    } as Course);
+  });
+  return courses;
+}
+
+/**
  * Adds a new course to a tenant.
  */
 export async function addCourse(
@@ -582,6 +620,31 @@ export async function getAssignments(tenantId: string): Promise<Assignment[]> {
   querySnapshot.forEach((doc) => {
     assignments.push({ id: doc.id, ...doc.data() } as Assignment);
   });
+  return assignments;
+}
+
+/**
+ * Fetches assignments scoped to a student's enrolled courses.
+ */
+export async function getAssignmentsForStudent(tenantId: string, courseIds: string[]): Promise<Assignment[]> {
+  if (!courseIds || courseIds.length === 0) return [];
+  
+  const assignments: Assignment[] = [];
+  // Firestore 'in' queries support a maximum of 10 items.
+  const chunks = [];
+  for (let i = 0; i < courseIds.length; i += 10) {
+    chunks.push(courseIds.slice(i, i + 10));
+  }
+
+  const assignmentsRef = collection(firestore, `tenants/${tenantId}/assignments`);
+  for (const chunk of chunks) {
+    const q = query(assignmentsRef, where('courseId', 'in', chunk));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      assignments.push({ id: doc.id, ...doc.data() } as Assignment);
+    });
+  }
+  
   return assignments;
 }
 

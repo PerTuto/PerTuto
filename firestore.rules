@@ -53,6 +53,14 @@ service cloud.firestore {
       return hasRole('parent');
     }
 
+    function isStudentOwner() {
+      return isStudent() && resource.data.userId == request.auth.uid;
+    }
+
+    function isParentOfStudent() {
+      return isParent() && resource.data.parentId == request.auth.uid;
+    }
+
     // ── User Profiles ──
     match /users/{userId} {
       allow read: if request.auth.uid == userId || isSuper() || isAdmin();
@@ -77,10 +85,12 @@ service cloud.firestore {
       
       // Students collection — students and parents can read their own records
       match /students/{studentId} {
-        allow read: if userBelongsToTenant(tenantId);
+        allow read: if userBelongsToTenant(tenantId) && (
+          isAdmin() || isSuper() || isTeacher() ||
+          isStudentOwner() || isParentOfStudent()
+        );
         // Students can update their own profile (limited fields)
-        allow update: if userBelongsToTenant(tenantId) && isStudent() &&
-          resource.data.userId == request.auth.uid;
+        allow update: if userBelongsToTenant(tenantId) && isStudentOwner();
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
       }
 

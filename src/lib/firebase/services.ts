@@ -824,7 +824,7 @@ export async function getPublishedResources(tenantId: string, filters?: {
   if (filters?.grade) constraints.push(where("grade", "==", filters.grade));
   if (filters?.curriculum) constraints.push(where("curriculum", "==", filters.curriculum));
 
-  const q = query(ref, ...constraints);
+  const q = query(ref, ...constraints, firestoreLimit(1000));
   const snapshot = await getDocs(q);
   return snapshot.docs.map(d => {
     const data = d.data() as Record<string, any>;

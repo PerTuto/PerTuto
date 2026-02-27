@@ -88,8 +88,8 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
         ) : (
           <div className="space-y-16">
             {Object.keys(groupedResources).sort((a, b) => {
-              if (a === "K") return -1;
-              if (b === "K") return 1;
+              if (a.toUpperCase() === "K") return -1;
+              if (b.toUpperCase() === "K") return 1;
               const numA = parseInt(a);
               const numB = parseInt(b);
               if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
@@ -104,7 +104,7 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
                 <section key={level} className="space-y-6">
                   <div className="border-b pb-4">
                     <h2 className="text-2xl font-headline font-bold text-slate-900">
-                      Level: {level}
+                      Level: {level.toUpperCase()}
                     </h2>
                   </div>
                   

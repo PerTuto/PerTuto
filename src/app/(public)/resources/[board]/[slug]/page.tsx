@@ -347,14 +347,15 @@ function GradePageContent() {
         const allResources = await getPublishedResources(DEFAULT_TENANT_ID);
         
         // Filter by board matching and slug keywords matching
-        const slugKeywords = slug.toLowerCase().split("-");
-        
         const filtered = allResources.filter((r: Resource) => {
           const matchesBoard = r.board?.toLowerCase() === boardParam || r.curriculum?.toLowerCase() === boardParam;
           if (!matchesBoard) return false;
           
-          const searchString = `${r.subject} ${r.grade}`.toLowerCase();
-          return slugKeywords.every(kw => searchString.includes(kw));
+          const expectedSlug = r.grade ? 
+            `${r.subject.toLowerCase().replace(/\s+/g, '-')}-${r.grade.toLowerCase().replace(/\s+/g, '-')}` : 
+            r.subject.toLowerCase().replace(/\s+/g, '-');
+            
+          return slug === expectedSlug;
         });
 
         setResources(filtered.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0)));

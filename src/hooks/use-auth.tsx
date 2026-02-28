@@ -13,6 +13,7 @@ import {
 import { firebaseApp } from '@/lib/firebase/client-app';
 import type { UserProfile } from '@/lib/firebase/services';
 import { getUserProfile } from '@/lib/firebase/services';
+import { UserRole } from '@/lib/types';
 
 export interface AuthContextType {
   user: User | null;
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUserProfile({
             fullName: "Super User Admin",
             email: user.email!,
-            role: "super", // Platform Super role
+            role: UserRole.Super, // Platform Super role
             tenantId: "pertuto-default", // Super user accesses the default tenant
           });
           setLoading(false);

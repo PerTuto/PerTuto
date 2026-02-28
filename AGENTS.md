@@ -374,6 +374,7 @@ git push origin master
 | **16** | **User Portals**           | Multi-tenant role dashboards: Student/Teacher/Parent portals, admin `createUser()` with custom domain emails, Direct Create invite mode, enhanced Firestore rules with role helpers.            |
 | **17** | **Curriculum Scaffolding** | Dynamic K-12 board pages (CBSE/ICSE), sorting bug fixes, Firestore 1000-limit resolution, React hydration error fixes, and robust UI rendering for syllabuses & past papers.                    |
 | **18** | **Audit Resolution**       | Addressed architectural gaps: created native optimized queries (`getCoursesForTeacher`, etc.), enforced strict `isStudentOwner`/`isParentOfStudent` document rules, built manual attendance UI. |
+| **19** | **UI/UX Polish**           | Refined the `/nike-proto` experimental homepage with Brilliant.org-inspired pastel rhythm, 3D button pops, Vanta constellation background, and fixed neural pathway micro-animations.           |
 
 ---
 

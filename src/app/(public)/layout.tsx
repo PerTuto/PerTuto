@@ -83,7 +83,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                 <Link
                                     key={link.label}
                                     href={link.href!}
-                                    className={`text-sm font-medium transition-colors ${
+                                    className={`text-sm font-semibold transition-colors nav-link-animated pb-1 ${
                                         pathname === link.href
                                             ? 'text-primary'
                                             : 'text-foreground/70 hover:text-foreground'

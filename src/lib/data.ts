@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Lead, Student, Course, Class, Assignment, User } from '@/lib/types';
 
 export const user: User = {

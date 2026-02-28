@@ -44,7 +44,7 @@ export function StudentHome() {
             // Find the student record linked to this auth user
             const allStudents = await getStudents(tenantId);
             const myStudent = allStudents.find(
-                (s) => s.userId === user.uid || s.email === user.email
+                (s) => s.ownerId === user.uid || s.email === user.email
             );
 
             if (!myStudent) {

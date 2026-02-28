@@ -109,7 +109,9 @@ const SidebarMenuItem = React.forwardRef<
 ))
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
-type SidebarMenuButtonProps = (React.ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button", href?: never }) | (LinkProps & { as: typeof Link, href: string });
+type SidebarMenuButtonProps = 
+  | (React.ComponentProps<"button"> & { as?: "button" }) 
+  | (React.ComponentProps<typeof Link> & { as: typeof Link });
 
 const SidebarMenuButton = React.forwardRef<
   HTMLAnchorElement | HTMLButtonElement,
@@ -134,7 +136,7 @@ const SidebarMenuButton = React.forwardRef<
       className
     );
     
-    const href = 'href' in props ? props.href : undefined;
+    const href = 'href' in props ? (props as any).href : undefined;
 
     if (Comp === 'button' || !href) {
         return (
@@ -145,7 +147,7 @@ const SidebarMenuButton = React.forwardRef<
     }
 
     return (
-       <Link href={href} className={buttonClasses} {...(props as LinkProps)} ref={ref as React.Ref<HTMLAnchorElement>}>
+       <Link className={buttonClasses} {...(props as React.ComponentProps<typeof Link>)} ref={ref as React.Ref<HTMLAnchorElement>}>
         {children}
       </Link>
     );

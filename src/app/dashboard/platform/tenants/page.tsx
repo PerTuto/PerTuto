@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getTenants } from "@/lib/firebase/services";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { UserRole } from "@/lib/types";
 import { AddTenantDialog } from "@/components/platform/add-tenant-dialog";
 import { Loader2, Building2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -15,8 +16,8 @@ export default function TenantsPage() {
   const { userProfile } = useAuth();
   const { toast } = useToast();
 
-  const isSuper = userProfile?.role === 'super' || 
-    (Array.isArray(userProfile?.role) && userProfile?.role.includes('super'));
+  const isSuper = userProfile?.role === UserRole.Super || 
+    (Array.isArray(userProfile?.role) && userProfile?.role.includes(UserRole.Super as any));
 
   const fetchTenantsData = async () => {
     setIsLoading(true);

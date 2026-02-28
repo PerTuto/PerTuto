@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Star, Loader2 } from 'lucide-react';
 import { SpotlightCard } from './spotlight-card';
+import { TypingTestimonial } from './typing-testimonial';
 import { getApprovedTestimonials } from '@/lib/firebase/services';
 
 const FALLBACK_TESTIMONIALS = [
@@ -30,6 +31,18 @@ const FALLBACK_TESTIMONIALS = [
         role: "Parent of A-Levels Student",
         rating: 5,
     },
+    {
+        quote: "Finding an experienced and permitted tutor in Dubai is tough. We immediately felt safe with PerTuto's thorough documentation and the quality of their educators.",
+        author: "Omar F.",
+        role: "Parent of CBSE Student",
+        rating: 5,
+    },
+    {
+        quote: "I needed to fast-track my understanding of Python for a new role. The 1-on-1 pace was challenging but exactly what I asked for. Highly recommend.",
+        author: "Jessica T.",
+        role: "Product Manager",
+        rating: 4,
+    }
 ];
 
 // Default tenant ID for the public website
@@ -83,9 +96,17 @@ export function TestimonialGrid() {
                                     <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                                 ))}
                             </div>
-                            <blockquote className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1">
-                                "{testimonial.quote}"
-                            </blockquote>
+                            {i < 4 ? (
+                                <TypingTestimonial
+                                    quote={testimonial.quote}
+                                    typingSpeed={25}
+                                    className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1"
+                                />
+                            ) : (
+                                <blockquote className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1">
+                                    &ldquo;{testimonial.quote}&rdquo;
+                                </blockquote>
+                            )}
                             <div className="mt-auto pt-6 border-t border-border/50">
                                 <div className="font-headline font-bold text-foreground">
                                     {testimonial.author}

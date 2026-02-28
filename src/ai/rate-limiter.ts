@@ -10,7 +10,7 @@ const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // Per 1 hour
  */
 export async function checkAIRateLimit(): Promise<boolean> {
     try {
-        const headersList = headers();
+        const headersList = await headers();
         const ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown-ip';
         
         // Strip out potential internal IPs or ports, just get the first raw IP string

@@ -84,7 +84,7 @@ export function DataTable<TData, TValue>({
     },
   });
   
-  const dialogContentWithProps = addEntityContext ? React.cloneElement(addEntityContext.dialogContent as React.ReactElement, { setIsAddDialogOpen }) : null;
+  const dialogContentWithProps = addEntityContext ? React.cloneElement(addEntityContext.dialogContent as React.ReactElement<any>, { setIsAddDialogOpen }) : null;
 
 
   return (

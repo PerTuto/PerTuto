@@ -36,6 +36,10 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "chrono-class",
+    "_legacy_angular",
+    "_legacy_vite",
+    "app_legacy"
   ]
 }

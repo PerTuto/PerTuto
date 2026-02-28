@@ -3,10 +3,11 @@
 import { RoleGuard } from "@/components/auth/role-guard";
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
+import { UserRole } from "@/lib/types";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
-        <RoleGuard allowedRoles={['super']}>
+        <RoleGuard allowedRoles={[UserRole.Super]}>
             <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-950">
                 {/* Temporary Header for navigation */}
                 <div className="absolute top-4 right-4 z-10">

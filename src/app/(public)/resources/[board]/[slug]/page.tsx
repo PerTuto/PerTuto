@@ -319,12 +319,10 @@ function PastPaperCard({ r }: { r: any }) {
 }
 
 
-function GradePageContent() {
-  const params = useParams();
+function GradePageContent({ board, slug }: { board: string; slug: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const slug = params.slug as string;
-  const boardParam = (params.board as string)?.toLowerCase();
+  const boardParam = board?.toLowerCase();
 
   // Create a clean title from the slug (e.g., mathematics-aa-sl -> Mathematics Aa Sl)
   const cleanTitle = slug
@@ -596,7 +594,23 @@ function GradePageContent() {
   );
 }
 
-export default function GradeResourcePage() {
+export default function GradeResourcePage({ params }: { params: { board: string; slug: string } | Promise<{ board: string; slug: string }> }) {
+  // Use React.use to unwrap params if it's a promise (Next.js 15+), or just access it directly
+  const [unwrappedParams, setUnwrappedParams] = useState<{ board: string; slug: string } | null>(null);
+
+  useEffect(() => {
+    async function unwrap() {
+      if (params instanceof Promise) {
+        setUnwrappedParams(await params);
+      } else {
+        setUnwrappedParams(params);
+      }
+    }
+    unwrap();
+  }, [params]);
+
+  if (!unwrappedParams) return <div className="flex items-center justify-center min-h-screen"><Loader2 className="w-8 h-8 animate-spin text-muted-foreground" /></div>;
+
   return (
     <Suspense
       fallback={
@@ -605,7 +619,7 @@ export default function GradeResourcePage() {
         </div>
       }
     >
-      <GradePageContent />
+      <GradePageContent board={unwrappedParams.board} slug={unwrappedParams.slug} />
     </Suspense>
   );
 }

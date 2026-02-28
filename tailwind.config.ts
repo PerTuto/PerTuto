@@ -18,7 +18,7 @@ export default {
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['DM Sans', 'Inter', 'sans-serif'],
+        headline: ['Space Grotesk', 'DM Sans', 'Inter', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -107,6 +107,10 @@ export default {
           '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
           '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
         },
+        'marquee': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -114,6 +118,7 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
         'blob-morph': 'blob-morph 8s ease-in-out infinite',
+        'marquee': 'marquee 25s linear infinite',
       },
     },
   },

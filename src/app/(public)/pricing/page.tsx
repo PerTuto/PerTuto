@@ -59,91 +59,152 @@ export default function PricingPage() {
             </div>
 
             {/* ===== PRICING TIERS ===== */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 w-full max-w-4xl mx-auto items-start animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                
-                {/* Tier 1: Diagnostic Trial */}
-                <div className="relative group flex flex-col p-8 rounded-3xl border border-border bg-white hover:border-primary/20 transition-all duration-300 mt-0 lg:mt-8 shadow-sm">
-                    <div className="mb-8">
-                        <h3 className="text-xl font-headline font-bold text-foreground mb-2">Diagnostic Trial</h3>
-                        <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Perfect for understanding your current baseline and potential.</p>
-                    </div>
-                    
-                    <div className="flex items-baseline gap-1 mb-8">
-                        <span className="text-5xl font-headline font-bold text-foreground tracking-tight">AED 350</span>
-                        <span className="text-muted-foreground font-medium text-sm">/one-time</span>
-                    </div>
-                    
-                    <Link href="/contact?package=trial" className="w-full mb-8">
-                        <button className="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary/80 text-foreground font-bold text-sm border border-border transition-all">
-                            Book Assessment
-                        </button>
-                    </Link>
-                    
-                    <div className="space-y-6 flex-1">
-                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">What&apos;s Included</p>
-                        <ul className="space-y-4">
-                            <li className="flex items-start gap-3 text-sm text-foreground/80">
-                                <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                <span>Complete academic & skills audit</span>
-                            </li>
-                            <li className="flex items-start gap-3 text-sm text-foreground/80">
-                                <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                <span>Initial 2-hour 1-on-1 session</span>
-                            </li>
-                            <li className="flex items-start gap-3 text-sm text-foreground/80">
-                                <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                <span>Custom 3-month roadmap creation</span>
-                            </li>
-                            <li className="flex items-start gap-3 text-sm text-muted-foreground/50 line-through">
-                                <XCircle className="w-5 h-5 text-muted-foreground/30 shrink-0 mt-0.5" />
-                                <span>Ongoing chat support</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            {/* ===== PRICING TIERS ===== */}
+            <div className="w-full max-w-4xl mx-auto items-start animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                {billingCycle === 'monthly' ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                        {/* Tier 1: Diagnostic Trial */}
+                        <div className="relative group flex flex-col p-8 rounded-3xl border border-border bg-white hover:border-primary/20 transition-all duration-300 shadow-sm mt-0 lg:mt-8">
+                            <div className="mb-8">
+                                <h3 className="text-xl font-headline font-bold text-foreground mb-2">Diagnostic Trial</h3>
+                                <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Perfect for understanding your current baseline and potential.</p>
+                            </div>
+                            
+                            <div className="flex items-baseline gap-1 mb-8">
+                                <span className="text-5xl font-headline font-bold text-foreground tracking-tight">AED 350</span>
+                                <span className="text-muted-foreground font-medium text-sm">/one-time</span>
+                            </div>
+                            
+                            <Link href="/contact?package=trial" className="w-full mb-8">
+                                <button className="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary/80 text-foreground font-bold text-sm border border-border transition-all">
+                                    Book Assessment
+                                </button>
+                            </Link>
+                            
+                            <div className="space-y-6 flex-1">
+                                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">What&apos;s Included</p>
+                                <ul className="space-y-4">
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" /><span>Complete academic & skills audit</span></li>
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" /><span>Initial 2-hour 1-on-1 session</span></li>
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" /><span>Custom 3-month roadmap creation</span></li>
+                                    <li className="flex items-start gap-3 text-sm text-muted-foreground/50 line-through"><XCircle className="w-5 h-5 text-muted-foreground/30 shrink-0 mt-0.5" /><span>Ongoing chat support</span></li>
+                                </ul>
+                            </div>
+                        </div>
 
-                {/* Tier 2: Monthly Retainer (Most Popular) */}
-                <div className="relative z-20 flex flex-col p-8 sm:p-10 rounded-3xl border-2 border-primary bg-white shadow-xl shadow-primary/10 transform md:-translate-y-4 transition-transform duration-300">
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                        <div className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-primary/30 tracking-widest uppercase flex items-center gap-1.5">
-                            <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
-                            Most Popular
+                        {/* Tier 2: Monthly Retainer */}
+                        <div className="relative z-20 flex flex-col p-8 sm:p-10 rounded-3xl border-2 border-primary bg-white shadow-xl shadow-primary/10 transform md:-translate-y-4 transition-transform duration-300">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                                <div className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-primary/30 tracking-widest uppercase flex items-center gap-1.5">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
+                                    Most Popular
+                                </div>
+                            </div>
+                            
+                            <div className="mb-6 mt-4">
+                                <h3 className="text-2xl font-headline font-bold text-primary mb-2">Retainer</h3>
+                                <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Comprehensive support for sustained academic or career growth.</p>
+                            </div>
+                            
+                            <div className="flex items-baseline gap-1 mb-8">
+                                <span className="text-6xl font-headline font-bold text-foreground tracking-tight">AED 2,800</span>
+                                <span className="text-muted-foreground font-medium text-sm">/month</span>
+                            </div>
+                            
+                            <Link href="/contact?package=retainer" className="w-full mb-10">
+                                <button className="btn-primary w-full py-4 px-6 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                                    Start Membership
+                                </button>
+                            </Link>
+                            
+                            <div className="space-y-6 flex-1">
+                                <p className="text-xs font-bold uppercase tracking-widest text-primary/70">Everything in Trial, plus</p>
+                                <ul className="space-y-4">
+                                    {['8 hours of 1-on-1 live sessions/mo', 'Unlimited WhatsApp chat support', 'Bi-weekly progress analytics', 'Access to recorded session vault', 'Exam technique workshops'].map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-sm text-foreground font-medium">
+                                            <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div className="mb-6 mt-4">
-                        <h3 className="text-2xl font-headline font-bold text-primary mb-2">Retainer</h3>
-                        <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Comprehensive support for sustained academic or career growth.</p>
-                    </div>
-                    
-                    <div className="flex items-baseline gap-1 mb-8">
-                        <span className="text-6xl font-headline font-bold text-foreground tracking-tight">AED {billingCycle === 'monthly' ? '2,800' : '2,380'}</span>
-                        <span className="text-muted-foreground font-medium text-sm">/month</span>
-                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                        {/* Termly Tier 1: Standard Termly */}
+                        <div className="relative group flex flex-col p-8 rounded-3xl border border-emerald-500/30 bg-white hover:border-emerald-500/50 transition-all duration-300 shadow-sm mt-0 lg:mt-8">
+                            <div className="mb-8">
+                                <h3 className="text-xl font-headline font-bold text-emerald-600 mb-2">Standard Termly</h3>
+                                <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Commit for the entire 3-month term and save 15% immediately.</p>
+                            </div>
+                            
+                            <div className="flex flex-col gap-1 mb-8">
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-5xl font-headline font-bold text-foreground tracking-tight">AED 7,140</span>
+                                    <span className="text-muted-foreground font-medium text-sm">/term</span>
+                                </div>
+                                <span className="text-sm text-emerald-500 font-medium">AED 2,380 equivalent per month</span>
+                            </div>
+                            
+                            <Link href="/contact?package=termly-standard" className="w-full mb-8">
+                                <button className="w-full py-4 px-6 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-sm border border-emerald-200 transition-all">
+                                    Secure Termly Pricing
+                                </button>
+                            </Link>
+                            
+                            <div className="space-y-6 flex-1">
+                                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">What&apos;s Included</p>
+                                <ul className="space-y-4">
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" /><span>24 hours of 1-on-1 sessions allocated flexibly</span></li>
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" /><span>Full WhatsApp priority chat access</span></li>
+                                    <li className="flex items-start gap-3 text-sm text-foreground/80"><CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" /><span>Mid-term director review meeting</span></li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    {billingCycle === 'termly' && (
-                        <div className="mb-6 -mt-4 text-sm text-emerald-600 font-medium">Billed termly as AED 7,140</div>
-                    )}
-                    
-                    <Link href="/contact?package=retainer" className="w-full mb-10">
-                        <button className="btn-primary w-full py-4 px-6 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-                            Start Membership
-                        </button>
-                    </Link>
-                    
-                    <div className="space-y-6 flex-1">
-                        <p className="text-xs font-bold uppercase tracking-widest text-primary/70">Everything in Trial, plus</p>
-                        <ul className="space-y-4">
-                            {['8 hours of 1-on-1 live sessions/mo', 'Unlimited WhatsApp chat support', 'Bi-weekly progress analytics', 'Access to recorded session vault', 'Exam technique workshops'].map((item, i) => (
-                                <li key={i} className="flex items-start gap-3 text-sm text-foreground font-medium">
-                                    <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        {/* Termly Tier 2: Intensive Termly */}
+                        <div className="relative z-20 flex flex-col p-8 sm:p-10 rounded-3xl border-2 border-emerald-500 bg-emerald-50/20 shadow-xl shadow-emerald-500/10 transform md:-translate-y-4 transition-transform duration-300">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                                <div className="bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-emerald-500/30 tracking-widest uppercase flex items-center gap-1.5">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
+                                    Maximum Results
+                                </div>
+                            </div>
+                            
+                            <div className="mb-6 mt-4">
+                                <h3 className="text-2xl font-headline font-bold text-emerald-600 mb-2">Intensive Termly</h3>
+                                <p className="text-sm text-muted-foreground min-h-[40px] leading-relaxed">Aggressive pacing for students undertaking double sciences or intense board prep.</p>
+                            </div>
+                            
+                            <div className="flex flex-col gap-1 mb-8">
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-6xl font-headline font-bold text-foreground tracking-tight">AED 11,400</span>
+                                    <span className="text-muted-foreground font-medium text-sm">/term</span>
+                                </div>
+                                <span className="text-sm text-emerald-600 font-medium">AED 3,800 equivalent per month</span>
+                            </div>
+                            
+                            <Link href="/contact?package=termly-intensive" className="w-full mb-10">
+                                <button className="w-full py-4 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-md transition-all">
+                                    Start Intensive Track
+                                </button>
+                            </Link>
+                            
+                            <div className="space-y-6 flex-1">
+                                <p className="text-xs font-bold uppercase tracking-widest text-emerald-600/80">Everything in Standard Termly, plus</p>
+                                <ul className="space-y-4">
+                                    {['48 hours of 1-on-1 live sessions', 'Weekly sync with parents', 'Exclusive mock exam marking', 'Personalized university counseling'].map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-sm text-foreground font-medium">
+                                            <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
+                )}
             </div>
 
             {/* ===== CUSTOM QUOTE ===== */}

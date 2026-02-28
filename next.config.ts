@@ -58,6 +58,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Legacy Service Routes (Audit Fixes)
+      { source: '/services/k-12-tutoring', destination: '/services/k12', permanent: true },
+      { source: '/services/professional-upskilling', destination: '/services/professional', permanent: true },
+      { source: '/services/higher-education', destination: '/services/university', permanent: true },
+      { source: '/our-tutors', destination: '/tutors', permanent: true },
+
       // K-12
       { source: '/resources/cbse-mathematics-:grade', destination: '/resources/cbse/mathematics-:grade', permanent: true },
       { source: '/resources/ib-mathematics-aa', destination: '/resources/ib/math-aa-sl', permanent: true },

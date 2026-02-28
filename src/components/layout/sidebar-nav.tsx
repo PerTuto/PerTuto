@@ -18,6 +18,11 @@ import {
   BookOpen,
   Globe,
   Landmark,
+  Database,
+  Layers,
+  Sparkles,
+  Megaphone,
+  Library,
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -50,6 +55,7 @@ const menuItems: MenuItem[] = [
   { href: "/dashboard/schedule", label: "Schedule", icon: Calendar, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
   { href: "/dashboard/availability", label: "Availability", icon: Clock, roles: ['super', 'admin', 'teacher'] },
   { href: "/dashboard/students", label: "Students", icon: GraduationCap, roles: ['super', 'admin', 'executive', 'teacher'] },
+  { href: "/:tenantId/batches", label: "Batches", icon: Layers, roles: ['super', 'admin', 'teacher'] },
   { href: "/dashboard/leads", label: "Leads", icon: Users, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/courses", label: "Courses", icon: Book, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
   { href: "/dashboard/assignments", label: "Assignments", icon: ClipboardList, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
@@ -57,8 +63,15 @@ const menuItems: MenuItem[] = [
   { href: "/dashboard/family", label: "Family Portal", icon: Users, roles: ['parent'] },
   { href: "/dashboard/financials", label: "Financials", icon: Landmark, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/organization/users", label: "Team", icon: UserCog, roles: ['super', 'admin', 'executive'] },
+  { href: "/:tenantId/organization/centers", label: "Centers", icon: Landmark, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/testimonials", label: "Testimonials", icon: MessageSquareQuote, roles: ['super', 'admin', 'executive'] },
   { href: "/dashboard/resources", label: "Resources", icon: BookOpen, roles: ['super', 'admin', 'executive'] },
+  { href: "/:tenantId/questions", label: "Question Bank", icon: Database, roles: ['super', 'admin', 'executive', 'teacher'] },
+  { href: "/:tenantId/tests", label: "Tests", icon: ClipboardList, roles: ['super', 'admin', 'executive', 'teacher', 'student'] },
+  { href: "/:tenantId/review-evaluations", label: "Review Evaluations", icon: Sparkles, roles: ['super', 'admin', 'teacher'] },
+  { href: "/:tenantId/grade-challenges", label: "Grade Challenges", icon: MessageSquareQuote, roles: ['super', 'admin', 'teacher'] },
+  { href: "/:tenantId/announcements", label: "Announcements", icon: Megaphone, roles: ['super', 'admin', 'executive', 'teacher'] },
+  { href: "/:tenantId/library", label: "Library", icon: Library, roles: ['super', 'admin', 'executive', 'teacher', 'student'] },
   { href: "/dashboard/website", label: "Public Site CMS", icon: Globe, roles: ['super'] },
   { href: "/dashboard/platform/tenants", label: "Platform Admin", icon: Settings, roles: ['super'] },
 ];
@@ -109,19 +122,25 @@ export function SidebarNav() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {visibleItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              {/* @ts-ignore - Next.js LinkProps missing children type in this version */}
-              <SidebarMenuButton
-                as={Link as any}
-                href={item.href}
-                isActive={pathname === item.href}
-              >
-                <item.icon />
-                <span>{item.label}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {visibleItems.map((item) => {
+            const href = item.href.includes(":tenantId") 
+              ? item.href.replace(":tenantId", userProfile?.tenantId || "pertuto-default")
+              : item.href;
+            
+            return (
+              <SidebarMenuItem key={item.href}>
+                {/* @ts-ignore - Next.js LinkProps missing children type in this version */}
+                <SidebarMenuButton
+                  as={Link as any}
+                  href={href}
+                  isActive={pathname === href}
+                >
+                  <item.icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>

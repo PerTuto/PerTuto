@@ -27,7 +27,7 @@ export default function TermsPage() {
                         </p>
 
                         <h2 className="text-2xl font-headline font-semibold mt-12 mb-4">2. Service Provision & Enrollment</h2>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                        <ul className="list-disc ps-6 space-y-2 mt-4 text-muted-foreground">
                             <li>All tutoring sessions are subject to tutor availability and final confirmation by PerTuto administration.</li>
                             <li>The "Diagnostic Trial" is limited to one per new student and cannot be repeated.</li>
                             <li>Monthly retainers guarantee a specific number of instructional hours per calendar month. Unused hours do not roll over unless explicit written permission is granted due to documented medical emergencies.</li>

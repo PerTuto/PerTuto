@@ -101,7 +101,7 @@ export default function AssignmentsPage() {
                     <Calendar className="h-4 w-4" />
                     Due on {(assignment.dueDate && typeof assignment.dueDate === 'object' && 'toDate' in assignment.dueDate ? (assignment.dueDate as any).toDate() : new Date(assignment.dueDate)).toLocaleDateString()}
                     {assignment.submissionUrls && assignment.submissionUrls.length > 0 && (
-                      <span className="ml-2 text-xs">📎 {assignment.submissionUrls.length} file(s)</span>
+                      <span className="ms-2 text-xs">📎 {assignment.submissionUrls.length} file(s)</span>
                     )}
                   </div>
                 </CardContent>

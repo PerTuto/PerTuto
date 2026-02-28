@@ -123,7 +123,7 @@ export function LabExperience({ className = '' }: { className?: string }) {
               {/* Progress bar */}
               <div className="h-1.5 bg-secondary">
                 <div
-                  className="h-full bg-primary rounded-r-full transition-all duration-500"
+                  className="h-full bg-primary rounded-e-full transition-all duration-500"
                   style={{ width: `${((currentQ + (selected !== null ? 1 : 0)) / QUESTIONS.length) * 100}%` }}
                 />
               </div>
@@ -161,7 +161,7 @@ export function LabExperience({ className = '' }: { className?: string }) {
                         key={idx}
                         onClick={() => handleSelect(idx)}
                         disabled={selected !== null}
-                        className={`w-full text-left px-5 py-3.5 rounded-xl border-2 font-medium transition-all duration-300 flex items-center gap-3 ${optionStyle} ${selected === null ? 'cursor-pointer' : 'cursor-default'}`}
+                        className={`w-full text-start px-5 py-3.5 rounded-xl border-2 font-medium transition-all duration-300 flex items-center gap-3 ${optionStyle} ${selected === null ? 'cursor-pointer' : 'cursor-default'}`}
                       >
                         <span className="w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-sm font-bold shrink-0">
                           {String.fromCharCode(65 + idx)}

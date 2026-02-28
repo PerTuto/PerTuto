@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { VoiceAssistant } from "../voice-assistant";
+import { NotificationBell } from "./notification-bell";
 
 const getTitleFromPathname = (pathname: string) => {
   if (pathname === "/" || pathname === "/dashboard") return "Dashboard";
@@ -23,6 +24,7 @@ export function Header() {
         </div>
       </div>
       <div className="flex items-center gap-3">
+        <NotificationBell />
         <VoiceAssistant />
       </div>
     </header>

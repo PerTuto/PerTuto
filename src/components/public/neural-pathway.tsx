@@ -85,7 +85,7 @@ export function NeuralPathway() {
       <svg
         width={dims.w}
         height={dims.h}
-        className="absolute top-0 left-0 hidden md:block"
+        className="absolute top-0 start-0 hidden md:block"
         style={{ overflow: 'visible' }}
       >
         <defs>

@@ -82,7 +82,7 @@ export function VoiceAssistant() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 end-6 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -170,7 +170,7 @@ export function VoiceAssistant() {
         {!isOpen && (
           <motion.span
             layoutId="dot"
-            className="absolute -top-1 -right-1 flex h-4 w-4"
+            className="absolute -top-1 -end-1 flex h-4 w-4"
           >
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-background"></span>

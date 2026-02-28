@@ -19,7 +19,7 @@ export default function K12Page() {
                 <FluidBlob />
                 <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
                     <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary uppercase">
-                        <span className="mr-2 flex h-2 w-2 relative">
+                        <span className="me-2 flex h-2 w-2 relative">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
@@ -62,8 +62,8 @@ export default function K12Page() {
                                 <p className="text-muted-foreground leading-relaxed text-lg">IB AA/AI HL, Further Maths, and University-level Calculus mastered through first-principles thinking rather than memorization.</p>
                             </div>
                             <div className="mt-12 relative h-44 w-full overflow-hidden rounded-xl bg-secondary border border-border">
-                                <div className="absolute bottom-0 left-0 right-0 h-full w-full bg-gradient-to-t from-primary/5 to-transparent"></div>
-                                <div className="absolute top-6 right-6 flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 border border-emerald-500/20">
+                                <div className="absolute bottom-0 start-0 end-0 h-full w-full bg-gradient-to-t from-primary/5 to-transparent"></div>
+                                <div className="absolute top-6 end-6 flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 border border-emerald-500/20">
                                     <TrendingUp className="w-4 h-4" />
                                     +2 Grade Jump Avg
                                 </div>
@@ -122,7 +122,7 @@ export default function K12Page() {
                                 </div>
                             </div>
                         </div>
-                        <AnimatedSection animation="fade-right" className="w-full lg:w-1/2 lg:pl-8">
+                        <AnimatedSection animation="fade-right" className="w-full lg:w-1/2 lg:ps-8">
                             <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-primary uppercase tracking-widest">
                                 <span className="h-px w-12 bg-primary"></span>
                                 The Pareto Principle
@@ -148,7 +148,7 @@ export default function K12Page() {
 
                     {/* Row 2 */}
                     <div className="flex flex-col-reverse items-center gap-16 lg:flex-row">
-                        <AnimatedSection animation="fade-left" className="w-full lg:w-1/2 lg:pr-8">
+                        <AnimatedSection animation="fade-left" className="w-full lg:w-1/2 lg:pe-8">
                             <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-widest">
                                 <span className="h-px w-12 bg-blue-600"></span>
                                 Exam Technique
@@ -193,7 +193,7 @@ export default function K12Page() {
                             <p className="text-muted-foreground max-w-md mx-auto mb-10">
                                 Our tutors operate at near full capacity. Submit your request to speak with an academic director.
                             </p>
-                            <div className="max-w-md mx-auto text-left">
+                            <div className="max-w-md mx-auto text-start">
                                 <LeadCaptureForm variant="minimal" />
                             </div>
                         </div>

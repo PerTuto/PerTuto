@@ -192,7 +192,7 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
         <Dialog open={open} onOpenChange={(isOpen) => (isOpen ? setOpen(true) : handleClose())}>
             <DialogTrigger asChild>
                 <Button variant="outline">
-                    <Link className="mr-2 h-4 w-4" />
+                    <Link className="me-2 h-4 w-4" />
                     Invite User
                 </Button>
             </DialogTrigger>
@@ -208,11 +208,11 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
                 <Tabs value={mode} onValueChange={(v) => setMode(v as "invite" | "create")} className="w-full">
                     <TabsList className="w-full grid grid-cols-2">
                         <TabsTrigger value="invite" className="text-sm">
-                            <Link className="mr-2 h-3.5 w-3.5" />
+                            <Link className="me-2 h-3.5 w-3.5" />
                             Invite Link
                         </TabsTrigger>
                         <TabsTrigger value="create" className="text-sm">
-                            <KeyRound className="mr-2 h-3.5 w-3.5" />
+                            <KeyRound className="me-2 h-3.5 w-3.5" />
                             Direct Create
                         </TabsTrigger>
                     </TabsList>
@@ -233,7 +233,7 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
                                                 <SelectItem key={value} value={value}>
                                                     <div>
                                                         <span className="font-medium">{label}</span>
-                                                        <span className="ml-2 text-muted-foreground text-xs">{description}</span>
+                                                        <span className="ms-2 text-muted-foreground text-xs">{description}</span>
                                                     </div>
                                                 </SelectItem>
                                             ))}
@@ -265,7 +265,7 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
 
                                 <DialogFooter>
                                     <Button onClick={handleGenerateLink} disabled={loading} className="w-full">
-                                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                        {loading && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                                         Generate Invite Link
                                     </Button>
                                 </DialogFooter>
@@ -347,7 +347,7 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
                                             type="button"
                                             variant="ghost"
                                             size="icon"
-                                            className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                                            className="absolute end-0 top-0 h-full px-3 hover:bg-transparent"
                                             onClick={() => setShowPassword(!showPassword)}
                                         >
                                             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -379,8 +379,8 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
 
                                 <DialogFooter>
                                     <Button onClick={handleDirectCreate} disabled={loading} className="w-full">
-                                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        <UserPlus className="mr-2 h-4 w-4" />
+                                        {loading && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
+                                        <UserPlus className="me-2 h-4 w-4" />
                                         Create Account
                                     </Button>
                                 </DialogFooter>

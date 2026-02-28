@@ -41,8 +41,8 @@ export function RecurringEditPrompt({ open, onChoice, eventTitle }: RecurringEdi
             className="justify-start h-auto py-3 px-4"
             onClick={() => onChoice('this')}
           >
-            <Calendar className="h-4 w-4 mr-3 text-muted-foreground flex-shrink-0" />
-            <div className="text-left">
+            <Calendar className="h-4 w-4 me-3 text-muted-foreground flex-shrink-0" />
+            <div className="text-start">
               <p className="text-sm font-medium">Only This Event</p>
               <p className="text-xs text-muted-foreground">Change only this occurrence</p>
             </div>
@@ -52,8 +52,8 @@ export function RecurringEditPrompt({ open, onChoice, eventTitle }: RecurringEdi
             className="justify-start h-auto py-3 px-4"
             onClick={() => onChoice('future')}
           >
-            <ArrowRight className="h-4 w-4 mr-3 text-muted-foreground flex-shrink-0" />
-            <div className="text-left">
+            <ArrowRight className="h-4 w-4 me-3 text-muted-foreground flex-shrink-0" />
+            <div className="text-start">
               <p className="text-sm font-medium">This & Future Events</p>
               <p className="text-xs text-muted-foreground">Apply to all upcoming occurrences</p>
             </div>

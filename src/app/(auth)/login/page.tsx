@@ -91,7 +91,7 @@ export default function LoginPage() {
               )}
             />
             <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting && <Loader2 className="mr-2 animate-spin" />}
+              {form.formState.isSubmitting && <Loader2 className="me-2 animate-spin" />}
               Sign In
             </Button>
           </form>

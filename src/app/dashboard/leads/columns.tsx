@@ -72,7 +72,7 @@ export const getColumns = (onConvert: (lead: Lead) => void): ColumnDef<Lead>[] =
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ms-2 h-4 w-4" />
         </Button>
       )
     },

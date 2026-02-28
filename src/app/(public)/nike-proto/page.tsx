@@ -51,7 +51,7 @@ const FAQ_ITEMS = [
 
 import { DecryptedText } from '@/components/public/decrypted-text';
 import { AnimatedStatsBar } from '@/components/public/animated-stats-bar';
-import { SpaceBackground } from '@/components/public/space-background';
+import { ConstellationBackground } from '@/components/public/constellation-background';
 import { TiltCard } from '@/components/public/tilt-card';
 import { NeuralPathway } from '@/components/public/neural-pathway';
 import { BouncyText } from '@/components/public/bouncy-text';
@@ -81,16 +81,15 @@ export default async function HomePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(FAQ_ITEMS)) }} />
 
             {/* ===== HERO (NIKE STYLE EXPERIMENT) ===== */}
-            <section className="relative min-h-[100svh] flex items-center justify-start px-6 md:px-16 overflow-visible text-white">
-                {/* Space-themed animated background */}
-                <SpaceBackground />
-                {/* Subtle bottom fade into next section */}
-                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#eef5f3] to-transparent z-[1] pointer-events-none"></div>
+            <section className="relative min-h-[100svh] flex items-center justify-start px-6 md:px-16 overflow-visible text-foreground" style={{ backgroundColor: '#f4f3f8' }}>
+                {/* Interactive constellation background */}
+                <ConstellationBackground />
+                <ColorBreathing />
 
                 <div className="max-w-7xl mx-auto w-full flex flex-col items-start relative z-10 pt-20">
                     {/* Badge */}
                     {hero.badgeText && (
-                        <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/10 border border-white/20 rounded-full backdrop-blur-md text-xs font-bold uppercase tracking-widest text-white mb-8 animate-fade-in-up">
+                        <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-primary/10 border border-primary/20 rounded-full backdrop-blur-md text-xs font-bold uppercase tracking-widest text-primary mb-8 animate-fade-in-up">
                             {hero.badgeText}
                         </div>
                     )}
@@ -100,14 +99,14 @@ export default async function HomePage() {
                             text={hero.title}
                             highlightWord="unique"
                             highlightClass="text-primary"
-                            className="font-headline font-black tracking-tighter uppercase leading-[1.0] text-white"
+                            className="font-headline font-black tracking-tighter uppercase leading-[1.0] text-foreground"
                             staggerMs={120}
                             as="span"
                         />
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-lg md:text-2xl text-white/70 max-w-3xl mb-10 font-medium leading-relaxed">
+                    <p className="text-lg md:text-2xl text-foreground/70 max-w-3xl mb-10 font-medium leading-relaxed">
                         {hero.subtitle}
                     </p>
 
@@ -119,7 +118,7 @@ export default async function HomePage() {
                             </button>
                         </Link>
                         <Link href={hero.secondaryCtaLink || "/services/k12"} className="w-full sm:w-auto">
-                            <button className="bg-transparent text-white px-8 py-4 rounded-full font-bold text-base md:text-lg uppercase tracking-wider w-full flex items-center justify-center gap-3 border-2 border-white/30 hover:border-white hover:bg-white hover:text-foreground hover:scale-[1.03] transition-all duration-300 group">
+                            <button className="bg-transparent text-foreground px-8 py-4 rounded-full font-bold text-base md:text-lg uppercase tracking-wider w-full flex items-center justify-center gap-3 border-2 border-foreground/30 hover:border-foreground hover:bg-foreground hover:text-background hover:scale-[1.03] transition-all duration-300 group">
                                 {hero.secondaryCtaText || "Explore Services"}
                             </button>
                         </Link>
@@ -140,14 +139,14 @@ export default async function HomePage() {
             {/* ===== SERVICES ===== */}
             <section className="py-24 md:py-32 px-6 text-foreground" style={{ backgroundColor: '#faf9f7' }}>
                 <div className="max-w-7xl mx-auto">
-                    <AnimatedSection className="mb-14 pl-6 md:pl-0 border-l-4 border-primary">
+                    <AnimatedSection className="mb-14 ps-6 md:ps-0 border-s-4 border-primary">
                         <h2 
-                            className="font-headline font-black uppercase mb-4 text-black tracking-[-0.03em] pl-6"
+                            className="font-headline font-black uppercase mb-4 text-black tracking-[-0.03em] ps-6"
                             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1 }}
                         >
                             Pathways<br/><span className="text-primary">To Excellence</span>
                         </h2>
-                        <p className="text-muted-foreground max-w-2xl text-base md:text-lg font-medium pl-6">Whether you&apos;re aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
+                        <p className="text-muted-foreground max-w-2xl text-base md:text-lg font-medium ps-6">Whether you&apos;re aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
                     </AnimatedSection>
 
                     <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 pb-4 snap-x snap-mandatory hide-scrollbar">
@@ -302,7 +301,7 @@ export default async function HomePage() {
                     <Accordion type="single" collapsible className="space-y-2">
                         {FAQ_ITEMS.map((item, i) => (
                             <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-6 bg-white">
-                                <AccordionTrigger className="text-left font-semibold text-sm hover:no-underline text-foreground">
+                                <AccordionTrigger className="text-start font-semibold text-sm hover:no-underline text-foreground">
                                     {item.q}
                                 </AccordionTrigger>
                                 <AccordionContent className="text-muted-foreground text-sm leading-relaxed">

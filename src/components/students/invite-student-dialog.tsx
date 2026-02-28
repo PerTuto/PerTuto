@@ -92,9 +92,9 @@ export function InviteStudentDialog({
                 className="w-full h-12 text-base"
             >
               {loading ? (
-                <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Generating Link...</>
+                <><Loader2 className="me-2 h-5 w-5 animate-spin" /> Generating Link...</>
               ) : (
-                <><LinkIcon className="mr-2 h-5 w-5" /> Generate Magic Link</>
+                <><LinkIcon className="me-2 h-5 w-5" /> Generate Magic Link</>
               )}
             </Button>
           ) : (

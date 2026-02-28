@@ -94,7 +94,7 @@ export default function PricingPage() {
 
                         {/* Tier 2: Monthly Retainer */}
                         <div className="relative z-20 flex flex-col p-8 sm:p-10 rounded-3xl border-2 border-primary bg-white shadow-xl shadow-primary/10 transform md:-translate-y-4 transition-transform duration-300">
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                            <div className="absolute -top-4 start-1/2 -translate-x-1/2">
                                 <div className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-primary/30 tracking-widest uppercase flex items-center gap-1.5">
                                     <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
                                     Most Popular
@@ -165,7 +165,7 @@ export default function PricingPage() {
 
                         {/* Termly Tier 2: Intensive Termly */}
                         <div className="relative z-20 flex flex-col p-8 sm:p-10 rounded-3xl border-2 border-emerald-500 bg-emerald-50/20 shadow-xl shadow-emerald-500/10 transform md:-translate-y-4 transition-transform duration-300">
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                            <div className="absolute -top-4 start-1/2 -translate-x-1/2">
                                 <div className="bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-emerald-500/30 tracking-widest uppercase flex items-center gap-1.5">
                                     <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
                                     Maximum Results

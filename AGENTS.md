@@ -1,7 +1,7 @@
 # PerTuto — AI Agent Project Context
 
 > **One-file reference for any AI agent working on this codebase.**
-> Last updated: 2026-02-27 (Phase 17: Curriculum UI & Scaffolding)
+> Last updated: 2026-02-28 (Phase 21: Analytics & AI Insights)
 
 ---
 
@@ -312,6 +312,12 @@ git push origin master
 - **Multi-tenancy & ID Safety**: Added runtime assertions for `tenantId` in Firestore services and fixed polymorphic `isEditing` logic to prevent ID-less operations.
 - **NEW Phase 17**: Scalable curriculum scaffolding for CBSE and ICSE boards, complete with subject bifurcation logic and dynamic sorting by grade.
 - **NEW Phase 17**: Robust resource retrieval bypassing implicit Firestore batch limits, coupled with a deterministic Next.js client-server rendering tree to eliminate hydration mismatches.
+- **NEW Phase 20 (Sprint 4)**: Targeted Announcements system, Study Materials Library (Chapter/Topic scoped), and Real-time Notification bell.
+- **NEW Phase 20 (Sprint 4)**: Full RTL support across the dashboard using logical properties and dynamic `dir="auto"` injection.
+- **NEW Phase 20 (Sprint 4)**: 1-click Tenant Data Portability (JSON/CSV export Cloud Function).
+- **NEW Phase 21 (Sprint 5)**: Analytics Service Layer for real-time institutional KPIs and performance metrics.
+- **NEW Phase 21 (Sprint 5)**: Interactive Student Analytics (Line/Radar charts) and high-level Admin Insights dashboard.
+- **NEW Phase 21 (Sprint 5)**: AI-driven Gap Analysis and Score Prediction flows using Genkit.
 - Dashboard: login, leads kanban (edit/delete/status), students table, courses CRUD, schedule calendar, assignments list, availability grid, settings, org users
 - Team invite flow (`/join/[token]`)
 - Input sanitization + rate limiting on public lead form
@@ -331,6 +337,10 @@ git push origin master
 - ~~Attendance page~~ → Replaced AI stub with fully functional manual attendance table
 - ~~Service function efficiency~~ → Implemented `getStudentByUserId`, `getCoursesForTeacher`, and `getAssignmentsForStudent` native queries
 - ~~Firestore granular helpers~~ → Enforced document-level security with `isStudentOwner()` and `isParentOfStudent()`
+- ~~Communication Features~~ → Announcements, Library, and Notifications fully implemented (Sprint 4).
+- ~~Analytics Layer~~ → Real-time KPI aggregation and AI performance insights live (Sprint 5).
+- ~~RTL Support~~ → Global dashboard audit and logical property conversion complete.
+- ~~Data Portability~~ → Tenant data export (JSON/CSV) triggerable from settings.
 
 ---
 
@@ -375,6 +385,8 @@ git push origin master
 | **17** | **Curriculum Scaffolding** | Dynamic K-12 board pages (CBSE/ICSE), sorting bug fixes, Firestore 1000-limit resolution, React hydration error fixes, and robust UI rendering for syllabuses & past papers.                    |
 | **18** | **Audit Resolution**       | Addressed architectural gaps: created native optimized queries (`getCoursesForTeacher`, etc.), enforced strict `isStudentOwner`/`isParentOfStudent` document rules, built manual attendance UI. |
 | **19** | **UI/UX Polish**           | Refined the `/nike-proto` experimental homepage with Brilliant.org-inspired pastel rhythm, 3D button pops, Vanta constellation background, and fixed neural pathway micro-animations.           |
+| **20** | **Communication**          | **Sprint 4**: Announcements, targeted notifications, study material library, RTL localization audit, and JSON/CSV data export for tenants.                                                      |
+| **21** | **Analytics & AI**         | **Sprint 5**: Real-time KPI analytics service, Student/Admin dashboards with Recharts, AI Learning Gap Analysis (`gapAnalyzerFlow`), and Predictive Score Modeling (`scorePredictorFlow`).      |
 
 ---
 
@@ -390,6 +402,80 @@ git push origin master
 - **Phase 2 (Suite 8):** Completed (All 5 roles verified — Super/Admin/Teacher/Student/Parent dashboards and RBAC sidebar. 14/14 pass).
 - **Phase 3 (Suites 9-10):** Completed (Security access control 3/3, SEO 6/7 — only og:image missing).
 - **🎯 All test suites complete!** Final score: **123 tests, 111 passed, 11 issues.**
+
+---
+
+---
+
+## 14. Upcoming Roadmap (6-Sprint Plan)
+
+> **Goal:** Merge PerTuto + TutorOS AI features + Acadine capabilities into one product that beats all competitors.
+> **Reference Artifacts:** `implementation_plan.md`, `gap_analysis.md`, `task.md` (in Antigravity brain)
+
+| Sprint                  | Focus                          | Key Deliverables                                                                                                                           |
+| ----------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Pre-Sprint 0**        | Foundation Fixes               | Upgrade Genkit to 1.28+, firebase-functions v7, create `storage.rules`, split `services.ts`, fix catch-all Firestore rule, install KaTeX   |
+| **Sprint 1** (Wk 1-2)   | Question Bank + AI Flows + PWA | Port TutorOS AI flows (extractor, curator, validator, enhancer), question bank CRUD, quiz system, quiz player with offline sync, PWA setup |
+| **Sprint 2** (Wk 3-4)   | Institute Management + Papers  | Centers, Batches, AI Question Paper Generation (Acadine-style), syllabus weightage, PDF export                                             |
+| **Sprint 3** (Wk 5-6)   | AI Evaluation + HITL           | AI Answer Sheet Evaluator (Gemini Vision), test lifecycle, grade challenges, HITL teacher review queue, exam-day concurrency handling      |
+| **Sprint 4** (Wk 7-8)   | Communication + RTL + Export   | ✅ **Complete**: Announcements, library, RTL audit, JSON/CSV export, notification center.                                                  |
+| **Sprint 5** (Wk 9-10)  | Analytics Engine               | ✅ **Complete**: Aggregation service, Recharts interaction, AI Gap Analysis, Predictive scores.                                            |
+| **Sprint 6** (Wk 11-12) | Gamification + Practice        | 🟡 **In Progress**: Streaks, XP, badges, leaderboards, self-serve practice mode.                                                           |
+
+### New Firestore Collections (Planned)
+
+All under `tenants/{tenantId}/`:
+
+```
+questions/{questionId}        # Question bank (6 types, LaTeX, figures, 4D taxonomy)
+quizzes/{quizId}              # Quiz configurations
+quizAttempts/{attemptId}      # Student quiz submissions
+taxonomy/{nodeId}             # Hierarchical taxonomy tree
+centers/{centerId}            # Branch/location management
+batches/{batchId}             # Student groups per course
+questionPapers/{paperId}      # Generated question papers
+tests/{testId}                # Scheduled test lifecycle
+evaluations/{evalId}          # AI-evaluated answer sheets
+gradeChallenges/{challengeId} # Student grade disputes
+announcements/{announcementId}# Targeted notice board
+studyMaterials/{materialId}   # Organized content library
+notifications/{notifId}       # In-app notification center
+gamification/{studentId}      # Streaks, XP, badges
+```
+
+### New Cloud Functions (Planned)
+
+```
+functions/src/flows/
+├── extractor.ts              # AI PDF → Questions (ported from TutorOS)
+├── curator.ts                # NL → Quiz Filters (ported from TutorOS)
+├── validator.ts              # AI Quality Check + Confidence Score
+├── enhancer.ts               # Rephrase, Adjust Difficulty, Explain, Similar
+├── paper-generator.ts        # AI Question Paper Generation (Acadine-style)
+├── evaluator.ts              # AI Answer Sheet Evaluation (Vision AI)
+├── predictive-performance.ts # Predict exam scores from historical data
+└── assignment-feedback.ts    # AI per-line assignment feedback
+```
+
+### Key Architecture Decisions
+
+- **Question Bank Scope:** Per-tenant (not shared, unlike TutorOS)
+- **AI Trust:** All AI outputs include `confidenceScore`; scores < 85% routed to Teacher Review Queue (HITL)
+- **Offline Strategy:** PWA with Service Worker + IndexedDB for quiz offline sync
+- **PDF Generation:** Server-side Puppeteer (Cloud Function), not client-side
+- **LaTeX:** KaTeX with accessible MathML output for WCAG compliance
+- **Bundle Optimization:** All heavy components (quiz player, charts, paper editor) loaded via `next/dynamic`
+
+### Known Risks & Mitigations
+
+| Risk                                              | Mitigation                                            |
+| ------------------------------------------------- | ----------------------------------------------------- |
+| Genkit 1.20→1.28 upgrade may break existing flows | Refactor before porting (PREREQ-2)                    |
+| No Firebase Storage rules                         | Create `storage.rules` (PREREQ-3)                     |
+| Firestore catch-all wildcard too permissive       | Replace with explicit per-collection rules (PREREQ-6) |
+| `services.ts` monolith (923 lines)                | Split into domain modules (PREREQ-5)                  |
+| Exam-day concurrency spike                        | IndexedDB offline sync + debounced writes             |
+| AI hallucination in evaluation                    | Confidence scoring + HITL review queue                |
 
 ---
 

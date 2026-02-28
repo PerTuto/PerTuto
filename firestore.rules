@@ -148,8 +148,14 @@ service cloud.firestore {
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
-      // Default catch-all for other subcollections
-      match /{allSubcollections=**} {
+      // Availability — teachers can manage
+      match /availability/{slotId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Testimonials — public read (approved), admin/teacher write
+      match /testimonials/{testimonialId} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }

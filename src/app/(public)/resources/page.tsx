@@ -19,7 +19,7 @@ export default function ResourcesHubPage() {
                 <FluidBlob />
                 <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
                     <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary uppercase">
-                        <span className="mr-2 flex h-2 w-2 relative">
+                        <span className="me-2 flex h-2 w-2 relative">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
@@ -89,7 +89,7 @@ export default function ResourcesHubPage() {
                             <div className="mt-4 flex gap-3">
                                 <Link href="/resources/ib/math-aa-(sl)" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Math AA <ArrowRight className="w-3.5 h-3.5" /></Link>
                                 <Link href="/resources/ib/chemistry-(sl)" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Chemistry <ArrowRight className="w-3.5 h-3.5" /></Link>
-                                <Link href="/resources/ib" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all ml-auto">All IB <ArrowRight className="w-3.5 h-3.5" /></Link>
+                                <Link href="/resources/ib" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all ms-auto">All IB <ArrowRight className="w-3.5 h-3.5" /></Link>
                             </div>
                         </div>
                     </AnimatedSection>
@@ -284,7 +284,7 @@ export default function ResourcesHubPage() {
                             <p className="text-muted-foreground max-w-md mx-auto mb-10">
                                 Book a free consultation. We&apos;ll match you with the right tutor and create a personalized study plan.
                             </p>
-                            <div className="max-w-md mx-auto text-left">
+                            <div className="max-w-md mx-auto text-start">
                                 <LeadCaptureForm variant="minimal" />
                             </div>
                         </div>

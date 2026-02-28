@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <RoleGuard allowedRoles={[UserRole.Super]}>
             <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-950">
                 {/* Temporary Header for navigation */}
-                <div className="absolute top-4 right-4 z-10">
+                <div className="absolute top-4 end-4 z-10">
                     <Link href="/">
                         <Button variant="outline">Back to App</Button>
                     </Link>

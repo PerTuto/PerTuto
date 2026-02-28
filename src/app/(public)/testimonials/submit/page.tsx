@@ -118,7 +118,7 @@ function TestimonialForm() {
               placeholder="Tell us about your experience..."
               className="w-full rounded-xl border bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"
             />
-            <p className="text-xs text-muted-foreground text-right">{quote.length}/1000</p>
+            <p className="text-xs text-muted-foreground text-end">{quote.length}/1000</p>
           </div>
 
           {/* Name */}

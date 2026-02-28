@@ -226,7 +226,7 @@ export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete, onC
                   </div>
                 ) : (
                   <Button type="button" variant="ghost" size="sm" onClick={() => setConfirmDelete(true)} className="text-muted-foreground hover:text-destructive w-full sm:w-auto justify-start px-2">
-                    <Trash2 className="w-4 h-4 mr-2" /> Delete Lead
+                    <Trash2 className="w-4 h-4 me-2" /> Delete Lead
                   </Button>
                 )}
               </div>
@@ -239,12 +239,12 @@ export function EditLeadDialog({ lead, open, onOpenChange, onSave, onDelete, onC
                     onClick={handleConvert}
                     disabled={saving || converting}
                   >
-                    {converting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    {converting ? <Loader2 className="w-4 h-4 animate-spin me-2" /> : null}
                     Convert to Student
                   </Button>
                 )}
                 <Button type="submit" disabled={saving || converting} className="w-full sm:w-auto">
-                  {saving && !converting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                  {saving && !converting ? <Loader2 className="w-4 h-4 animate-spin me-2" /> : null}
                   Save Changes
                 </Button>
               </div>

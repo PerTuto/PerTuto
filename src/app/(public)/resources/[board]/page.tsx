@@ -68,7 +68,7 @@ export default async function BoardPage({ params }: { params: Promise<{ board: s
         {/* Header Setup */}
         <div className="space-y-4">
           <Link href="/resources" className="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-700">
-            <ArrowLeft className="w-4 h-4 mr-1" /> Back to All Resources
+            <ArrowLeft className="w-4 h-4 me-1" /> Back to All Resources
           </Link>
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-slate-900 tracking-tight">

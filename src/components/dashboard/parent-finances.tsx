@@ -149,7 +149,7 @@ export function ParentFinances({ children, selectedChild }: ParentFinancesProps)
                       {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(invoice.balanceDue)}
                     </span>
                     <Button size="sm" onClick={() => handlePayNow(invoice)} disabled={payingInvoiceId === invoice.id}>
-                      <CreditCard className="h-4 w-4 mr-1" /> {payingInvoiceId === invoice.id ? 'Processing...' : 'Pay Now'}
+                      <CreditCard className="h-4 w-4 me-1" /> {payingInvoiceId === invoice.id ? 'Processing...' : 'Pay Now'}
                     </Button>
                   </div>
                 </div>

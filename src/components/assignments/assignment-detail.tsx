@@ -177,7 +177,7 @@ export function AssignmentDetailDialog({
             Due: {(assignment.dueDate && typeof assignment.dueDate === 'object' && 'toDate' in assignment.dueDate ? (assignment.dueDate as any).toDate() : new Date(assignment.dueDate)).toLocaleDateString()}
             <Badge
               className={cn(
-                "ml-2 border-transparent",
+                "ms-2 border-transparent",
                 statusColor[assignment.status] || ""
               )}
             >
@@ -306,12 +306,12 @@ export function AssignmentDetailDialog({
               <Button onClick={handleGrade} disabled={grading}>
                 {grading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="me-2 h-4 w-4 animate-spin" />
                     Saving...
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 className="mr-2 h-4 w-4" />
+                    <CheckCircle2 className="me-2 h-4 w-4" />
                     Mark as Graded
                   </>
                 )}

@@ -1,0 +1,17 @@
+[debug] [2026-02-12T20:48:25.553Z] ----------------------------------------------------------------------
+[debug] [2026-02-12T20:48:25.554Z] Command:       /opt/homebrew/Cellar/node@20/20.19.6/bin/node /opt/homebrew/bin/firebase deploy --only functions --project databank-tutoros
+[debug] [2026-02-12T20:48:25.554Z] CLI Version:   15.4.0
+[debug] [2026-02-12T20:48:25.554Z] Platform:      darwin
+[debug] [2026-02-12T20:48:25.554Z] Node Version:  v20.19.6
+[debug] [2026-02-12T20:48:25.554Z] Time:          Fri Feb 13 2026 02:18:25 GMT+0530 (India Standard Time)
+[debug] [2026-02-12T20:48:25.554Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-02-12T20:48:25.555Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-02-12T20:48:26.287Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-12T20:48:26.287Z] > authorizing via signed-in user (super@24x7tutors.com)
+[debug] [2026-02-12T20:48:26.287Z] [iam] checking project databank-tutoros for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-02-12T20:48:26.288Z] Checked if tokens are valid: false, expires at: 1770809206024
+[debug] [2026-02-12T20:48:26.288Z] Checked if tokens are valid: false, expires at: 1770809206024
+[debug] [2026-02-12T20:48:26.288Z] > refreshing access token with scopes: []
+[debug] [2026-02-12T20:48:26.288Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-12T20:48:26.288Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]

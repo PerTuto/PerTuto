@@ -192,7 +192,7 @@ export default function AvailabilityGrid() {
                     </div>
                     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button size="sm"><Plus className="mr-2 h-4 w-4" /> Add Slot</Button>
+                            <Button size="sm"><Plus className="me-2 h-4 w-4" /> Add Slot</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
@@ -315,7 +315,7 @@ export default function AvailabilityGrid() {
                                                                     </Badge>
                                                                 ) : (
                                                                     <Badge variant="outline" className="text-[10px] bg-red-100 text-red-700 border-red-200">
-                                                                        <AlertCircle className="h-2.5 w-2.5 mr-1" /> Fully booked
+                                                                        <AlertCircle className="h-2.5 w-2.5 me-1" /> Fully booked
                                                                     </Badge>
                                                                 )}
                                                                 <Button
@@ -334,12 +334,12 @@ export default function AvailabilityGrid() {
 
                                                         {/* Booked classes within this slot */}
                                                         {overlapping.length > 0 && (
-                                                            <div className="space-y-1.5 pl-5">
+                                                            <div className="space-y-1.5 ps-5">
                                                                 {overlapping.map(c => (
                                                                     <div key={c.id} className="flex items-center gap-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg px-2.5 py-1.5">
                                                                         <BookOpen className="h-3 w-3 text-blue-600 shrink-0" />
                                                                         <span className="text-xs font-medium text-blue-700 dark:text-blue-400 truncate">{c.title}</span>
-                                                                        <span className="text-[10px] text-blue-500 ml-auto whitespace-nowrap">
+                                                                        <span className="text-[10px] text-blue-500 ms-auto whitespace-nowrap">
                                                                             {formatDisplayTime(
                                                                                 `${c.start.getHours().toString().padStart(2, '0')}:${c.start.getMinutes().toString().padStart(2, '0')}`,
                                                                                 hour12
@@ -377,7 +377,7 @@ export default function AvailabilityGrid() {
                                                         <div key={c.id} className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-2.5 py-1.5">
                                                             <AlertCircle className="h-3 w-3 text-amber-600 shrink-0" />
                                                             <span className="text-xs font-medium text-amber-700 dark:text-amber-400 truncate">{c.title}</span>
-                                                            <span className="text-[10px] text-amber-500 ml-auto whitespace-nowrap">
+                                                            <span className="text-[10px] text-amber-500 ms-auto whitespace-nowrap">
                                                                 {formatDisplayTime(
                                                                     `${c.start.getHours().toString().padStart(2, '0')}:${c.start.getMinutes().toString().padStart(2, '0')}`,
                                                                     hour12

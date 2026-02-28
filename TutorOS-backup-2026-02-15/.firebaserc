@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "databank-tutoros"
+  },
+  "targets": {
+    "databank-tutoros": {
+      "hosting": {
+        "main": [
+          "databank-tutoros"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

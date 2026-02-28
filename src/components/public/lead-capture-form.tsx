@@ -135,9 +135,9 @@ export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCap
                 className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
             >
                 {isSubmitting ? (
-                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</>
+                    <><Loader2 className="me-2 h-4 w-4 animate-spin" /> Submitting...</>
                 ) : (
-                    <><Send className="mr-2 h-4 w-4" /> Book My Free Demo</>
+                    <><Send className="me-2 h-4 w-4" /> Book My Free Demo</>
                 )}
             </Button>
         </form>

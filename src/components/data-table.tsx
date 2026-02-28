@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
                <Button>
-                  <PlusCircle className="mr-2 h-4 w-4" /> {addEntityContext.addLabel}
+                  <PlusCircle className="me-2 h-4 w-4" /> {addEntityContext.addLabel}
                 </Button>
             </DialogTrigger>
             <DialogContent>

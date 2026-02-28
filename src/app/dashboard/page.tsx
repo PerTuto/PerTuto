@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect } from "react";
+import { AdminInsights } from "@/components/analytics/admin-insights";
 
 export default function DashboardPage() {
     const { userProfile, loading } = useAuth();
@@ -42,8 +43,6 @@ export default function DashboardPage() {
 
     // Student Portal
     if (role === "student") {
-        import("@/components/dashboards/student-home").then(); // Just to silence unused import error if I didn't import anything, but we do import
-        // Let's rely on the top-level import
         return <StudentHome />;
     }
 
@@ -61,7 +60,11 @@ export default function DashboardPage() {
     return (
         <div className="space-y-6">
             <QuickAdd />
-            <DashboardStats />
+            {role === "admin" || role === "super" || role === "executive" ? (
+                <AdminInsights />
+            ) : (
+                <DashboardStats />
+            )}
             <Separator />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <div className="md:col-span-2 space-y-6">

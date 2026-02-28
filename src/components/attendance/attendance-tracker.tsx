@@ -135,7 +135,7 @@ export function AttendanceTracker() {
               <TableRow>
                 <TableHead>Student</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead className="text-right">Present?</TableHead>
+                <TableHead className="text-end">Present?</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -159,7 +159,7 @@ export function AttendanceTracker() {
                           {isPresent ? "Present" : "Absent"}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-end">
                         <Switch 
                           checked={isPresent} 
                           onCheckedChange={() => toggleStudent(student.id)} 

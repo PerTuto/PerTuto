@@ -102,8 +102,8 @@ export function AgendaListView({ classes, courses, onClassClick, timezone }: Age
                     {/* Content Column */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <h4 className="font-bold text-base truncate pr-6">{c.title}</h4>
-                        <ChevronRight className="w-4 h-4 text-muted-foreground absolute right-4 top-1/2 -translate-y-1/2 opacity-50" />
+                        <h4 className="font-bold text-base truncate pe-6">{c.title}</h4>
+                        <ChevronRight className="w-4 h-4 text-muted-foreground absolute end-4 top-1/2 -translate-y-1/2 opacity-50" />
                       </div>
                       
                       <div className="flex flex-wrap gap-y-1 gap-x-3 items-center text-xs text-muted-foreground">

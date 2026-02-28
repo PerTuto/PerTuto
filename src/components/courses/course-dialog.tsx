@@ -127,7 +127,7 @@ export function CourseDialog({ courseToEdit, onCourseSaved, trigger }: CourseDia
             <DialogTrigger asChild>
                 {trigger || (
                     <Button>
-                        <Plus className="mr-2 h-4 w-4" />
+                        <Plus className="me-2 h-4 w-4" />
                         Add Course
                     </Button>
                 )}

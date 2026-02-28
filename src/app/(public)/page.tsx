@@ -131,8 +131,8 @@ export default async function HomePage() {
 
             {/* ===== CURRICULUM MARQUEE ===== */}
             <div className="w-full border-y border-border overflow-hidden py-10 relative bg-secondary/50">
-                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute inset-y-0 start-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute inset-y-0 end-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
 
                 <div className="flex whitespace-nowrap animate-marquee">
                     {[1, 2, 3].map((setIndex) => (
@@ -305,7 +305,7 @@ export default async function HomePage() {
                     <Accordion type="single" collapsible className="space-y-2">
                         {FAQ_ITEMS.map((item, i) => (
                             <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-6 bg-white">
-                                <AccordionTrigger className="text-left font-semibold text-sm hover:no-underline text-foreground">
+                                <AccordionTrigger className="text-start font-semibold text-sm hover:no-underline text-foreground">
                                     {item.q}
                                 </AccordionTrigger>
                                 <AccordionContent className="text-muted-foreground text-sm leading-relaxed">

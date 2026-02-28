@@ -76,7 +76,7 @@ export default function AdminDashboard() {
                 </div>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                     <DialogTrigger asChild>
-                        <Button><Plus className="h-4 w-4 mr-2" /> Create Tenant</Button>
+                        <Button><Plus className="h-4 w-4 me-2" /> Create Tenant</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
                         </div>
                         <DialogFooter>
                             <Button onClick={handleCreateTenant} disabled={creating || !newTenant.name.trim()}>
-                                {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                                {creating && <Loader2 className="h-4 w-4 me-2 animate-spin" />}
                                 Create Tenant
                             </Button>
                         </DialogFooter>

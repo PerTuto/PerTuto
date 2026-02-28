@@ -83,20 +83,20 @@ export function QuickAdd({ onEntityAdd }: QuickAddProps) {
       onSubmit={handleSubmit}
       className="relative"
     >
-      <Wand2 className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <Wand2 className="absolute start-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
       <Input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Quick Add: 'new student John Doe' or 'new lead Jane Smith'..."
-        className="pl-10 pr-24 h-12 text-base"
+        className="ps-10 pe-24 h-12 text-base"
         disabled={isPending}
       />
       <Button
         type="submit"
-        className="absolute right-2 top-1/2 -translate-y-1/2"
+        className="absolute end-2 top-1/2 -translate-y-1/2"
         disabled={isPending || !input}
       >
-        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isPending && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
         Add
       </Button>
     </form>

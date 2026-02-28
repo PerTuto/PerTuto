@@ -46,10 +46,10 @@ export function AIQuickAdd({ onResult }: AIQuickAddProps) {
     return (
         <form onSubmit={handleSubmit} className="flex flex-1 items-center gap-2 max-w-lg">
             <div className="relative flex-1">
-                <Sparkles className="absolute left-2.5 top-2.5 h-4 w-4 text-primary animate-pulse" />
+                <Sparkles className="absolute start-2.5 top-2.5 h-4 w-4 text-primary animate-pulse" />
                 <Input
                     placeholder="e.g. Schedule Math on Monday at 2 PM"
-                    className="pl-9 bg-primary/5 border-primary/20 focus-visible:ring-primary"
+                    className="ps-9 bg-primary/5 border-primary/20 focus-visible:ring-primary"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     disabled={loading}

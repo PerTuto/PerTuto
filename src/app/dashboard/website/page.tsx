@@ -211,12 +211,12 @@ export default function WebsiteCMSPage() {
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="absolute top-3 right-3 h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                      className="absolute top-3 end-3 h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50"
                       onClick={() => removeFeature(idx)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
-                    <div className="space-y-4 pr-10">
+                    <div className="space-y-4 pe-10">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Feature Title</Label>

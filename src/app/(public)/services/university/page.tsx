@@ -19,7 +19,7 @@ export default function UniversityPage() {
                 <FluidBlob />
                 <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
                     <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary uppercase">
-                        <span className="mr-2 flex h-2 w-2 relative">
+                        <span className="me-2 flex h-2 w-2 relative">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
@@ -64,7 +64,7 @@ export default function UniversityPage() {
                             <div className="mt-12 relative h-48 w-full overflow-hidden rounded-xl border border-border bg-[#1e293b]">
                                 <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
                                     <span className="w-3 h-3 rounded-full bg-slate-500/50"></span>
-                                    <span className="text-xs text-slate-400 font-mono ml-2">Research_Proposal_Final.pdf</span>
+                                    <span className="text-xs text-slate-400 font-mono ms-2">Research_Proposal_Final.pdf</span>
                                 </div>
                                 <div className="p-4 overflow-hidden relative">
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#1e293b] to-transparent z-10"></div>
@@ -120,7 +120,7 @@ export default function UniversityPage() {
             <section className="py-24 border-t border-border bg-secondary/30 overflow-hidden">
                 <div className="mx-auto max-w-6xl px-6">
                     <div className="flex flex-col-reverse items-center gap-16 lg:flex-row">
-                        <AnimatedSection animation="fade-left" className="w-full lg:w-1/2 lg:pr-8">
+                        <AnimatedSection animation="fade-left" className="w-full lg:w-1/2 lg:pe-8">
                             <div className="mb-6 inline-flex items-center gap-3 text-sm font-bold text-emerald-600 uppercase tracking-widest">
                                 <span className="h-px w-12 bg-emerald-600"></span>
                                 ROI Focused
@@ -165,7 +165,7 @@ export default function UniversityPage() {
                             <p className="text-muted-foreground max-w-md mx-auto mb-10">
                                 Stop struggling in isolation. Tell us where you are stuck and we&apos;ll architect the fastest path forward.
                             </p>
-                            <div className="max-w-md mx-auto text-left">
+                            <div className="max-w-md mx-auto text-start">
                                 <LeadCaptureForm variant="minimal" />
                             </div>
                         </div>

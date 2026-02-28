@@ -227,7 +227,7 @@ export function OrbitalCurriculum({
         className="w-full h-full"
       />
       {hoveredTag && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-bold text-primary uppercase tracking-wider backdrop-blur-sm pointer-events-none animate-fade-in-up">
+        <div className="absolute bottom-4 start-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-bold text-primary uppercase tracking-wider backdrop-blur-sm pointer-events-none animate-fade-in-up">
           Explore {hoveredTag} →
         </div>
       )}

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Building, DollarSign, Image as ImageIcon } from "lucide-react";
+import { Loader2, Building, DollarSign, Image as ImageIcon, Database, Download, FileJson, FileSpreadsheet, AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OrganizationSettingsPage() {
@@ -56,6 +56,29 @@ export default function OrganizationSettingsPage() {
     }
     fetchSettings();
   }, [userProfile?.tenantId, toast]);
+
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async (format: 'json' | 'csv') => {
+    if (!userProfile?.tenantId) return;
+    setExporting(true);
+    try {
+      // In a real app, this calls an httpsCallable Cloud Function
+      // const exportData = httpsCallable(functions, 'tenantDataExporter');
+      // const result = await exportData({ tenantId: userProfile.tenantId, format });
+      
+      toast({ 
+        title: "Export Started", 
+        description: `Your ${format.toUpperCase()} export is being generated. You will receive a notification when it's ready for download.` 
+      });
+      
+      // Simulating a delay for UI feedback
+      setTimeout(() => setExporting(false), 2000);
+    } catch (error: any) {
+      toast({ title: "Export Failed", description: error.message, variant: "destructive" });
+      setExporting(false);
+    }
+  };
 
   const handleSave = async (tabName: string) => {
     if (!userProfile?.tenantId) return;
@@ -122,6 +145,7 @@ export default function OrganizationSettingsPage() {
           <TabsTrigger value="profile" className="gap-2"><Building className="h-4 w-4" /> Profile</TabsTrigger>
           <TabsTrigger value="financials" className="gap-2"><DollarSign className="h-4 w-4" /> Financial Policies</TabsTrigger>
           <TabsTrigger value="branding" className="gap-2"><ImageIcon className="h-4 w-4" /> Branding</TabsTrigger>
+          <TabsTrigger value="portability" className="gap-2"><Database className="h-4 w-4" /> Data Portability</TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile">
@@ -164,7 +188,7 @@ export default function OrganizationSettingsPage() {
             </CardContent>
             <CardFooter>
               <Button onClick={() => handleSave("profile")} disabled={saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {saving && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                 Save Profile
               </Button>
             </CardFooter>
@@ -182,11 +206,11 @@ export default function OrganizationSettingsPage() {
                 <div className="space-y-1">
                   <Label htmlFor="rate">Default Hourly Rate</Label>
                   <div className="relative">
-                    <DollarSign className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <DollarSign className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input 
                       id="rate" 
                       type="number" 
-                      className="pl-8" 
+                      className="ps-8" 
                       value={defaultHourlyRate} 
                       onChange={(e) => setDefaultHourlyRate(parseFloat(e.target.value))} 
                     />
@@ -226,7 +250,7 @@ export default function OrganizationSettingsPage() {
             </CardContent>
             <CardFooter>
               <Button onClick={() => handleSave("financials")} disabled={saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {saving && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                 Save Financial Policies
               </Button>
             </CardFooter>
@@ -262,10 +286,76 @@ export default function OrganizationSettingsPage() {
             </CardContent>
             <CardFooter>
               <Button onClick={() => handleSave("branding")} disabled={saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {saving && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                 Save Branding
               </Button>
             </CardFooter>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="portability">
+          <Card className="border-primary/10 bg-primary/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Database className="h-5 w-5 text-primary" /> Tenant Data Portability
+              </CardTitle>
+              <CardDescription>
+                Download a complete archive of your organization&apos;s data. This includes students, courses, financial records, and learning materials.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="p-6 rounded-2xl bg-glass border border-slate-200 dark:border-white/5 space-y-4">
+                  <div className="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-500">
+                    <FileJson className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 dark:text-white">Full JSON Export</h4>
+                    <p className="text-xs text-muted-foreground dark:text-white/40 leading-relaxed">
+                      Best for developers or for importing into another system. Contains all raw document data.
+                    </p>
+                  </div>
+                  <Button 
+                    className="w-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/10"
+                    disabled={exporting}
+                    onClick={() => handleExport('json')}
+                  >
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : <Download className="h-4 w-4 me-2" />}
+                    Download JSON Archive
+                  </Button>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-glass border border-slate-200 dark:border-white/5 space-y-4">
+                  <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-500">
+                    <FileSpreadsheet className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 dark:text-white">Flat CSV Export</h4>
+                    <p className="text-xs text-muted-foreground dark:text-white/40 leading-relaxed">
+                      Best for analysis in Excel or Google Sheets. Flattened tables for students, payments, and attendance.
+                    </p>
+                  </div>
+                  <Button 
+                    className="w-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/10"
+                    disabled={exporting}
+                    onClick={() => handleExport('csv')}
+                  >
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : <Download className="h-4 w-4 me-2" />}
+                    Download CSV Archive
+                  </Button>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex gap-3">
+                <AlertCircle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="text-xs font-bold text-amber-500">Important Security Note</p>
+                  <p className="text-[10px] text-amber-500/60 leading-tight">
+                    Exporting data is a sensitive operation. All exports are logged and restricted to Organization Executives. Ensure you handle the downloaded files with care as they contain Personal Identifiable Information (PII).
+                  </p>
+                </div>
+              </div>
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>

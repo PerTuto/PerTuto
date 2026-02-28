@@ -51,7 +51,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <nav className="hidden md:flex items-center gap-8 absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                         {NAV_LINKS.map((link) =>
                             link.children ? (
                                 // Services Dropdown
@@ -64,7 +64,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                         <ChevronDown className={`w-4 h-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
                                     </button>
                                     {servicesOpen && (
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-white rounded-xl border border-border shadow-lg p-2 animate-fade-in">
+                                        <div className="absolute top-full start-1/2 -translate-x-1/2 mt-3 w-72 bg-white rounded-xl border border-border shadow-lg p-2 animate-fade-in">
                                             {link.children.map((child) => (
                                                 <Link
                                                     key={child.href}

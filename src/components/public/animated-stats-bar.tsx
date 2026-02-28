@@ -142,7 +142,7 @@ const AnimatedStat = ({ value, label, suffix = "", duration = 2, onComplete }: S
         <div ref={ref} className="flex flex-col items-center justify-center p-5 text-center rounded-2xl bg-white/60 backdrop-blur-sm">
             <div className="text-4xl md:text-5xl font-black font-headline text-primary mb-2 tracking-tighter flex items-center">
                 {count}
-                <span className="text-foreground ml-1">{suffix}</span>
+                <span className="text-foreground ms-1">{suffix}</span>
             </div>
             <div className="text-sm md:text-base font-semibold text-muted-foreground uppercase tracking-widest">
                 {label}

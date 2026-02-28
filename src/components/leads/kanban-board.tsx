@@ -85,7 +85,7 @@ function SortableLeadCard({ lead, isProcessing, onEditClick }: { lead: Lead, isP
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-left shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing",
+        "group relative bg-white p-4 rounded-xl border border-border hover:border-primary/50 transition-all text-start shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing",
         lead.status === LeadStatus.Converted ? "opacity-75" : "",
         isDragging && "opacity-30 border-primary",
         isProcessing && "opacity-50 pointer-events-none"

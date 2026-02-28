@@ -528,8 +528,8 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                             {isEditing && (
                                 <AlertDialog>
                                     <AlertDialogTrigger asChild>
-                                        <Button variant="destructive" type="button" className="mr-auto">
-                                            <Trash2 className="h-4 w-4 mr-2" />
+                                        <Button variant="destructive" type="button" className="me-auto">
+                                            <Trash2 className="h-4 w-4 me-2" />
                                             Delete
                                         </Button>
                                     </AlertDialogTrigger>
@@ -553,14 +553,14 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                                 variant="outline"
                                 onClick={handleCheckConflicts}
                                 disabled={isCheckingConflicts}
-                                className="mr-2"
+                                className="me-2"
                             >
-                                {isCheckingConflicts ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2 text-primary" />}
+                                {isCheckingConflicts ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4 me-2 text-primary" />}
                                 Smart Check
                             </Button>
 
                             <Button type="submit" disabled={form.formState.isSubmitting}>
-                                {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                {form.formState.isSubmitting && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                                 {isEditing ? "Update Class" : "Schedule Class"}
                             </Button>
                         </DialogFooter>

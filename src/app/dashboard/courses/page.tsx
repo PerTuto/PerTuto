@@ -172,7 +172,7 @@ export default function CoursesPage() {
                     </div>
                   )}
                   <Badge
-                    className={`absolute top-2 right-2 ${getStatusColor(course.status)}`}
+                    className={`absolute top-2 end-2 ${getStatusColor(course.status)}`}
                   >
                     {course.status}
                   </Badge>
@@ -242,7 +242,7 @@ export default function CoursesPage() {
                     onEnrollmentSaved={fetchData}
                     trigger={
                       <Button variant="outline" className="flex-1" size="sm">
-                        <Users className="mr-2 h-4 w-4" />
+                        <Users className="me-2 h-4 w-4" />
                         Students
                       </Button>
                     }
@@ -252,7 +252,7 @@ export default function CoursesPage() {
                     onCourseSaved={handleCourseSaved}
                     trigger={
                       <Button variant="outline" className="flex-1" size="sm">
-                        <Pencil className="mr-2 h-4 w-4" />
+                        <Pencil className="me-2 h-4 w-4" />
                         Edit
                       </Button>
                     }

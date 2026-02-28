@@ -188,7 +188,7 @@ export function InvoiceDialog({ onInvoiceCreated, trigger }: InvoiceDialogProps)
               <div className="flex justify-between items-center">
                 <h4 className="text-sm font-medium">Line Items</h4>
                 <Button type="button" variant="outline" size="sm" onClick={handleAddItem}>
-                  <Plus className="h-3 w-3 mr-1" /> Add Item
+                  <Plus className="h-3 w-3 me-1" /> Add Item
                 </Button>
               </div>
 
@@ -232,7 +232,7 @@ export function InvoiceDialog({ onInvoiceCreated, trigger }: InvoiceDialogProps)
               ))}
               
               <div className="flex justify-end pt-2 text-sm">
-                <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-right">
+                <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-end">
                   <span className="text-muted-foreground">Subtotal:</span>
                   <span>${subtotal.toFixed(2)}</span>
                   <span className="font-semibold">Total:</span>
@@ -260,7 +260,7 @@ export function InvoiceDialog({ onInvoiceCreated, trigger }: InvoiceDialogProps)
             <Button type="submit" disabled={loading}>
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="me-2 h-4 w-4 animate-spin" />
                   Saving...
                 </>
               ) : (

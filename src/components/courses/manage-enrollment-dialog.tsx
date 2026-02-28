@@ -97,7 +97,7 @@ export function ManageEnrollmentDialog({ course, onEnrollmentSaved, trigger }: M
             <DialogTrigger asChild>
                 {trigger || (
                     <Button variant="outline" size="sm">
-                        <Users className="mr-2 h-4 w-4" />
+                        <Users className="me-2 h-4 w-4" />
                         Manage Students
                     </Button>
                 )}
@@ -171,7 +171,7 @@ export function ManageEnrollmentDialog({ course, onEnrollmentSaved, trigger }: M
                             "Saving..."
                         ) : (
                             <>
-                                <Save className="mr-2 h-4 w-4" />
+                                <Save className="me-2 h-4 w-4" />
                                 Save Changes
                             </>
                         )}

@@ -68,7 +68,7 @@ export function TypingTestimonial({
       &ldquo;{quote.slice(0, displayedLength)}
       {(!typingDone || cursorVisible) && (
         <span
-          className="inline-block w-[2px] h-[1em] bg-primary ml-0.5 align-text-bottom"
+          className="inline-block w-[2px] h-[1em] bg-primary ms-0.5 align-text-bottom"
           style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}
         />
       )}

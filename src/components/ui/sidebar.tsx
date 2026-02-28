@@ -131,7 +131,7 @@ const SidebarMenuButton = React.forwardRef<
   ) => {
     
     const buttonClasses = cn(
-      "flex w-full items-center gap-3 rounded-md p-2 text-left text-sm font-medium outline-none ring-sidebar-ring transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50",
+      "flex w-full items-center gap-3 rounded-md p-2 text-start text-sm font-medium outline-none ring-sidebar-ring transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50",
       isActive && "bg-sidebar-accent text-sidebar-accent-foreground",
       className
     );

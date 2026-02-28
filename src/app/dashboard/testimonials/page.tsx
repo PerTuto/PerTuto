@@ -313,7 +313,7 @@ function TestimonialCard({
               Reject
             </Button>
           )}
-          <Button size="sm" variant="ghost" onClick={onDelete} disabled={processing} className="gap-1.5 ml-auto text-muted-foreground hover:text-destructive">
+          <Button size="sm" variant="ghost" onClick={onDelete} disabled={processing} className="gap-1.5 ms-auto text-muted-foreground hover:text-destructive">
             <Trash2 className="w-3 h-3" /> Delete
           </Button>
         </div>

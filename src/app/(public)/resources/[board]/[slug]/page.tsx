@@ -51,7 +51,7 @@ function SyllabusChapter({ r, expanded, onToggle }: { r: any; expanded: boolean;
   return (
     <Card className="overflow-hidden border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md">
       <button
-        className="w-full p-5 text-left flex items-center justify-between hover:bg-muted/30 transition-colors"
+        className="w-full p-5 text-start flex items-center justify-between hover:bg-muted/30 transition-colors"
         onClick={onToggle}
       >
         <div className="flex items-center gap-3 min-w-0">
@@ -68,7 +68,7 @@ function SyllabusChapter({ r, expanded, onToggle }: { r: any; expanded: boolean;
         <div className="flex items-center gap-2 shrink-0">
           {r.weightage && (
             <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-[11px] font-semibold hidden sm:inline-flex">
-              <Award className="w-3 h-3 mr-1" />
+              <Award className="w-3 h-3 me-1" />
               {r.weightage}
             </Badge>
           )}
@@ -82,12 +82,12 @@ function SyllabusChapter({ r, expanded, onToggle }: { r: any; expanded: boolean;
 
       {expanded && (
         <CardContent className="pt-0 pb-6 px-5 animate-fade-in">
-          <div className="pl-12 space-y-5">
+          <div className="ps-12 space-y-5">
             {/* Weightage badge (mobile) */}
             {r.weightage && (
               <div className="sm:hidden">
                 <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-[11px] font-semibold">
-                  <Award className="w-3 h-3 mr-1" />
+                  <Award className="w-3 h-3 me-1" />
                   {r.weightage}
                 </Badge>
               </div>
@@ -131,10 +131,10 @@ function SyllabusChapter({ r, expanded, onToggle }: { r: any; expanded: boolean;
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-primary/10 bg-primary/5">
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary/70">
+                        <th className="text-start px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary/70">
                           Name
                         </th>
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary/70">
+                        <th className="text-start px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary/70">
                           Formula
                         </th>
                       </tr>
@@ -526,7 +526,7 @@ function GradePageContent({ board, slug }: { board: string; slug: string }) {
                         </div>
                         <h3 className="font-semibold text-lg">{r.title}</h3>
                       </div>
-                      <div className="prose prose-sm dark:prose-invert max-w-none pl-[52px] text-slate-700">
+                      <div className="prose prose-sm dark:prose-invert max-w-none ps-[52px] text-slate-700">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {r.content}
                         </ReactMarkdown>
@@ -542,7 +542,7 @@ function GradePageContent({ board, slug }: { board: string; slug: string }) {
                   return (
                     <Card key={r.id} className="overflow-hidden mb-4">
                       <button
-                        className="w-full p-5 text-left flex items-start gap-3 hover:bg-muted/30 transition-colors"
+                        className="w-full p-5 text-start flex items-start gap-3 hover:bg-muted/30 transition-colors"
                         onClick={() => toggleExpand(r.id)}
                       >
                         <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/30 flex items-center justify-center shrink-0 mt-0.5">
@@ -559,7 +559,7 @@ function GradePageContent({ board, slug }: { board: string; slug: string }) {
                       </button>
                       {expanded && (
                         <CardContent className="pt-0 pb-5 px-5">
-                          <div className="pl-11 prose prose-sm dark:prose-invert max-w-none text-slate-700">
+                          <div className="ps-11 prose prose-sm dark:prose-invert max-w-none text-slate-700">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                               {r.content}
                             </ReactMarkdown>

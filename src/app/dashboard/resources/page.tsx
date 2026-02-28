@@ -425,12 +425,12 @@ export default function ResourcesPage() {
           {/* Faceted CRM Filter Bar */}
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row flex-wrap items-center gap-3">
             <div className="relative flex-1 min-w-[200px] w-full md:w-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <Input
                 placeholder="Search resources by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 bg-slate-50 border-slate-200 focus-visible:ring-emerald-500"
+                className="ps-9 bg-slate-50 border-slate-200 focus-visible:ring-emerald-500"
               />
             </div>
             <Select value={filterCurriculum} onValueChange={setFilterCurriculum}>
@@ -492,7 +492,7 @@ export default function ResourcesPage() {
                 }}
                 className="text-slate-500 hover:text-slate-900 w-full md:w-auto"
                >
-                 <X className="w-4 h-4 mr-2" /> Clear
+                 <X className="w-4 h-4 me-2" /> Clear
                </Button>
             )}
           </div>
@@ -525,7 +525,7 @@ export default function ResourcesPage() {
                       <TableHead>Pathway & Subject</TableHead>
                       <TableHead>Type</TableHead>
                       <TableHead className="text-center">Status</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="text-end">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -573,7 +573,7 @@ export default function ResourcesPage() {
                           </Badge>
                         </TableCell>
 
-                        <TableCell className="align-top text-right">
+                        <TableCell className="align-top text-end">
                           <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Button
                               variant="ghost"

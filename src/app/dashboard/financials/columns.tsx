@@ -91,7 +91,7 @@ export const columns: ColumnDef<Invoice & { studentName?: string }>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <FileText className="mr-2 h-4 w-4" />
+              <FileText className="me-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>
             {invoice.balanceDue > 0 && (
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Invoice & { studentName?: string }>[] = [
                   window.dispatchEvent(event);
                 }}
               >
-                <CreditCard className="mr-2 h-4 w-4" />
+                <CreditCard className="me-2 h-4 w-4" />
                 Record Payment
               </DropdownMenuItem>
             )}

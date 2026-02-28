@@ -432,13 +432,13 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
             <select
               value={timezone}
               onChange={(e) => handleTzChange(e.target.value)}
-              className="appearance-none bg-transparent border rounded-md px-2 py-1.5 text-xs pr-6 cursor-pointer hover:bg-muted/50 transition-colors"
+              className="appearance-none bg-transparent border rounded-md px-2 py-1.5 text-xs pe-6 cursor-pointer hover:bg-muted/50 transition-colors"
             >
               {COMMON_TIMEZONES.map(tz => (
                 <option key={tz.value} value={tz.value}>{tz.label}</option>
               ))}
             </select>
-            <Globe className="absolute right-1.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground pointer-events-none" />
+            <Globe className="absolute end-1.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground pointer-events-none" />
           </div>
 
           {/* View Toggle */}
@@ -478,7 +478,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
               <div
                 key={day.toISOString()}
                 className={cn(
-                  "text-center py-2 border-r last:border-r-0 transition-colors",
+                  "text-center py-2 border-r last:border-e-0 transition-colors",
                   isToday(day) && "bg-primary/5"
                 )}
               >
@@ -510,7 +510,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
               <div
                 key={day.toISOString()}
                 className={cn(
-                  "text-center py-2 border-r last:border-r-0 transition-colors bg-background/95 backdrop-blur-md",
+                  "text-center py-2 border-r last:border-e-0 transition-colors bg-background/95 backdrop-blur-md",
                   isToday(day) && "bg-primary/5"
                 )}
               >
@@ -535,10 +535,10 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
             {hourLabels.map((label, i) => (
               <div
                 key={i}
-                className="absolute w-full text-right"
+                className="absolute w-full text-end"
                 style={{ top: i * HOUR_HEIGHT - 6 }} // slight offset to align text vertically with the line below it
               >
-                <span className="text-[10px] text-muted-foreground pr-2 font-medium bg-transparent whitespace-nowrap block">{label}</span>
+                <span className="text-[10px] text-muted-foreground pe-2 font-medium bg-transparent whitespace-nowrap block">{label}</span>
               </div>
             ))}
           </div>
@@ -552,7 +552,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
             return (
               <div
                 key={day.toISOString()}
-                className={cn("relative border-r last:border-r-0", isToday(day) && "bg-primary/[0.02]")}
+                className={cn("relative border-r last:border-e-0", isToday(day) && "bg-primary/[0.02]")}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, day)}
                 onClick={(e) => handleGridClick(e, day)}
@@ -626,7 +626,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                                 onDragStart={(e) => handleDragStart(e, c)}
                                 onClick={(e) => { e.stopPropagation(); onClassClick?.(c); }}
                                 className={cn(
-                                  "absolute rounded-md border-l-[3px] px-2 py-1 cursor-pointer overflow-hidden transition-all",
+                                  "absolute rounded-md border-s-[3px] px-2 py-1 cursor-pointer overflow-hidden transition-all",
                                   "hover:shadow-lg hover:z-20 hover:scale-[1.02]",
                                   canManage && "cursor-grab active:cursor-grabbing",
                                   color.bg, color.border, color.text,
@@ -660,7 +660,7 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                                 {/* Resize handle */}
                                 {canManage && (
                                   <div
-                                    className="absolute bottom-0 left-0 right-0 h-2 cursor-s-resize hover:bg-black/10 dark:hover:bg-white/10 rounded-b-md"
+                                    className="absolute bottom-0 start-0 end-0 h-2 cursor-s-resize hover:bg-black/10 dark:hover:bg-white/10 rounded-b-md"
                                     onMouseDown={(e) => handleResizeStart(e, c)}
                                   />
                                 )}
@@ -685,11 +685,11 @@ export function WeeklyCalendar({ onClassClick, onSlotClick, onClassDragged, time
                 {/* ── Current time indicator ── */}
                 {isToday(day) && currentTimePosition > 0 && currentTimePosition < TOTAL_HEIGHT && (
                   <div
-                    className="absolute left-0 right-0 z-30 pointer-events-none"
+                    className="absolute start-0 end-0 z-30 pointer-events-none"
                     style={{ top: currentTimePosition }}
                   >
                     <div className="relative">
-                      <div className="absolute -left-[5px] -top-[5px] w-[10px] h-[10px] rounded-full bg-red-500" />
+                      <div className="absolute -start-[5px] -top-[5px] w-[10px] h-[10px] rounded-full bg-red-500" />
                       <div className="h-[2px] bg-red-500 w-full" />
                     </div>
                   </div>

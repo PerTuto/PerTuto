@@ -1,0 +1,42 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.workingDirectories": [
+        {
+            "directory": ".",
+            "changeProcessCWD": true
+        },
+        {
+            "directory": "functions",
+            "changeProcessCWD": true
+        },
+        {
+            "directory": "tutoros",
+            "changeProcessCWD": true
+        }
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/.next": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/.next": true,
+        "**/package-lock.json": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "firebase.emulatorUI.port": 4000
+}

@@ -46,6 +46,7 @@ export type Student = {
   curriculum?: string;
   grade?: string;
   timezone?: string;
+  batchIds?: string[]; // IDs of batches this student belongs to
 };
 
 export enum CourseStatus {
@@ -346,3 +347,328 @@ export type WebsiteContent = {
   updatedAt: Date;
   updatedBy: string; // UID of admin who last updated it
 };
+
+// --- Question Bank Types ---
+export type QuestionType =
+  | "MCQ_SINGLE"
+  | "MCQ_MULTI"
+  | "TRUE_FALSE"
+  | "FILL_IN_BLANK"
+  | "FREE_RESPONSE"
+  | "PASSAGE_BASED";
+
+export type QuestionDifficulty = "EASY" | "MEDIUM" | "HARD" | "OLYMPIAD";
+export type QuestionStatus = "DRAFT" | "PENDING" | "APPROVED" | "REJECTED";
+export type CognitiveDepth = "FLUENCY" | "CONCEPTUAL" | "APPLICATION" | "SYNTHESIS";
+
+export interface Question {
+  id: string;
+  stem: string; // The question text (may contain LaTeX)
+  type: QuestionType;
+  difficulty: QuestionDifficulty;
+  status: QuestionStatus;
+  options: { id: string; text: string; isCorrect: boolean }[]; // For MCQ types
+  correctAnswer: string; // For non-MCQ types
+  explanation: string; // Solution explanation
+  figures: { url: string; caption?: string; base64?: string }[];
+  taxonomy: {
+    domainId: string; // e.g., "Mathematics"
+    topicId: string; // e.g., "Calculus"
+    subTopicId: string; // e.g., "Derivatives"
+    cognitiveDepth: CognitiveDepth;
+    scaffoldLevel: number; // 1-5
+    curriculum: string; // e.g., "IB", "CBSE"
+    standardMapping?: string; // e.g., "IB.Math.HL.5.1"
+  };
+  source: {
+    origin: "AI_EXTRACTED" | "AI_GENERATED" | "MANUAL";
+    extractedFrom?: string; // PDF filename
+    pageNumber?: number;
+  };
+  confidenceScore?: number; // AI confidence 0-100
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// --- Quiz Types ---
+export interface Quiz {
+  id: string;
+  title: string;
+  description?: string;
+  questions: QuizQuestionConfig[];
+  totalPoints: number;
+  status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
+  settings: {
+    timeLimit?: number; // Minutes
+    shuffleQuestions: boolean;
+    showResults: boolean;
+    allowRetake: boolean;
+  };
+  isPublic: boolean;
+  publicSlug?: string;
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface QuizQuestionConfig {
+  questionId: string;
+  points: number;
+  order: number;
+}
+
+export interface QuizAttempt {
+  id: string;
+  quizId: string;
+  studentId: string;
+  responses: {
+    questionId: string;
+    answer: string;
+    isCorrect: boolean;
+    pointsAwarded: number;
+    timeTaken?: number; // Seconds per question
+  }[];
+  totalScore: number;
+  maxScore: number;
+  startedAt: Date;
+  completedAt?: Date;
+  synced: boolean; // IndexedDB → Firestore sync status
+}
+
+// --- Taxonomy Types ---
+export interface TaxonomyNode {
+  id: string;
+  parentId: string | null;
+  name: string;
+  type: "domain" | "topic" | "subtopic" | "microskill";
+  order: number;
+  description?: string;
+}
+
+export interface Subject extends TaxonomyNode {}
+
+// --- Institute Management Types ---
+
+export interface Center {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  status: "active" | "inactive";
+  createdAt: Date;
+}
+
+export interface Batch {
+  id: string;
+  name: string; // e.g., "IB Math HL — Batch A"
+  courseId: string;
+  centerId?: string; // Optional if no physical center
+  teacherIds: string[];
+  studentIds: string[];
+  status: "active" | "archived";
+  schedule?: {
+    dayOfWeek: number; // 0-6
+    startTime: string; // "14:00"
+    durationMins: number;
+  }[];
+  createdAt: Date;
+}
+
+export interface QuestionPaper {
+  id: string;
+  title: string;
+  courseId: string;
+  subjectId: string;
+  sections: PaperSection[];
+  totalMarks: number;
+  duration: number; // Minutes
+  instructions?: string;
+  status: "draft" | "approved" | "archived";
+  generationMode: "auto" | "manual" | "ai-assisted";
+  syllabus: {
+    chapters: { id: string; name: string; weightage: number }[];
+  };
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PaperSection {
+  title: string; // e.g., "Section A — MCQ"
+  instructions?: string;
+  questions: { questionId: string; marks: number; order: number }[];
+  totalMarks: number;
+}
+
+export interface SyllabusConfig {
+  id: string;
+  courseId: string;
+  curriculum: string; // "IB", "CBSE", etc.
+  chapters: {
+    id: string;
+    name: string;
+    weightage: number; // Percentage
+    topics: { id: string; name: string; weightage: number }[];
+  }[];
+  createdBy: string;
+  updatedAt: Date;
+}
+
+// --- Test Lifecycle & Evaluation Types ---
+
+export interface Test {
+  id: string;
+  title: string;
+  questionPaperId: string;
+  batchIds: string[];
+  scheduledDate: Date;
+  duration: number; // Minutes
+  instructions?: string;
+  status:
+    | "draft"
+    | "scheduled"
+    | "in-progress"
+    | "completed"
+    | "results-published";
+  uploadMode: "student-upload" | "admin-bulk" | "online-only";
+  createdBy: string;
+  createdAt: Date;
+}
+
+export interface Evaluation {
+  id: string;
+  testId: string;
+  studentId: string;
+  subject: string; // Denormalized for analytics
+  answerSheetUrl?: string; // Storage URL (scanned PDF/image)
+  questionScores: {
+    questionId: string;
+    marksAwarded: number;
+    maxMarks: number;
+    feedback: string; // Per-question AI feedback
+    confidence: number; // Per-question confidence 0-100
+  }[];
+  totalScore: number;
+  maxScore: number;
+  status: "pending" | "evaluating" | "evaluated" | "reviewed" | "published";
+  confidenceScore: number; // Overall AI confidence 0-100
+  requiresReview: boolean; // True if confidenceScore < 85
+  evaluatedAt?: Date;
+  reviewedBy?: string;
+  reviewedAt?: Date;
+  reviewNotes?: string;
+  createdAt: Date;
+}
+
+export interface GradeChallenge {
+  id: string;
+  evaluationId: string;
+  testId: string;
+  studentId: string;
+  questionId: string; // Which question is being challenged
+  reason: string; // Student's explanation
+  status: "open" | "reviewing" | "resolved";
+  resolution?: string; // Teacher's resolution note
+  marksChange?: number; // +/- marks adjustment
+  resolvedBy?: string;
+  createdAt: Date;
+  resolvedAt?: Date;
+}
+
+// --- Sprint 4: Communication Types ---
+
+export interface Announcement {
+  id: string;
+  title: string;
+  body: string; // Markdown/Rich text
+  targetType: "all" | "center" | "course" | "batch";
+  targetIds: string[]; // IDs of the selected targets
+  priority: "low" | "medium" | "high" | "urgent";
+  attachments?: { name: string; url: string }[];
+  createdBy: string;
+  createdAt: Date;
+  expiresAt?: Date;
+}
+
+export interface StudyMaterial {
+  id: string;
+  title: string;
+  description?: string;
+  subjectId: string;
+  chapterId?: string;
+  topicId?: string;
+  fileUrl: string; // Storage URL
+  fileType: "pdf" | "video" | "presentation" | "link" | "image";
+  fileSize?: number; // Bytes
+  courseIds: string[];
+  batchIds: string[];
+  uploadedBy: string;
+  createdAt: Date;
+}
+
+export interface Notification {
+  id: string;
+  userId: string; // Recipient
+  title: string;
+  body: string;
+  type: "announcement" | "test" | "grade" | "schedule" | "system";
+  link?: string; // Dashboard route to navigate to
+  read: boolean;
+  createdAt: Date;
+}
+
+// --- Sprint 5: Analytics & Predictive AI ---
+
+export interface PerformanceTrend {
+  date: string;
+  score: number;
+  average?: number;
+}
+
+export interface SubjectStrength {
+  subject: string;
+  score: number;
+  fullMark: number;
+  grade: string;
+}
+
+export interface TenantKpis {
+  totalStudents: number;
+  activeBatches: number;
+  attendanceRate: number;
+  revenue?: number;
+  growthPercentage?: number;
+}
+
+// --- Sprint 6: Gamification & Engagement ---
+
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string; // Lucide icon name or emoji
+  unlockedAt: Date;
+}
+
+export interface GamificationProfile {
+  studentId: string;
+  xp: number;
+  level: number;
+  streakCount: number;
+  lastActivityDate: Date;
+  badges: Badge[];
+  totalQuizzesCompleted: number;
+  totalClassesAttended: number;
+}
+
+export interface LeaderboardEntry {
+  studentId: string;
+  name: string;
+  avatar?: string;
+  xp: number;
+  level: number;
+  rank?: number;
+}

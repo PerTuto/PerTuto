@@ -172,7 +172,7 @@ export default function WelcomePage() {
                   )}
                 />
                 <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting && <Loader2 className="mr-2 animate-spin" />}
+                  {form.formState.isSubmitting && <Loader2 className="me-2 animate-spin" />}
                   Continue to Dashboard
                 </Button>
               </form>

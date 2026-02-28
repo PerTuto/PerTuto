@@ -269,9 +269,9 @@ export function ICalImport({ onImportComplete }: ICalImportProps) {
             className="bg-primary hover:bg-primary/90 min-w-[100px]"
           >
             {importing ? (
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              <Loader2 className="h-4 w-4 animate-spin me-2" />
             ) : (
-              <CheckCircle2 className="h-4 w-4 mr-2" />
+              <CheckCircle2 className="h-4 w-4 me-2" />
             )}
             Import Events
           </Button>

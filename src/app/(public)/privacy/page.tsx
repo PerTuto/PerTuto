@@ -25,7 +25,7 @@ export default function PrivacyPage() {
                         <p>
                             We collect information to provide better services to our users. The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.
                         </p>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                        <ul className="list-disc ps-6 space-y-2 mt-4 text-muted-foreground">
                             <li><strong>Account Information:</strong> Name, email address, phone number, and physical address when you register for an account or book a consultation.</li>
                             <li><strong>Student Data:</strong> Grade level, school curriculum, and academic goals to personalize the tutoring experience.</li>
                             <li><strong>Usage Data:</strong> Information on how you interact with our website, collected via Google Analytics.</li>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
 
                         <h2 className="text-2xl font-headline font-semibold mt-12 mb-4">2. How We Use Your Information</h2>
                         <p>We use the information we collect in various ways, including to:</p>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                        <ul className="list-disc ps-6 space-y-2 mt-4 text-muted-foreground">
                             <li>Provide, operate, and maintain our website and tutoring services.</li>
                             <li>Improve, personalize, and expand our educational offerings.</li>
                             <li>Understand and analyze how you use our website.</li>
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
                         <p>
                             We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:
                         </p>
-                        <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
+                        <ul className="list-disc ps-6 space-y-2 mt-4 text-muted-foreground">
                             <li><strong>The right to access:</strong> You have the right to request copies of your personal data.</li>
                             <li><strong>The right to rectification:</strong> You have the right to request that we correct any information you believe is inaccurate.</li>
                             <li><strong>The right to erasure:</strong> You have the right to request that we erase your personal data, under certain conditions.</li>

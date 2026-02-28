@@ -37,6 +37,8 @@
   ],
   "exclude": [
     "node_modules",
+    "functions",
+    "TutorOS-backup-2026-02-15",
     "chrono-class",
     "_legacy_angular",
     "_legacy_vite",

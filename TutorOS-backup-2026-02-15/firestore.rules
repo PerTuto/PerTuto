@@ -1,0 +1,123 @@
+// NOTE: Firebase Admin SDK (used by Cloud Functions) bypasses
+// these security rules entirely. This is by design — the extraction
+// pipeline, seed scripts, and any server-side logic operate with
+// full admin privileges regardless of these rules.
+//
+// These rules govern CLIENT-SIDE access only (web app, mobile SDKs).
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helper Functions ───────────────────────────────────────────
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Checks if the authenticated user has the "admin" role in their
+    // Firestore user document. NOTE: This performs a Firestore read
+    // per rule evaluation — consider migrating to custom claims
+    // (request.auth.token.admin == true) for production scale.
+    //
+    // RACE CONDITION: If a user is authenticated but their
+    // users/{uid} document hasn't been created yet (e.g. during
+    // signup), this will return false. New admin users may experience
+    // a brief lockout until their user document is written.
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ─── Users ──────────────────────────────────────────────────────
+    // Own profile only; admins can read all profiles
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Questions ──────────────────────────────────────────────────
+    // Authenticated users can read; only admins can write
+    match /questions/{questionId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ─── Quizzes ────────────────────────────────────────────────────
+    // Authenticated users can read all quizzes. Unauthenticated users
+    // can read only if the quiz has isPublic == true.
+    // Quizzes WITHOUT an isPublic field are private by default
+    // (null != true evaluates to false in Firestore rules).
+    match /quizzes/{quizId} {
+      allow read: if isSignedIn() || resource.data.isPublic == true;
+      allow write: if isAdmin();
+    }
+
+    // ─── Assignments ────────────────────────────────────────────────
+    // Admins can do anything; students can read and update their own
+    match /assignments/{assignmentId} {
+      allow read: if isAdmin() ||
+        (isSignedIn() && resource.data.studentId == request.auth.uid);
+      allow create: if isAdmin();
+      allow update: if isAdmin() ||
+        (isSignedIn() && resource.data.studentId == request.auth.uid);
+      allow delete: if isAdmin();
+    }
+
+    // ─── Quiz Attempts ──────────────────────────────────────────────
+    // Students create and update their own attempts; admins can read all
+    match /attempts/{attemptId} {
+      allow read: if isAdmin() ||
+        (isSignedIn() && resource.data.studentId == request.auth.uid);
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && resource.data.studentId == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+
+    // ─── Public Quiz Attempts (Anonymous) ───────────────────────────
+    // Anyone can submit an anonymous attempt, but documents must have
+    // the expected shape and be reasonably sized to prevent abuse.
+    match /public_attempts/{attemptId} {
+      allow create: if request.resource.data.keys().hasAll(['quizId', 'answers', 'submittedAt'])
+                    && request.resource.data.size() < 10;
+      allow read: if false;
+    }
+
+    // ─── Taxonomy Collections ───────────────────────────────────────
+    // Authenticated users can read; only admins can write
+    match /taxonomy_domains/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /taxonomy_topics/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /taxonomy_subtopics/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /taxonomy_nodes/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /taxonomy_concepts/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ─── Default Deny ───────────────────────────────────────────────
+    // All other collections not explicitly listed above are denied
+    // by default. This is Firestore's built-in behavior — unmatched
+    // paths return "permission denied" without needing an explicit
+    // deny rule. This comment exists to make the security posture
+    // explicit rather than implicit.
+  }
+}

@@ -10,9 +10,9 @@ import { getAssignments, getCourses } from "@/lib/firebase/services";
 import type { Assignment, Course } from "@/lib/types";
 
 const statusColors: { [key in "Pending" | "Submitted" | "Graded"]: string } = {
-  Pending: "bg-yellow-100 text-yellow-800",
-  Submitted: "bg-blue-100 text-blue-800",
-  Graded: "bg-green-100 text-green-800",
+  Pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/20",
+  Submitted: "bg-blue-100 text-blue-800 dark:bg-blue-500/10 dark:text-blue-500 border-blue-200 dark:border-blue-500/20",
+  Graded: "bg-green-100 text-green-800 dark:bg-green-500/10 dark:text-green-500 border-green-200 dark:border-green-500/20",
 };
 
 export function PendingAssignments() {

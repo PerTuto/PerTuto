@@ -81,7 +81,7 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link href="#book-demo">
               <Button size="lg" className="h-12 px-8 text-base font-semibold">
-                {subject.hero.ctaText} <ArrowRight className="ml-2 w-4 h-4" />
+                {subject.hero.ctaText} <ArrowRight className="ms-2 w-4 h-4" />
               </Button>
             </Link>
           </div>
@@ -112,7 +112,7 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             {subject.agitateSection.bulletPoints.map((point, index) => (
               <div key={index} className="bg-card/50 border border-border/50 rounded-2xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1 h-full bg-destructive/60"></div>
+                <div className="absolute top-0 start-0 w-1 h-full bg-destructive/60"></div>
                 <p className="text-muted-foreground leading-relaxed">{point}</p>
               </div>
             ))}
@@ -153,7 +153,7 @@ export default async function SubjectPage({ params }: { params: Promise<{ slug: 
       {/* ===== LEAD CAPTURE (CTA) ===== */}
       <section id="book-demo" className="py-24 px-6 relative overflow-hidden">
         {/* Subtle background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
         
         <div className="max-w-lg mx-auto relative z-10">
           <div className="rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-md p-8 md:p-10 shadow-2xl">

@@ -31,14 +31,14 @@ export function ConnectCalendarButton() {
     };
 
     if (loading) {
-        return <Button disabled variant="outline"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking...</Button>;
+        return <Button disabled variant="outline"><Loader2 className="me-2 h-4 w-4 animate-spin" /> Checking...</Button>;
     }
 
     if (connected) {
         return (
             <div className="flex items-center gap-4">
                 <Button variant="outline" className="text-green-600 border-green-200 hover:text-green-700 hover:bg-green-50 pointer-events-none">
-                    <CheckCircle className="mr-2 h-4 w-4" />
+                    <CheckCircle className="me-2 h-4 w-4" />
                     Calendar Connected
                 </Button>
                 <Button variant="link" className="text-muted-foreground text-xs" onClick={handleConnect}>

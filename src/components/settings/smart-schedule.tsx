@@ -79,7 +79,7 @@ export function SmartSchedule() {
             <FormItem><FormLabel>Student Preferences</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
         )} />
         <Button type="submit" disabled={isPending}>
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
+          {isPending ? <Loader2 className="me-2 h-4 w-4 animate-spin" /> : <Wand2 className="me-2 h-4 w-4" />}
           Generate Suggestion
         </Button>
       </form>

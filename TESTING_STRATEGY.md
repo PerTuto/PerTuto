@@ -2,6 +2,21 @@
 
 This document outlines the systematic testing protocol to verify all features, workflows, and AI pipelines integrated during the March 2026 Merge & Polish phases (specifically Sprints 1, 2, and 3 capabilities).
 
+## 0. Test Credentials (Seed Data)
+
+**Production URL:** `https://pertuto.com`
+
+Use these credentials for testing on the staging/production environment if the database has been seeded.
+
+| Role                | Email                    | Password      | Tenant ID         |
+| :------------------ | :----------------------- | :------------ | :---------------- |
+| **Super Admin**     | `super@pertuto.com`      | `password`    | N/A               |
+| **Tenant Admin**    | `admin@demoschool.com`   | `password123` | `test-tenant-001` |
+| **Teacher**         | `teacher@demoschool.com` | `password123` | `test-tenant-001` |
+| **Student (Alice)** | `alice@demoschool.com`   | `password123` | `test-tenant-001` |
+
+---
+
 ## 1. Multi-Tenant Role-Based Access Control (RBAC) Testing
 
 **Objective:** Ensure complete data isolation and correct access privileges across roles within a specific tenant (governed by `firestore.rules`).

@@ -87,11 +87,28 @@ Use these credentials for testing on the staging/production environment if the d
 - [ ] Trigger the `extractor.ts` flow.
 - [ ] **Verification:** Check the `/questions` Firestore collection to ensure questions were successfully parsed, tagged with correct 4D taxonomy metadata, and saved as individual documents.
 
+### 4.4 Data Integrity & Edge Cases
+
+- [ ] **LaTeX Rendering:** Add a question with complex math (e.g., `$\frac{-b \pm \sqrt{b^2-4ac}}{2a}$`) to the bank. Verify it renders correctly in both the Question Paper editor and the Quiz Player.
+- [ ] **Question Normalization:** Import a legacy `MULTIPLE_CHOICE` question. Verify it is correctly mapped to `MCQ_SINGLE` and that `correctAnswer` is removed (moved to `options`).
+- [ ] **4D Taxonomy:** Assign a question to a multi-level topic (e.g., Math -> Algebra -> Linear Equations). Verify the filters correctly surface it.
+
 ---
 
-## 5. Deployment Validation
+## 5. Domain Services & Deployment Validation
 
-**Objective:** Ensure complete production readiness across all decoupled services.
+**Objective:** Ensure complete production readiness across all 27 decoupled domain services.
+
+### Service Modules Checklist
+
+- [ ] **Admin Core:** `tenants.ts`, `users.ts`, `centers.ts`, `batches.ts`
+- [ ] **LMS Core:** `students.ts`, `teachers.ts`, `courses.ts`, `classes.ts`
+- [ ] **Assessment:** `questions.ts`, `quizzes.ts`, `tests.ts`, `question-papers.ts`
+- [ ] **AI Flows:** `evaluations.ts`, `grade-challenges.ts`, `taxonomy.ts`
+- [ ] **Operations:** `attendance.ts`, `assignments.ts`, `announcements.ts`, `notifications.ts`
+- [ ] **Infrastructure:** `storage-services.ts`, `financial-services.ts`, `analytics.ts`, `gamification.ts`
+
+### Deployment Deployment
 
 - [ ] **Core App:** Run `npm run build` locally to confirm 0 build errors across the Next.js app (ensuring all strict TypeScript checks and Next.js static generation succeed).
 - [ ] **Backend Cloud Functions:** Run `npm run build` inside `functions/` and deploy via `firebase deploy --only functions`. Ensure all Genkit endpoints (especially `paperGeneratorFlow` and `evaluatorFlow`) deploy successfully.

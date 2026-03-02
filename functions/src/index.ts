@@ -104,6 +104,7 @@ export const generateQuestions = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await generateQuestionsFlow(request.data);
 });
@@ -113,6 +114,7 @@ export const generateNotes = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await generateNotesFlow(request.data);
 });
@@ -122,6 +124,7 @@ export const generateQuestionsFromPdf = onCall({
     memory: "1GiB",
     timeoutSeconds: 240, // PDFs take longer
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await extractQuestionsFromPdfFlow(request.data);
 });
@@ -131,6 +134,7 @@ export const syncDriveFolder = onCall({
     memory: "512MiB",
     timeoutSeconds: 120,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await syncDriveFolderFlow(request.data);
 });
@@ -140,6 +144,7 @@ export const worksheetExtractor = onCall({
     memory: "1GiB",
     timeoutSeconds: 240,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await worksheetExtractorFlow(request.data);
 });
@@ -149,6 +154,7 @@ export const quizCurator = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await quizCuratorFlow(request.data);
 });
@@ -158,6 +164,7 @@ export const questionValidator = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await questionValidatorFlow(request.data);
 });
@@ -167,6 +174,7 @@ export const questionEnhancer = onCall({
     memory: "512MiB",
     timeoutSeconds: 120,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await questionEnhancerFlow(request.data);
 });
@@ -176,6 +184,7 @@ export const paperGenerator = onCall({
     memory: "1GiB",
     timeoutSeconds: 180,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await paperGeneratorFlow(request.data);
 });
@@ -185,6 +194,7 @@ export const paperExport = onCall({
     memory: "2GiB", // PDF gen needs more RAM
     timeoutSeconds: 300,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await paperExportFlow(request.data);
 });
@@ -194,6 +204,7 @@ export const evaluator = onCall({
     memory: "2GiB", // Vision AI needs more RAM
     timeoutSeconds: 540,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await answerSheetEvaluatorFlow(request.data);
 });
@@ -205,6 +216,7 @@ export const gapAnalyzer = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await gapAnalyzerFlow(request.data);
 });
@@ -214,6 +226,7 @@ export const scorePredictor = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await scorePredictorFlow(request.data);
 });
@@ -223,6 +236,7 @@ export const assignmentFeedback = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await assignmentFeedbackFlow(request.data);
 });
@@ -232,6 +246,7 @@ export const practiceEvaluator = onCall({
     memory: "512MiB",
     timeoutSeconds: 60,
     secrets: [apiKey],
+    cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
     return await practiceEvaluatorFlow(request.data);
 });

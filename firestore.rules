@@ -106,6 +106,19 @@ service cloud.firestore {
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
       }
 
+      // Teachers collection
+      match /teachers/{teacherId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+        allow update: if userBelongsToTenant(tenantId) && isTeacher() && request.auth.uid == teacherId;
+      }
+
+      // Announcements collection
+      match /announcements/{announcementId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || isSuper());
+      }
+
       // Classes collection
       match /classes/{classId} {
         allow read: if userBelongsToTenant(tenantId);
@@ -214,6 +227,7 @@ service cloud.firestore {
       }
 
       // Practice Sessions — student self-practice history
+      match /practiceSessions/{sessionId} {
         allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
         allow write: if userBelongsToTenant(tenantId) && isStudent() && request.resource.data.studentId == request.auth.uid;
       }

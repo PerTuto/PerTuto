@@ -82,6 +82,18 @@ service cloud.firestore {
     // ── Tenant-Scoped Data ──
     match /tenants/{tenantId} {
       allow read: if userBelongsToTenant(tenantId);
+
+      // Centers — admins/executives write, others read
+      match /centers/{centerId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+      }
+
+      // Batches — admins/executives write, others read
+      match /batches/{batchId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isSuper());
+      }
       
       // Students collection — students and parents can read their own records
       match /students/{studentId} {
@@ -158,6 +170,53 @@ service cloud.firestore {
       match /testimonials/{testimonialId} {
         allow read: if userBelongsToTenant(tenantId);
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // ── TutorOS Question Bank & Exam AI ──
+      
+      // Questions (Databank) — teachers manage questions, students can read via quizzes
+      match /questions/{questionId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Quizzes — teachers build/manage quizzes
+      match /quizzes/{quizId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Quiz Attempts — students take quizzes
+      match /quizAttempts/{attemptId} {
+        allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
+        // Students can create their own attempts and update them.
+        allow create: if userBelongsToTenant(tenantId) && isStudent() && request.resource.data.studentId == request.auth.uid;
+        allow update: if userBelongsToTenant(tenantId) && isStudent() && resource.data.studentId == request.auth.uid;
+        allow delete: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Taxonomy — generic hierarchical subjects/topics
+      match /taxonomy/{taxId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Question Papers (Acadine parity) — teachers generate papers
+      match /questionPapers/{paperId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Tests — deployed exams for students
+      match /tests/{testId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Practice Sessions — student self-practice history
+      match /practiceSessions/{sessionId} {
+        allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
+        allow write: if userBelongsToTenant(tenantId) && isStudent() && request.resource.data.studentId == request.auth.uid;
       }
     }
   }

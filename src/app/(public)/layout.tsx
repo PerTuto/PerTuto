@@ -175,7 +175,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                 <li><Link href="/services/university" className="hover:text-primary transition-colors">Higher Education</Link></li>
                                 <li><Link href="/services/professional" className="hover:text-primary transition-colors">Professional Upskilling</Link></li>
                                 <li><Link href="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
-                                <li><Link href="/tutors" className="hover:text-primary transition-colors">Our Tutors</Link></li>
                             </ul>
                         </div>
                         <div>

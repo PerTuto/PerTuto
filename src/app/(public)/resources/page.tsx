@@ -49,8 +49,8 @@ export default function ResourcesHubPage() {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
                     {/* Large Card: CBSE Mathematics */}
                     <AnimatedSection delay={100} className="col-span-1 md:col-span-2 md:row-span-2">
-                        <Link href="/resources/cbse" className="block h-full">
-                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 md:p-10 hover:border-primary/40 transition-colors">
+                        <div className="block h-full relative group">
+                            <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-3xl p-8 md:p-10 hover:border-primary/40 transition-colors">
                                 <div className="mb-auto">
                                     <div className="mb-6 inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                                         <FunctionSquare className="w-7 h-7" />
@@ -63,7 +63,7 @@ export default function ResourcesHubPage() {
                                         <span key={g} className="px-3 py-1 rounded-full bg-primary/5 text-primary text-xs font-medium border border-primary/10">{g}</span>
                                     ))}
                                 </div>
-                                <div className="mt-auto pt-6 flex flex-col gap-1.5 border-t border-border/50">
+                                <div className="mt-auto pt-6 flex flex-col gap-1.5 border-t border-border/50 relative z-10">
                                     <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 mt-2">Popular Subjects</h4>
                                     <Link href="/resources/cbse/mathematics-12" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Class 12 Mathematics <ArrowRight className="w-3.5 h-3.5" /></Link>
                                     <Link href="/resources/cbse/physics-12" className="text-sm text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">Class 12 Physics <ArrowRight className="w-3.5 h-3.5" /></Link>
@@ -71,7 +71,7 @@ export default function ResourcesHubPage() {
                                     <Link href="/resources/cbse" className="text-sm text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all mt-2 group-hover:gap-3">Explore all grades <ArrowRight className="w-4 h-4" /></Link>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     </AnimatedSection>
 
                     {/* IB Diploma */}
@@ -96,8 +96,8 @@ export default function ResourcesHubPage() {
 
                     {/* ICSE Board */}
                     <AnimatedSection delay={250} className="col-span-1 md:col-span-2">
-                        <Link href="/resources/icse" className="block h-full">
-                            <div className="glass-panel group relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8 hover:border-emerald-500/40 transition-colors">
+                        <div className="block h-full relative group">
+                            <div className="glass-panel relative h-full flex flex-col justify-center overflow-hidden rounded-3xl p-8 hover:border-emerald-500/40 transition-colors">
                                 <div className="flex items-start justify-between">
                                     <div className="flex flex-col gap-3">
                                         <div className="inline-flex size-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
@@ -107,11 +107,11 @@ export default function ResourcesHubPage() {
                                         <p className="text-muted-foreground">Rigorous K-12 resources, early science bifurcations, and comprehensive past papers.</p>
                                     </div>
                                 </div>
-                                <div className="mt-4 flex gap-3">
-                                    <span className="text-sm text-emerald-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">Explore ICSE <ArrowRight className="w-3.5 h-3.5" /></span>
+                                <div className="mt-4 flex gap-3 relative z-10">
+                                    <Link href="/resources/icse" className="text-sm text-emerald-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">Explore ICSE <ArrowRight className="w-3.5 h-3.5" /></Link>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     </AnimatedSection>
 
                     {/* IGCSE */}
@@ -130,20 +130,20 @@ export default function ResourcesHubPage() {
                         </div>
                     </AnimatedSection>
 
-                    {/* A-Level */}
+                    {/* Edexcel */}
                     <AnimatedSection delay={400} className="col-span-1 md:col-span-2">
-                        <Link href="/resources/edexcel" className="block h-full">
-                            <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-primary/40 transition-colors">
+                        <div className="block h-full relative group">
+                            <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-3xl p-8 hover:border-primary/40 transition-colors">
                                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-green-500/10 text-green-600">
                                     <Microscope className="w-6 h-6" />
                                 </div>
                                 <h3 className="font-headline text-xl font-bold text-foreground mb-2">Edexcel</h3>
                                 <p className="text-sm text-muted-foreground">International GCSE & A-Level</p>
-                                <div className="mt-auto flex items-center gap-1 text-primary text-xs font-medium group-hover:gap-2 transition-all">
-                                    Explore <ArrowRight className="w-3 h-3" />
+                                <div className="mt-auto flex items-center gap-1 text-primary text-xs font-medium group-hover:gap-2 transition-all relative z-10 pt-4">
+                                    <Link href="/resources/edexcel" className="flex items-center gap-1">Explore Edexcel <ArrowRight className="w-3 h-3" /></Link>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     </AnimatedSection>
                 </div>
             </section>
@@ -163,110 +163,110 @@ export default function ResourcesHubPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {/* University Engineering */}
                         <AnimatedSection delay={100}>
-                            <Link href="/resources/engineering" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-sky-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-sky-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600">
                                         <GraduationCap className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">University Engineering</h3>
                                     <p className="text-sm text-muted-foreground mb-4">Calculus, linear algebra, physics, and more for engineering undergrads.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/engineering/calculus" className="text-xs text-sky-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Calculus <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/engineering/physics" className="text-xs text-sky-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Physics <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-sky-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/engineering" className="text-sky-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
 
                         {/* Computer Science */}
                         <AnimatedSection delay={200}>
-                            <Link href="/resources/computer-science" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-cyan-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-cyan-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600">
                                         <Atom className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">Computer Science</h3>
                                     <p className="text-sm text-muted-foreground mb-4">Algorithms, data structures, programming paradigms, and system design.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/computer-science/algorithms" className="text-xs text-cyan-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Algorithms <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/computer-science/system-design" className="text-xs text-cyan-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">System Design <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-cyan-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/computer-science" className="text-cyan-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
 
                         {/* Business & Finance */}
                         <AnimatedSection delay={300}>
-                            <Link href="/resources/business" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-teal-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-teal-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600">
                                         <GraduationCap className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">Business &amp; Finance</h3>
                                     <p className="text-sm text-muted-foreground mb-4">Accounting, microeconomics, and corporate finance study guides.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/business/economics" className="text-xs text-teal-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Micro & Macro Economics <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/business/finance" className="text-xs text-teal-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Corporate Finance <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-teal-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/business" className="text-teal-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
 
                         {/* Data Science & ML */}
                         <AnimatedSection delay={400}>
-                            <Link href="/resources/data-science" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-emerald-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-emerald-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
                                         <Code2 className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">Data Science &amp; ML</h3>
                                     <p className="text-sm text-muted-foreground mb-4">From pandas and SQL to deep learning and MLOps.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/data-science/machine-learning" className="text-xs text-emerald-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Machine Learning Algorithms <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/data-science/data-analysis" className="text-xs text-emerald-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Data Pre-processing <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-emerald-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/data-science" className="text-emerald-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
 
                         {/* Python Programming */}
                         <AnimatedSection delay={500}>
-                            <Link href="/resources/ai-ml" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-yellow-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-yellow-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-yellow-500/10 text-yellow-600">
                                         <Code2 className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">Python &amp; AI</h3>
                                     <p className="text-sm text-muted-foreground mb-4">Foundations → OOP → concurrency → production code.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/ai-ml/python-basics" className="text-xs text-yellow-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Python Fundamentals <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/ai-ml/neural-networks" className="text-xs text-yellow-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Neural Networks <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-yellow-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/ai-ml" className="text-yellow-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
 
                         {/* Web Development */}
                         <AnimatedSection delay={600}>
-                            <Link href="/resources/web-dev" className="block h-full">
-                                <div className="glass-panel group relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-rose-500/40 transition-colors">
+                            <div className="block h-full relative group">
+                                <div className="glass-panel relative h-full flex flex-col overflow-hidden rounded-2xl p-6 hover:border-rose-500/40 transition-colors">
                                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-rose-500/10 text-rose-600">
                                         <Rocket className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-headline text-xl font-bold text-foreground mb-2">Web Development</h3>
                                     <p className="text-sm text-muted-foreground mb-4">React, Next.js, backend engineering, and cloud deployment.</p>
-                                    <div className="mt-auto flex flex-col gap-1.5">
+                                    <div className="mt-auto flex flex-col gap-1.5 relative z-10">
                                         <Link href="/resources/web-dev/react" className="text-xs text-rose-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Advanced React <ArrowRight className="w-3 h-3" /></Link>
                                         <Link href="/resources/web-dev/node-js" className="text-xs text-rose-600 font-medium flex items-center gap-1 hover:gap-2 transition-all">Backend NodeJS <ArrowRight className="w-3 h-3" /></Link>
-                                        <div className="text-rose-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></div>
+                                        <Link href="/resources/web-dev" className="text-rose-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all mt-2 pt-2 border-t border-border">Explore <ArrowRight className="w-3 h-3" /></Link>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </AnimatedSection>
                     </div>
                 </div>

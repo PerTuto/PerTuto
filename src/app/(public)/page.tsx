@@ -57,6 +57,15 @@ const FAQ_ITEMS = [
 ];
 
 import { DecryptedText } from '@/components/public/decrypted-text';
+import { AnimatedStatsBar } from '@/components/public/animated-stats-bar';
+import { ConstellationBackground } from '@/components/public/constellation-background';
+import { TiltCard } from '@/components/public/tilt-card';
+import { NeuralPathway } from '@/components/public/neural-pathway';
+import { BouncyText } from '@/components/public/bouncy-text';
+import { OrbitalCurriculum } from '@/components/public/orbital-curriculum';
+import { FloatingFormulas } from '@/components/public/floating-formulas';
+import { LabExperience } from '@/components/public/lab-experience';
+import { ColorBreathing } from '@/components/public/color-breathing';
 
 // ... (existing code and imports)
 
@@ -86,42 +95,45 @@ export default async function HomePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateOrganizationSchema()) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(FAQ_ITEMS)) }} />
 
-            {/* ===== HERO ===== */}
-            <section className="relative pt-24 pb-20 md:pt-36 md:pb-28 px-6 overflow-hidden">
-                <FluidBlob />
-                <div className="max-w-5xl mx-auto text-center flex flex-col items-center relative z-10">
+            {/* ===== HERO (NIKE STYLE EXPERIMENT) ===== */}
+            <section className="relative min-h-[100svh] flex items-center justify-start px-6 md:px-16 overflow-visible text-foreground" style={{ backgroundColor: '#f4f3f8' }}>
+                {/* Interactive constellation background */}
+                <ConstellationBackground />
+                <ColorBreathing />
+
+                <div className="max-w-7xl mx-auto w-full flex flex-col items-start relative z-10 pt-20">
                     {/* Badge */}
                     {hero.badgeText && (
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-xs font-medium text-primary mb-8 animate-fade-in-up">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
+                        <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-primary/10 border border-primary/20 rounded-full backdrop-blur-md text-xs font-bold uppercase tracking-widest text-primary mb-8 animate-fade-in-up">
                             {hero.badgeText}
                         </div>
                     )}
 
-                    {/* Headline */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.05] mb-6 text-foreground">
-                        {titleLine1 && <><DecryptedText text={titleLine1} speed={50} /><br /></>}
-                        {titleLine2 && <DecryptedText text={titleLine2} speed={40} />}
+                    <h1 className="mb-6" style={{ fontSize: "clamp(2.5rem, 8vw, 7rem)" }}>
+                        <BouncyText
+                            text={hero.title}
+                            highlightWord="unique"
+                            highlightClass="text-primary"
+                            className="font-headline font-black tracking-tighter uppercase leading-[1.0] text-foreground"
+                            staggerMs={120}
+                            as="span"
+                        />
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                    <p className="text-lg md:text-2xl text-foreground/70 max-w-3xl mb-10 font-medium leading-relaxed">
                         {hero.subtitle}
                     </p>
 
-                    {/* Actions */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                         <Link href={hero.primaryCtaLink || "#book-demo"} className="w-full sm:w-auto">
-                            <button className="btn-primary px-8 py-4 rounded-xl font-semibold text-lg w-full flex items-center justify-center gap-2 font-headline">
+                            <button className="bg-primary text-white px-8 py-4 rounded-full font-bold text-base md:text-lg uppercase tracking-wider w-full flex items-center justify-center gap-3 shadow-[0_4px_0_0_hsl(var(--primary)/0.6)] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_hsl(var(--primary)/0.6)] active:translate-y-[4px] active:shadow-none transition-all duration-100 group">
                                 {hero.primaryCtaText || "Book Free Demo"}
-                                <ArrowRight className="w-5 h-5" />
+                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                             </button>
                         </Link>
                         <Link href={hero.secondaryCtaLink || "/services/k12"} className="w-full sm:w-auto">
-                            <button className="px-8 py-4 rounded-xl font-semibold text-foreground/70 hover:text-foreground hover:bg-secondary transition-colors w-full flex items-center justify-center gap-2 group border border-border hover:border-primary/20 font-headline">
+                            <button className="bg-transparent text-foreground px-8 py-4 rounded-full font-bold text-base md:text-lg uppercase tracking-wider w-full flex items-center justify-center gap-3 border-2 border-foreground/30 hover:border-foreground hover:bg-foreground hover:text-background hover:scale-[1.03] transition-all duration-300 group">
                                 {hero.secondaryCtaText || "Explore Services"}
                             </button>
                         </Link>
@@ -129,151 +141,144 @@ export default async function HomePage() {
                 </div>
             </section>
 
-            {/* ===== CURRICULUM MARQUEE ===== */}
-            <div className="w-full border-y border-border overflow-hidden py-10 relative bg-secondary/50">
-                <div className="absolute inset-y-0 start-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute inset-y-0 end-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
-
-                <div className="flex whitespace-nowrap animate-marquee">
-                    {[1, 2, 3].map((setIndex) => (
-                        <div key={`set-${setIndex}`} className="flex items-center gap-16 mx-8 opacity-30 hover:opacity-70 transition-all duration-500">
-                            {CURRICULA.map((curriculum) => (
-                                <span key={`${setIndex}-${curriculum}`} className="text-2xl font-headline font-bold tracking-widest text-foreground">
-                                    {curriculum}
-                                </span>
-                            ))}
-                        </div>
-                    ))}
+            {/* ===== CURRICULUM ORBITAL GLOBE ===== */}
+            <div className="w-full border-y border-border/40 overflow-hidden relative" style={{ backgroundColor: '#eef5f3' }}>
+                <div className="max-w-4xl mx-auto py-6" style={{ height: '360px' }}>
+                    <OrbitalCurriculum />
                 </div>
             </div>
 
+            {/* ===== ANIMATED PROOF BAR ===== */}
+            <AnimatedStatsBar />
+
             {/* ===== SERVICES ===== */}
-            <section className="py-24 md:py-32 px-6">
-                <div className="max-w-5xl mx-auto">
-                    <AnimatedSection className="text-center mb-20">
-                        <h2 className="text-3xl md:text-5xl font-headline font-bold mb-6 text-foreground">Pathways to <span className="text-primary">Excellence</span></h2>
-                        <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Whether you&apos;re aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
+            <section className="py-24 md:py-32 px-6 text-foreground" style={{ backgroundColor: '#faf9f7' }}>
+                <div className="max-w-7xl mx-auto">
+                    <AnimatedSection className="mb-14 ps-6 md:ps-0 border-s-4 border-primary">
+                        <h2 
+                            className="font-headline font-black uppercase mb-4 text-black tracking-[-0.03em] ps-6"
+                            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1 }}
+                        >
+                            Pathways<br/><span className="text-primary">To Excellence</span>
+                        </h2>
+                        <p className="text-muted-foreground max-w-2xl text-base md:text-lg font-medium ps-6">Whether you&apos;re aiming for perfect IB scores or looking to pivot into Data Science, we have a structured program for you.</p>
                     </AnimatedSection>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* K-12 Card */}
-                        <AnimatedSection delay={100}>
-                            <div className="glass-panel p-8 md:p-10 flex flex-col group h-full">
-                                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8">
-                                    <GraduationCap className="w-7 h-7 text-primary" />
+                    <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 pb-4 snap-x snap-mandatory hide-scrollbar">
+                        {/* K-12 */}
+                        <AnimatedSection delay={100} className="h-full min-w-[85vw] md:min-w-0 snap-center">
+                          <TiltCard className="h-full">
+                            <div className="relative p-8 flex flex-col group h-[50vh] min-h-[380px] overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-border/50 shadow-[0_0_20px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_30px_rgba(0,0,0,0.08)] hover:border-primary/30 transition-all duration-500">
+                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-auto">
+                                    <GraduationCap className="w-6 h-6 text-primary animate-float" />
                                 </div>
-
-                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">K-12 <span className="text-primary">Tutoring</span></h3>
-                                <p className="text-muted-foreground leading-relaxed mb-8">
-                                    Master the complexities of IB DP, Cambridge IGCSE, and A-Levels. From IA reviews to rigorous final exam prep.
-                                </p>
-
-                                <ul className="mb-10 space-y-4">
-                                    {['IB MYP & DP', 'IGCSE & A-Level', 'Math, Physics, Chemistry'].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-foreground/80">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link href="/services/k12" className="mt-auto">
-                                    <button className="w-full py-4 rounded-xl bg-secondary hover:bg-primary/10 border border-border font-semibold text-foreground transition-all flex items-center justify-center gap-2 group-hover:border-primary/30">
-                                        View Program Details
-                                        <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                                    </button>
-                                </Link>
+                                
+                                <div className="flex flex-col mt-auto">
+                                    <h3 className="text-3xl md:text-4xl font-headline font-black text-foreground uppercase tracking-tighter mb-3 transition-transform duration-500 group-hover:-translate-y-3">K-12 <br/><span className="text-primary">Tutoring</span></h3>
+                                    
+                                    <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden translate-y-4 group-hover:translate-y-0">
+                                        <p className="text-muted-foreground font-medium mb-5 text-sm md:text-base leading-relaxed">
+                                            Master the complexities of IB DP, Cambridge IGCSE, and A-Levels. Rigorous prep for high performers.
+                                        </p>
+                                        <Link href="/services/k12">
+                                            <button className="bg-foreground text-background px-6 py-3 rounded-full font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-primary hover:text-white transition-colors">
+                                                View Program
+                                                <ArrowRight className="w-4 h-4" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
+                          </TiltCard>
                         </AnimatedSection>
 
-                        {/* Professional Card */}
-                        <AnimatedSection delay={200}>
-                            <div className="glass-panel p-8 md:p-10 flex flex-col group h-full">
-                                <div className="w-14 h-14 rounded-2xl bg-foreground/5 flex items-center justify-center mb-8">
-                                    <Briefcase className="w-7 h-7 text-foreground/70" />
+                        {/* Professional */}
+                        <AnimatedSection delay={200} className="h-full min-w-[85vw] md:min-w-0 snap-center">
+                          <TiltCard className="h-full">
+                            <div className="relative p-8 flex flex-col group h-[50vh] min-h-[380px] overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/5 to-amber-500/[0.02] border border-border/50 shadow-[0_0_20px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_30px_rgba(0,0,0,0.08)] hover:border-amber-500/30 transition-all duration-500">
+                                <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-auto">
+                                    <Briefcase className="w-6 h-6 text-amber-600 animate-float" style={{ animationDelay: '1s' }} />
                                 </div>
-
-                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">Professional <span className="text-primary">Upskilling</span></h3>
-                                <p className="text-muted-foreground leading-relaxed mb-8">
-                                    Future-proof your career with intensive, 1-on-1 coaching in AI, Data Science, and modern Software Engineering.
-                                </p>
-
-                                <ul className="mb-10 space-y-4">
-                                    {['AI & Machine Learning', 'Data Science & Analytics', 'Executive Tech Literacy'].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-foreground/80">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-foreground/40"></div>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link href="/services/professional" className="mt-auto">
-                                    <button className="w-full py-4 rounded-xl bg-secondary hover:bg-foreground/5 border border-border font-semibold text-foreground transition-all flex items-center justify-center gap-2 group-hover:border-foreground/20">
-                                        View Career Tracks
-                                        <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                                    </button>
-                                </Link>
+                                
+                                <div className="flex flex-col mt-auto">
+                                    <h3 className="text-3xl md:text-4xl font-headline font-black text-foreground uppercase tracking-tighter mb-3 transition-transform duration-500 group-hover:-translate-y-3">Professional <br/><span className="text-amber-600">Upskilling</span></h3>
+                                    
+                                    <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden translate-y-4 group-hover:translate-y-0">
+                                        <p className="text-muted-foreground font-medium mb-5 text-sm md:text-base leading-relaxed">
+                                            Future-proof your career with intensive, 1-on-1 coaching in AI, Data Science, and modern Software Engineering.
+                                        </p>
+                                        <Link href="/services/professional">
+                                            <button className="bg-foreground text-background px-6 py-3 rounded-full font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-amber-600 hover:text-white transition-colors">
+                                                View Tracks
+                                                <ArrowRight className="w-4 h-4" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
+                          </TiltCard>
                         </AnimatedSection>
-
-                        {/* University & Adult Learners Card */}
-                        <AnimatedSection delay={300}>
-                            <div className="glass-panel p-8 md:p-10 flex flex-col group h-full">
-                                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-8">
-                                    <BookOpen className="w-7 h-7 text-emerald-600" />
+                        
+                        {/* University */}
+                        <AnimatedSection delay={300} className="h-full min-w-[85vw] md:min-w-0 snap-center">
+                          <TiltCard className="h-full">
+                            <div className="relative p-8 flex flex-col group h-[50vh] min-h-[380px] overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500/5 to-indigo-500/[0.02] border border-border/50 shadow-[0_0_20px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_30px_rgba(0,0,0,0.08)] hover:border-indigo-500/30 lg:col-span-1 md:col-span-2 transition-all duration-500">
+                                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-auto">
+                                    <BookOpen className="w-6 h-6 text-indigo-600 animate-float" style={{ animationDelay: '2s' }} />
                                 </div>
-
-                                <h3 className="text-3xl font-headline font-bold text-foreground mb-4">Higher <span className="text-emerald-600">Education</span></h3>
-                                <p className="text-muted-foreground leading-relaxed mb-8">
-                                    Bridge the gap between academia and industry. Deep support for university students and professionals in online degrees.
-                                </p>
-
-                                <ul className="mb-10 space-y-4">
-                                    {['Thesis & Research Help', 'Assignment Decoding', 'Career Trajectory'].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-foreground/80">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link href="/services/university" className="mt-auto">
-                                    <button className="w-full py-4 rounded-xl bg-secondary hover:bg-emerald-500/5 border border-border font-semibold text-foreground transition-all flex items-center justify-center gap-2 group-hover:border-emerald-500/20">
-                                        View Advisory Tracks
-                                        <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                                    </button>
-                                </Link>
+                                
+                                <div className="flex flex-col mt-auto">
+                                    <h3 className="text-3xl md:text-4xl font-headline font-black text-foreground uppercase tracking-tighter mb-3 transition-transform duration-500 group-hover:-translate-y-3">Higher <br/><span className="text-indigo-600">Education</span></h3>
+                                    
+                                    <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden translate-y-4 group-hover:translate-y-0">
+                                        <p className="text-muted-foreground font-medium mb-5 text-sm md:text-base leading-relaxed">
+                                            Bridge the gap between academia and industry. Deep support for university students and online degrees.
+                                        </p>
+                                        <Link href="/services/university">
+                                            <button className="bg-foreground text-background px-6 py-3 rounded-full font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-indigo-600 hover:text-white transition-colors">
+                                                View Advisory
+                                                <ArrowRight className="w-4 h-4" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
+                          </TiltCard>
                         </AnimatedSection>
                     </div>
                 </div>
             </section>
 
             {/* ===== HOW IT WORKS ===== */}
-            <section className="py-24 px-6 bg-secondary/30 border-y border-border">
+            <section className="py-24 md:py-32 px-6 text-foreground" style={{ backgroundColor: '#f0f2f5' }}>
                 <div className="max-w-4xl mx-auto">
                     <AnimatedSection className="text-center mb-16">
-                        <h2 className="font-headline text-3xl md:text-4xl font-bold mb-4 text-foreground">How It Works</h2>
-                        <p className="text-muted-foreground">Three simple steps to get started</p>
+                        <h2 className="font-headline text-4xl md:text-6xl font-black mb-4 uppercase tracking-[-0.03em] text-black">How It Works</h2>
+                        <p className="text-muted-foreground font-semibold text-lg">Three simple steps to get started</p>
                     </AnimatedSection>
 
-                    <div className="grid md:grid-cols-3 gap-10">
-                        {[
-                            { icon: Target, step: "01", title: "Tell Us What You Need", desc: "Share your subject, curriculum, and goals. We'll find the perfect match." },
-                            { icon: Users, step: "02", title: "Meet Your Expert", desc: "Get matched with a vetted tutor who specializes in your exact needs." },
-                            { icon: Sparkles, step: "03", title: "Start Learning", desc: "Join your first session—online, flexible, and designed around you." },
-                        ].map(({ icon: Icon, step, title, desc }, index) => (
-                            <AnimatedSection key={step} delay={index * 150}>
-                                <div className="text-center space-y-4">
-                                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-                                        <Icon className="w-7 h-7 text-primary" />
+                    <div className="relative">
+                        {/* Neural Pathway SVG connector */}
+                        <NeuralPathway />
+
+                        <div className="grid md:grid-cols-3 gap-10 relative z-10">
+                            {[
+                                { icon: Target, step: "01", title: "Tell Us What You Need", desc: "Share your subject, curriculum, and goals. We'll find the perfect match." },
+                                { icon: Users, step: "02", title: "Meet Your Expert", desc: "Get matched with a vetted tutor who specializes in your exact needs." },
+                                { icon: Sparkles, step: "03", title: "Start Learning", desc: "Join your first session—online, flexible, and designed around you." },
+                            ].map(({ icon: Icon, step, title, desc }, index) => (
+                                <AnimatedSection key={step} delay={index * 150}>
+                                    <div className="text-center space-y-6">
+                                        <div className="w-20 h-20 rounded-full border-2 border-emerald-500 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(52,211,153,0.2)] bg-background">
+                                            <Icon className="w-8 h-8 text-emerald-500" />
+                                        </div>
+                                        <div className="text-sm font-mono text-emerald-500 tracking-widest font-black uppercase">{step}</div>
+                                        <h3 className="font-headline text-2xl font-black text-foreground">{title}</h3>
+                                        <p className="text-base text-muted-foreground leading-relaxed font-medium">{desc}</p>
                                     </div>
-                                    <div className="text-xs font-mono text-primary tracking-widest font-bold">{step}</div>
-                                    <h3 className="font-headline text-lg font-bold text-foreground">{title}</h3>
-                                    <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                                </div>
-                            </AnimatedSection>
-                        ))}
+                                </AnimatedSection>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -281,14 +286,20 @@ export default async function HomePage() {
             {/* ===== TESTIMONIALS ===== */}
             <TestimonialGrid />
 
+            {/* ===== LAB EXPERIENCE ===== */}
+            <div className="border-y border-border/40" style={{ backgroundColor: '#faf6ef' }}>
+              <LabExperience />
+            </div>
+
             {/* ===== LEAD CAPTURE ===== */}
-            <section id="book-demo" className="py-24 px-6 bg-primary/[0.03]">
+            <section id="book-demo" className="py-28 md:py-36 px-6 bg-foreground text-background relative overflow-hidden">
+                <FloatingFormulas />
                 <AnimatedSection>
                     <div className="max-w-lg mx-auto">
-                        <div className="rounded-2xl border border-border bg-white p-8 md:p-10 shadow-sm">
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.07] backdrop-blur-sm p-8 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.15)]">
                             <div className="text-center mb-8">
-                                <h2 className="font-headline text-2xl md:text-3xl font-bold mb-2 text-foreground">Book Your Free Demo</h2>
-                                <p className="text-sm text-muted-foreground">3 fields. 30 seconds. We&apos;ll call you within 2 hours.</p>
+                                <h2 className="font-headline text-2xl md:text-3xl font-black mb-2 text-white">Book Your Free Demo</h2>
+                                <p className="text-sm text-white/60">3 fields. 30 seconds. We&apos;ll call you within 2 hours.</p>
                             </div>
                             <LeadCaptureForm variant="minimal" />
                         </div>

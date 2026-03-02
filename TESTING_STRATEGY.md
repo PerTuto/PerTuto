@@ -96,3 +96,14 @@ Use these credentials for testing on the staging/production environment if the d
 - [ ] **Core App:** Run `npm run build` locally to confirm 0 build errors across the Next.js app (ensuring all strict TypeScript checks and Next.js static generation succeed).
 - [ ] **Backend Cloud Functions:** Run `npm run build` inside `functions/` and deploy via `firebase deploy --only functions`. Ensure all Genkit endpoints (especially `paperGeneratorFlow` and `evaluatorFlow`) deploy successfully.
 - [ ] **Frontend Hosting:** Run `firebase deploy --only hosting` and verify routing rules (especially the dynamic `[tenantId]` paths) function correctly on the live Firebase URL without throwing 404s on page refresh.
+
+---
+
+## 6. Technical Gaps & Risks (Flagged for Review)
+
+During the final documentation audit, the following items were identified as potential blockers for a "bulletproof" test:
+
+1. **Student Auth Accounts:** The `seed.ts` script creates student documents in Firestore but **does not** create their Firebase Auth credentials. Testing Student-specific workflows (Alice/Bob) will require manually creating these accounts in the Firebase Console or updating the seed script.
+2. **Genkit Function Deployment:** Verify that the `paperGenerator` and `evaluator` flows are actually deployed and accessible via the `httpsCallable` interface. If they throw "Not Found", verify the `index.ts` export names.
+3. **Immersive Web CLS:** Initial scan suggests heavy GSAP animations on the landing page. Perform a Core Web Vitals audit to ensure Cumulative Layout Shift (CLS) stays within the "Good" range (< 0.1).
+4. **Security Rule Coverage:** Verified that `evaluations` and `gradeChallenges` rules were missing and have now been manually added to `firestore.rules`. Baseline testing should confirm these are now properly isolated.

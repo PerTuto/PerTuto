@@ -214,9 +214,22 @@ service cloud.firestore {
       }
 
       // Practice Sessions — student self-practice history
-      match /practiceSessions/{sessionId} {
         allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
         allow write: if userBelongsToTenant(tenantId) && isStudent() && request.resource.data.studentId == request.auth.uid;
+      }
+
+      // Evaluations — AI results (teachers/admins manage, students read own)
+      match /evaluations/{evalId} {
+        allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Grade Challenges — Students dispute, Teachers resolve
+      match /gradeChallenges/{challengeId} {
+        allow read: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher() || (isStudent() && resource.data.studentId == request.auth.uid));
+        allow create: if userBelongsToTenant(tenantId) && isStudent() && request.resource.data.studentId == request.auth.uid;
+        allow update: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+        allow delete: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
     }
   }

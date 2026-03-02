@@ -26,14 +26,6 @@ admin.initializeApp();
 const gmailEmail = defineString("GMAIL_EMAIL", { default: "super@pertuto.com" });
 const gmailPassword = defineString("GMAIL_PASSWORD");
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: gmailEmail.value(),
-        pass: gmailPassword.value(),
-    },
-});
-
 export const onLeadCreated = functionsV1.region("asia-south1").firestore
     .document("tenants/pertuto-default/leads/{leadId}")
     .onCreate(async (snap) => {
@@ -43,6 +35,14 @@ export const onLeadCreated = functionsV1.region("asia-south1").firestore
             console.error("Gmail credentials are not set in functions config.");
             return;
         }
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: gmailEmail.value(),
+                pass: gmailPassword.value(),
+            },
+        });
 
         // 1. Send Admin Notification
         const adminMailOptions = {

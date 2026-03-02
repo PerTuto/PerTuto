@@ -131,6 +131,12 @@ service cloud.firestore {
         allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
 
+      // Subjects collection
+      match /subjects/{subjectId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
       // Assignments collection — students can submit, teachers can grade
       match /assignments/{assignmentId} {
         allow read: if userBelongsToTenant(tenantId);

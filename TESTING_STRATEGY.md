@@ -28,68 +28,129 @@ _Note: Student Auth accounts may not be automatically seeded by the script and m
 
 ---
 
-## Test Suite 1: Immersive Web & Core Authentication
+## Test Suite 1: Production Load & Visuals
 
-**Test 1.1: Visual Verification**
+**Test 1.1: Load Homepage**
 
-- **Action:** Navigate to `https://pertuto.com`. Wait for network idle.
-- **Expected:** The landing page renders without Next.js React hydration errors in the browser console. Visually identify the GSAP/Framer Motion animated hero section or Neural Pathway background.
-- **Status:** [ ] PASS / [ ] FAIL
+- **Action:** Navigate to `https://pertuto.com`.
+- **Expected:** Page loads with HTTP 200.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
-**Test 1.2: Super Admin Login & Routing**
+**Test 1.2: Visual Verification**
 
-- **Action:** Navigate to `https://pertuto.com/login`. Input `super@pertuto.com` and `password`. Submit.
-- **Expected:** Successful redirect to `/dashboard`. The URL does not contain a specific `[tenantId]` parameter initially, or redirects to a global admin view.
-- **Status:** [ ] PASS / [ ] FAIL
+- **Action:** Wait for network idle. Look for the animated hero section or Neural Pathway background.
+- **Expected:** Premium UI elements are visible.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
-**Test 1.3: Teacher RBAC Isolation**
+**Test 1.3: Console Hydration Check**
 
-- **Action:** Log out. Log in as `teacher@demoschool.com` (`password123`). Attempt to manually navigate to `/dashboard/test-tenant-001/organization/centers`.
-- **Expected:** The UI either redirects the teacher away or explicitly shows an "Unauthorized" boundary. The "Centers" and "Batches" options must NOT be visible in the sidebar nav.
-- **Status:** [ ] PASS / [ ] FAIL
+- **Action:** Open browser console.
+- **Expected:** No Next.js React hydration mismatch errors.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
 ---
 
-## Test Suite 2: AI Feature Parity (Genkit & Gemini Vision)
+## Test Suite 2: Core Authentication & RBAC
 
-**Test 2.1: Question Paper Generation Wizard**
+**Test 2.1: Load Login Page**
 
-- **Action:** While logged in as Teacher, navigate to `/dashboard/test-tenant-001/question-papers/generate`. Fill out the form constraints (e.g., 10 MCQs, Medium difficulty). Submit.
-- **Expected:** The UI enters a loading state, calls the Firebase backend, and transitions to the Review step. Genkit `paperGeneratorFlow` does not return a 500 or 404 error.
+- **Action:** Navigate to `https://pertuto.com/login`.
+- **Expected:** Login form renders.
 - **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
-**Test 2.2: AI Evaluator HITL (Human-In-The-Loop) Queue**
+**Test 2.2: Super Admin Login Execution**
+
+- **Action:** Input `super@pertuto.com` and `password`. Submit.
+- **Expected:** Form submits without network errors.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 2.3: Super Admin Dashboard Redirect**
+
+- **Action:** Wait for redirect.
+- **Expected:** URL changes to `/dashboard` (or global admin view) and UI renders.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 2.4: Log Out (Super Admin)**
+
+- **Action:** Click Log Out.
+- **Expected:** Redirected back to `/login` or `/`.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 2.5: Teacher Login Execution**
+
+- **Action:** Log in with `teacher@demoschool.com` and `password123`.
+- **Expected:** Redirected to Tenant dashboard.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 2.6: RBAC Isolation Check**
+
+- **Action:** Attempt to manually navigate to `/dashboard/test-tenant-001/organization/centers`.
+- **Expected:** Explicit "Unauthorized" boundary or redirect away from the Centers page. Data table must NOT load.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+---
+
+## Test Suite 3: AI Feature Parity (Genkit)
+
+**Test 3.1: Navigate to Question Paper Wizard**
+
+- **Action:** (Logged in as Teacher) Navigate to `/dashboard/test-tenant-001/question-papers/generate`.
+- **Expected:** Generation UI loads.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 3.2: Configure & Trigger Generation**
+
+- **Action:** Fill constraints (e.g., 10 MCQs) and submit.
+- **Expected:** UI enters a loading state. Backend is called.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 3.3: Verify Generation Result**
+
+- **Action:** Wait for generation.
+- **Expected:** Genkit `paperGeneratorFlow` succeeds (no 500 error) and transitions to Review step.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 3.4: Load HITL Evaluation Queue**
 
 - **Action:** Navigate to `/dashboard/test-tenant-001/review-evaluations`.
-- **Expected:** The page loads without crashing and successfully queries the `evaluations` Firestore collection. If empty, it displays a zero-state UI correctly.
+- **Expected:** Queue loads successfully (zero-state or list). No crashes.
 - **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
 ---
 
-## Test Suite 3: Domain Services Resilience (27 Modules)
+## Test Suite 4: Domain Access Smoke Test
 
-We must ensure that navigating through the Admin architecture does not result in broken links or Firebase Permission Denied errors.
+_Action:_ (Logged in as `admin@demoschool.com`). Click through these routes. _Expected:_ Pages load without `permission-denied` errors in console.
 
-**Action:** Logged in as Admin (`admin@demoschool.com`), sequentially click through the following sidebar routes. Wait 3 seconds per route. Capture console logs for Firebase SDK errors.
+**Test 4.1: Admin Core (Centers)**
 
-- **Expected:** All routes load their respective React tables/components without throwing Firestore `permission-denied` uncaught exceptions.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
-_Mark PASS or FAIL for each module group:_
+**Test 4.2: Admin Core (Batches)**
 
-- **Admin Core** (Centers, Batches): [ ] PASS / [ ] FAIL
-- **LMS Core** (Students, Teachers, Courses, Classes): [ ] PASS / [ ] FAIL
-- **Assessment** (Questions, Quizzes, Tests): [ ] PASS / [ ] FAIL
-- **Operations** (Attendance, Assignments, Announcements): [ ] PASS / [ ] FAIL
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 4.3: LMS Core (Students)**
+
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 4.4: Assessment (Questions)**
+
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
+
+**Test 4.5: Operations (Attendance)**
+
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
 ---
 
-## Test Suite 4: Data Edge Cases
+## Test Suite 5: Data Edge Cases
 
-**Test 4.1: LaTeX Math Rendering**
+**Test 5.1: Verify Math Rendering**
 
-- **Action:** Inspect the DOM on any Mathematics Question page within the Question Bank (`/dashboard/test-tenant-001/questions`). Look for elements parsed by `react-katex` or verify raw `$` symbols are converted to formatted math nodes.
-- **Expected:** Math equations are visually formatted, not raw text strings.
-- **Status:** [ ] PASS / [ ] FAIL
+- **Action:** Inspect a math question in the UI (e.g., `/dashboard/test-tenant-001/questions`).
+- **Expected:** `react-katex` or similar renders formatted math, not raw `$` strings.
+- **Status:** [ ] PASS / [ ] FAIL / [ ] BLOCK
 
 ---
 

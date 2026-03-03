@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Star, Loader2 } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { SpotlightCard } from './spotlight-card';
 import { TypingTestimonial } from './typing-testimonial';
+import { motion } from 'framer-motion';
 import { getApprovedTestimonials } from '@/lib/firebase/services';
 
 const FALLBACK_TESTIMONIALS = [
@@ -73,51 +74,80 @@ export function TestimonialGrid() {
         fetchTestimonials();
     }, []);
 
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: { staggerChildren: 0.15 }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, scale: 0.8, y: 30 },
+        visible: { 
+            opacity: 1, 
+            scale: 1, 
+            y: 0,
+            transition: { type: "spring" as const, stiffness: 300, damping: 20 }
+        }
+    };
+
     return (
-        <section className="py-24 px-6 relative overflow-hidden">
+        <section className="py-24 px-6 relative overflow-hidden bg-slate-50">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm font-medium text-primary mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm font-bold tracking-widest uppercase text-primary mb-4 shadow-sm">
                         Proven Results
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-headline font-bold mb-4 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-headline font-black mb-4 tracking-tight text-foreground">
                         Don't Just Take Our Word For It
                     </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
                         We measure our success entirely by the quantifiable improvements of our students.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
                     {testimonials.map((testimonial, i) => (
-                        <SpotlightCard key={i} className="p-8 h-full flex flex-col">
-                            <div className="flex gap-1 mb-6">
-                                {[...Array(testimonial.rating)].map((_, i) => (
-                                    <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                                ))}
-                            </div>
-                            {i < 4 ? (
-                                <TypingTestimonial
-                                    quote={testimonial.quote}
-                                    typingSpeed={25}
-                                    className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1"
-                                />
-                            ) : (
-                                <blockquote className="text-lg text-foreground/90 leading-relaxed mb-8 flex-1">
+                        <motion.div key={i} variants={cardVariants} className="h-full">
+                            <SpotlightCard className="p-8 h-full flex flex-col bg-white border border-border shadow-sm hover:shadow-xl transition-shadow duration-300 rounded-3xl">
+                                <div className="flex gap-1 mb-6">
+                                    {[...Array(testimonial.rating)].map((_, i) => (
+                                        <motion.div 
+                                            key={i}
+                                            initial={{ opacity: 0, rotate: -30 }}
+                                            animate={{ opacity: 1, rotate: 0 }}
+                                            transition={{ delay: 0.5 + (i * 0.1), type: "spring" }}
+                                        >
+                                            <Star className="w-5 h-5 fill-amber-400 text-amber-400 drop-shadow-sm" />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                                <blockquote className="text-lg text-foreground/80 font-medium leading-relaxed mb-8 flex-1 italic">
                                     &ldquo;{testimonial.quote}&rdquo;
                                 </blockquote>
-                            )}
-                            <div className="mt-auto pt-6 border-t border-border/50">
-                                <div className="font-headline font-bold text-foreground">
-                                    {testimonial.author}
+                                <div className="mt-auto pt-6 border-t border-slate-100 flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary font-headline text-lg">
+                                        {testimonial.author.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <div className="font-headline font-black tracking-tight text-foreground">
+                                            {testimonial.author}
+                                        </div>
+                                        <div className="text-sm font-medium text-muted-foreground">
+                                            {testimonial.role}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="text-sm text-muted-foreground">
-                                    {testimonial.role}
-                                </div>
-                            </div>
-                        </SpotlightCard>
+                            </SpotlightCard>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

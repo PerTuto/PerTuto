@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { useInView } from 'framer-motion';
+import { useInView, motion } from 'framer-motion';
 import { Sparkles, CheckCircle2, XCircle, ArrowRight, RotateCcw, Beaker } from 'lucide-react';
 
 interface Question {
@@ -151,25 +151,38 @@ export function LabExperience({ className = '' }: { className?: string }) {
                     const isSelected = idx === selected;
                     let optionStyle = 'border-border hover:border-primary/40 hover:bg-primary/5';
                     if (selected !== null) {
-                      if (isCorrect) optionStyle = 'border-emerald-500 bg-emerald-50 text-emerald-800';
-                      else if (isSelected && !isCorrect) optionStyle = 'border-red-400 bg-red-50 text-red-700';
+                      if (isCorrect) optionStyle = 'border-emerald-500 bg-emerald-50 text-emerald-800 shadow-sm';
+                      else if (isSelected && !isCorrect) optionStyle = 'border-red-400 bg-red-50 text-red-700 shadow-sm';
                       else optionStyle = 'border-border opacity-50';
                     }
 
                     return (
-                      <button
+                      <motion.button
                         key={idx}
                         onClick={() => handleSelect(idx)}
                         disabled={selected !== null}
-                        className={`w-full text-start px-5 py-3.5 rounded-xl border-2 font-medium transition-all duration-300 flex items-center gap-3 ${optionStyle} ${selected === null ? 'cursor-pointer' : 'cursor-default'}`}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 + (idx * 0.1), type: 'spring', stiffness: 300, damping: 20 }}
+                        whileHover={selected === null ? { scale: 1.02, x: 5 } : {}}
+                        whileTap={selected === null ? { scale: 0.98 } : {}}
+                        className={`w-full text-start px-5 py-3.5 rounded-xl border-2 font-medium transition-colors duration-300 flex items-center gap-3 ${optionStyle} ${selected === null ? 'cursor-pointer' : 'cursor-default'}`}
                       >
-                        <span className="w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-sm font-bold shrink-0">
+                        <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-bold shrink-0 transition-colors ${selected !== null && (isCorrect || isSelected) ? 'border-current' : 'border-muted-foreground/40 text-muted-foreground'}`}>
                           {String.fromCharCode(65 + idx)}
                         </span>
                         <span className="flex-1">{option}</span>
-                        {selected !== null && isCorrect && <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />}
-                        {selected !== null && isSelected && !isCorrect && <XCircle className="w-5 h-5 text-red-500 shrink-0" />}
-                      </button>
+                        {selected !== null && isCorrect && (
+                          <motion.div initial={{ scale: 0, rotate: -45 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring' }}>
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                          </motion.div>
+                        )}
+                        {selected !== null && isSelected && !isCorrect && (
+                          <motion.div initial={{ scale: 0, rotate: 45 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring' }}>
+                            <XCircle className="w-5 h-5 text-red-500 shrink-0" />
+                          </motion.div>
+                        )}
+                      </motion.button>
                     );
                   })}
                 </div>

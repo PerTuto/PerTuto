@@ -66,6 +66,7 @@ import { OrbitalCurriculum } from '@/components/public/orbital-curriculum';
 import { FloatingFormulas } from '@/components/public/floating-formulas';
 import { LabExperience } from '@/components/public/lab-experience';
 import { ColorBreathing } from '@/components/public/color-breathing';
+import { HowItWorksGrid } from '@/components/public/how-it-works-grid';
 
 // ... (existing code and imports)
 
@@ -250,35 +251,31 @@ export default async function HomePage() {
             </section>
 
             {/* ===== HOW IT WORKS ===== */}
-            <section className="py-24 md:py-32 px-6 text-foreground" style={{ backgroundColor: '#f0f2f5' }}>
-                <div className="max-w-4xl mx-auto">
-                    <AnimatedSection className="text-center mb-16">
-                        <h2 className="font-headline text-4xl md:text-6xl font-black mb-4 uppercase tracking-[-0.03em] text-black">How It Works</h2>
-                        <p className="text-muted-foreground font-semibold text-lg">Three simple steps to get started</p>
+            <section className="py-24 md:py-32 px-6 text-foreground bg-slate-50 relative overflow-hidden">
+                {/* Background Grid Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
+
+                <div className="max-w-5xl mx-auto relative z-10">
+                    <AnimatedSection className="text-center mb-16 md:mb-24">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-sm font-bold tracking-wide uppercase text-primary mb-6 shadow-sm">
+                            <Target className="w-4 h-4" />
+                            The Learning Journey
+                        </div>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-headline font-black mb-6 tracking-tight text-foreground">
+                            How PerTuto Works
+                        </h2>
+                        <p className="text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
+                            A structured, gamified pathway designed to maximize student engagement and measurable outcomes.
+                        </p>
                     </AnimatedSection>
 
                     <div className="relative">
-                        {/* Neural Pathway SVG connector */}
-                        <NeuralPathway />
-
-                        <div className="grid md:grid-cols-3 gap-10 relative z-10">
-                            {[
-                                { icon: Target, step: "01", title: "Tell Us What You Need", desc: "Share your subject, curriculum, and goals. We'll find the perfect match." },
-                                { icon: Users, step: "02", title: "Meet Your Expert", desc: "Get matched with a vetted tutor who specializes in your exact needs." },
-                                { icon: Sparkles, step: "03", title: "Start Learning", desc: "Join your first session—online, flexible, and designed around you." },
-                            ].map(({ icon: Icon, step, title, desc }, index) => (
-                                <AnimatedSection key={step} delay={index * 150}>
-                                    <div className="text-center space-y-6">
-                                        <div className="w-20 h-20 rounded-full border-2 border-emerald-500 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(52,211,153,0.2)] bg-background">
-                                            <Icon className="w-8 h-8 text-emerald-500" />
-                                        </div>
-                                        <div className="text-sm font-mono text-emerald-500 tracking-widest font-black uppercase">{step}</div>
-                                        <h3 className="font-headline text-2xl font-black text-foreground">{title}</h3>
-                                        <p className="text-base text-muted-foreground leading-relaxed font-medium">{desc}</p>
-                                    </div>
-                                </AnimatedSection>
-                            ))}
+                        {/* Interactive SVG path connecting the steps */}
+                        <div className="absolute inset-0 z-0 hidden md:block" aria-hidden="true">
+                           <NeuralPathway />
                         </div>
+
+                        <HowItWorksGrid />
                     </div>
                 </div>
             </section>
@@ -292,17 +289,33 @@ export default async function HomePage() {
             </div>
 
             {/* ===== LEAD CAPTURE ===== */}
-            <section id="book-demo" className="py-28 md:py-36 px-6 bg-foreground text-background relative overflow-hidden">
+            <section id="book-demo" className="py-28 md:py-36 px-6 bg-slate-950 text-slate-50 relative overflow-hidden">
                 <FloatingFormulas />
+                
+                {/* Background Ambient Glows */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
+                
                 <AnimatedSection>
-                    <div className="max-w-lg mx-auto">
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.07] backdrop-blur-sm p-8 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.15)]">
-                            <div className="text-center mb-8">
-                                <h2 className="font-headline text-2xl md:text-3xl font-black mb-2 text-white">Book Your Free Demo</h2>
-                                <p className="text-sm text-white/60">3 fields. 30 seconds. We&apos;ll call you within 2 hours.</p>
+                    <div className="max-w-xl mx-auto relative group">
+                        
+                        {/* Animated Glow Border Behind the Form */}
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-500 rounded-[2rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-1000"></div>
+
+                        <TiltCard className="relative">
+                            <div className="relative rounded-[2rem] border border-white/20 bg-white/10 backdrop-blur-2xl p-8 md:p-12 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden">
+                                
+                                {/* Inner Glass Sheen */}
+                                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
+                                
+                                <div className="relative z-10 text-center mb-10">
+                                    <h2 className="font-headline text-3xl md:text-4xl font-black mb-3 text-white tracking-tight drop-shadow-sm">Book Your Free Demo</h2>
+                                    <p className="text-base text-white/70 font-medium tracking-wide">3 fields. 30 seconds. We&apos;ll call you within 2 hours.</p>
+                                </div>
+                                <div className="relative z-10">
+                                    <LeadCaptureForm variant="minimal" />
+                                </div>
                             </div>
-                            <LeadCaptureForm variant="minimal" />
-                        </div>
+                        </TiltCard>
                     </div>
                 </AnimatedSection>
             </section>

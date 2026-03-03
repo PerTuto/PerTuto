@@ -3,6 +3,7 @@
     "scripts": {
         "lint": "eslint",
         "build": "tsc",
+        "gcp-build": "",
         "build:watch": "tsc --watch",
         "serve": "npm run build && firebase emulators:start --only functions",
         "shell": "npm run build && firebase functions:shell",
@@ -23,7 +24,6 @@
         "google-auth-library": "^10.5.0",
         "googleapis": "^170.1.0",
         "nodemailer": "^6.9.1",
-        "puppeteer": "^24.37.5",
         "zod": "^3.24.2"
     },
     "devDependencies": {

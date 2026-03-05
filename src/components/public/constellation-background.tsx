@@ -29,9 +29,12 @@ interface Particle {
 
 const PARTICLE_COUNT = 75; // Increased density
 const LINE_MAX_DIST = 160;
-const MOUSE_RADIUS = 200;
-const MOUSE_PUSH = 50;
-const BASE_COLOR = '#f8f9fc'; // Slightly cooler, modern grey-blue
+const MOUSE_RADIUS = 280;
+const MOUSE_PUSH = 70;
+const BASE_COLOR_LIGHT = '#f8f9fc';
+const BASE_COLOR_DARK = '#0c0f1a';
+const LINE_COLOR_LIGHT = '100, 116, 139';
+const LINE_COLOR_DARK = '148, 163, 184';
 
 // Playful, gamified color palette
 const PALETTE = [
@@ -42,7 +45,14 @@ const PALETTE = [
   '16, 185, 129',  // Emerald
 ];
 
-export function ConstellationBackground() {
+interface ConstellationProps {
+  variant?: 'light' | 'dark';
+}
+
+export function ConstellationBackground({ variant = 'light' }: ConstellationProps) {
+  const isDark = variant === 'dark';
+  const isDarkRef = useRef(isDark);
+  isDarkRef.current = isDark;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
@@ -144,7 +154,7 @@ export function ConstellationBackground() {
     const my = mouseRef.current.y;
 
     // Clear background
-    ctx.fillStyle = BASE_COLOR;
+    ctx.fillStyle = isDarkRef.current ? BASE_COLOR_DARK : BASE_COLOR_LIGHT;
     ctx.fillRect(0, 0, w, h);
 
     const particles = particlesRef.current;
@@ -202,7 +212,8 @@ export function ConstellationBackground() {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(100, 116, 139, ${lineAlpha * boost})`; // Slate 500
+          const lineRgb = isDarkRef.current ? LINE_COLOR_DARK : LINE_COLOR_LIGHT;
+          ctx.strokeStyle = `rgba(${lineRgb}, ${lineAlpha * boost * (isDarkRef.current ? 2 : 1)})`;
           ctx.lineWidth = 0.5 + avgZ * 0.6;
           ctx.stroke();
         }
@@ -211,7 +222,7 @@ export function ConstellationBackground() {
 
     // Draw particles
     particles.forEach((p) => {
-      const alpha = 0.2 + p.z * 0.4;
+      const alpha = isDarkRef.current ? (0.35 + p.z * 0.5) : (0.2 + p.z * 0.4);
 
       let glowBoost = 0;
       if (!isTouchRef.current && mx > -9000) {

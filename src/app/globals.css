@@ -96,6 +96,13 @@ body {
     border-bottom: 1px solid hsl(215 15% 89%);
   }
 
+  /* Glass header — dark frosted navbar for dark pages */
+  .glass-header-dark {
+    background: rgba(12, 15, 26, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   /* Primary button with teal glow */
   .btn-primary {
     background: hsl(168 65% 29%);
@@ -183,6 +190,82 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ===== PRISMATIC DESIGN SYSTEM ===== */
+
+/* CSS property for animatable conic-gradient angle */
+@property --prismatic-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes prismatic-spin {
+  to { --prismatic-angle: 360deg; }
+}
+
+@keyframes holographic-sheen {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+
+@keyframes mesh-morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translate(5%, -3%) scale(1.05);
+  }
+  50% {
+    border-radius: 50% 30% 50% 70% / 40% 70% 30% 60%;
+    transform: translate(-3%, 5%) scale(0.95);
+  }
+  75% {
+    border-radius: 40% 60% 30% 50% / 60% 40% 70% 30%;
+    transform: translate(3%, 2%) scale(1.02);
+  }
+}
+
+@keyframes shard-drift {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.15;
+  }
+  25% {
+    transform: translate(30px, -20px) rotate(45deg);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-10px, -40px) rotate(90deg);
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(-30px, -10px) rotate(135deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes shard-drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.1;
+  }
+  33% {
+    transform: translate(-20px, -30px) rotate(60deg);
+    opacity: 0.2;
+  }
+  66% {
+    transform: translate(20px, -50px) rotate(120deg);
+    opacity: 0.15;
+  }
+}
+
 /* ===== ANIMATION UTILITIES ===== */
 @layer utilities {
   .animate-float {
@@ -220,6 +303,63 @@ body {
 
   .animate-marquee {
     animation: marquee 40s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 40s linear infinite;
+  }
+
+  /* Prismatic utilities */
+  .prismatic-border {
+    --prismatic-angle: 0deg;
+    border-image: conic-gradient(from var(--prismatic-angle), #10b981, #3b82f6, #8b5cf6, #f59e0b, #10b981) 1;
+    animation: prismatic-spin 6s linear infinite;
+  }
+
+  .film-grain {
+    position: relative;
+  }
+  .film-grain::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .glass-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-sheen::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 40%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.03) 60%,
+      transparent 100%
+    );
+    transform: translateX(-100%) rotate(25deg);
+    transition: none;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .glass-sheen:hover::before {
+    animation: holographic-sheen 0.8s ease-out forwards;
   }
 
   /* Stagger delays for children */

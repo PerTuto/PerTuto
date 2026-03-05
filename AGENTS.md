@@ -1,7 +1,7 @@
 # PerTuto — AI Agent Project Context
 
 > **One-file reference for any AI agent working on this codebase.**
-> Last updated: 2026-02-28 (Phase 21: Analytics & AI Insights)
+> Last updated: 2026-03-04 (Phase 9: Immersive V3 Gamification Prototype)
 
 ---
 
@@ -48,6 +48,7 @@ pertuto-tutoring/
 │   │   │   ├── blog/              # Blog listing + [slug] posts
 │   │   │   ├── contact/           # Contact form
 │   │   │   ├── pricing/           # Pricing page
+│   │   │   ├── nike-proto/        # V3 immersive prototype (gamification + WebGL)
 │   │   │   ├── privacy/           # Privacy policy
 │   │   │   ├── services/k12/     # K-12 tutoring services
 │   │   │   ├── services/professional/  # Professional training
@@ -504,6 +505,11 @@ functions/src/flows/
 - **Phase 2 (Missing ChronoClass Features)**: Validated the App Router porting of multi-tenant workflows (Admin/Teacher/Student). Successfully mapped TutorOS Databank management and AI extraction workflows to the new structure.
 - **Phase 3 (Immersive Web Overhaul)**: Implemented premium SaaS UI with functional interactive elements (Framer Motion/Native CSS) on public landing pages and the LMS dashboard, establishing a "Brilliant.org/Duolingo" aesthetic.
 - **Phase 5 (Acadine Parity - Sprints 2 & 3)**: Secured tenant-isolated data models (`centers`, `batches`) via complete `firestore.rules` RBAC refactoring. Confirmed full merge of UI for Centers/Batches, AI Question Paper Wizard, and Gemini Vision Answer Sheet Evaluator (HITL and Grade Challenge queues).
+- **Phase 8 (Immersive V2 Overhaul)**: Complete visual overhaul of the public homepage — enlarged Constellation Background with curriculum keywords, spring-physics "How It Works" cards, staggered Testimonials grid, premium glassmorphism Lead Capture form, and interactive Lab Experience quiz section. Full desktop/mobile verification.
+- **Phase 9 (Immersive V3 Prototype — `/nike-proto`)**: Built an experimental gamification prototype on `/nike-proto` with two development sprints:
+  - **Sprint 1 (DOM Interactions)**: Infinite Canvas Hero with 6 draggable/flippable sticky notes (`framer-motion`), Auto-Drawing SVG paths, Mini-Lab drag-and-drop equation solver (`@dnd-kit`, `canvas-confetti`), ComboMeterHUD with golden state badge, and `useGamificationStore` (Zustand). All interactions wired to a combo scoring system (max 100).
+  - **Sprint 2 (WebGL)**: Magnetized Focus Modes — 18-keyword 3D constellation (`@react-three/fiber`, `@react-three/drei`) with category filtering (K-12, University, AI & Tech). 3D Journey Map — scroll-bound camera path with checkpoint unlocking. Both components dynamically imported (`ssr: false`) via Client Component wrappers with `<Suspense>` fallbacks.
+  - **Polish Pass**: Synthesized sound effects via Web Audio API (`useSoundEffect` hook), Golden State shimmer CTA button (`GoldenCTA` component).
 
 ---
 

@@ -29,9 +29,10 @@ interface LeadFormData {
 interface LeadCaptureFormProps {
     variant?: 'minimal' | 'full';
     className?: string;
+    dark?: boolean;
 }
 
-export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCaptureFormProps) {
+export function LeadCaptureForm({ variant = 'minimal', className = '', dark = false }: LeadCaptureFormProps) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LeadFormData>();
     const [subject, setSubject] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,35 +91,39 @@ export function LeadCaptureForm({ variant = 'minimal', className = '' }: LeadCap
         );
     }
 
+    const inputClasses = dark
+        ? 'bg-white/10 border-white/10 text-white placeholder:text-white/50 focus:ring-primary/50 h-12'
+        : 'bg-background/50 border-border/50 h-12';
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`space-y-4 ${className}`}>
             <div className={variant === 'minimal' ? 'flex flex-col sm:flex-row gap-3' : 'space-y-4'}>
                 <Input
                     placeholder="Your name"
                     {...register('name', { required: true })}
-                    className="bg-background/50 border-border/50 h-12"
+                    className={inputClasses}
                 />
                 <Input
                     placeholder="Phone number"
                     type="tel"
                     {...register('phone', { required: true })}
-                    className="bg-background/50 border-border/50 h-12"
+                    className={inputClasses}
                 />
                 {variant === 'full' && (
                     <Input
                         placeholder="Email (optional)"
                         type="email"
                         {...register('email')}
-                        className="bg-background/50 border-border/50 h-12"
+                        className={inputClasses}
                     />
                 )}
                 <Select value={subject} onValueChange={setSubject}>
-                    <SelectTrigger className="bg-background/50 border-border/50 h-12">
+                    <SelectTrigger className={inputClasses}>
                         <SelectValue placeholder="Select subject" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={dark ? 'bg-[#1a1f2e] border-white/10' : ''}>
                         {SUBJECTS.map(s => (
-                            <SelectItem key={s} value={s}>{s}</SelectItem>
+                            <SelectItem key={s} value={s} className={dark ? 'text-white/80 focus:bg-white/10 focus:text-white' : ''}>{s}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>

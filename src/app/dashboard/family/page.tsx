@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
-import { getChildrenForParent, getCourses, getClasses, getAssignments } from "@/lib/firebase/services";
+import { getChildrenForParent, getCourses, getClasses, getAssignments, getAttendanceForStudent } from "@/lib/firebase/services";
 import { Student, Course, Class, Assignment } from "@/lib/types";
 import { ParentFinances } from "@/components/dashboard/parent-finances";
 
@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Users, Calendar, BookOpen, ClipboardList, GraduationCap, CheckCircle2, AlertCircle } from "lucide-react";
+import { Users, Calendar, BookOpen, ClipboardList, GraduationCap, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 export default function FamilyPage() {
   const { user, userProfile } = useAuth();
@@ -22,7 +22,29 @@ export default function FamilyPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [attendance, setAttendance] = useState<any[]>([]);
+  const [attendanceLoading, setAttendanceLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAttendance() {
+      if (!userProfile?.tenantId || !selectedChildId) return;
+      setAttendanceLoading(true);
+      try {
+        const records = await getAttendanceForStudent(userProfile.tenantId, selectedChildId);
+        setAttendance(records.sort((a,b) => {
+            const dateA = a.date instanceof Date ? a.date : new Date(a.date);
+            const dateB = b.date instanceof Date ? b.date : new Date(b.date);
+            return dateB.getTime() - dateA.getTime();
+        }));
+      } catch (err) {
+        console.error("Failed to load attendance", err);
+      } finally {
+        setAttendanceLoading(false);
+      }
+    }
+    loadAttendance();
+  }, [userProfile?.tenantId, selectedChildId]);
 
   const selectedChild = children.find(c => c.id === selectedChildId) || null;
 
@@ -304,6 +326,46 @@ export default function FamilyPage() {
                   ) : (
                     <p className="text-sm text-muted-foreground py-4 text-center">
                       No courses enrolled yet.
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Attendance */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                    Attendance History
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {attendanceLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : attendance.length > 0 ? (
+                    <div className="space-y-3">
+                      {attendance.slice(0, 5).map(record => {
+                        const recDate = record.date instanceof Date ? record.date : new Date(record.date);
+                        // Find if present
+                        const statusRecord = record.records?.find((r:any) => r.studentId === selectedChildId);
+                        const isPresent = statusRecord?.present;
+                        return (
+                          <div key={record.id} className="flex justify-between items-center border-b pb-2 last:border-0 border-slate-100 dark:border-white/10">
+                            <div>
+                               <p className="text-sm font-medium">{recDate.toLocaleDateString()}</p>
+                            </div>
+                            <Badge variant={isPresent ? "default" : "destructive"}>
+                              {isPresent ? "Present" : "Absent"}
+                            </Badge>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground py-4 text-center">
+                      No attendance records found.
                     </p>
                   )}
                 </CardContent>

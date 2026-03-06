@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 import { firestore } from '../client-app';
 import { GamificationProfile, Badge, LeaderboardEntry } from '../../types';
+import { getStudentsByIds } from './students';
 
 /**
  * Initializes or fetches a student's gamification profile.
@@ -117,22 +118,25 @@ export async function getLeaderboard(tenantId: string, limitCount: number = 10):
   const q = query(gamificationRef, orderBy('xp', 'desc'), limit(limitCount));
   const snapshot = await getDocs(q);
   
-  const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
-  const leaderboard: LeaderboardEntry[] = [];
+  if (snapshot.empty) return [];
 
-  for (const docSnap of snapshot.docs) {
+  const studentIds = snapshot.docs.map(doc => doc.id);
+  const students = await getStudentsByIds(tenantId, studentIds);
+  const studentMap = new Map(students.map(s => [s.id, s]));
+
+  const leaderboard: LeaderboardEntry[] = snapshot.docs.map(docSnap => {
     const gamificationData = docSnap.data();
-    const studentSnap = await getDoc(doc(studentsRef, docSnap.id));
-    const studentData = studentSnap.exists() ? studentSnap.data() : { name: 'Unknown Student' };
+    const studentData = studentMap.get(docSnap.id);
     
-    leaderboard.push({
+    return {
       studentId: docSnap.id,
-      name: studentData.name,
-      avatar: studentData.avatar,
+      name: studentData?.name || 'Unknown Student',
+      avatar: studentData?.avatar,
       xp: gamificationData.xp,
       level: gamificationData.level,
-    });
-  }
+      rank: 0, // Assigned later
+    };
+  });
 
   return leaderboard.map((entry, index) => ({ ...entry, rank: index + 1 }));
 }

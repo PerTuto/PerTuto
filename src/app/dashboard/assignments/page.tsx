@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Book, Calendar, Loader2, Plus } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
-import { getAssignments, getCourses } from "@/lib/firebase/services";
+import { getAssignments, getCourses, getStudents } from "@/lib/firebase/services";
 import type { Assignment, Course, UserRole } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { AddAssignmentDialog } from "@/components/assignments/add-assignment-dialog";
@@ -21,7 +21,7 @@ const statusColors: { [key in AssignmentStatus]: string } = {
 };
 
 export default function AssignmentsPage() {
-  const { userProfile } = useAuth();
+  const { userProfile, user } = useAuth();
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,11 +34,26 @@ export default function AssignmentsPage() {
     if (userProfile?.tenantId) {
       setLoading(true);
       try {
-        const [assignmentsData, coursesData] = await Promise.all([
+        const isStudent = userProfile.role === 'student' || (Array.isArray(userProfile.role) && userProfile.role.includes('student' as UserRole));
+        
+        const [assignmentsData, coursesData, studentsData] = await Promise.all([
           getAssignments(userProfile.tenantId),
-          getCourses(userProfile.tenantId)
+          getCourses(userProfile.tenantId),
+          isStudent ? getStudents(userProfile.tenantId) : Promise.resolve([])
         ]);
-        setAssignments(assignmentsData);
+
+        let filteredAssignments = assignmentsData;
+        
+        if (isStudent && user) {
+           const myStudent = studentsData.find(s => s.ownerId === user.uid || s.email === user.email);
+           if (myStudent && myStudent.courses) {
+               filteredAssignments = assignmentsData.filter(a => myStudent.courses.includes(a.courseId));
+           } else {
+               filteredAssignments = [];
+           }
+        }
+
+        setAssignments(filteredAssignments);
         setCourses(coursesData);
       } catch (error) {
         console.error("Failed to fetch assignments data:", error);
@@ -46,7 +61,7 @@ export default function AssignmentsPage() {
         setLoading(false);
       }
     }
-  }, [userProfile?.tenantId]);
+  }, [userProfile, user]);
 
   useEffect(() => {
     fetchData();

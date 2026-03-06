@@ -84,8 +84,9 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
         if (!user) return;
         setLoading(true);
         try {
+            const idToken = await user.getIdToken();
             const result = await createInviteToken(
-                user.uid,
+                idToken,
                 tenantId,
                 tenantName,
                 role as any,
@@ -130,8 +131,9 @@ export function InviteUserDialog({ tenantId, tenantName }: InviteUserDialogProps
 
         setLoading(true);
         try {
+            const idToken = await user.getIdToken();
             const result = await adminCreateUser(
-                user.uid,
+                idToken,
                 tenantId,
                 createForm.email,
                 createForm.password,

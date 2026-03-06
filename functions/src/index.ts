@@ -106,6 +106,9 @@ export const generateQuestions = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await generateQuestionsFlow(request.data);
 });
 
@@ -116,6 +119,9 @@ export const generateNotes = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await generateNotesFlow(request.data);
 });
 
@@ -126,6 +132,9 @@ export const generateQuestionsFromPdf = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await extractQuestionsFromPdfFlow(request.data);
 });
 
@@ -136,6 +145,9 @@ export const syncDriveFolder = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await syncDriveFolderFlow(request.data);
 });
 
@@ -146,6 +158,9 @@ export const worksheetExtractor = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await worksheetExtractorFlow(request.data);
 });
 
@@ -156,6 +171,9 @@ export const quizCurator = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await quizCuratorFlow(request.data);
 });
 
@@ -166,6 +184,9 @@ export const questionValidator = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await questionValidatorFlow(request.data);
 });
 
@@ -176,6 +197,9 @@ export const questionEnhancer = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await questionEnhancerFlow(request.data);
 });
 
@@ -186,6 +210,9 @@ export const paperGenerator = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await paperGeneratorFlow(request.data);
 });
 
@@ -196,6 +223,9 @@ export const paperExport = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await paperExportFlow(request.data);
 });
 
@@ -206,6 +236,9 @@ export const evaluator = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await answerSheetEvaluatorFlow(request.data);
 });
 
@@ -218,6 +251,9 @@ export const gapAnalyzer = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await gapAnalyzerFlow(request.data);
 });
 
@@ -228,6 +264,9 @@ export const scorePredictor = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await scorePredictorFlow(request.data);
 });
 
@@ -238,6 +277,9 @@ export const assignmentFeedback = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await assignmentFeedbackFlow(request.data);
 });
 
@@ -248,5 +290,12 @@ export const practiceEvaluator = onCall({
     secrets: [apiKey],
     cors: ["https://pertuto.com", "http://localhost:3000"],
 }, async (request) => {
+    if (!request.auth) {
+        throw new functionsV1.https.HttpsError("unauthenticated", "User must be authenticated to use AI features.");
+    }
     return await practiceEvaluatorFlow(request.data);
 });
+
+export * from './triggers/student-triggers';
+export * from './triggers/class-triggers';
+export * from './triggers/course-triggers';

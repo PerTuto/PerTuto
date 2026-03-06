@@ -9,6 +9,7 @@ import { getLeads, addLead as addLeadToFirestore, convertLeadToStudent, updateLe
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { RoleGuard } from "@/components/auth/role-guard";
 import type { UserRole } from "@/lib/types";
@@ -18,6 +19,8 @@ export default function LeadsPage() {
   const { toast } = useToast();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [lastVisible, setLastVisible] = useState<any>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
 
@@ -26,8 +29,9 @@ export default function LeadsPage() {
       if (userProfile?.tenantId) {
         setLoading(true);
         try {
-          const data = await getLeads(userProfile.tenantId);
+          const { leads: data, lastVisible: newLastVisible } = await import('@/lib/firebase/services').then(m => m.getLeadsPaginated(userProfile.tenantId, 50));
           setLeads(data);
+          setLastVisible(newLastVisible);
         } catch (error) {
           console.error("Failed to fetch leads:", error);
         } finally {
@@ -37,6 +41,21 @@ export default function LeadsPage() {
     }
     fetchLeads();
   }, [userProfile?.tenantId]);
+
+  const loadMore = async () => {
+    if (!userProfile?.tenantId || !lastVisible) return;
+    setLoadingMore(true);
+    try {
+      const { leads: newLeads, lastVisible: newLastVisible } = await import('@/lib/firebase/services').then(m => m.getLeadsPaginated(userProfile.tenantId, 50, lastVisible));
+      setLeads(prev => [...prev, ...newLeads]);
+      setLastVisible(newLastVisible);
+    } catch (error) {
+      console.error("Failed to load more leads:", error);
+      toast({ title: "Error", description: "Failed to load more leads.", variant: "destructive" });
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   const addLead = async (lead: Omit<Lead, 'id' | 'dateAdded' | 'status'>) => {
     if (!userProfile?.tenantId) return;
@@ -150,6 +169,15 @@ export default function LeadsPage() {
           onAddLeadClick={() => setIsAddDialogOpen(true)}
           onEditClick={(lead) => setEditingLead(lead)}
         />
+
+        {lastVisible && (
+          <div className="flex justify-center mt-4 mb-4">
+            <Button variant="outline" onClick={loadMore} disabled={loadingMore}>
+              {loadingMore ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+              Load More
+            </Button>
+          </div>
+        )}
 
         {/* Add Lead Dialog */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>

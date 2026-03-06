@@ -11,25 +11,36 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@pertuto.com';
 
 // ── Rate Limiting ──
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
-function checkRateLimit(identifier: string): boolean {
+async function checkRateLimit(identifier: string): Promise<boolean> {
   const now = Date.now();
-  const entry = rateLimitMap.get(identifier);
-
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(identifier, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return true;
+  const limitRef = adminFirestore.collection('rateLimits').doc(identifier);
+  
+  try {
+      const doc = await limitRef.get();
+      if (!doc.exists) {
+        await limitRef.set({ count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+        return true;
+      }
+      
+      const data = doc.data()!;
+      if (now > data.resetAt) {
+        await limitRef.set({ count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+        return true;
+      }
+      
+      if (data.count >= RATE_LIMIT_MAX) {
+        return false;
+      }
+      
+      await limitRef.update({ count: FieldValue.increment(1) });
+      return true;
+  } catch (err) {
+      console.error("Rate limit check failed", err);
+      return true; // fail-open
   }
-
-  if (entry.count >= RATE_LIMIT_MAX) {
-    return false;
-  }
-
-  entry.count++;
-  return true;
 }
 
 // ── Validation Schema ──
@@ -60,7 +71,7 @@ export async function submitPublicLead(data: {
 
         // Rate limit by a hash of name+phone (no IP available in server actions)
         const rateLimitKey = `${validData.name}-${validData.phone}`.toLowerCase().trim();
-        if (!checkRateLimit(rateLimitKey)) {
+        if (!(await checkRateLimit(rateLimitKey))) {
             return { success: false, error: 'Too many submissions. Please try again later.' };
         }
 

@@ -198,7 +198,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
 
                 await updateClass(userProfile.tenantId, classToEdit.id, classData);
                 // Trigger Sync
-                syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
+                syncClassToGoogleAction(await user.getIdToken(), userProfile.tenantId, classToEdit.id, false);
 
                 toast({
                     title: "Class Updated",
@@ -217,7 +217,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                 } else {
                     const newClass = await addClass(userProfile.tenantId, classData);
                     // Trigger Sync
-                    syncClassToGoogleAction(userProfile.tenantId, user.uid, newClass.id, false);
+                    syncClassToGoogleAction(await user.getIdToken(), userProfile.tenantId, newClass.id, false);
 
                     toast({
                         title: "Class Scheduled",
@@ -247,7 +247,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
         try {
             if (choice === 'this') {
                 await updateSingleClassDetached(userProfile.tenantId, classToEdit.id, pendingEdit.classData);
-                syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
+                syncClassToGoogleAction(await user.getIdToken(), userProfile.tenantId, classToEdit.id, false);
                 toast({ title: "Event Updated", description: "Only this event was changed." });
             } else if (choice === 'future') {
                 const newStart = pendingEdit.classData.start as Date;
@@ -267,7 +267,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
                     otherUpdates
                 );
                 
-                syncClassToGoogleAction(userProfile.tenantId, user.uid, classToEdit.id, false);
+                syncClassToGoogleAction(await user.getIdToken(), userProfile.tenantId, classToEdit.id, false);
                 toast({ title: "Series Updated", description: "This and all future events were updated." });
             }
             
@@ -287,7 +287,7 @@ export function ClassDialog({ classToEdit, onSaved, trigger, open: controlledOpe
 
             // Sync Delete
             if (classToEdit.googleEventId) {
-                deleteGoogleCalendarEvent(user.uid, classToEdit.googleEventId);
+                deleteGoogleCalendarEvent(await user.getIdToken(), classToEdit.googleEventId);
             }
 
             toast({

@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ClipboardList, Book, Calendar, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
-import { getAssignments, getCourses } from "@/lib/firebase/services";
-import type { Assignment, Course } from "@/lib/types";
+import { getAssignments, getCourses, getStudents } from "@/lib/firebase/services";
+import type { Assignment, Course, UserRole } from "@/lib/types";
 
 const statusColors: { [key in "Pending" | "Submitted" | "Graded"]: string } = {
   Pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/20",
@@ -16,7 +16,7 @@ const statusColors: { [key in "Pending" | "Submitted" | "Graded"]: string } = {
 };
 
 export function PendingAssignments() {
-  const { userProfile } = useAuth();
+  const { userProfile, user } = useAuth();
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,11 +25,26 @@ export function PendingAssignments() {
     async function fetchData() {
       if (!userProfile?.tenantId) return;
       try {
-        const [a, c] = await Promise.all([
+        const isStudent = userProfile.role === 'student' || (Array.isArray(userProfile.role) && userProfile.role.includes('student' as UserRole));
+
+        const [a, c, s] = await Promise.all([
           getAssignments(userProfile.tenantId),
           getCourses(userProfile.tenantId),
+          isStudent ? getStudents(userProfile.tenantId) : Promise.resolve([])
         ]);
-        setAssignments(a);
+
+        let filteredAssignments = a;
+
+        if (isStudent && user) {
+           const myStudent = s.find(student => student.ownerId === user.uid || student.email === user.email);
+           if (myStudent && myStudent.courses) {
+               filteredAssignments = a.filter(assignment => myStudent.courses.includes(assignment.courseId));
+           } else {
+               filteredAssignments = [];
+           }
+        }
+
+        setAssignments(filteredAssignments);
         setCourses(c);
       } catch (error) {
         console.error("Failed to fetch assignments:", error);
@@ -38,7 +53,7 @@ export function PendingAssignments() {
       }
     }
     fetchData();
-  }, [userProfile?.tenantId]);
+  }, [userProfile, user]);
 
   const pendingAssignments = assignments.filter(a => a.status === 'Pending').slice(0, 5);
 

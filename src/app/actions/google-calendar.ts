@@ -1,6 +1,6 @@
 "use server";
 
-import { adminFirestore } from "@/lib/firebase/server-app";
+import { adminFirestore, adminAuth } from "@/lib/firebase/server-app";
 import { getOAuth2Client } from "@/lib/google-calendar";
 import { Timestamp } from "firebase-admin/firestore";
 import { google } from "googleapis";
@@ -48,9 +48,12 @@ export async function syncClassToGoogle(userId: string, classId: string, isDelet
 }
 
 // Redefining with TenantID for direct access
-export async function syncClassToGoogleAction(tenantId: string, userId: string, classId: string, isDelete: boolean = false) {
-    console.log(`[GCal Sync] Started: Tenant=${tenantId}, User=${userId}, Class=${classId}, Delete=${isDelete}`);
+export async function syncClassToGoogleAction(idToken: string, tenantId: string, classId: string, isDelete: boolean = false) {
+    console.log(`[GCal Sync] Started: Tenant=${tenantId}, Class=${classId}, Delete=${isDelete}`);
     try {
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const userId = decodedToken.uid;
+
         // 1. Fetch User's Google Tokens
         const integrationSnap = await adminFirestore.collection('users').doc(userId).collection('integrations').doc('google').get();
 
@@ -133,8 +136,10 @@ export async function syncClassToGoogleAction(tenantId: string, userId: string, 
     }
 }
 
-export async function deleteGoogleCalendarEvent(userId: string, googleEventId: string) {
+export async function deleteGoogleCalendarEvent(idToken: string, googleEventId: string) {
     try {
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const userId = decodedToken.uid;
         const integrationSnap = await adminFirestore.collection('users').doc(userId).collection('integrations').doc('google').get();
         if (!integrationSnap.exists || !integrationSnap.data()?.connected) return;
 

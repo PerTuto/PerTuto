@@ -70,8 +70,9 @@ export function AddUserDialog({ onUserAdded }: { onUserAdded: () => void }) {
 
         setLoading(true);
         try {
+            const idToken = await user.getIdToken();
             const result = await createTenantUser(
-                user.uid,
+                idToken,
                 userProfile.tenantId,
                 {
                     email: values.email,

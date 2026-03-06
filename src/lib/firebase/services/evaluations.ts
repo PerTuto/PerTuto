@@ -9,6 +9,7 @@ import {
   query, 
   where, 
   orderBy,
+  limit,
   Timestamp,
   deleteDoc
 } from "firebase/firestore";
@@ -35,7 +36,7 @@ export async function createEvaluation(tenantId: string, evaluation: Omit<Evalua
 
 export async function getEvaluationsByTest(tenantId: string, testId: string): Promise<Evaluation[]> {
   const evalRef = collection(firestore, `tenants/${tenantId}/${COLLECTION_NAME}`);
-  const q = query(evalRef, where("testId", "==", testId));
+  const q = query(evalRef, where("testId", "==", testId), limit(500));
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => mapDocToEvaluation(doc.id, doc.data()));
 }
@@ -60,7 +61,7 @@ export async function updateEvaluation(tenantId: string, evalId: string, updates
 
 export async function getReviewQueue(tenantId: string): Promise<Evaluation[]> {
   const evalRef = collection(firestore, `tenants/${tenantId}/${COLLECTION_NAME}`);
-  const q = query(evalRef, where("requiresReview", "==", true), where("status", "==", "evaluated"));
+  const q = query(evalRef, where("requiresReview", "==", true), where("status", "==", "evaluated"), limit(500));
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => mapDocToEvaluation(doc.id, doc.data()));
 }

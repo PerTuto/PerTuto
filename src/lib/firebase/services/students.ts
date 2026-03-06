@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, query, where, addDoc, deleteDoc, type Timestamp } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where, addDoc, deleteDoc, type Timestamp, limit, startAfter, orderBy } from 'firebase/firestore';
 import { firestore } from '../client-app';
 import { type Student, StudentStatus } from '../../types';
 
@@ -7,7 +7,8 @@ import { type Student, StudentStatus } from '../../types';
  */
 export async function getStudents(tenantId: string): Promise<Student[]> {
   const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
-  const querySnapshot = await getDocs(studentsRef);
+  const q = query(studentsRef, orderBy('name'), limit(500)); // Safety limit
+  const querySnapshot = await getDocs(q);
   const students: Student[] = [];
   querySnapshot.forEach((doc) => {
     const data = doc.data();
@@ -18,6 +19,38 @@ export async function getStudents(tenantId: string): Promise<Student[]> {
     } as Student);
   });
   return students;
+}
+
+/**
+ * Fetches students with cursor-based pagination for scalable list views.
+ */
+export async function getStudentsPaginated(
+  tenantId: string,
+  pageSize: number = 50,
+  lastDocSnap?: any
+): Promise<{ students: Student[], lastVisible: any }> {
+  const studentsRef = collection(firestore, `tenants/${tenantId}/students`);
+  let q = query(studentsRef, orderBy('name'), limit(pageSize));
+
+  if (lastDocSnap) {
+    q = query(q, startAfter(lastDocSnap));
+  }
+
+  const querySnapshot = await getDocs(q);
+  const students: Student[] = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    students.push({
+      id: doc.id,
+      ...data,
+      enrolledDate: (data.enrolledDate as Timestamp)?.toDate?.()?.toISOString().split('T')[0] || data.enrolledDate,
+    } as Student);
+  });
+
+  return {
+    students,
+    lastVisible: querySnapshot.docs[querySnapshot.docs.length - 1],
+  };
 }
 
 /**

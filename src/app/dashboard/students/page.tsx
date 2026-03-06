@@ -5,10 +5,12 @@ import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import type { Student } from '@/lib/types';
 import { AddStudentForm } from '@/components/students/add-student-form';
-import { getStudents, getCourses, addStudent as addStudentService, deleteStudent as deleteStudentService } from '@/lib/firebase/services';
+import { getStudentsPaginated, getCourses, addStudent as addStudentService, deleteStudent as deleteStudentService } from '@/lib/firebase/services';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 import { InviteStudentDialog } from '@/components/students/invite-student-dialog';
 import {
   AlertDialog,
@@ -24,6 +26,8 @@ import {
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [lastVisible, setLastVisible] = useState<any>(null);
   const [inviteStudent, setInviteStudent] = useState<Student | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null);
   const { user, userProfile } = useAuth();
@@ -33,8 +37,8 @@ export default function StudentsPage() {
     if (!user || !userProfile?.tenantId) return;
     setLoading(true);
     try {
-      const [studentList, courseList] = await Promise.all([
-        getStudents(userProfile.tenantId),
+      const [studentResult, courseList] = await Promise.all([
+        getStudentsPaginated(userProfile.tenantId, 50),
         getCourses(userProfile.tenantId)
       ]);
 
@@ -42,12 +46,13 @@ export default function StudentsPage() {
       const courseMap = new Map(courseList.map(c => [c.id, c.title]));
 
       // Enrich Students with Course Names instead of IDs
-      const enrichedStudents = studentList.map(s => ({
+      const enrichedStudents = studentResult.students.map(s => ({
         ...s,
         courses: s.courses.map(id => courseMap.get(id) || id)
       }));
 
       setStudents(enrichedStudents);
+      setLastVisible(studentResult.lastVisible);
     } catch (error) {
       console.error("Error fetching data:", error);
       toast({
@@ -59,6 +64,29 @@ export default function StudentsPage() {
       setLoading(false);
     }
   }, [user, userProfile, toast]);
+
+  const loadMore = async () => {
+    if (!userProfile?.tenantId || !lastVisible) return;
+    setLoadingMore(true);
+    try {
+      const { students: newStudents, lastVisible: newLastVisible } = await getStudentsPaginated(userProfile.tenantId, 50, lastVisible);
+      const courseList = await getCourses(userProfile.tenantId);
+      const courseMap = new Map(courseList.map(c => [c.id, c.title]));
+      
+      const enrichedStudents = newStudents.map(s => ({
+        ...s,
+        courses: s.courses.map(id => courseMap.get(id) || id)
+      }));
+
+      setStudents(prev => [...prev, ...enrichedStudents]);
+      setLastVisible(newLastVisible);
+    } catch (error) {
+      console.error("Error loading more students:", error);
+      toast({ title: "Error", description: "Could not load more students.", variant: "destructive" });
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   useEffect(() => {
     if (userProfile?.tenantId) {
@@ -152,6 +180,15 @@ export default function StudentsPage() {
           dialogContent: <AddStudentForm addStudent={addStudent} />,
         }}
       />
+
+      {lastVisible && (
+        <div className="flex justify-center mt-4 mb-8">
+          <Button variant="outline" onClick={loadMore} disabled={loadingMore}>
+            {loadingMore ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+            Load More
+          </Button>
+        </div>
+      )}
 
       {inviteStudent && (
         <InviteStudentDialog 

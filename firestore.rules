@@ -251,6 +251,30 @@ service cloud.firestore {
         allow update: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
         allow delete: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
       }
+
+      // Notifications
+      match /notifications/{notificationId} {
+        allow read: if userBelongsToTenant(tenantId) && resource.data.userId == request.auth.uid;
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Study Materials
+      match /studyMaterials/{materialId} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && (isAdmin() || isTeacher());
+      }
+
+      // Gamification
+      match /gamification/{document=**} {
+        allow read: if userBelongsToTenant(tenantId);
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
+
+      // Payments
+      match /payments/{document=**} {
+        allow read: if userBelongsToTenant(tenantId) && isAdmin();
+        allow write: if userBelongsToTenant(tenantId) && isAdmin();
+      }
     }
   }
 }

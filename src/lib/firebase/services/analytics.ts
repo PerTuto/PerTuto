@@ -106,13 +106,32 @@ export async function getTenantKpis(tenantId: string): Promise<TenantKpis> {
       revenue += amount;
     }
   });
+
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  
+  let newStudentsInLast30Days = 0;
+  studentsSnap.docs.forEach(doc => {
+    const data = doc.data();
+    if (data.createdAt) {
+      const createdAt = data.createdAt.toDate();
+      if (createdAt >= thirtyDaysAgo) {
+        newStudentsInLast30Days++;
+      }
+    }
+  });
+
+  const previousStudentCount = studentsSnap.size - newStudentsInLast30Days;
+  const growthPercentage = previousStudentCount > 0 
+    ? Math.round((newStudentsInLast30Days / previousStudentCount) * 100) 
+    : newStudentsInLast30Days > 0 ? 100 : 0;
   
   return {
     totalStudents: studentsSnap.size,
     activeBatches: batchesSnap.size,
     attendanceRate,
     revenue,
-    growthPercentage: 12.5 // Hard to calculate historically without snapshots, keeping static for now
+    growthPercentage
   };
 }
 

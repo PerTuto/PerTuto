@@ -39,8 +39,9 @@ export function InviteStudentDialog({
     setCopied(false);
 
     try {
+      const idToken = await user.getIdToken();
       const result = await createInviteToken(
-        user.uid,
+        idToken,
         userProfile.tenantId,
         "PerTuto", // Tenant Name (could be fetched dynamically if supported)
         "student",

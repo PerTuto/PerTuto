@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, query, where, addDoc, setDoc, deleteDoc, orderBy, limit as firestoreLimit } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where, addDoc, setDoc, deleteDoc, orderBy, limit as firestoreLimit, startAfter } from 'firebase/firestore';
 import { firestore } from '../client-app';
 import { type Lead } from '../../types';
 
@@ -7,12 +7,40 @@ import { type Lead } from '../../types';
  */
 export async function getLeads(tenantId: string): Promise<Lead[]> {
   const leadsRef = collection(firestore, `tenants/${tenantId}/leads`);
-  const querySnapshot = await getDocs(leadsRef);
+  const q = query(leadsRef, orderBy('dateAdded', 'desc'), firestoreLimit(500));
+  const querySnapshot = await getDocs(q);
   const leads: Lead[] = [];
   querySnapshot.forEach((doc) => {
     leads.push({ id: doc.id, ...doc.data() } as Lead);
   });
   return leads;
+}
+
+/**
+ * Fetches leads with cursor-based pagination for scalable list views.
+ */
+export async function getLeadsPaginated(
+  tenantId: string,
+  pageSize: number = 50,
+  lastDocSnap?: any
+): Promise<{ leads: Lead[], lastVisible: any }> {
+  const leadsRef = collection(firestore, `tenants/${tenantId}/leads`);
+  let q = query(leadsRef, orderBy('dateAdded', 'desc'), firestoreLimit(pageSize));
+
+  if (lastDocSnap) {
+    q = query(q, startAfter(lastDocSnap));
+  }
+
+  const querySnapshot = await getDocs(q);
+  const leads: Lead[] = [];
+  querySnapshot.forEach((doc) => {
+    leads.push({ id: doc.id, ...doc.data() } as Lead);
+  });
+
+  return {
+    leads,
+    lastVisible: querySnapshot.docs[querySnapshot.docs.length - 1],
+  };
 }
 
 /**

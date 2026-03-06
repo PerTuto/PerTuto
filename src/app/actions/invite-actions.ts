@@ -1,6 +1,6 @@
 "use server";
 
-import { adminFirestore } from "@/lib/firebase/server-app";
+import { adminFirestore, adminAuth } from "@/lib/firebase/server-app";
 import crypto from "crypto";
 
 export type InviteTokenData = {
@@ -24,7 +24,7 @@ type CreateInviteResponse = {
 import { z } from "zod";
 
 const createInviteSchema = z.object({
-    currentUserUid: z.string().min(1),
+    idToken: z.string().min(1),
     tenantId: z.string().min(1),
     tenantName: z.string().min(1),
     role: z.enum(['admin', 'teacher', 'student', 'parent', 'executive']),
@@ -36,7 +36,7 @@ const createInviteSchema = z.object({
  * Only admins or super users can create invites.
  */
 export async function createInviteToken(
-    currentUserUid: string,
+    idToken: string,
     tenantId: string,
     tenantName: string,
     role: 'admin' | 'teacher' | 'student' | 'parent' | 'executive',
@@ -44,10 +44,15 @@ export async function createInviteToken(
 ): Promise<CreateInviteResponse> {
     try {
         // Strict Validation
-        const validation = createInviteSchema.safeParse({ currentUserUid, tenantId, tenantName, role, studentId });
+        const validation = createInviteSchema.safeParse({ idToken, tenantId, tenantName, role, studentId });
         if (!validation.success) {
             return { success: false, message: "Invalid invite data: " + validation.error.message };
         }
+        
+        // Securely decode the token to authenticate caller
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const currentUserUid = decodedToken.uid;
+
         // Verify caller authorization
         const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
         if (!callerDoc.exists) {

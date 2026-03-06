@@ -12,7 +12,7 @@ type CreateUserResponse = {
 import { z } from "zod";
 
 const createTenantUserSchema = z.object({
-  currentUserUid: z.string().min(1),
+  idToken: z.string().min(1),
   targetTenantId: z.string().min(1),
   userData: z.object({
     email: z.string().email(),
@@ -23,7 +23,7 @@ const createTenantUserSchema = z.object({
 });
 
 const createTenantSchema = z.object({
-  currentUserUid: z.string().min(1),
+  idToken: z.string().min(1),
   data: z.object({
     tenantName: z.string().min(3),
     adminFullName: z.string().min(2),
@@ -33,22 +33,20 @@ const createTenantSchema = z.object({
 });
 
 export async function createTenantUser(
-    currentUserUid: string, // We accept UID but verification is crucial
+    idToken: string, // Verified via Firebase Admin
     targetTenantId: string,
     userData: { email: string; password?: string; fullName: string; role: 'admin' | 'teacher' }
 ): Promise<CreateUserResponse> {
     try {
-        const validation = createTenantUserSchema.safeParse({ currentUserUid, targetTenantId, userData });
+        const validation = createTenantUserSchema.safeParse({ idToken, targetTenantId, userData });
         if (!validation.success) {
           return { success: false, message: "Invalid user data: " + validation.error.message };
         }
 
-        // 1. Verify Authentication & Authorization
-        // In a real app, we would verify the session cookie here.
-        // For now/MVP with Client SDK Auth + Server Actions, we trust the caller BUT 
-        // we must verify the caller actually has rights to this tenant.
-        // Ideally, we'd pass an ID token and verify it, but `firebase-admin` allows `verifyIdToken`.
-        // Let's assume for this step we will verify the user's role from Firestore.
+        // - VERIFICATION LAYER -
+        // Verify the ID token passed by the client
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const currentUserUid = decodedToken.uid;
 
         // Fetch caller profile from Admin Firestore to be sure (bypassing client-side tampering)
         const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
@@ -113,7 +111,7 @@ export async function createTenantUser(
 }
 
 export async function createTenant(
-    currentUserUid: string,
+    idToken: string,
     data: {
         tenantName: string;
         adminFullName: string;
@@ -122,11 +120,14 @@ export async function createTenant(
     }
 ): Promise<{ success: boolean; message?: string; tenantId?: string }> {
     try {
-        const validation = createTenantSchema.safeParse({ currentUserUid, data });
+        const validation = createTenantSchema.safeParse({ idToken, data });
         if (!validation.success) {
           return { success: false, message: "Invalid tenant data: " + validation.error.message };
         }
         
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const currentUserUid = decodedToken.uid;
+
         // 1. Verify caller is super admin
         const callerDoc = await adminFirestore.collection("users").doc(currentUserUid).get();
         if (!callerDoc.exists) {

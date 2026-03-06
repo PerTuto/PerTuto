@@ -15,7 +15,7 @@ type AdminCreateUserResponse = {
 // --- Validation Schema ---
 
 const createUserSchema = z.object({
-    callerUid: z.string().min(1, "Caller UID is required"),
+    idToken: z.string().min(1, "ID token is required"),
     tenantId: z.string().min(1, "Tenant ID is required"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
@@ -34,7 +34,7 @@ const createUserSchema = z.object({
  * Only super admins or tenant admins can call this action.
  */
 export async function adminCreateUser(
-    callerUid: string,
+    idToken: string,
     tenantId: string,
     email: string,
     password: string,
@@ -45,7 +45,7 @@ export async function adminCreateUser(
     try {
         // 1. Validate input
         const validation = createUserSchema.safeParse({
-            callerUid,
+            idToken,
             tenantId,
             email,
             password,
@@ -60,6 +60,10 @@ export async function adminCreateUser(
                 message: "Validation failed: " + validation.error.errors.map(e => e.message).join(", "),
             };
         }
+
+        // Securely decode the ID token to authenticate the caller
+        const decodedToken = await adminAuth.verifyIdToken(idToken);
+        const callerUid = decodedToken.uid;
 
         // 2. Verify caller authorization
         const callerDoc = await adminFirestore.collection("users").doc(callerUid).get();

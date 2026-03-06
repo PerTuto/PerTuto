@@ -4,14 +4,16 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/lib/firebase/client-app";
-import { getSubjects, getQuestions, getGamificationProfile, updateXp } from "@/lib/firebase/services";
+import { getSubjects, getQuestions, getGamificationProfile, updateXp, getLeaderboard } from "@/lib/firebase/services";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, Zap, Target, BookOpen, ChevronRight } from "lucide-react";
+import { RefreshCw, Zap, Target, BookOpen, ChevronRight, Trophy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { XpProgress } from "@/components/gamification/xp-progress";
+import { BadgeShowcase } from "@/components/gamification/badge-showcase";
+import { LeaderboardWidget } from "@/components/gamification/leaderboard-widget";
 
 export default function PracticePage() {
   const { user, userProfile } = useAuth();
@@ -22,6 +24,7 @@ export default function PracticePage() {
   const [userAnswer, setUserAnswer] = useState("");
   const [isChecking, setIsChecking] = useState(false);
   const [gamification, setGamification] = useState<any>(null);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
 
   useEffect(() => {
     if (userProfile?.tenantId && user?.uid) {
@@ -32,12 +35,14 @@ export default function PracticePage() {
   async function loadInitialData() {
     try {
       setLoading(true);
-      const [subjectsList, profile] = await Promise.all([
+      const [subjectsList, profile, board] = await Promise.all([
         getSubjects(userProfile!.tenantId!),
-        getGamificationProfile(userProfile!.tenantId!, user!.uid)
+        getGamificationProfile(userProfile!.tenantId!, user!.uid),
+        getLeaderboard(userProfile!.tenantId!, 10)
       ]);
       setSubjects(subjectsList);
       setGamification(profile);
+      setLeaderboard(board);
     } catch (error) {
       console.error(error);
       toast({ title: "Error", description: "Failed to load practice data.", variant: "destructive" });
@@ -209,6 +214,31 @@ export default function PracticePage() {
             </motion.div>
           )}
         </AnimatePresence>
+      )}
+
+      {/* Gamification Hub */}
+      {!selectedSubject && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 animate-in slide-in-from-bottom-6 duration-700 delay-200 fill-mode-both">
+          <div className="md:col-span-2 space-y-6">
+            <Card className="border-slate-200 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 backdrop-blur-md shadow-xl">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Trophy className="h-5 w-5 text-yellow-500" />
+                  Badge Collection
+                </CardTitle>
+                <CardDescription>
+                  Earn badges by completing targeted practice sessions and maintaining streaks.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <BadgeShowcase badges={gamification?.badges || []} />
+              </CardContent>
+            </Card>
+          </div>
+          <div>
+            <LeaderboardWidget entries={leaderboard} className="border-slate-200 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 shadow-xl" />
+          </div>
+        </div>
       )}
     </div>
   );

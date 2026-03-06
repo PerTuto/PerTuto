@@ -21,6 +21,7 @@ import {
   Database,
   Layers,
   Sparkles,
+  Zap,
   Megaphone,
   Library,
 } from "lucide-react";
@@ -52,6 +53,7 @@ const ALL_ROLES = ['super', 'admin', 'executive', 'teacher', 'parent', 'student'
 
 const menuItems: MenuItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: [] },
+  { href: "/dashboard/:tenantId/practice", label: "Practice", icon: Zap, roles: ['super', 'admin', 'teacher', 'student'] },
   { href: "/dashboard/schedule", label: "Schedule", icon: Calendar, roles: ['super', 'admin', 'teacher', 'student', 'parent'] },
   { href: "/dashboard/availability", label: "Availability", icon: Clock, roles: ['super', 'admin', 'teacher'] },
   { href: "/dashboard/students", label: "Students", icon: GraduationCap, roles: ['super', 'admin', 'executive', 'teacher'] },
